@@ -13,11 +13,13 @@ echo("</br>");
 $input = json_decode(file_get_contents('php://input'),true);
 var_dump($input);
 
-/*
+
 // connect to the mysql database
 $link = mysqli_connect('localhost', 'root', 'axspa123', 'asstdb');
 mysqli_set_charset($link,'utf8');
- 
+
+
+/*
 // retrieve the table and key from the path
 $table = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $key = array_shift($request)+0;
