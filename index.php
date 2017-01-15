@@ -7,13 +7,13 @@ echo("hello world");
 $method = $_SERVER['REQUEST_METHOD'];
 echo("</br>".$method."</br>");
 $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
-echo("</br>".$_SERVER['PATH_INFO']);
+echo("</br>".$_SERVER['REQUEST_URI']);
 var_dump($request);
 echo("</br>");
 $input = json_decode(file_get_contents('php://input'),true);
 var_dump($input);
 
-/*
+
 // connect to the mysql database
 $link = mysqli_connect('localhost', 'root', 'axspa123', 'asstdb');
 mysqli_set_charset($link,'utf8');
@@ -22,6 +22,8 @@ mysqli_set_charset($link,'utf8');
 $table = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $key = array_shift($request)+0;
 echo("</br>".$table."</br>".$key."</br>");
+
+/*
 // escape the columns and values from the input object
 $columns = preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
 $values = array_map(function ($value) use ($link) {
