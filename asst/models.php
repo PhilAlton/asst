@@ -20,12 +20,12 @@ class User {
 
 	}
 
-	public static function handleRequest($methodType, $uID, $params = null){
+	public static function handleRequest($method, $uID, $params = null){
 
 		// ?need to instantiate instance of model
 		$return;
 
-		switch $methodType {
+		switch ($method) {
 /*			case 'PUT':
 				// call method to replace
 				updateParams();
