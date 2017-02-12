@@ -1,11 +1,8 @@
 <?php
 require 'query.php';
-require_once 'database.php';
-
 
 class User {
 
-	public $database = new Database;
 
 
 	public static function authenticate($uID){
