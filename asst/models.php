@@ -103,9 +103,9 @@ class User {
 
 class Data {
 
-	public answersTosurveryinlotsofvariables;
+	public $answersTosurveryinlotsofvariables;
 
-	public __construct(){
+	public function __construct(){
 
 
 	}
