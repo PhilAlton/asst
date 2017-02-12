@@ -1,37 +1,98 @@
-<?php
-
-echo("hello world");
+﻿<?php
+require 'models.php';
 
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
-echo("</br>".$method."</br>");
 $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
-echo("</br>".$_SERVER['REQUEST_URI']);
-var_dump($request);
-echo("</br>");
+$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
-var_dump($input);
+
+// Switch to govern action based on URI
+try{
+	if (uri('asst/Users/..*')){
+	//	echo "/asst/Users/*";
+	$uID = $request[1];
+		if (isset($request[2])){
+			switch($request[2]){
+				case "data":
+					// case for /asst/Users/Id/Data pass in $method
+					echo "/asst/Users/Id/Data";
+					Data::syncData($uID);
+					break;
+				case "auth":
+					// case for /asst/Users/Id/auth
+					echo "/asst/Users/Id/auth";
+					User::authenticate($uID);
+					break;
+				default:
+					$e = "Invalid URI selected";
+					throw new Exception($e);
+			}
+		} else {
+			// action for /asst/Users/Id
+			echo "/asst/Users/Id"; 
+			User::handleRequest($method, $uID);
+			
+		}
+		
+	} else if (uri('asst/Users')){	
+		// code for asst/Users (create new user)
+		User::createUser();
+		echo "/asst/Users";
+		
+	} else {
+		$e = "Invalid URI selected";
+		throw new Exception($e);
+	}
+} catch (Exception $e) {
+		echo "caught exception: ", $e->getMessage(), "\n";
+}
 
 
-// connect to the mysql database
-$link = mysqli_connect('localhost', 'root', 'axspa123', 'asstdb');
-mysqli_set_charset($link,'utf8');
+
+function uri(String $match){
+	$match = "#".$match."#";
+	return preg_match($match, $_SERVER['REQUEST_URI']);
+
+}
 
 
 
-// retrieve the table and key from the path
-$table = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
-$key = array_shift($request)+0;
-echo("</br>".$table."</br>".$key."</br>");
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
+// retrieve the table and key from the path
+
+//echo "hereis".$apiRoot;
+echo "</br></br></br>";
+var_dump($request);
+$table = array_shift($request);
+$key = array_shift($request);
+//echo("</br>".$table."</br>H".$key."</br>");
+
+
 // escape the columns and values from the input object
 $columns = preg_replace('/[^a-z0-9_]+/i','',array_keys($input));
+var_dump($columns);
 $values = array_map(function ($value) use ($link) {
-  if ($value===null) return null;
+  if ($value===null) return null;
   return mysqli_real_escape_string($link,(string)$value);
 },array_values($input));
+
+//echo("other");
+/*var_dump($vales);
  
 // build the SET part of the SQL command
 $set = '';
@@ -39,7 +100,9 @@ for ($i=0;$i<count($columns);$i++) {
   $set.=($i>0?',':'').'`'.$columns[$i].'`=';
   $set.=($values[$i]===null?'NULL':'"'.$values[$i].'"');
 }
- 
+
+
+
 // create SQL based on HTTP method
 switch ($method) {
   case 'GET':
