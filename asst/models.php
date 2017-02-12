@@ -1,5 +1,6 @@
 <?php
 require 'query.php';
+require_once 'database.php';
 
 
 class User {
