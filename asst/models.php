@@ -4,6 +4,7 @@ require 'query.php';
 
 class User {
 
+	public $newVar = "him";
 	public $database = New Database();
 
 
