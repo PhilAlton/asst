@@ -1,6 +1,6 @@
 <?php
 
-require '../asst/database.php';
+require 'database.php';
 	
 	
 // Syntax: 
