@@ -32,6 +32,7 @@ try{
 		} else {
 			// action for /asst/Users/Id
 			echo "/asst/Users/Id";
+			echo $uID;
 			User::handleRequest($method, $uID);
 
 		}

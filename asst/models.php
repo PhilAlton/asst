@@ -101,14 +101,6 @@ class User {
 
 class Data {
 
-	public $answersTosurveryinlotsofvariables;
-
-	public function __construct(){
-
-
-	}
-
-
 
 	public static function syncData(){
 		// method to get user data against timestamp and either update (call postData),
