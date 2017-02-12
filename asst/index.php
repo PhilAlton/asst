@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require 'models.php';
 
 
@@ -12,9 +12,9 @@ $input = json_decode(file_get_contents('php://input'),true);
 try{
 	if (uri('asst/Users/..*')){
 	//	echo "/asst/Users/*";
-	$uID = $request[1];
-		if (isset($request[2])){
-			switch($request[2]){
+	$uID = $request[2];
+		if (isset($request[3])){
+			switch($request[3]){
 				case "data":
 					// case for /asst/Users/Id/Data pass in $method
 					echo "/asst/Users/Id/Data";
@@ -26,21 +26,21 @@ try{
 					User::authenticate($uID);
 					break;
 				default:
-					$e = "Invalid URI selected";
+					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
 					throw new Exception($e);
 			}
 		} else {
 			// action for /asst/Users/Id
-			echo "/asst/Users/Id"; 
+			echo "/asst/Users/Id";
 			User::handleRequest($method, $uID);
-			
+
 		}
-		
-	} else if (uri('asst/Users')){	
+
+	} else if (uri('asst/Users')){
 		// code for asst/Users (create new user)
 		User::createUser();
 		echo "/asst/Users";
-		
+
 	} else {
 		$e = "Invalid URI selected";
 		throw new Exception($e);
