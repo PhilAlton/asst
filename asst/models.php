@@ -77,7 +77,7 @@ class User {
 	private static function getRepresentation($uID){
 		// GET request
 
-		Query $query = New Query('SELECT * FROM `UserTable` WHERE `ID` =:id');
+		$query = New Query('SELECT * FROM `UserTable` WHERE `ID` =:id');
 		return $query->execute([':id' => $uID]);
 
 	}

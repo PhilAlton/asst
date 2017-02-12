@@ -11,7 +11,7 @@ require '../asst/database.php';
 
 
 
-class query {
+class Query {
 
     private $query;
     // private $params;
