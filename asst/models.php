@@ -4,7 +4,7 @@ require 'query.php';
 
 class User {
 
-	public $database = New Database;
+	public $database = New Database();
 
 
 	public static function authenticate($uID){
