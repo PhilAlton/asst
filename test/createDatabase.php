@@ -1,4 +1,5 @@
 <?php
+	require_once "../asst/output.php";
 	require '../asst/database.php';
 	
 	$database = New Database;
@@ -8,26 +9,26 @@
 
        
         if($database->execute()){
-            echo "yay";
+            Output::setOutput( "yay";
         }else{
-            echo "didn't work";
+            Output::setOutput( "didn't work";
         }
 
 */
 //        $query = 'SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "UserTable"';
-echo "dbtest5";
+Output::setOutput("dbtest5");
         $query = 'SELECT * FROM `UserTable` WHERE `ID` =:id';
         $id = '00001';
     
         $database->query($query);
 		
-		echo "qry excute";
+		Output::setOutput("qry excute");
 		
         var_dump($database->resultset([':id' => $id]));
-            echo ("yay");
+            Output::setOutput("yay");
       //  else{
-       //     echo "didn't work";
+       //     Output::setOutput("didn't work");
        // }
-echo "end";
+Output::setOutput("end");
 
 ?>

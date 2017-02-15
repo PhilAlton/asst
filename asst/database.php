@@ -26,7 +26,7 @@ class Database {
             }
             catch(PDOException $err){
                 $this->error = $err->getMessage();
-                echo  $this->error;
+                Output::setOutput($this->error);
             }
         }
     }

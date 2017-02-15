@@ -1,4 +1,5 @@
 <?php
+include 'output.php';
 require 'models.php';
 
 
@@ -11,18 +12,18 @@ $input = json_decode(file_get_contents('php://input'),true);
 // Switch to govern action based on URI
 try{
 	if (uri('asst/Users/..*')){
-	//	echo "/asst/Users/*";
+	//	Output::setOutput( "/asst/Users/*";
 	$uID = $request[2];
 		if (isset($request[3])){
 			switch($request[3]){
 				case "data":
 					// case for /asst/Users/Id/Data pass in $method
-					echo "/asst/Users/Id/Data";
+					Output::setOutput("/asst/Users/Id/Data");
 					Data::syncData($uID);
 					break;
 				case "auth":
 					// case for /asst/Users/Id/auth
-					echo "/asst/Users/Id/auth";
+					Output::setOutput("/asst/Users/Id/auth");
 					User::authenticate($uID);
 					break;
 				default:
@@ -31,8 +32,8 @@ try{
 			}
 		} else {
 			// action for /asst/Users/Id
-			echo "/asst/Users/Id"."</br>";
-			echo $uID;
+			Output::setOutput("/asst/Users/Id"."</br>");
+			Output::setOutput($uID);
 			User::handleRequest($method, $uID);
 
 		}
@@ -40,16 +41,19 @@ try{
 	} else if (uri('asst/Users')){
 		// code for asst/Users (create new user)
 		User::createUser();
-		echo "/asst/Users";
+		Output::setOutput("/asst/Users");
 
 	} else {
 		$e = "Invalid URI selected";
 		throw new Exception($e);
 	}
 } catch (Exception $e) {
-		echo "caught exception: ", $e->getMessage(), "\n";
+		Output::setOutput("caught exception: ", $e->getMessage(), "\n");
 }
 
+
+
+Output::output;
 
 
 function uri(String $match){
@@ -76,12 +80,12 @@ function uri(String $match){
 /*
 // retrieve the table and key from the path
 
-//echo "hereis".$apiRoot;
-echo "</br></br></br>";
+//Output::setOutput( "hereis".$apiRoot;
+Output::setOutput( "</br></br></br>";
 var_dump($request);
 $table = array_shift($request);
 $key = array_shift($request);
-//echo("</br>".$table."</br>H".$key."</br>");
+//Output::setOutput(("</br>".$table."</br>H".$key."</br>");
 
 
 // escape the columns and values from the input object
@@ -92,7 +96,7 @@ $values = array_map(function ($value) use ($link) {
   return mysqli_real_escape_string($link,(string)$value);
 },array_values($input));
 
-//echo("other");
+//Output::setOutput(("other");
 /*var_dump($vales);
  
 // build the SET part of the SQL command
@@ -127,15 +131,15 @@ if (!$result) {
  
 // print results, insert id or affected row count
 if ($method == 'GET') {
-  if (!$key) echo '[';
+  if (!$key) Output::setOutput( '[';
   for ($i=0;$i<mysqli_num_rows($result);$i++) {
-    echo ($i>0?',':'').json_encode(mysqli_fetch_object($result));
+    Output::setOutput( ($i>0?',':'').json_encode(mysqli_fetch_object($result));
   }
-  if (!$key) echo ']';
+  if (!$key) Output::setOutput( ']';
 } elseif ($method == 'POST') {
-  echo mysqli_insert_id($link);
+  Output::setOutput( mysqli_insert_id($link);
 } else {
-  echo mysqli_affected_rows($link);
+  Output::setOutput( mysqli_affected_rows($link);
 }
  
 // close mysql connection
