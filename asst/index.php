@@ -42,9 +42,10 @@ try{
 		// code for asst/Users (create new user)
 		User::createUser();
 		//Output::setOutput("/asst/Users");
-		Output::setOutput('{"Location": "You are in /asst/Users",
-					"testOutput": "this is a test message in JSON",
-					"anotherItem": "this is another item"}');
+		Output::setOutput(Array(
+						"Location" => "You are in /asst/Users",
+						"testOutput" => "this is a test message in JSON",
+						"anotherItem" => "this is another item"));
 
 	} else {
 		$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
