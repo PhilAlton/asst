@@ -41,7 +41,11 @@ try{
 	} else if (uri('asst/Users')){
 		// code for asst/Users (create new user)
 		User::createUser();
-		Output::setOutput("/asst/Users");
+		//Output::setOutput("/asst/Users");
+		Output::setOutput('{
+					"testOutput": "this is a test message in JSON",
+					"anotherItem": "this is another item"
+				}');
 
 	} else {
 		$e = "Invalid URI selected";
