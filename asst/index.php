@@ -47,6 +47,8 @@ try{
 						"testOutput" => "this is a test message in JSON",
 						"anotherItem" => "this is another item"));
 
+		Output::setOutput($input);
+
 	} else {
 		$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
 		throw new Exception($e);
