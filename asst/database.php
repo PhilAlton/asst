@@ -10,7 +10,7 @@ class Database {
        
         if (!isset($this->dbConnection)){
 
-            $this->config = parse_ini_file(realpath('../../private/config.ini'));
+            $this->config = parse_ini_file(realpath('../../../private/config.ini'));
 
             // Set DSN
             $dsn = "mysql:host={$this->config['DB_HOST']};dbname={$this->config['DB_NAME']};charset=utf8mb4";
