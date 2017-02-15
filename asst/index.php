@@ -42,7 +42,6 @@ try{
 		// code for asst/Users (create new user)
 		User::createUser();
 		Output::setOutput("/asst/Users");
-		Output::setOutput("test second output");
 
 	} else {
 		$e = "Invalid URI selected";
