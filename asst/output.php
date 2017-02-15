@@ -18,7 +18,7 @@ class Output{
 		Output::setHistory($output);
 	}
 
-	public static function output(){
+	public static function go(){
 		echo Output::getOutput();
 		echo Output::getHistory();
 	}

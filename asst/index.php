@@ -53,7 +53,7 @@ try{
 
 
 
-Output::output;
+Output::go;
 
 
 function uri(String $match){
