@@ -62,7 +62,7 @@ class User {
 		// GET request
 
 		$query = New Query('SELECT * FROM `UserTable` WHERE `ID` =:id');
-		Output::setOutput($query->execute([':id' => $uID]));
+		return $query->execute([':id' => $uID]);
 
 	}
 

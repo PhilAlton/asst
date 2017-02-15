@@ -28,7 +28,7 @@ class Query {
         foreach ($params as $param => $value){
             $this->database->bind($param, $value);
         }
-        $this->database->resultset($params);
+        echo $this->database->resultset($params);
 
     }
 
