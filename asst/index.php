@@ -53,9 +53,7 @@ try{
 		throw new Exception($e);
 	}
 } catch (Exception $e) {
-	var_dump($e);
-	var_dump($e->getMessage());
-		Output::setOutput("caught exception: ", $e->getMessage(), "\n");
+		Output::setOutput("caught exception: ".$e->getMessage()."\n");
 }
 
 
