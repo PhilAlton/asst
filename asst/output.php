@@ -15,7 +15,7 @@ class Output{
 
 	public static function setOutput($output){
 		Output::setHistory(Output::$output);
-		Output::$output = $output;
+		Output::$output = json_encode($output);
 	}
 
 	public static function go(){
