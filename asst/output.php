@@ -9,7 +9,7 @@ class Output{
 	private static function getOutput(){return Output::$output;}
 	private static function getHistory(){return Output::$history;}
 	private static function setHistory($newOutput){
-		Output::$history = Output::$history.json_encode("</br>").$newOutput;
+		Output::$history = Output::$history."</br>".$newOutput;
 	}
 
 

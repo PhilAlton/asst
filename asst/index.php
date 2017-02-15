@@ -32,8 +32,8 @@ try{
 			}
 		} else {
 			// action for /asst/Users/Id
-			Output::setOutput("/asst/Users/Id"."</br>");
-			Output::setOutput($uID);
+	//		Output::setOutput("/asst/Users/Id"."</br>");
+	//		Output::setOutput($uID);
 			User::handleRequest($method, $uID);
 
 		}
