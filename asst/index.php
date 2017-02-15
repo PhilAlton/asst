@@ -18,7 +18,7 @@ try{
 			switch($request[3]){
 				case "data":
 					// case for /asst/Users/Id/Data pass in $method
-					Output::setOutput("/asst/Users/Id/Data");
+					Output::setOutput("/asst/Users/Id/data");
 					Data::syncData($uID);
 					break;
 				case "auth":
@@ -28,6 +28,7 @@ try{
 					break;
 				default:
 					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
+					echo $e;
 					throw new Exception($e);
 			}
 		} else {
