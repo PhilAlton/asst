@@ -48,7 +48,6 @@ try{
 						"anotherItem" => "this is another item"));
 
 		Output::setOutput($input);
-		var_dump($input);
 
 
 	} else {
