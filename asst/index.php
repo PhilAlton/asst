@@ -48,6 +48,8 @@ try{
 						"anotherItem" => "this is another item"));
 
 		Output::setOutput($input);
+		var_dump($input);
+
 
 	} else {
 		$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
