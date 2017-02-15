@@ -14,8 +14,8 @@ class Output{
 
 
 	public static function setOutput($output){
+		Output::setHistory(Output::$output);
 		Output::$output = $output;
-		Output::setHistory($output);
 	}
 
 	public static function go(){
