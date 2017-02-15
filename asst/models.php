@@ -31,17 +31,17 @@ class User {
 */
 			case 'POST':
 				// call method to update single varaibles
-				updateParams();
+				User::updateParams();
 				break;
 
 			case 'DELETE':
 				// call method to delete
-				deleteUser();
+				User::deleteUser();
 				break;
 
 			case 'GET':
 				// call method to get
-				getRepresentation();
+				User::getRepresentation();
 				break;
 
 			default:
@@ -56,20 +56,6 @@ class User {
 	}
 
 
-
-	public function __construct($representation){
-		// accept class variables as JSON string and decode here to construct object
-
-		// remember to create new SQL table representing user data as well as adding user details
-		//		to master table
-
-
-		// send back secret id (formed from PHP random unique ID generator (+ name?)
-
-
-
-
-	}
 
 
 	private static function getRepresentation($uID){
