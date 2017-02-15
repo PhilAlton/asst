@@ -28,7 +28,6 @@ try{
 					break;
 				default:
 					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
-					echo $e;
 					throw new Exception($e);
 			}
 		} else {
@@ -50,10 +49,11 @@ try{
 				}');
 
 	} else {
-		$e = "Invalid URI selected";
+		$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
 		throw new Exception($e);
 	}
 } catch (Exception $e) {
+	var_dump($e);
 		Output::setOutput("caught exception: ", $e->getMessage(), "\n");
 }
 
