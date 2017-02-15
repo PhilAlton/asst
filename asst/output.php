@@ -20,7 +20,9 @@ class Output{
 
 	public static function go(){
 		echo Output::getOutput();
-		echo Output::getHistory();
+		if (Output::getHistory() !== "</br>"){
+			echo Output::getHistory();
+		}
 	}
 
 
