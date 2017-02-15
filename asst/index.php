@@ -42,10 +42,10 @@ try{
 		// code for asst/Users (create new user)
 		User::createUser();
 		//Output::setOutput("/asst/Users");
-	/*	Output::setOutput(Array(
+		Output::setOutput(Array(
 						"Location" => "You are in /asst/Users",
 						"testOutput" => "this is a test message in JSON",
-						"anotherItem" => "this is another item")); */
+						"anotherItem" => "this is another item"));
 
 		Output::setOutput($input);
 
