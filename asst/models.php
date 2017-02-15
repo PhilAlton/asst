@@ -31,17 +31,17 @@ class User {
 */
 			case 'POST':
 				// call method to update single varaibles
-				User::updateParams();
+				User::updateParams($uID, $params);
 				break;
 
 			case 'DELETE':
 				// call method to delete
-				User::deleteUser();
+				User::deleteUser($uID);
 				break;
 
 			case 'GET':
 				// call method to get
-				User::getRepresentation();
+				User::getRepresentation($uID);
 				break;
 
 			default:
@@ -66,14 +66,14 @@ class User {
 
 	}
 
-	private static function updateParams(){
+	private static function updateParams($uID, $params){
 		//PUT request, acepting multiple arguments including user ID.
 
 
 	}
 
 
-	private static function deleteUser(){
+	private static function deleteUser($uID){
 		// DELETE request, accepting user ID;
 
 	}
