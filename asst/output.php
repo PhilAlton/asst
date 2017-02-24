@@ -20,7 +20,7 @@ class Output{
 
 	public static function go(){
 		echo Output::getOutput();
-		if (Output::getHistory() !== "</br>"){
+		if (Output::getHistory() !== "/n"){
 			echo Output::getHistory();
 		}
 	}
