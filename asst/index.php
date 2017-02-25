@@ -11,8 +11,9 @@ use Defuse\Crypto\KeyProtectedByPassword;
 
 $keyfile = parse_ini_file(realpath('../../../private/keyfile.ini'));
 $key = $keyfile['KEY'];
+echo Key::loadFromAsciiSafeString($keyAscii);
 
-echo $key;
+
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
