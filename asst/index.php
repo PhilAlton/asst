@@ -2,7 +2,7 @@
 require 'output.php';
 require 'models.php';
 require_once ('/var/www/lib/defuse-crypto.phar');
-use '/var/www/lib/defuse-crypto.phar' as Defuse;
+use var/www/lib/defuse-crypto.phar as Defuse;
 
 $key = defuse/Key::createNewRandomKey();
 echo $key->saveToAsciiSafeString();
