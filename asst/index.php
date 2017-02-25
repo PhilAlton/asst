@@ -1,6 +1,7 @@
 <?php
-include 'output.php';
+require 'output.php';
 require 'models.php';
+require_once ('/var/www/lib/defuse-crypto.phar');
 
 
 // get the HTTP method, path and body of the request
@@ -34,13 +35,13 @@ try{
 			// action for /asst/Users/Id
 	//		Output::setOutput("/asst/Users/Id"."</br>");
 	//		Output::setOutput($uID);
-			User::handleRequest($method, $uID);
+			User::handleRequest($method, $uID, $input);
 
 		}
 
 	} else if (uri('asst/Users')){
 		// code for asst/Users (create new user)
-		User::createUser();
+		User::createUser($input);
 		//Output::setOutput("/asst/Users");
 		Output::setOutput(Array(
 						"Location" => "You are in /asst/Users",
