@@ -1,27 +1,14 @@
 <?php
 require 'output.php';
 require 'models.php';
-require_once '../vendor/autoload.php';
-
-use Defuse\Crypto\Exception as Ex;
-use Defuse\Crypto\File;
-use Defuse\Crypto\Key;
-use Defuse\Crypto\KeyProtectedByPassword;
-
-$keyfile = parse_ini_file(realpath('../../../private/keyfile.ini'));
-$key = $keyfile['KEY'];
-var_dump($key);
-echo "</br>".$key;
-$key = Key::loadFromAsciiSafeString($key);;
-echo "</br>".$key;
-
+require 'crypt.php';
 
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
-$input = json_decode(file_get_contents('php://input'),true);
+$input = encrypt_input(json_decode(file_get_contents('php://input'),true));
 
 // Switch to govern action based on URI
 try{
@@ -34,11 +21,6 @@ try{
 					// case for /asst/Users/Id/Data pass in $method
 					Output::setOutput("/asst/Users/Id/data");
 					Data::syncData($uID);
-					break;
-				case "auth":
-					// case for /asst/Users/Id/auth
-					Output::setOutput("/asst/Users/Id/auth");
-					User::authenticate($uID);
 					break;
 				default:
 					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
