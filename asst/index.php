@@ -1,7 +1,7 @@
 <?php
 require 'output.php';
 require 'models.php';
-
+require_once '../vendor/autoload.php';
 
 use Defuse\Crypto\Key;
 
