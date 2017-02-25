@@ -3,7 +3,7 @@ require 'output.php';
 require 'models.php';
 require_once 'phar:///var/www/lib/defuse-crypto.phar';
 
-$protected_key = defuse-crypto.phar/KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
+//$protected_key = defuse-crypto.phar/KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
 
 $key = Key::createNewRandomKey();
 echo $key->saveToAsciiSafeString();
