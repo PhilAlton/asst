@@ -1,11 +1,12 @@
 <?php
 require 'output.php';
 require 'models.php';
-require_once ('/var/www/lib/defuse-cryspto.phar');
+require_once '/var/www/lib/defuse-crypto.phar';
 
+echo "included";
 
-$key = \var\www\lib\defuse-crypto.phar\Key::createNewRandomKey();
-echo $key->saveToAsciiSafeString();
+//$key = \var\www\lib\defuse-crypto.phar\Key::createNewRandomKey();
+//echo $key->saveToAsciiSafeString();
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
