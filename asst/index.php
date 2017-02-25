@@ -1,7 +1,7 @@
 <?php
 require 'output.php';
 require 'models.php';
-require_once '/var/www/lib/defuse-crygpto.phar';
+require_once '/var/www/lib/defuse-crypto.phar';
 
 echo "included";
 
