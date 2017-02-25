@@ -5,7 +5,7 @@ require_once '/var/www/lib/defuse-crypto.phar';
 
  $protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
 
-$key = \var\www\lib\defuse-crypto.phar\Key::createNewRandomKey();
+$key = Key::createNewRandomKey();
 echo $key->saveToAsciiSafeString();
 
 // get the HTTP method, path and body of the request
