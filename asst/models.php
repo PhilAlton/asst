@@ -70,10 +70,10 @@ class User {
 
 
 		$query = New Query(
-						"INSERT INTO AuthTable
-							(UserName, SALT, Password, AuthToken
-						VALUES
-							(:UserName, $SALT, :Password, $AuthToken)"
+						"INSERT INTO AuthTable".
+							"(UserName, Password, AuthToken".
+						"VALUES".
+							"(:UserName, :Password, $AuthToken)"
 						);
 
 		$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);

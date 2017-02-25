@@ -3,6 +3,8 @@ require 'output.php';
 require 'models.php';
 require_once ('/var/www/lib/defuse-crypto.phar');
 
+$key = Key::createNewRandomKey();
+echo $key->saveToAsciiSafeString();
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
