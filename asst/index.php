@@ -8,10 +8,13 @@ use Defuse\Crypto\File;
 use Defuse\Crypto\Key;
 use Defuse\Crypto\KeyProtectedByPassword;
 
+$key = Key::createNewRandomKey();
+echo "</br>".$key->saveToAsciiSafeString();
+file_put_contents ('../../../private/keyfile.ini' , "[KEY]".$key->saveToAsciiSafeString());
 
 $keyfile = parse_ini_file(realpath('../../../private/keyfile.ini'));
-echo $key = $keyfile['KEY'];
-echo Key::loadFromAsciiSafeString($keyAscii);
+echo "</br>".$key = $keyfile['KEY'];
+echo "</br>".Key::loadFromAsciiSafeString($keyAscii);
 
 
 
