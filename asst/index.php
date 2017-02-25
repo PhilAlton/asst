@@ -9,9 +9,11 @@ use Defuse\Crypto\Key;
 use Defuse\Crypto\KeyProtectedByPassword;
 
 $keyfile = parse_ini_file(realpath('../../../private/keyfile.ini'));
-echo "</br>".$key = $keyfile['KEY'];
-$key = '"'.$key.'"';
-echo "</br>".Key::loadFromAsciiSafeString($key);
+$key = $keyfile['KEY'];
+
+echo "</br>".$key;
+$key = Key::loadFromAsciiSafeString($key);;
+echo "</br>".$key;
 
 
 
