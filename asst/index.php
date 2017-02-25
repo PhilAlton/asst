@@ -3,10 +3,10 @@ require 'output.php';
 require 'models.php';
 require_once '/var/www/lib/defuse-crypto.phar';
 
-echo "included";
+ $protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
 
-//$key = \var\www\lib\defuse-crypto.phar\Key::createNewRandomKey();
-//echo $key->saveToAsciiSafeString();
+$key = \var\www\lib\defuse-crypto.phar\Key::createNewRandomKey();
+echo $key->saveToAsciiSafeString();
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
