@@ -1,9 +1,10 @@
 <?php
 require 'output.php';
 require 'models.php';
-require_once 'phar:///var/www/lib/defuse-crypto.phar';
+// require_once '../vendor/defuse/php-encryption/src/key.php';
+require_once '../vendor/autoload.php';
 
-//$protected_key = defuse-crypto.phar/KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
+$protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
 
 $key = Key::createNewRandomKey();
 echo $key->saveToAsciiSafeString();
