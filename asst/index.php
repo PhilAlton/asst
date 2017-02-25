@@ -3,15 +3,16 @@ require 'output.php';
 require 'models.php';
 require_once '../vendor/autoload.php';
 
+use Defuse\Crypto\Exception as Ex;
+use Defuse\Crypto\File;
 use Defuse\Crypto\Key;
+use Defuse\Crypto\KeyProtectedByPassword;
 
 
-//require_once '../vendor/defuse/php-encryption/src/key.php';
+$keyfile = parse_ini_file(realpath('../../../private/keyfile.ini'));
+$key = $kleyfile['KEY'];
 
-//$protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
-
-$key = Key::createNewRandomKey();
-echo $key->saveToAsciiSafeString();
+echo $key;
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
