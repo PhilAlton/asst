@@ -1,8 +1,9 @@
 <?php
 require 'output.php';
 require 'models.php';
-require_once '../vendor/defuse/php-encryption/src/key.php';
 require_once '../vendor/autoload.php';
+
+require_once '../vendor/defuse/php-encryption/src/key.php';
 
 //$protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
 
