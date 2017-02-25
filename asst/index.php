@@ -10,7 +10,7 @@ use Defuse\Crypto\KeyProtectedByPassword;
 
 
 $keyfile = parse_ini_file(realpath('../../../private/keyfile.ini'));
-$key = $kleyfile['KEY'];
+$key = $keyfile['KEY'];
 
 echo $key;
 
