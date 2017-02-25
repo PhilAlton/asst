@@ -1,7 +1,10 @@
 <?php
 require 'output.php';
 require 'models.php';
-require_once '../vendor/autoload.php';
+
+
+use Defuse\Crypto\Key;
+
 
 //require_once '../vendor/defuse/php-encryption/src/key.php';
 
