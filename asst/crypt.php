@@ -4,6 +4,7 @@ require_once '../vendor/autoload.php';
 use Defuse\Crypto\Exception as Ex;
 use Defuse\Crypto\File;
 use Defuse\Crypto\Key;
+use Defuse\Crypto\Crypto;
 use Defuse\Crypto\KeyProtectedByPassword;
 
 
@@ -22,7 +23,7 @@ function encrypt_input($input){
 
 	$key = loadEncryptionKeyFromConfig();
 
-	var_dump($input); 
+	var_dump($input);
 	//	$ciphertext = Crypto::encrypt($secret_data, $key);
 
 
@@ -33,8 +34,8 @@ function decrypt_output($output){
 
 	$key = loadEncryptionKeyFromConfig();
 
-	$ciphertext = date;// ... load $ciphertext from the database
-	try 
+	$ciphertext = "data";// ... load $ciphertext from the database
+	try
 	{
 		$secret_data = Crypto::decrypt($ciphertext, $key);
 
