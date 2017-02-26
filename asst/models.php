@@ -20,7 +20,7 @@ class User {
 		if (password_verify
 			(base64_encode
 				(
-					hash('sha256', $params['Password'], true)
+					hash('sha384', $params['Password'], true)
 				),
 				encrypt($password)
 			))
