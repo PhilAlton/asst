@@ -11,18 +11,19 @@ class User {
 		$q_auth = false;
 
 
-		$query = New Query('SELECT * FROM `AuthTable` WHERE `UserName` =:UserName');
-		Output::setOutput($query->execute([':UserName' => $UserName]));
+		// retrieve stored password string from database against UserName
+		$query = New Query('SELECT Password FROM `AuthTable` WHERE `UserName` =:UserName');
+		$password = decrypt($query->execute([':UserName' => $UserName]));						//FIX - decrypt should go in query class
 
 		// Check if the hash of the entered login password, matches the stored hash.
 		if (password_verify
-			(
-				base64_encode
+			(base64_encode
 				(
 					hash('sha256', $params['password'], true)
 				),
-				"stored password"		//change this to reference the output of sql function
-			)) {
+				$password		
+			)) 
+		{
 			// Success :D
 			$q_auth = true;
 		} else {
@@ -58,13 +59,15 @@ class User {
 
 		// Hash a new password for storing in the database.
 		// The function automatically generates a cryptographically safe salt.
-		$password =	password_hash
-					(
-						base64_encode
+		$password =	encrypt(
+						password_hash
 						(
-							hash('sha384', $params['Password'], true)
-						),
-						PASSWORD_DEFAULT
+							base64_encode
+							(
+								hash('sha384', $params['Password'], true)
+							),
+							PASSWORD_DEFAULT
+						)
 					);
 
 

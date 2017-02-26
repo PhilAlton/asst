@@ -5,13 +5,15 @@ require 'crypt.php';
 
 
 //Test segments
+/*
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "the cat and the dog", true)),PASSWORD_DEFAULT)));
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "", true)),PASSWORD_DEFAULT)));
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', null, true)),PASSWORD_DEFAULT)));
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "3", true)),PASSWORD_DEFAULT)));
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', 3, true)),PASSWORD_DEFAULT)));
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "endofthree", true)),PASSWORD_DEFAULT)));
-
+*/
+echo "</br>".(encrypt(password_hash(base64_encode(hash('sha384', "mypassword", true)),PASSWORD_DEFAULT)));
 
 
 
