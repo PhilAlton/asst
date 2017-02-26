@@ -21,7 +21,7 @@ class User {
 				(
 					hash('sha256', $params['password'], true)
 				),
-				$stored
+				"stored password"		//change this to reference the output of sql function
 			)) {
 			// Success :D
 			$q_auth = true;

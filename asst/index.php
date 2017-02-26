@@ -13,6 +13,14 @@ echo "</br>".strlen(encrypt(3));
 echo "</br>".strlen(encrypt("endofthree"));
 
 
+echo "</br>".strlen(base64_encode("the cat and the dog"));
+echo "</br>".strlen(base64_encode(""));
+echo "</br>".strlen(base64_encode(null));
+echo "</br>".strlen(base64_encode("3"));
+echo "</br>".strlen(base64_encode(3));
+echo "</br>".strlen(base64_encode("endofthree"));
+
+
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
