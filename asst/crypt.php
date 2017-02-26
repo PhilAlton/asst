@@ -24,6 +24,7 @@ function encrypt_input($input){
 	$key = loadEncryptionKeyFromConfig();
 
 	var_dump($input);
+
 	//	$ciphertext = Crypto::encrypt($secret_data, $key);
 
 

@@ -8,7 +8,7 @@ require 'crypt.php';
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
-$input = encrypt_input(json_decode(file_get_contents('php://input'),true));
+$input = json_decode(file_get_contents('php://input'),true);
 
 // Switch to govern action based on URI
 try{

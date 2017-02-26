@@ -6,6 +6,9 @@ class User {
 
 
 	public static function authenticate($params){
+		
+		return true; // DEBUG MODE
+		
 		// authenticate user session to enable access to api functions
 		$q_auth = false;
 
@@ -141,7 +144,7 @@ class User {
 	private static function getUser($UserName){
 		// GET request
 
-		$query = New Query('SELECT * FROM `UserTable` WHERE `UserName` =:UserName');
+		$query = New Query('SELECT * FROM `AuthTable` WHERE `UserName` =:UserName');
 		Output::setOutput($query->execute([':UserName' => $UserName]));
 
 	}

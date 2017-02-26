@@ -1,13 +1,13 @@
 <?php
 
 class Database {
-    private $config; 
+    private $config;
     private $dbConnection;
     private $error;
     private $statement;
-    
+
     public function __construct(){
-       
+
         if (!isset($this->dbConnection)){
 
             $this->config = parse_ini_file(realpath('../../../private/config.ini'));
@@ -39,14 +39,14 @@ class Database {
      * @return mixed The result of the mysqli::query() function
      */
     public function query($query) {
-    
+
         // Query the database
                                                                     //$result = $dbConnection -> query($query);
         $this->statement = $this->dbConnection->prepare($query);
 
         return $this->statement;
     }
-     
+
 
 
 
@@ -73,16 +73,16 @@ class Database {
         }
         $this->statement->bindValue($param, $value, $type);
     }
-  
+
 
 
   //execute query
-    public function execute(Array $params){
-        return $this->statement->execute($params);
+    public function execute(){						// FIX: ($parms)
+        return $this->statement->execute();			// FIX: ($parms)
     }
     //get results of query
-    public function resultset(Array $params){
-        $this->execute($params);
+    public function resultset(){					// FIX: ($parms)
+        $this->execute();							// FIX: ($parms)
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
     //get number of rows in results
@@ -133,7 +133,7 @@ class Database {
 
     /**
      * Fetch the last error from the database
-     * 
+     *
      * @return string Database error message
      */
     public function error() {
