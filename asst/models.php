@@ -13,7 +13,7 @@ class User {
 
 		// retrieve stored password string from database against UserName
 		$query = New Query('SELECT Password FROM `AuthTable` WHERE `UserName` =:UserName');
-		$password = decrypt($query->execute([':UserName' => $UserName]));						//FIX - decrypt should go in query class
+		$password = decrypt($query->execute([':UserName' => $UserName])[0]["Password"]);						//FIX - decrypt should go in query class
 
 		// Check if the hash of the entered login password, matches the stored hash.
 		if (password_verify
