@@ -22,7 +22,7 @@ class User {
 				(
 					hash('sha256', $params['Password'], true)
 				),
-				$password
+				encrypt($password)
 			))
 		{
 			// Success :D
