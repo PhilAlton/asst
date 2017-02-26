@@ -27,7 +27,6 @@ function encrypt($input){
 }
 
 function decrypt($input){
-	var_dump($input);
 	$key = loadEncryptionKeyFromConfig();
 	try
 	{
