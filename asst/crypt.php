@@ -20,14 +20,14 @@ function loadEncryptionKeyFromConfig()
 
 
 function encrypt($input){
-	$input = base64_encode($input);
+
 	$key = loadEncryptionKeyFromConfig();
 	$ciphertext = Crypto::encrypt($input, $key);
 	return $ciphertext;
 }
 
 function decrypt($input){
-
+	echo $input;
 	$key = loadEncryptionKeyFromConfig();
 	try
 	{
@@ -42,7 +42,7 @@ function decrypt($input){
 		Output::setOutput("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown"."\n");
 	}
 
-	$plaintext = base64_decode($plaintext);
+
 	return $plaintext;
 
 }
