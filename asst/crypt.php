@@ -19,26 +19,18 @@ function loadEncryptionKeyFromConfig()
 }
 
 
-function encrypt_input($input){
-
+function encrypt($input){
 	$key = loadEncryptionKeyFromConfig();
-
-	var_dump($input);
-
-	//	$ciphertext = Crypto::encrypt($secret_data, $key);
-
-
-	return $input;
+	$ciphertext = Crypto::encrypt($input, $key);
+	return $ciphertext;
 }
 
-function decrypt_output($output){
+function decrypt($input){
 
 	$key = loadEncryptionKeyFromConfig();
-
-	$ciphertext = "data";// ... load $ciphertext from the database
 	try
 	{
-		$secret_data = Crypto::decrypt($ciphertext, $key);
+		$plaintex = Crypto::decrypt($input, $key);
 
 	} catch (\Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException $ex) {
 		// An attack! Either the wrong key was loaded, or the ciphertext has
@@ -46,11 +38,11 @@ function decrypt_output($output){
 		// intentionally modified by Eve trying to carry out an attack.
 
 		// ... handle this case in a way that's suitable to your application ...
-		Output::setOutput("caught exception: ".""."\n");
+		Output::setOutput("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown"."\n");
 	}
 
 
-	return $output;
+	return $plaintex;
 
 }
 

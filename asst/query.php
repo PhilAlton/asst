@@ -25,8 +25,11 @@ class Query {
 
     public function execute($params){
         $this->database->query($this->query);
-        foreach ($params as $param => $value){
-            $this->database->bind($param, $value);
+        foreach ($params as $param => $value){				// Pass parameters to PDO statement
+            $this->database->bind(		
+				$param,										// Encrypt all parameters here: erncrypt($param)
+				$value
+			);
         }
         return $this->database->resultset();				// FIX: ($parms)
 

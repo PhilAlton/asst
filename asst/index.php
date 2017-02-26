@@ -4,6 +4,16 @@ require 'models.php';
 require 'crypt.php';
 
 
+//Test segments
+echo "</br>".encrypt("the cat and the dog");
+echo "</br>".encrypt("");
+echo "</br>".encrypt(null);
+echo "</br>".encrypt("3");
+echo "</br>".encrypt(3);
+echo "</br>".encrypt("endofthree");
+
+
+
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));

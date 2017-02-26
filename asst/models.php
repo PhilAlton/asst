@@ -7,13 +7,11 @@ class User {
 
 	public static function authenticate($params){
 		
-		return true; // DEBUG MODE
-		
 		// authenticate user session to enable access to api functions
 		$q_auth = false;
 
 
-		$query = New Query('SELECT * FROM `UserTable` WHERE `UserName` =:UserName');
+		$query = New Query('SELECT * FROM `AuthTable` WHERE `UserName` =:UserName');
 		Output::setOutput($query->execute([':UserName' => $UserName]));
 
 		// Check if the hash of the entered login password, matches the stored hash.
@@ -127,7 +125,7 @@ class User {
 
 			}
 
-			Output::setOutput('need to return json representation or success string');
+		//	Output::setOutput('need to return json representation or success string');
 
 		} else {
 			Output::setOutput('unable to authenticate');

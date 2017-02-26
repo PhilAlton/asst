@@ -19,7 +19,8 @@ class Output{
 	}
 
 	public static function go(){
-		echo decrypt_output(Output::getOutput());
+		//echo decrypt_output(Output::getOutput());
+		echo Output::getOutput();
 		if (Output::getHistory() !== "/n"){
 			echo Output::getHistory();
 		}
