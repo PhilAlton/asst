@@ -13,9 +13,7 @@ echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "3", true
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', 3, true)),PASSWORD_DEFAULT)));
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "endofthree", true)),PASSWORD_DEFAULT)));
 */
-echo $params['Password'];
-echo "</br>".base64_encode(hash('sha384', $params['Password'], true));
-echo "</br>".base64_encode(hash('sha384', $params['Password'], true));
+
 
 
 
@@ -24,6 +22,13 @@ $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
+
+
+
+echo $input['Password'];
+echo "</br>".base64_encode(hash('sha384', $input['Password'], true));
+echo "</br>".base64_encode(hash('sha384', $input['Password'], true));
+
 
 // Switch to govern action based on URI
 try{
