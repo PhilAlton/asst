@@ -20,6 +20,7 @@ function loadEncryptionKeyFromConfig()
 
 
 function encrypt($input){
+	$input = base64_encode($input);
 	$key = loadEncryptionKeyFromConfig();
 	$ciphertext = Crypto::encrypt($input, $key);
 	return $ciphertext;
@@ -30,7 +31,7 @@ function decrypt($input){
 	$key = loadEncryptionKeyFromConfig();
 	try
 	{
-		$plaintex = Crypto::decrypt($input, $key);
+		$plaintext = Crypto::decrypt($input, $key);
 
 	} catch (\Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException $ex) {
 		// An attack! Either the wrong key was loaded, or the ciphertext has
@@ -41,8 +42,8 @@ function decrypt($input){
 		Output::setOutput("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown"."\n");
 	}
 
-
-	return $plaintex;
+	$plaintext = base64_decode($plaintext);
+	return $plaintext;
 
 }
 

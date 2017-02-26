@@ -5,8 +5,8 @@ class User {
 
 
 
-	public static function authenticate($params){
-		
+	public static function authenticate($UserName, $params){
+
 		// authenticate user session to enable access to api functions
 		$q_auth = false;
 
@@ -97,7 +97,7 @@ class User {
 	public static function handleRequest($method, $UserName, $params){
 
 
-		if (User::authenticate($params)){
+		if (User::authenticate($UserName, $params)){
 
 			switch ($method) {
 				/*			case 'PUT':

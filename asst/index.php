@@ -24,13 +24,13 @@ $input = json_decode(file_get_contents('php://input'),true);
 try{
 	if (uri('asst/Users/..*')){
 	//	Output::setOutput( "/asst/Users/*";
-	$uID = $request[2];
+	$UserName = $request[2];
 		if (isset($request[3])){
 			switch($request[3]){
 				case "data":
 					// case for /asst/Users/Id/Data pass in $method
 					Output::setOutput("/asst/Users/Id/data");
-					Data::syncData($uID);
+					Data::syncData($UserName);
 					break;
 				default:
 					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
@@ -40,7 +40,7 @@ try{
 			// action for /asst/Users/Id
 	//		Output::setOutput("/asst/Users/Id"."</br>");
 	//		Output::setOutput($uID);
-			User::handleRequest($method, $uID, $input);
+			User::handleRequest($method, $UserName, $input);
 
 		}
 
