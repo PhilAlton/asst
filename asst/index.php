@@ -5,20 +5,16 @@ require 'crypt.php';
 
 
 //Test segments
-echo "</br>".strlen(encrypt("the cat and the dog"));
-echo "</br>".strlen(encrypt(""));
-echo "</br>".strlen(encrypt(null));
-echo "</br>".strlen(encrypt("3"));
-echo "</br>".strlen(encrypt(3));
-echo "</br>".strlen(encrypt("endofthree"));
+echo "</br>".strlen(password_hash(base64_encode(hash('sha384', "the cat and the dog", true)),PASSWORD_DEFAULT));
+echo "</br>".strlen(password_hash(base64_encode(hash('sha384', "", true)),PASSWORD_DEFAULT));
+echo "</br>".strlen(password_hash(base64_encode(hash('sha384', null, true)),PASSWORD_DEFAULT));
+echo "</br>".strlen(password_hash(base64_encode(hash('sha384', "3", true)),PASSWORD_DEFAULT));
+echo "</br>".strlen(password_hash(base64_encode(hash('sha384', 3, true)),PASSWORD_DEFAULT));
+echo "</br>".strlen(password_hash(base64_encode(hash('sha384', "endofthree", true)),PASSWORD_DEFAULT));
 
 
-echo "</br>".strlen(base64_encode("the cat and the dog"));
-echo "</br>".strlen(base64_encode(""));
-echo "</br>".strlen(base64_encode(null));
-echo "</br>".strlen(base64_encode("3"));
-echo "</br>".strlen(base64_encode(3));
-echo "</br>".strlen(base64_encode("endofthree"));
+password_hash(base64_encode(hash('sha384', $params['Password'], true)),PASSWORD_DEFAULT);
+
 
 
 
