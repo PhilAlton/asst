@@ -5,7 +5,7 @@ require 'crypt.php';
 
 
 //Test segments
-echo "</br>".strlen(encrypt("the cat and the dog")));
+echo "</br>".strlen(encrypt("the cat and the dog"));
 echo "</br>".strlen(encrypt(""));
 echo "</br>".strlen(encrypt(null));
 echo "</br>".strlen(encrypt("3"));
