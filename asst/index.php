@@ -5,12 +5,12 @@ require 'crypt.php';
 
 
 //Test segments
-echo "</br>".encrypt("the cat and the dog");
-echo "</br>".encrypt("");
-echo "</br>".encrypt(null);
-echo "</br>".encrypt("3");
-echo "</br>".encrypt(3);
-echo "</br>".encrypt("endofthree");
+echo "</br>".strlen(encrypt("the cat and the dog")));
+echo "</br>".strlen(encrypt(""));
+echo "</br>".strlen(encrypt(null));
+echo "</br>".strlen(encrypt("3"));
+echo "</br>".strlen(encrypt(3));
+echo "</br>".strlen(encrypt("endofthree"));
 
 
 
