@@ -28,6 +28,10 @@ $jaggedArrayFromDatabase = array(
 var_dump($jaggedArrayFromDatabase);
 
 
+var_dump(array_walk($jaggedArrayFromDatabase, function(&$value, $key){
+     $value = $value.'modified';
+   }));
+
 
 
 // get the HTTP method, path and body of the request
