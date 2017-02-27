@@ -12,7 +12,7 @@ class User {
 
 
 		// retrieve stored password string from database against UserName
-		$query = New Query('SELECT Password FROM `AuthTable` WHERE `UserName` =:UserName');
+		$query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
 //		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]])[0]["Password"]);						//FIX - decrypt should go in query class
 		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]));
 
@@ -76,18 +76,18 @@ class User {
 		$AuthToken = "randomauthtoken90";
 
 		$query = New Query(
-						"INSERT INTO AuthTable".
-							"(Password, AuthToken)".
+						INSERT, "INTO AuthTable".
+							"(UserName, Password, AuthToken)".
 						"VALUES".
-							"(:Password, '$AuthToken')"
+							"(:UserName, :Password, '$AuthToken')"
 						);
 
-		$query->execute([':Password' => $password]);
+		$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
 
 /*
 
 		$query = New Query(
-						"CREATE TABLE DATA_TABLE_$uID".
+						CREATE, "TABLE DATA_TABLE_$uID".
 						"(".
 							"DataID int NOT NULL".
 						")"
@@ -147,7 +147,7 @@ class User {
 	private static function getUser($UserName){
 		// GET request
 
-		$query = New Query('SELECT * FROM `AuthTable` WHERE `UserName` =:UserName');
+		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 		Output::setOutput($query->execute([':UserName' => $UserName]));
 
 	}

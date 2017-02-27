@@ -1,22 +1,30 @@
 <?php
 
 require 'database.php';
+define("INSERT", "INSERT");
+define("UPDATE", "UPDATE");
+define("SELECT", "SELECT");
+define("CREATE", "CREATE");
+
+
 
 
 class Query {
 
     private $query;
-    // private $params;
     private $database;
+	private $queryType;
 
-    public function __construct($query){
+    public function __construct($queryType, $query){
         $this->database = New Database;
-        $this->query = $query;
+		$this->queryType = $queryType;
+        $this->query = $queryType." ".$query;
     }
 
 
     public function execute($params){
-        $this->database->query($this->query);
+        $results;
+		$this->database->query($this->query);
         foreach ($params as $param => $value){				// Pass parameters to PDO statement
             $this->database->bind(
 		//		encrypt
@@ -25,18 +33,38 @@ class Query {
 			);
         }
 
-		$results = $this->database->resultset();
 
-		// reduce output in case of single row, or single result
-		if (count($results) == 1)
+		switch ($this->queryType)
 		{
-			foreach ($results as $result){$results = $result;}
-			if (count($results) == 1){foreach ($results as $result){$results = $result;}}
+			case SELECT:
+				$results = $this->database->resultset();
+
+				// reduce output in case of single row, or single result
+				if (count($results) == 1)
+				{
+					foreach ($results as $result){$results = $result;}
+					if (count($results) == 1){foreach ($results as $result){$results = $result;}}
+				}
+
+				// algorithm to decrypt all database output
+			//	array_walk_recursive($results, function(&$value, $key){$value = decrypt($value);});
+				break;
+
+			case INSERT:
+				http_response_code(201); // created
+				$results = true;
+				break;
+
+			case UPDATE:
+				http_response_code(204); // No content *(request fulfilled)
+				$results = true;
+				break;
+
+			default:
+				echo "failure of limited SQL syntax";
+
+
 		}
-
-
-		// algorithm to decrypt all database output
-	//	array_walk_recursive($results, function(&$value, $key){$value = decrypt($value);});
 
 		return $results;
     }
