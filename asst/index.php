@@ -23,9 +23,13 @@ $jaggedArrayFromDatabase = array(
 								5 => "finished"
 							);
 
+function fakeEncrpyt($item, $key)
+{
+	$item = $item."modified";
 
+}
 
-array_walk_recursive($jaggedArrayFromDatabase, function($item, $key){$item = $item."modified";});
+array_walk_recursive($jaggedArrayFromDatabase, 'fakeEncrpyt');
 
 var_dump$jaggedArrayFromDatabase);
 
