@@ -122,10 +122,10 @@ class User {
 			$query = New Query(
 							CREATE, "TABLE DATA_TABLE_$uID".
 							"(".
-								"DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY".
-								"TimeStamp TIMESTAMP".
-								"Date date".
-								"Item_1 int(11)".
+								"DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,".
+								"TimeStamp TIMESTAMP,".
+								"Date date,".
+								"Item_1 int(11),".
 								"Item_X TEXT".
 							")"
 							);
