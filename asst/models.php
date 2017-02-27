@@ -73,7 +73,7 @@ class User {
 					);
 
 
-		$AuthToken = "randomauthtokenatcreation";
+		$AuthToken = "randomauthtokenatcreationrandomauthtokenatcreation1234567890";
 
 		$query = New Query(
 						"INSERT INTO AuthTable".
