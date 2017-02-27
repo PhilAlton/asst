@@ -88,7 +88,7 @@ class User {
 
 		// Retrieve the created primary key
 		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-		$uID = $query->execute([':UserName' => $UserName])['UniqueID'];
+		$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
 
 
 		// Update UserTable with parameters
