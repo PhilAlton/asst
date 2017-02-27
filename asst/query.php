@@ -71,9 +71,16 @@ class Query {
 				$results = true;
 				break;
 
+			case DROP:
+				$this->database->execute();
+				http_response_code(204); // No content *(request fulfilled)
+				$results = true;
+				break;
+
 
 			default:
 				$this->database->execute();
+				$results = true;
 		}
 
 		return $results;
