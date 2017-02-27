@@ -58,73 +58,81 @@ class User {
 	// On clicking the link in the email, the auth token will be registered as verified, and can be used in authenticated transactions
 	// Further communication with the API should be via the hashed username and auth token.
 
+		//Ensure user of UserName does not already exist
+		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
+		$conflict = $query->execute([':UserName' => $params['UserName']]);
+		if (isset($conflict)){
 
+			echo "database conflict, user of {$params['UserName']} alraedy exists";
 
-		// Hash a new password for storing in the database.
-		// The function automatically generates a cryptographically safe salt.
-		$password =	encrypt(
-						password_hash
-						(
-							base64_encode
+		} else {
+
+			// Hash a new password for storing in the database.
+			// The function automatically generates a cryptographically safe salt.
+			$password =	encrypt(
+							password_hash
 							(
-								hash('sha384', $params['Password'], true)
-							),
-							PASSWORD_DEFAULT
-						)
+								base64_encode
+								(
+									hash('sha384', $params['Password'], true)
+								),
+								PASSWORD_DEFAULT
+							)
+						);
+
+			// TODO: Devise AuthToken uses and method
+			$AuthToken = "randomauthtoken90";
+
+
+			// Update AuthTable with parameters
+			$query = New Query(
+							INSERT, "INTO AuthTable".
+								"(UserName, Password, AuthToken)".
+							"VALUES".
+								"(:UserName, :Password, '$AuthToken')"
+							);
+
+			$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
+
+			// Retrieve the created primary key
+			$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
+			$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
+
+
+			// Update UserTable with parameters
+			$query = New Query(
+					INSERT, "INTO UserTable".
+						"(UniqueID, Firstname, Surname, DoB, Gender, Age_Of_Symptom_Onset, Research_Participant, NHS_Number)".
+					"VALUES".
+						"(:UniqueID, :Firstname, :Surname, :DoB, :Gender, :Age_Of_Symptom_Onset, :Research_Participant, :NHS_Number)"
 					);
 
-		// TODO: Devise AuthToken uses and method
-		$AuthToken = "randomauthtoken90";
-
-
-		// Update AuthTable with parameters
-		$query = New Query(
-						INSERT, "INTO AuthTable".
-							"(UserName, Password, AuthToken)".
-						"VALUES".
-							"(:UserName, :Password, '$AuthToken')"
-						);
-
-		$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
-
-		// Retrieve the created primary key
-		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-		$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
-
-
-		// Update UserTable with parameters
-		$query = New Query(
-				INSERT, "INTO UserTable".
-					"(UniqueID, Firstname, Surname, DoB, Gender, Age_Of_Symptom_Onset, Research_Participant, NHS_Number)".
-				"VALUES".
-					"(:UniqueID, :Firstname, :Surname, :DoB, :Gender, :Age_Of_Symptom_Onset, :Research_Participant, :NHS_Number)"
-				);
-
-		$query->execute([':UniqueID' => $uID,
-						':Firstname' => $params['Firstname'],
-						':Surname' => $params['Surname'],
-						':DoB' => $params['DoB'],
-						':Gender' => $params['Gender'],
-						':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
-						':Research_Participant' => $params['Research_Participant'],
-						':NHS_Number' => $params['NHS_Number']]);
+			$query->execute([':UniqueID' => $uID,
+							':Firstname' => $params['Firstname'],
+							':Surname' => $params['Surname'],
+							':DoB' => $params['DoB'],
+							':Gender' => $params['Gender'],
+							':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
+							':Research_Participant' => $params['Research_Participant'],
+							':NHS_Number' => $params['NHS_Number']]);
 
 
 
 
-/*
-		// Create Data Table for User
-		$query = New Query(
-						CREATE, "TABLE DATA_TABLE_$uID".
-						"(".
-							"DataID int NOT NULL".
-						")"
-						);
+	/*
+			// Create Data Table for User
+			$query = New Query(
+							CREATE, "TABLE DATA_TABLE_$uID".
+							"(".
+								"DataID int NOT NULL".
+							")"
+							);
 
-		$query->execute();
+			$query->execute();
 
-	*/
+		*/
 
+		}
 	}
 
 	public static function handleRequest($method, $UserName, $params){
