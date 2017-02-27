@@ -23,7 +23,7 @@ $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
 
-
+var_dump($_SERVER);
 
 
 // Switch to govern action based on URI
