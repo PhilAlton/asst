@@ -34,17 +34,26 @@ class Query {
 
 		$results = $this->database->resultset();
 
-		// reduce output in case of 
+		// reduce output in case of single row, or single result
 		if (count($results) == 1)
 		{
 			foreach ($results as $result){$results = $result;}
 			if (count($results) == 1){foreach ($results as $result){$results = $result;}}
 		}
 
+
+		// algorithm to decrypt all database output
+
+
+
 		return $results;
     }
 
 
+	private function recurssiveArrayAccess(){
+
+
+	}
 
 
  //   $query = 'SELECT * FROM `UserTable` WHERE `ID` =:id';
