@@ -82,7 +82,7 @@ class User {
 							"(:UserName, '$AuthToken')"
 						);
 
-		$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
+		$query->execute([':UserName' => $params['UserName']]);
 
 /*
 
