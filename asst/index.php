@@ -25,10 +25,6 @@ $input = json_decode(file_get_contents('php://input'),true);
 
 
 
-echo $input['Password'];
-echo "</br>".base64_encode(hash('sha384', $input['Password'], true));
-echo "</br>".base64_encode(hash('sha384', $input['Password'], true));
-
 
 // Switch to govern action based on URI
 try{
