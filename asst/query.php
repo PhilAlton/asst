@@ -1,9 +1,9 @@
 <?php
 
 require 'database.php';
-	
-	
-// Syntax: 
+
+
+// Syntax:
 // Query query = New Query($query);
 // $query->execute([    ':id' => '00001',
 //                      ':otherParam' => $oP
@@ -26,20 +26,29 @@ class Query {
     public function execute($params){
         $this->database->query($this->query);
         foreach ($params as $param => $value){				// Pass parameters to PDO statement
-            $this->database->bind(		
+            $this->database->bind(
 				$param,										// Encrypt all parameters here: erncrypt($param)
 				$value
 			);
         }
-        return $this->database->resultset();				// FIX: ($parms)
 
+		$results = $this->database->resultset();
+
+		// reduce output in case of 
+		if (count($results) == 1)
+		{
+			foreach ($result as $results){$results = $result;}
+			if (count($results) == 1){foreach ($result as $results){$results = $result;}}
+		}
+
+		return $results;
     }
 
 
 
 
  //   $query = 'SELECT * FROM `UserTable` WHERE `ID` =:id';
- //   $this->database->query($query);                   // prep the query, need to bind parameters	
+ //   $this->database->query($query);                   // prep the query, need to bind parameters
  //   $id = '00001';                                    // $id not set here
  //   $this->database->resultset([':id' => $id]);       //$database->resultset($this->params);
 
