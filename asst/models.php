@@ -123,10 +123,10 @@ class User {
 							CREATE, "TABLE DATA_TABLE_$uID".
 							"(".
 								"DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,".
-								"TimeStamp TIMESTAMP,".
-								"Date date,".
-								"Item_1 int(11),".
-								"Item_X TEXT".
+								"TimeStamp TIMESTAMP,".		// this might not be the correct way
+								"Date date NOT_NULL,".
+								"Item_1 int(11) NOT_NULL,".
+								"Item_X TEXT NOT_NULL".
 							")"
 							);
 
@@ -185,7 +185,10 @@ class User {
 		// GET request
 
 		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-		Output::setOutput($query->execute([':UserName' => $UserName]));
+		$uID = $query->execute([':UserName' => $UserName])['UniqueID'];
+		$query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+		Output::setOutput($query->execute([':UniqueID' => $uID]));
+
 
 	}
 
@@ -198,7 +201,15 @@ class User {
 
 	private static function deleteUser($UserName){
 		// DELETE request, accepting user ID;
+		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
+		$uID = $query->execute([':UserName' => $UserName])['UniqueID'];
 
+		$query = New Query(DROP, "TABLE DATA_TABLE_$uID");
+		$query->execute();
+		$query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+		$query->execute([':UniqueID' => $uID]);
+		$query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
+		$query->execute([':UniqueID' => $uID]);
 	}
 
 

@@ -6,6 +6,7 @@ define("UPDATE", "UPDATE");
 define("SELECT", "SELECT");
 define("CREATE", "CREATE");
 define("DELETE", "CREATE");
+define("DROP", "DROP");
 
 
 
