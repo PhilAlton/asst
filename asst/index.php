@@ -28,11 +28,11 @@ $jaggedArrayFromDatabase = array(
 var_dump($jaggedArrayFromDatabase);
 
 
-var_dump(array_walk_recursive($jaggedArrayFromDatabase, function(&$value, $key){
-     $value = $value.'modified';
-   }));
+array_walk_recursive($jaggedArrayFromDatabase, function(&$value, $key){
+	$value = $value.'modified';
+});
 
-
+var_dump($jaggedArrayFromDatabase);
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
