@@ -28,7 +28,7 @@ $jaggedArrayFromDatabase = array(
 var_dump($jaggedArrayFromDatabase);
 
 
-var_dump(array_walk($jaggedArrayFromDatabase, function(&$value, $key){
+var_dump(array_walk_recursive($jaggedArrayFromDatabase, function(&$value, $key){
      $value = $value.'modified';
    }));
 
