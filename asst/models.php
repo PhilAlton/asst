@@ -62,7 +62,7 @@ class User {
 		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 		$conflict = $query->execute([':UserName' => $params['UserName']]);
 		if (count($conflict) !== 0){
-
+			http_response_code(409);
 			echo "database conflict, user {$params['UserName']} alraedy exists";
 
 		} else {
