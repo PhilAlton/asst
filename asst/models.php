@@ -61,7 +61,7 @@ class User {
 		//Ensure user of UserName does not already exist
 		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 		$conflict = $query->execute([':UserName' => $params['UserName']]);
-		if (count($conflict) === 0){
+		if (count($conflict) !== 0){
 			echo count($conflict);
 			echo "database conflict, user {$params['UserName']} alraedy exists";
 
