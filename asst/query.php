@@ -23,7 +23,7 @@ class Query {
     }
 
 
-    public function execute($params){
+    public function execute($params = null){
         $results;
 		$this->database->query($this->query);
         foreach ($params as $param => $value){				// Pass parameters to PDO statement
