@@ -27,13 +27,6 @@ $jaggedArrayFromDatabase = array(
 
 var_dump($jaggedArrayFromDatabase);
 
-function fakeEncrpyt($item, $key)
-{
-	$item = $item."modified";
-
-}
-
-var_dump(array_walk_recursive($jaggedArrayFromDatabase, 'fakeEncrpyt'));
 
 
 
