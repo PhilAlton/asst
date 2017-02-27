@@ -5,6 +5,7 @@ define("INSERT", "INSERT");
 define("UPDATE", "UPDATE");
 define("SELECT", "SELECT");
 define("CREATE", "CREATE");
+define("DELETE", "CREATE");
 
 
 
@@ -62,11 +63,15 @@ class Query {
 				$results = true;
 				break;
 
+			case DELETE:
+				$this->database->execute();
+				http_response_code(204); // No content *(request fulfilled)
+				$results = true;
+				break;
+
+
 			default:
 				$this->database->execute();
-				echo "execute attempted";
-
-
 		}
 
 		return $results;
