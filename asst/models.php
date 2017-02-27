@@ -84,7 +84,7 @@ class User {
 			$AuthToken = "randomauthtoken90";
 
 
-			// Update AuthTable with parameters
+			// Update AuthTable with parameters:
 			$query = New Query(
 							INSERT, "INTO AuthTable".
 								"(UserName, Password, AuthToken)".
