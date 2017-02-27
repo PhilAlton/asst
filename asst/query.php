@@ -51,17 +51,20 @@ class Query {
 				break;
 
 			case INSERT:
+				$this->database->execute();
 				http_response_code(201); // created
 				$results = true;
 				break;
 
 			case UPDATE:
+				$this->database->execute();
 				http_response_code(204); // No content *(request fulfilled)
 				$results = true;
 				break;
 
 			default:
-				echo "failure of limited SQL syntax";
+				$this->database->execute();
+				echo "execute attempted";
 
 
 		}
