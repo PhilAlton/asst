@@ -5,7 +5,7 @@ define("INSERT", "INSERT");
 define("UPDATE", "UPDATE");
 define("SELECT", "SELECT");
 define("CREATE", "CREATE");
-define("DELETE", "CREATE");
+define("DELETE", "DELETE");
 define("DROP", "DROP");
 
 
