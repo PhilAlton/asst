@@ -73,13 +73,13 @@ class User {
 					);
 
 
-		$AuthToken = "randomauthtokenatcreationrandomauthtokenatcreation1234567890";
+		$AuthToken = "randomauthtoken90";
 
 		$query = New Query(
 						"INSERT INTO AuthTable".
-							"(UserName, Password, AuthToken)".
+							"(UserName, Password)".
 						"VALUES".
-							"(:UserName, :Password, '$AuthToken')"
+							"(:UserName, :Password)"
 						);
 
 		$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
