@@ -37,8 +37,8 @@ class Query {
 		// reduce output in case of 
 		if (count($results) == 1)
 		{
-			foreach ($result as $results){$results = $result;}
-			if (count($results) == 1){foreach ($result as $results){$results = $result;}}
+			foreach ($results as $result){$results = $result;}
+			if (count($results) == 1){foreach ($results as $result){$results = $result;}}
 		}
 
 		return $results;
