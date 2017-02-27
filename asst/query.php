@@ -29,7 +29,7 @@ class Query {
         foreach ($params as $param => $value){				// Pass parameters to PDO statement
             $this->database->bind(
 		//		encrypt
-				($param),							// Encrypt all parameters here: erncrypt($param)
+				$param,							// Encrypt all parameters here: erncrypt($param)
 				$value
 			);
         }

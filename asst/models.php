@@ -75,7 +75,7 @@ class User {
 
 		// TODO: Devise AuthToken uses and method
 		$AuthToken = "randomauthtoken90";
-
+		var_dump($params);
 		// Update AuthTable with parameters
 		$query = New Query(
 						INSERT, "INTO AuthTable".
