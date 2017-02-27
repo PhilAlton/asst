@@ -79,7 +79,7 @@ class User {
 						"INSERT INTO AuthTable".
 							"(UserName, Password, AuthToken)".
 						"VALUES".
-							"(:UserName, :Password, 'randomauthtokenatcreationrandomauthtokenatcreation1234567890')"
+							"(:UserName, :Password, '$AuthToken')"
 						);
 
 		$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
