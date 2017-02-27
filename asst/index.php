@@ -15,24 +15,6 @@ echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "endofthr
 */
 
 
-$jaggedArrayFromDatabase = array(
-								"this",
-								"that",
-								array("some" => "sommer", "othter" => "other", "elements"),
-								"more",
-								array (1,2,3,4),
-								"finished"
-							);
-
-
-var_dump($jaggedArrayFromDatabase);
-
-
-array_walk_recursive($jaggedArrayFromDatabase, function(&$value, $key){
-	$value = $value.'modified';
-});
-
-var_dump($jaggedArrayFromDatabase);
 
 // get the HTTP method, path and body of the request
 $method = $_SERVER['REQUEST_METHOD'];
@@ -71,16 +53,11 @@ try{
 		// code for asst/Users (create new user)
 		User::createUser($input);
 		//Output::setOutput("/asst/Users");
-		Output::setOutput(Array(
-						"Location" => "You are in /asst/Users",
-						"testOutput" => "this is a test message in JSON",
-						"anotherItem" => "this is another item"));
-
-		Output::setOutput($input);
 
 
 	} else {
 		$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
+		http_response_code(406); // input not acceptable
 		throw new Exception($e);
 	}
 } catch (Exception $e) {

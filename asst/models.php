@@ -29,6 +29,7 @@ class User {
 			$q_auth = true;
 		} else {
 			// Failure :(
+			http_response_code(401); // not authorised
 			$q_auth = false;
 		}
 
