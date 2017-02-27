@@ -39,7 +39,7 @@ class Query {
 		{
 			case SELECT:
 				$results = $this->database->resultset();
-
+				echo count($results);
 				// reduce output in case of single row, or single result
 				if (count($results) == 1)
 				{
