@@ -62,7 +62,7 @@ class User {
 		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 		$conflict = $query->execute([':UserName' => $params['UserName']]);
 		if (count($conflict) !== 0){
-			echo count($conflict);
+
 			echo "database conflict, user {$params['UserName']} alraedy exists";
 
 		} else {
@@ -118,19 +118,20 @@ class User {
 
 
 
-
-	/*
 			// Create Data Table for User
 			$query = New Query(
 							CREATE, "TABLE DATA_TABLE_$uID".
 							"(".
-								"DataID int NOT NULL".
+								"DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY".
+								"TimeStamp TIMESTAMP".
+								"Date date".
+								"Item_1 int(11)".
+								"Item_X TEXT".
 							")"
 							);
 
 			$query->execute();
 
-		*/
 
 		}
 	}
