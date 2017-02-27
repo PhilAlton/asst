@@ -21,7 +21,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
-var_dump($input);
+
 // $_SERVER["PHP_AUTH_USER"]
 // $_SERVER["PHP_AUTH_PW"]
 

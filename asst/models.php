@@ -75,7 +75,8 @@ class User {
 
 		// TODO: Devise AuthToken uses and method
 		$AuthToken = "randomauthtoken90";
-		var_dump($params);
+
+
 		// Update AuthTable with parameters
 		$query = New Query(
 						INSERT, "INTO AuthTable".
@@ -89,7 +90,7 @@ class User {
 		// Retrieve the created primary key
 		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 		$uID = $query->execute([':UserName' => $params['UserName']]);
-		var_dump($uID);
+		var_dump($uID[0]['UniqueID']);
 
 		// Update UserTable with parameters
 		$query = New Query(
