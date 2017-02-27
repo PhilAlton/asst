@@ -14,24 +14,26 @@ echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', 3, true))
 echo "</br>".strlen(encrypt(password_hash(base64_encode(hash('sha384', "endofthree", true)),PASSWORD_DEFAULT)));
 */
 
+
 $jaggedArrayFromDatabase = array(
-								0 => "this",
-								1 => "that",
-								2 => array("some", "othter", "elements"),
-								3 => "more",
-								4 => array (1,2,3,4),
-								5 => "finished"
+								"this",
+								"that",
+								array("some" => "sommer", "othter" => "other", "elements"),
+								"more",
+								array (1,2,3,4),
+								"finished"
 							);
 
-function fakeEncrpyt($item, $key)
+
+var_dump($jaggedArrayFromDatabase);
+
+function fakeEncrpyt($item, $key)
 {
 	$item = $item."modified";
 
 }
 
-array_walk_recursive($jaggedArrayFromDatabase, 'fakeEncrpyt');
-
-var_dump$jaggedArrayFromDatabase);
+var_dump(array_walk_recursive($jaggedArrayFromDatabase, 'fakeEncrpyt'));
 
 
 
