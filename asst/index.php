@@ -38,6 +38,7 @@ try{
 					Data::syncData($UserName);
 					break;
 				default:
+
 					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
 					throw new Exception($e);
 			}
@@ -57,10 +58,10 @@ try{
 
 	} else {
 		$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
-		http_response_code(406); // input not acceptable
 		throw new Exception($e);
 	}
 } catch (Exception $e) {
+        http_response_code(406);
 		Output::setOutput("caught exception: ".$e->getMessage()."\n");
 }
 
