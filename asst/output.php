@@ -28,7 +28,11 @@ class Output{
 	public static function go(){
 		echo json_encode(Output::getOutput());
 
-        $errorLog = Output::getError();
+        $errorLog = "<b>Error Log</b></br>"
+                    ."</br>Connection from IP: ".$_SERVER['REMOTE_ADDR']
+                    ."</br>As User: ".$_SERVER['PHP_AUTH_USER']
+                    ."</br>To: ".$_SERVER['REQUEST_URI']
+                    ."</br>".Output::getError();
 		if (Output::getHistory() !== "</br>"){
 			$errorLog = $errorLog."</br></br></br>".Output::getHistory();
 		}
