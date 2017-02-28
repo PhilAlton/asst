@@ -62,7 +62,7 @@ try{
 	}
 } catch (Exception $e) {
         http_response_code(406);
-		Output::setOutput("caught exception: ".$e->getMessage()."\n");
+		Output::errorMsg("caught exception: ".$e->getMessage()."\n");
 }
 
 
