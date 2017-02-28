@@ -28,7 +28,7 @@ class Output{
 	public static function go(){
 		echo json_encode(Output::getOutput());
 
-        $errorLog = getError();
+        $errorLog = Output::getError();
 		if (Output::getHistory() !== "/n"){
 			$errorLog = $errorLog."/n/n/n".Output::getHistory();
 		}
