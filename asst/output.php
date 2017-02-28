@@ -34,7 +34,7 @@ class Output{
 		}
 
 
-        file_put_contents(realpath('/var/www/html/').'error.txt', $errorLog);
+        file_put_contents(realpath('/var/www/html//').'error.txt', $errorLog);
 
 	}
 
