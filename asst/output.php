@@ -37,7 +37,7 @@ class Output{
 
         $errorLog = $errorLog."</br><b>-------------------------------------------------------------------------</b></br></br></br></br>";
         echo FILE_APPEND;
-        echo LOCK_EX;
+        echo LOCK_EX;
 
         file_put_contents(realpath('/var/www/html').'/error.html', $errorLog, FILE_APPEND | LOCK_EX);
 
