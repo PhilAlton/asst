@@ -124,9 +124,9 @@ class User {
 							"(".
 								"DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,".
 								"TimeStamp TIMESTAMP,".		// this might not be the correct way
-								"Date date NOT_NULL,".
-								"Item_1 int(11) NOT_NULL,".
-								"Item_X TEXT NOT_NULL".
+								"Date date,".
+								"Item_1 int(11),".
+								"Item_X TEXT".
 							")"
 							);
 
