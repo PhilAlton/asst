@@ -27,7 +27,7 @@ class Output{
 
 	public static function go(){
 		echo json_encode(Output::getOutput());
-        $errorLog = "<b>Error Log</b></br>-------------->--------------------------------------</br>";
+        $errorLog = "<b>Error Log</b></br>---------------------<---------------->-------------------------------</br>";
         $errorLog = $errorLog."</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
                     ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
                     ."</br>To: <b>".$_SERVER['REQUEST_URI']."</b>"
@@ -36,7 +36,7 @@ class Output{
 			$errorLog = $errorLog."</br></br></br>".Output::getHistory();
 		}
 
-        $errorLog = $errorLog."</br>-------------->--------------------------------------";
+        $errorLog = $errorLog."</br>---------------------<---------------->-------------------------------";
         file_put_contents(realpath('/var/www/html').'/error.html', $errorLog);
         //file_put_contents(realpath('/var/www/html').'/error.html', $errorLog, FILE_APPEND | LOCK_EX);
 
