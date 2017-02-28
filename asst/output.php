@@ -21,7 +21,7 @@ class Output{
 	}
 
     public static function errorMsg($errMsg){
-        Output::$error = Output::$error."</br>".date("Y-m-d, H:i:s",time())." - ".$errMsg;
+        Output::$error = Output::$error."</br><b>".date("Y-m-d, H:i:s",time())." - </b>".$errMsg;
 
     }
 
@@ -34,7 +34,7 @@ class Output{
 		}
 
 
-        file_put_contents(realpath('/var/www/html').'/error.txt', $errorLog);
+        file_put_contents(realpath('/var/www/html').'/error.html', $errorLog);
 
 	}
 
