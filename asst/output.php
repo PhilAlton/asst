@@ -35,7 +35,7 @@ class Output{
 			$errorLog = $errorLog."</br></br></br>".Output::getHistory();
 		}
 
-        $errorLog = $errorLog."</br><b>-------------------------------------------------------------------------</b></br></br></br></br>";
+        $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</br>";
 
         file_put_contents(realpath('/var/www/html').'/error.html', $errorLog, 10);
 
