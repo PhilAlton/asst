@@ -29,9 +29,9 @@ class Output{
 		echo json_encode(Output::getOutput());
 
         $errorLog = "<b>Error Log</b></br>"
-                    ."</br>Connection from IP: ".($_SERVER['REMOTE_ADDR'] ?: 'null')
-                    ."</br>As User: ".($_SERVER['PHP_AUTH_USER'] ?: 'ANON.')
-                    ."</br>To: ".$_SERVER['REQUEST_URI']
+                    ."</br>Connection from IP: ".$_SERVER['REMOTE_ADDR']
+                    ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
+                    ."</br>To: <b>".$_SERVER['REQUEST_URI']."</b>"
                     ."</br>".Output::getError();
 		if (Output::getHistory() !== "</br>"){
 			$errorLog = $errorLog."</br></br></br>".Output::getHistory();
