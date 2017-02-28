@@ -11,7 +11,7 @@ class Output{
 	private static function getHistory(){return Output::$history;}
     private static function getError(){return Output::$error;}
 	private static function setHistory($newOutput){
-		Output::$history = Output::$history."/n".$newOutput;
+		Output::$history = Output::$history."</br>".$newOutput;
 	}
 
 
@@ -21,7 +21,7 @@ class Output{
 	}
 
     public static function errorMsg($errMsg){
-        Output::$error = Output::$error."/n".date("Y-m-d H:i:s",time()).": ".$errMsg;
+        Output::$error = Output::$error."</br>".date("Y-m-d, H:i:s",time())." - ".$errMsg;
 
     }
 
@@ -29,8 +29,8 @@ class Output{
 		echo json_encode(Output::getOutput());
 
         $errorLog = Output::getError();
-		if (Output::getHistory() !== "/n"){
-			$errorLog = $errorLog."/n/n/n".Output::getHistory();
+		if (Output::getHistory() !== "</br>"){
+			$errorLog = $errorLog."</br></br></br>".Output::getHistory();
 		}
 
 
