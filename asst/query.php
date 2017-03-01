@@ -40,52 +40,54 @@ class Query {
         $results = false;
 
         try {
-            $results = $this->database->execute();
+            $this->database->execute();
+		    $results = $params;
 
-        } catch (Exception $e) {
+            switch ($this->queryType){
+			    case SELECT:
+				    $results = $this->database->resultset();
+
+				    // reduce output in case of single row, or single result
+				    if (count($results) == 1)
+				    {
+					    foreach ($results as $result){$results = $result;}
+					    if (count($results) == 1){foreach ($results as $result){$results = $result;}}
+				    }
+
+				    // algorithm to decrypt all database output
+			        // array_walk_recursive($results, function(&$value, $key){$value = decrypt($value);});
+                    http_response_code(200); // OK
+				    break;
+
+			    case INSERT:
+				    http_response_code(201); // content created
+				    break;
+
+			    case UPDATE:
+				    http_response_code(204); // No content *(request fulfilled)
+				    break;
+
+			    case DELETE:
+				    http_response_code(204); // No content *(request fulfilled)
+				    break;
+
+			    case DROP:
+				    http_response_code(204); // No content *(request fulfilled)
+				    break;
+
+			    default:
+				    http_response_code(200);
+		    }
+
+        }
+        catch (Exception $e) {
             http_response_code(406);
             Output::errorMsg("caught exception: ".$e->getMessage()
                                 ." - with SQL Statement ".$this->query
                                 ." and these parameters:".json_encode($params)
                             );
+
         }
-
-
-		switch ($this->queryType)
-		{
-			case SELECT:
-				$results = $this->database->resultset();
-
-				// reduce output in case of single row, or single result
-				if (count($results) == 1)
-				{
-					foreach ($results as $result){$results = $result;}
-					if (count($results) == 1){foreach ($results as $result){$results = $result;}}
-				}
-
-				// algorithm to decrypt all database output
-			    // array_walk_recursive($results, function(&$value, $key){$value = decrypt($value);});
-				break;
-
-			case INSERT:
-				http_response_code(201); // content created
-				break;
-
-			case UPDATE:
-				http_response_code(204); // No content *(request fulfilled)
-				break;
-
-			case DELETE:
-				http_response_code(204); // No content *(request fulfilled)
-				break;
-
-			case DROP:
-				http_response_code(204); // No content *(request fulfilled)
-				break;
-
-			default:
-				http_response_code(200);
-		}
 
 		return $results;
     }

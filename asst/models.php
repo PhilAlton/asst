@@ -105,7 +105,7 @@ class User {
 								"(:UserName, :Password, '$AuthToken')"
 							);
 
-			$query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
+			$result[] = $query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
 
 			// Retrieve the created primary key
 			$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -120,14 +120,15 @@ class User {
 						"(:UniqueID, :Firstname, :Surname, :DoB, :Gender, :Age_Of_Symptom_Onset, :Research_Participant, :NHS_Number)"
 					);
 
-			$query->execute([':UniqueID' => $uID,
+            // Output should be set on the sucess of the following record insert
+			$result[] = ($query->execute([':UniqueID' => $uID,
 							':Firstname' => $params['Firstname'],
 							':Surname' => $params['Surname'],
 							':DoB' => $params['DoB'],
 							':Gender' => $params['Gender'],
 							':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
 							':Research_Participant' => $params['Research_Participant'],
-							':NHS_Number' => $params['NHS_Number']]);
+							':NHS_Number' => $params['NHS_Number']]));
 
 
 
@@ -143,7 +144,9 @@ class User {
 							")"
 							);
 
-			$query->execute();
+			$result[] = $query->execute();
+
+            Output::setOutput($result);
 
 
 		}
@@ -163,24 +166,20 @@ class User {
 				case 'PUT':
 					// call method to update single varaibles
                     Output::setOutput(User::updateParams($UserName, $params));
-                    http_response_code(204);
 					break;
 
 				case 'DELETE':
 					// call method to delete
 					Output::setOutput(User::deleteUser($UserName));
-                    http_response_code(204);
 					break;
 
 				case 'GET':
 					// call method to get
 					Output::setOutput(User::getUser($UserName));
-                    http_response_code(200);
 					break;
 
 				default:
                     Output::errorMsg("HTML verb has no corisponding API action");
-                    http_response_code(404);
 				// throw exception
 
 			}
@@ -230,17 +229,15 @@ class User {
                                 );
         $UserTable_ColArray = $query->execute([':tableName' => 'UserTable']);
 
-        //$UserTable_ColArray = Array('UniqueID', 'Firstname', 'Surname', 'DoB', 'Gender', 'Age_Of_Symptom_Onset', 'Research_Participant', 'NHS_Number');
-
         // Loop through each column, and check whether a post variable has been created with that same column name
         // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
         foreach ($UserTable_ColArray as $col){
             if (isset($params[$col["COLUMN_NAME"]])){
-                User::updateParam($uID, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
+                $return[] = User::updateParam($uID, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
             }
         }
 
-        return "User Record - Updated";
+        return $return;
 
 	}
 
@@ -249,7 +246,7 @@ class User {
         $query = New Query(UPDATE, "`UserTable` ".
                             "SET $column=:value ".
                             "WHERE `UniqueID` =:UniqueID");
-		$query->execute([':value' => $value,':UniqueID' => $uID]);
+		return $query->execute([':value' => $value,':UniqueID' => $uID]);
 
     }
 
@@ -264,9 +261,8 @@ class User {
 		$query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		$query->execute([':UniqueID' => $uID]);
 		$query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
-		$query->execute([':UniqueID' => $uID]);
+		return $query->execute([':UniqueID' => $uID]);
 
-        return "User Record - Deleted";
     }
 
 
