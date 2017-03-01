@@ -77,11 +77,12 @@ class Database {
 
 
   //execute query
-    public function execute(){						
-        return $this->statement->execute();			
+    public function execute(){
+        echo $this->statement;
+        return $this->statement->execute();
     }
     //get results of query
-    public function resultset(){											
+    public function resultset(){
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
     //get number of rows in results

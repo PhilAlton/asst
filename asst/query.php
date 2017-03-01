@@ -40,8 +40,7 @@ class Query {
         $results = false;
 
         try {
-            echo $this->database->statement;
-            echo $this->database->execute();
+            $this->database->execute();
 		    $results = $params;
 
             switch ($this->queryType){
