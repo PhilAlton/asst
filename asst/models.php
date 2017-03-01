@@ -13,17 +13,21 @@ class User {
         try{
 	        // retrieve stored password string from database against UserName
 	        $query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
-        //		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]])[0]["Password"]);						//FIX - decrypt should go in query class
-	        $password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]));
-            Output::errorMsg('Password is:'.$password.'.');
+	        $password = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
 
+
+            // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
             if ($password===null){
-                echo "caught a coold";
+                // If no password obtained then throw exception and handle.
                 $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
                 throw new UnexpectedValueException($e);
+            } else {
+                // Else decrypt the password
+                $password = decrypt($password);                                                             //FIX - decrypt should go in query class
+
             }
+
             // Check if the hash of the entered login password, matches the stored hash.
-            echo "still going";
 	        if (password_verify
 		        (base64_encode
 			        (
