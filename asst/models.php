@@ -10,31 +10,37 @@ class User {
 		// authenticate user session to enable access to api functions
 		$q_auth = false;
 
+        try{
+	        // retrieve stored password string from database against UserName
+	        $query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
+        //		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]])[0]["Password"]);						//FIX - decrypt should go in query class
+	        $password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]));
+            Output::errorMsg('Password is:'.$password.'.');
 
-		// retrieve stored password string from database against UserName
-		$query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
-//		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]])[0]["Password"]);						//FIX - decrypt should go in query class
-		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]));
-        Output::errorMsg('Password is:'.$password.'.');
-		
-         
-        // Check if the hash of the entered login password, matches the stored hash.
-		    if (password_verify
-			    (base64_encode
-				    (
-					    hash('sha384', $_SERVER["PHP_AUTH_PW"], true)
-				    ),
-				    $password
-			    ))
-		    {
-			    // Success :D
-			    $q_auth = true;
-		    } else {
-			    // Failure :(
-			    http_response_code(401); // not authorised
-			    $q_auth = false;
-		    }
-
+            if ($password===null){
+                $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
+                throw new UnexpectedValueException($e);
+            }
+            // Check if the hash of the entered login password, matches the stored hash.
+	        if (password_verify
+		        (base64_encode
+			        (
+				        hash('sha384', $_SERVER["PHP_AUTH_PW"], true)
+			        ),
+			        $password
+		        ))
+	        {
+		        // Success :D
+		        $q_auth = true;
+	        } else {
+		        // Failure :(
+		        http_response_code(401); // not authorised
+		        $q_auth = false;
+	        }
+        } catch (UnexpectedValueException $e) {
+            http_response_code(404);
+            Output::errorMsg("caught exception: ".$e->getMessage().".");
+        }
 
 		return $q_auth;
 
