@@ -244,9 +244,9 @@ class User {
     private static function updateParam($uID, $column, $value){
         //PUT request, acepting multiple arguments including user ID.
         $query = New Query(UPDATE, "`UserTable` ".
-                            "SET `UniqueID` = 7 ".
+                            "SET $column=:$column ".
                             "WHERE `UniqueID` =:UniqueID");
-		return $query->execute([':UniqueID' => 3]);
+		return $query->execute([":$column" => $value,':UniqueID' => $uID]);
 
     }
 
