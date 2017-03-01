@@ -9,7 +9,7 @@ class User {
 
 		// authenticate user session to enable access to api functions
 		$q_auth = false;
-        
+
 
 		// retrieve stored password string from database against UserName
 		$query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -149,20 +149,25 @@ class User {
 				 */
 				case 'PUT':
 					// call method to update single varaibles
-                    User::updateParams($UserName, $params);
+                    Output::setOutput(User::updateParams($UserName, $params));
+                    http_response_code(204);
 					break;
 
 				case 'DELETE':
 					// call method to delete
-					User::deleteUser($UserName);
+					Output::setOutput(User::deleteUser($UserName));
+                    http_response_code(204);
 					break;
 
 				case 'GET':
 					// call method to get
-					User::getUser($UserName);
+					Output::setOutput(User::getUser($UserName));
+                    http_response_code(200);
 					break;
 
 				default:
+                    Output::errorMsg("HTML verb has no corisponding API action");
+                    http_response_code(404);
 				// throw exception
 
 			}
@@ -193,7 +198,7 @@ class User {
 		$query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
 		$uID = $query->execute([':UserName' => $UserName]);
 		$query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		Output::setOutput($query->execute([':UniqueID' => $uID]));
+		return $query->execute([':UniqueID' => $uID]);
 
 
 	}
@@ -216,6 +221,8 @@ class User {
             }
         }
 
+        return "User Record - Updated";
+
 	}
 
     private static function updateParam($uID, $column, $value){
@@ -223,7 +230,7 @@ class User {
         $query = New Query(UPDATE, "`UserTable`".
                             "SET $column=:value".
                             "WHERE `UniqueID` =:UniqueID'");
-		$query->execute(['::value' => $value,'UniqueID' => $uID]);
+		$query->execute([':value' => $value,':UniqueID' => $uID]);
 
     }
 
@@ -239,7 +246,9 @@ class User {
 		$query->execute([':UniqueID' => $uID]);
 		$query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
 		$query->execute([':UniqueID' => $uID]);
-	}
+
+        return "User Record - Deleted";
+    }
 
 
 

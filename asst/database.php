@@ -26,7 +26,7 @@ class Database {
             }
             catch(PDOException $err){
                 $this->error = $err->getMessage();
-                Output::setOutput($this->error);
+                Output::errorMsg($this->error);
             }
         }
     }
@@ -35,7 +35,7 @@ class Database {
      /**
      * Query the database
      *
-     * @param $query The query string
+     * @param $query - The query string
      * @return mixed The result of the mysqli::query() function
      */
     public function query($query) {
@@ -116,7 +116,7 @@ class Database {
     /**
      * Fetch rows from the database (SELECT query)
      *
-     * @param $query The query string
+     * @param $query - the query string
      * @return bool False on failure / array Database rows on success
      */
     public function select($query) {
