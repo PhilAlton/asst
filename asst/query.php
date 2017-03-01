@@ -40,6 +40,7 @@ class Query {
         $results = false;
 
         try {
+            echo $this->database->statement;
             echo $this->database->execute();
 		    $results = $params;
 
