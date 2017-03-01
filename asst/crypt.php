@@ -38,7 +38,7 @@ function decrypt($input){
 		// intentionally modified by Eve trying to carry out an attack.
 
 		// ... handle this case in a way that's suitable to your application ...
-		Output::setOutput("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown"."\n");
+		Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown"."\n");
 	}
 
 
