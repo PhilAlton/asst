@@ -27,8 +27,8 @@ $input = json_decode(file_get_contents('php://input'),true);
 // $_SERVER["PHP_AUTH_USER"]
 // $_SERVER["PHP_AUTH_PW"]
 
-echo filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL);
-echo filter_var($_SERVER["PHP_AUTH_USER"], FILTER_VALIDATE_EMAIL);
+echo "sanitize: ".filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL);
+echo "validate: ".filter_var($_SERVER["PHP_AUTH_USER"], FILTER_VALIDATE_EMAIL);
 
 // Switch to govern action based on URI
 try{
