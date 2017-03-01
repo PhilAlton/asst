@@ -14,7 +14,7 @@ class User {
 	        // retrieve stored password string from database against UserName
 	        $query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
 	        $password = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
-
+            var_dump($password);
 
             // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
             if ($password===null){
