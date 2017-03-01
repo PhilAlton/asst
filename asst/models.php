@@ -18,10 +18,12 @@ class User {
             Output::errorMsg('Password is:'.$password.'.');
 
             if ($password===null){
+                echo "caught a coold";
                 $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
                 throw new UnexpectedValueException($e);
             }
             // Check if the hash of the entered login password, matches the stored hash.
+            echo "still going";
 	        if (password_verify
 		        (base64_encode
 			        (
@@ -39,7 +41,7 @@ class User {
 	        }
         } catch (UnexpectedValueException $e) {
             http_response_code(404);
-            Output::errorMsg("caught exception: ".$e->getMessage().".");
+            Output::errorMsg("Unexpected Value: ".$e->getMessage().".");
         }
 
 		return $q_auth;
