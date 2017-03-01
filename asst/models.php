@@ -19,10 +19,12 @@ class User {
             // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
             if ($password===null){
                 // If no password obtained then throw exception and handle.
+                echo "here";
                 $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
                 throw new UnexpectedValueException($e);
             } else {
                 // Else decrypt the password
+                echo "not here";
                 $password = decrypt($password);                                                             //FIX - decrypt should go in query class
 
             }
