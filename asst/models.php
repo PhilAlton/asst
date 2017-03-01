@@ -235,12 +235,8 @@ class User {
         // Loop through each column, and check whether a post variable has been created with that same column name
         // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
         foreach ($UserTable_ColArray as $col){
-            echo $colName = $col["COLUMN_NAME"];
-            echo $params[$col["COLUMN_NAME"]];
-            echo $params[$colName];
-
             if (isset($params[$col["COLUMN_NAME"]])){
-                User::updateParam($uID, $col, $params[$col["COLUMN_NAME"]]);
+                User::updateParam($uID, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
             }
         }
 
