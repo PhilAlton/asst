@@ -236,7 +236,7 @@ class User {
         // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
         foreach ($UserTable_ColArray as $col){
             if (isset($params[$col["COLUMN_NAME"]])){
-                User::updateParam($uID, $col, $params[$col]);
+                User::updateParam($uID, $col, $params[$col["COLUMN_NAME"]]);
             }
         }
 
