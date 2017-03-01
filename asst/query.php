@@ -37,6 +37,15 @@ class Query {
 			}
 		}
 
+        try {
+            $results = $this->database->execute();
+
+        } catch (Exception $e) {
+            http_response_code(406);
+            Output::errorMsg("caught exception: ".$e->getMessage()." - with SQL Statement ".$this->query);
+        }
+
+
 		switch ($this->queryType)
 		{
 			case SELECT:
@@ -50,37 +59,27 @@ class Query {
 				}
 
 				// algorithm to decrypt all database output
-			//	array_walk_recursive($results, function(&$value, $key){$value = decrypt($value);});
+			    // array_walk_recursive($results, function(&$value, $key){$value = decrypt($value);});
 				break;
 
 			case INSERT:
-				$this->database->execute();
-				http_response_code(201); // created
-				$results = true;
+				http_response_code(201); // content created
 				break;
 
 			case UPDATE:
-				$this->database->execute();
 				http_response_code(204); // No content *(request fulfilled)
-				$results = true;
 				break;
 
 			case DELETE:
-				$this->database->execute();
 				http_response_code(204); // No content *(request fulfilled)
-				$results = true;
 				break;
 
 			case DROP:
-				$this->database->execute();
 				http_response_code(204); // No content *(request fulfilled)
-				$results = true;
 				break;
 
-
 			default:
-				$this->database->execute();
-				$results = true;
+				http_response_code(200);
 		}
 
 		return $results;

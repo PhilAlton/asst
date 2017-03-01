@@ -24,11 +24,9 @@ $input = json_decode(file_get_contents('php://input'),true);
 
 // Sanitise input
 
-
-
-
 // $_SERVER["PHP_AUTH_USER"]
 // $_SERVER["PHP_AUTH_PW"]
+
 
 // Switch to govern action based on URI
 try{
@@ -72,7 +70,7 @@ try{
 	}
 } catch (Exception $e) {
         http_response_code(406);
-		Output::errorMsg("caught exception: ".$e->getMessage());
+		Output::errorMsg("caught exception: ".$e->getMessage().".");
 }
 
 

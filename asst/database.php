@@ -26,8 +26,7 @@ class Database {
             }
             catch(PDOException $err){
                 $this->error = $err->getMessage();
-                var_dump($statement);
-                Output::errorMsg($this->error." - ");
+                Output::errorMsg($this->error);
             }
         }
     }
@@ -78,12 +77,11 @@ class Database {
 
 
   //execute query
-    public function execute(){						// FIX: ($parms)
-        return $this->statement->execute();			// FIX: ($parms)
+    public function execute(){						
+        return $this->statement->execute();			
     }
     //get results of query
-    public function resultset(){					// FIX: ($parms)
-        $this->execute();							// FIX: ($parms)
+    public function resultset(){											
         return $this->statement->fetchAll(PDO::FETCH_ASSOC);
     }
     //get number of rows in results
