@@ -21,8 +21,6 @@ class Query {
         $this->database = New Database;
 		$this->queryType = $queryType;
         $this->query = $queryType." ".$query;
-
-        echo $this->query;
     }
 
 
