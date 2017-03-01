@@ -229,7 +229,7 @@ class User {
         //PUT request, acepting multiple arguments including user ID.
         $query = New Query(UPDATE, "`UserTable` ".
                             "SET $column=:value ".
-                            "WHERE `UniqueID` =:UniqueID'");
+                            "WHERE `UniqueID` =:UniqueID");
 		$query->execute([':value' => $value,':UniqueID' => $uID]);
 
     }
