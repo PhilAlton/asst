@@ -231,7 +231,7 @@ class User {
         $UserTable_ColArray = $query->execute([':tableName' => 'UserTable']);
         var_dump($UserTable_ColArray);
 
-        $UserTable_ColArray = Array('Firstname', 'Surname', 'DoB', 'Gender', 'Age_Of_Symptom_Onset', 'Research_Participant', 'NHS_Number');
+        $UserTable_ColArray = Array('UniqueID', 'Firstname', 'Surname', 'DoB', 'Gender', 'Age_Of_Symptom_Onset', 'Research_Participant', 'NHS_Number');
 
         // Loop through each column, and check whether a post variable has been created with that same column name
         // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
