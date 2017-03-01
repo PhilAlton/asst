@@ -30,6 +30,7 @@ class Output{
         $errorLog = "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
                     ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
                     ."</br>To: <b>".$_SERVER['REQUEST_URI']."</b>"
+                    ."</br>At: <b>".$_SERVER['REQUEST_TIME']."</b>"
                     ."</br>".Output::getError();
 		if (Output::getHistory() !== "</br>"){
 			$errorLog = $errorLog."</br></br></br>".Output::getHistory();

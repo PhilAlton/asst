@@ -9,7 +9,7 @@ class User {
 
 		// authenticate user session to enable access to api functions
 		$q_auth = false;
-
+        
 
 		// retrieve stored password string from database against UserName
 		$query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -142,14 +142,14 @@ class User {
 		if (User::authenticate($UserName, $params)){
 
 			switch ($method) {
-				/*			case 'PUT':
-				// call method to replace
+				/*			case 'POST':
+				// call method to replace entire user / ?create new user
 				updateParams();
 				break;
 				 */
-				case 'POST':
+				case 'PUT':
 					// call method to update single varaibles
-					User::updateParams($UserName, $params);
+                    User::updateParams($UserName, $params);
 					break;
 
 				case 'DELETE':
@@ -179,13 +179,19 @@ class User {
 	}
 
 
+    public static function resetPassword($UserName){
+
+        // function to restet password
+        Output::setOutput('function currently not available');
+
+    }
 
 
 	private static function getUser($UserName){
 		// GET request
 
-		$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-		$uID = $query->execute([':UserName' => $UserName])['UniqueID'];
+		$query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
+		$uID = $query->execute([':UserName' => $UserName]);
 		$query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		Output::setOutput($query->execute([':UniqueID' => $uID]));
 
@@ -193,10 +199,33 @@ class User {
 	}
 
 	private static function updateParams($UserName, $params){
-		//PUT request, acepting multiple arguments including user ID.
 
+        // Get UserID
+		$query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
+        $uID = $query->execute([':UserName' => $UserName]);
+
+        // Asign columns in the User Table to an array
+            // This could be dynamically created from a call to the Table to show list of columns
+        $UserTable_ColArray = Array('Firstname', 'Surname', 'DoB', 'Gender', 'Age_Of_Symptom_Onset', 'Research_Participant', 'NHS_Number');
+
+        // Loop through each column, and check whether a post variable has been created with that same column name
+        // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
+        foreach ($UserTable_ColArray as $col){
+            if (isset($params[$col])){
+                User::updateParam($uID, $col, $params[$col]);
+            }
+        }
 
 	}
+
+    private static function updateParam($uID, $column, $value){
+        //PUT request, acepting multiple arguments including user ID.
+        $query = New Query(UPDATE, "`UserTable`".
+                            "SET $column=:value".
+                            "WHERE `UniqueID` =:UniqueID'");
+		$query->execute(['::value' => $value,'UniqueID' => $uID]);
+
+    }
 
 
 	private static function deleteUser($UserName){

@@ -22,6 +22,11 @@ $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
 
+// Sanitise input
+
+
+
+
 // $_SERVER["PHP_AUTH_USER"]
 // $_SERVER["PHP_AUTH_PW"]
 
@@ -34,9 +39,14 @@ try{
 			switch($request[3]){
 				case "data":
 					// case for /asst/Users/Id/Data pass in $method
-					Output::setOutput("/asst/Users/Id/data");
+					Output::setOutput("/asst/Users/$UserName/data");                    //this line should be removed
 					Data::syncData($UserName);
 					break;
+                case "resetPassword":
+                    //case for restetting password
+                    Output::setOutput("/asst/Users/$UserName/resetPassword");           //this line should be removed
+                    User::resetPassword($UserName);
+                    break;
 				default:
 
 					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
