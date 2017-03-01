@@ -7,7 +7,6 @@ define("SELECT", "SELECT");
 define("CREATE", "CREATE");
 define("DELETE", "DELETE");
 define("DROP", "DROP");
-define("EXISTS", "IF EXISTS (SELECT");
 
 
 
@@ -54,7 +53,6 @@ class Query {
 
 		switch ($this->queryType)
 		{
-            case EXISTS:
 			case SELECT:
 				$results = $this->database->resultset();
 
