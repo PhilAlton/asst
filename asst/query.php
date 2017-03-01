@@ -37,12 +37,17 @@ class Query {
 			}
 		}
 
+        $results = false;
+
         try {
             $results = $this->database->execute();
 
         } catch (Exception $e) {
             http_response_code(406);
-            Output::errorMsg("caught exception: ".$e->getMessage()." - with SQL Statement ".$this->query);
+            Output::errorMsg("caught exception: ".$e->getMessage()
+                                ." - with SQL Statement ".$this->query
+                                ." and these parameters:".json_encode($params)
+                            );
         }
 
 
