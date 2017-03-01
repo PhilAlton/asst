@@ -24,7 +24,6 @@ $input = json_decode(file_get_contents('php://input'),true);
 
 // Sanitise input of UserName
 $_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
-echo "good effor";
 
 
 // Switch to govern action based on URI

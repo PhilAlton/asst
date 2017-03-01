@@ -1,0 +1,6 @@
+{
+    "require": {
+        "defuse/php-encryption": "^2.0",
+        "phpdocumentor/phpdocumentor": "^2.9"
+    }
+}
