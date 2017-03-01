@@ -243,10 +243,11 @@ class User {
 
     private static function updateParam($uID, $column, $value){
         //PUT request, acepting multiple arguments including user ID.
+        echo $boundColValue = ":".$column;
         $query = New Query(UPDATE, "`UserTable` ".
-                            "SET $column=:$column ".
+                            "SET $column=$boundColValue ".
                             "WHERE `UniqueID` =:UniqueID");
-		return $query->execute([":$column" => $value,':UniqueID' => $uID]);
+		return $query->execute([$boundColValue => $value,':UniqueID' => $uID]);
 
     }
 
