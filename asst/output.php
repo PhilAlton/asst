@@ -27,6 +27,7 @@ class Output{
 
 	public static function go(){
 		echo json_encode(Output::getOutput());
+
         $errorLog = "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
                     ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
                     ."</br>To: <b>".$_SERVER['REQUEST_URI']."</b>"

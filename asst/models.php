@@ -76,7 +76,7 @@ class User {
 		$conflict = $query->execute([':UserName' => $params['UserName']]);
 		if (count($conflict) !== 0){
 			http_response_code(409);
-			echo "database conflict, user {$params['UserName']} alraedy exists";
+			Output::errorMsg("database conflict, user {$params['UserName']} alraedy exists");
 
 		} else {
 

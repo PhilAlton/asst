@@ -22,13 +22,10 @@ $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
 
-// Sanitise input
+// Sanitise input of UserName
+$_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
 
-// $_SERVER["PHP_AUTH_USER"]
-// $_SERVER["PHP_AUTH_PW"]
 
-echo "sanitize: ".filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL);
-echo "validate: ".filter_var($_SERVER["PHP_AUTH_USER"], FILTER_VALIDATE_EMAIL);
 
 // Switch to govern action based on URI
 try{
