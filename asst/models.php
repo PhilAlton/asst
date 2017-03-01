@@ -12,7 +12,7 @@ class User {
 
 
 		// retrieve stored password string from database against UserName
-		$query = New Query(EXISTS, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
+		$query = New Query(EXISTS, 'Password FROM `AuthTable` WHERE `UserName` =:UserName)');
 //		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]])[0]["Password"]);						//FIX - decrypt should go in query class
 		$password = decrypt($query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]));
         Output::errorMsg('Password is: '.$password);
