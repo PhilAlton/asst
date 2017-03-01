@@ -224,9 +224,9 @@ class User {
 
         // Asign columns in the User Table to an array
             // This could be dynamically created from a call to the Table to show list of columns
-        $query = New Query(SELECT, "COLUMN_NAME"
-                                ."FROM INFORMATION_SCHEMA.COLUMNS"
-                                ."WHERE TABLE_NAME=UserTable"
+        $query = New Query(SELECT, "COLUMN_NAME "
+                                ."FROM INFORMATION_SCHEMA.COLUMNS "
+                                ."WHERE TABLE_NAME=UserTable "
                                 );
         $UserTable_ColArray = $query->execute();
         var_dump($UserTable_ColArray);
