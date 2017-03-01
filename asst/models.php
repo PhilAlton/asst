@@ -226,7 +226,7 @@ class User {
             // This could be dynamically created from a call to the Table to show list of columns
         $query = New Query(SELECT, "COLUMN_NAME "
                                 ."FROM INFORMATION_SCHEMA.COLUMNS "
-                                ."WHERE TABLE_NAME=UserTable "
+                                ."WHERE TABLE_NAME=`sql.php?table=UserTable&amp;db=asstdb&amp;token=a3f12653895c5befb322e3149429fd76`"
                                 );
         $UserTable_ColArray = $query->execute();
         var_dump($UserTable_ColArray);
