@@ -228,7 +228,7 @@ class User {
                                 ."FROM INFORMATION_SCHEMA.COLUMNS "
                                 ."WHERE TABLE_NAME=:tableName"
                                 );
-        $UserTable_ColArray = $query->execute([':tableName' => 'sql.php?table=UserTable&amp;db=asstdb&amp;token=a3f12653895c5befb322e3149429fd76']);
+        $UserTable_ColArray = $query->execute([':tableName' => 'UserTable']);
         var_dump($UserTable_ColArray);
 
         $UserTable_ColArray = Array('Firstname', 'Surname', 'DoB', 'Gender', 'Age_Of_Symptom_Onset', 'Research_Participant', 'NHS_Number');
