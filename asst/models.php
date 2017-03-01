@@ -134,15 +134,15 @@ class User {
 
 			// Create Data Table for User
 			$query = New Query(
-							CREATE, "TABLE DATA_TABLE_$uID".
-							"(".
-								"DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,".
-								"TimeStamp TIMESTAMP,".		// this might not be the correct way
-								"Date date,".
-								"Item_1 int(11),".
-								"Item_X TEXT".
-							")"
-							);
+						    CREATE, "TABLE DATA_TABLE_$uID".
+						    "(".
+							    "DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,".
+							    "TimeStamp TIMESTAMP,".		// this might not be the correct way
+							    "Date date,".
+							    "Item_1 int(11),".
+							    "Item_X TEXT".
+						    ")"
+						    );
 
 			$result[] = $query->execute();
 
@@ -195,13 +195,6 @@ class User {
 
 	}
 
-
-    public static function resetPassword($UserName){
-
-        // function to restet password
-        Output::setOutput('function currently not available');
-
-    }
 
 
 	private static function getUser($UserName){
@@ -265,6 +258,15 @@ class User {
 
     }
 
+
+
+    public static function resetPassword($UserName){
+
+        // function to restet password
+        Output::setOutput('function currently not available');
+
+        //
+    }
 
 
 
