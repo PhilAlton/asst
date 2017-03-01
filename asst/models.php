@@ -224,6 +224,10 @@ class User {
 
         // Asign columns in the User Table to an array
             // This could be dynamically created from a call to the Table to show list of columns
+        $query = New Query(SELECT, "column_name FROM all_tab_columns WHERE table_name = UserTable");
+        $UserTable_ColArray = $query->execute();
+        var_dump($UserTable_ColArray);
+
         $UserTable_ColArray = Array('Firstname', 'Surname', 'DoB', 'Gender', 'Age_Of_Symptom_Onset', 'Research_Participant', 'NHS_Number');
 
         // Loop through each column, and check whether a post variable has been created with that same column name
