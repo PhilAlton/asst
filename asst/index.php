@@ -23,60 +23,65 @@ $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
 
 // Sanitise input of UserName
-$_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
-
-
-// Switch to govern action based on URI
 try{
-	if (uri('asst/Users/..*')){
-	//	Output::setOutput( "/asst/Users/*";
-	$UserName = $request[2];
-		if (isset($request[3])){
-			switch($request[3]){
-				case "data":
-					// case for /asst/Users/Id/Data pass in $method
-					Output::setOutput("/asst/Users/$UserName/data");                    //this line should be removed
-					Data::syncData($UserName);
-					break;
-                case "resetPassword":
-                    //case for restetting password
-                    Output::setOutput("/asst/Users/$UserName/resetPassword");           //this line should be removed
-                    User::resetPassword($UserName);
-                    break;
-				default:
+    if (!isset($_SERVER["PHP_AUTH_USER"])) {$e = "User details not sent in header"; throw new OutOfRangeException ($e);}
+    $_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
 
-					$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
-					throw new Exception($e);
-			}
-		} else {
-			// action for /asst/Users/Id
-	//		Output::setOutput("/asst/Users/Id"."</br>");
-	//		Output::setOutput($uID);
-			User::handleRequest($method, $UserName, $input);
+    // Switch to govern action based on URI
+    try{
+	    if (uri('asst/Users/..*'))
+        {
+	    $UserName = $request[2];
+		    if (isset($request[3]))
+            {
+			    
+                switch($request[3])
+                {
+				    case "data":
+					    // case for /asst/Users/Id/Data pass in $method     "/asst/Users/$UserName/data"
+					    Data::syncData($UserName);
+					    break;
+                    case "resetPassword":
+                        //case for restetting password  "/asst/Users/$UserName/resetPassword"
+                        User::resetPassword($UserName);
+                        break;
+				    default:
+					    throw new Exception("Invalid URI selected".$_SERVER['REQUEST_URI']);
+			    }
+		    
+            } else {
+			    // action for /asst/Users/Id
+			    User::handleRequest($method, $UserName, $input);
+		    }
 
-		}
+	    } else if (uri('asst/Users')){
+		    // code for asst/Users (create new user)
+		    User::createUser($input);
 
-	} else if (uri('asst/Users')){
-		// code for asst/Users (create new user)
-		User::createUser($input);
-		//Output::setOutput("/asst/Users");
+	    } else {
+		    $e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
+		    throw new Exception($e);
+
+	    }
 
 
-	} else {
-		$e = "Invalid URI selected".$_SERVER['REQUEST_URI'];
-		throw new Exception($e);
-	}
-} catch (Exception $e) {
-        http_response_code(406);
-		Output::errorMsg("caught exception: ".$e->getMessage().".");
+    } catch (Exception $e) {
+            http_response_code(406);
+		    Output::errorMsg("caught exception: ".$e->getMessage().".");
+    }
+
+
 }
-
+catch (OutOfRangeException $e) {
+    http_response_code(401);
+    Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
+}
 
 
 Output::go();
 
 
-function uri(String $match){
+function uri($match){
 	$match = "#".$match."#";
 	return preg_match($match, $_SERVER['REQUEST_URI']);
 

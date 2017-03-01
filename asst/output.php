@@ -39,7 +39,8 @@ class Output{
 
         $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</b></br>";
 
-        file_put_contents(realpath('/var/www/html').'/error.html', $errorLog, 10);
+        $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
+        file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
 
 	}
 
