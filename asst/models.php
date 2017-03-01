@@ -209,8 +209,8 @@ class User {
 
 		$query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
 		$uID = $query->execute([':UserName' => $UserName]);
-		$query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		return $query->execute([':UniqueID' => $uID]);
+		$query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
+		return $query->execute([':uID' => $uID]);
 
 
 	}
@@ -245,8 +245,8 @@ class User {
         //PUT request, acepting multiple arguments including user ID.
         $query = New Query(UPDATE, "`UserTable` ".
                             "SET $column=:$column ".
-                            "WHERE `UniqueID` =:UniqueID");
-		return $query->execute([":$column" => $value,':UniqueID' => $uID]);
+                            "WHERE `UniqueID` =:uID");
+		return $query->execute([":$column" => $value,':uID' => $uID]);
 
     }
 
@@ -258,10 +258,10 @@ class User {
 
 		$query = New Query(DROP, "TABLE DATA_TABLE_$uID");
 		$query->execute();
-		$query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		$query->execute([':UniqueID' => $uID]);
-		$query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
-		return $query->execute([':UniqueID' => $uID]);
+		$query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:uID');
+		$query->execute([':uID' => $uID]);
+		$query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:uID');
+		return $query->execute([':uID' => $uID]);
 
     }
 
