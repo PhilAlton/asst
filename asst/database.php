@@ -78,7 +78,7 @@ class Database {
 
   //execute query
     public function execute(){
-        echo $this->statement;
+        var_dump($this->statement);
         return $this->statement->execute();
     }
     //get results of query
