@@ -1,10 +1,5 @@
 <?php
-require 'asst/lib/connection.php';
-require 'asst/lib/output.php';
-require 'asst/lib/models.php';
-require 'asst/lib/crypt.php';
-require 'asst/lib/Exceptions.php';
-require_once dirname(__FILE__) . '/vendor/autoload.php';
+require_once dirname(__FILE__) . '/../bootstrap.php';
 
 
 //Test segments
