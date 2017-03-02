@@ -36,7 +36,7 @@ try{
 
     // Switch to govern action based on URI
     try{
-	    if (uri('asst/Users/..*') & ($request[2]==$_SERVER["PHP_AUTH_USER"]))       // ensure that user specific end points are only accesible
+	    if (uri('asst/Users/..*') and ($request[2]==$_SERVER["PHP_AUTH_USER"]))       // ensure that user specific end points are only accesible
         {
 	    $UserName = $request[2];
 		    if (isset($request[3]))
