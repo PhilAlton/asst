@@ -22,19 +22,26 @@ $request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
 $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
 
-// Sanitise input of UserName
+// sanitise POST data UserName
+$input['UserName'] = null;          // This should never be sent in the post variables, instead, username should be sent in the header.
+                                    // This also prevents UserName being updated.
+$input['Password'] = null;          // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
+
+
+
 try{
     if (!isset($_SERVER["PHP_AUTH_USER"])) {$e = "User details not sent in header"; throw new OutOfRangeException ($e);}
+    // Sanitise input of UserName
     $_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
 
     // Switch to govern action based on URI
     try{
-	    if (uri('asst/Users/..*'))
+	    if (uri('asst/Users/..*') & ($request[2]==$_SERVER["PHP_AUTH_USER"]))       // ensure that user specific end points are only accesible
         {
 	    $UserName = $request[2];
 		    if (isset($request[3]))
             {
-			    
+
                 switch($request[3])
                 {
 				    case "data":
@@ -48,7 +55,7 @@ try{
 				    default:
 					    throw new Exception("Invalid URI selected".$_SERVER['REQUEST_URI']);
 			    }
-		    
+
             } else {
 			    // action for /asst/Users/Id
 			    User::handleRequest($method, $UserName, $input);

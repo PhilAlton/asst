@@ -111,20 +111,30 @@ class User {
 			$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 			$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
 
+            // Update UserPersonalData with parameters
+			$query = New Query(
+					INSERT, "INTO UserPersonalData".
+						"(UniqueID, Firstname, Surname, DoB)".
+					"VALUES".
+						"(:UniqueID, :Firstname, :Surname, :DoB)"
+					);
+
+            $result[] = ($query->execute([':UniqueID' => $uID,
+							':Firstname' => $params['Firstname'],
+							':Surname' => $params['Surname'],
+							':DoB' => $params['DoB']]));
 
 			// Update UserTable with parameters
 			$query = New Query(
 					INSERT, "INTO UserTable".
-						"(UniqueID, Firstname, Surname, DoB, Gender, Age_Of_Symptom_Onset, Research_Participant, NHS_Number)".
+						"(UniqueID, Age, Gender, Age_Of_Symptom_Onset, Research_Participant, NHS_Number)".
 					"VALUES".
-						"(:UniqueID, :Firstname, :Surname, :DoB, :Gender, :Age_Of_Symptom_Onset, :Research_Participant, :NHS_Number)"
+						"(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant, :NHS_Number)"
 					);
 
             // Output should be set on the sucess of the following record insert
 			$result[] = ($query->execute([':UniqueID' => $uID,
-							':Firstname' => $params['Firstname'],
-							':Surname' => $params['Surname'],
-							':DoB' => $params['DoB'],
+							':Age' => User::age($params['DoB']),
 							':Gender' => $params['Gender'],
 							':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
 							':Research_Participant' => $params['Research_Participant'],
@@ -133,6 +143,7 @@ class User {
 
 
 			// Create Data Table for User
+            //ALTER TABLE `UserPersonalData` CHANGE `UniqueID` `UniqueID` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT ;
 			$query = New Query(
 						    CREATE, "TABLE DATA_TABLE_$uID".
 						    "(".
@@ -199,16 +210,25 @@ class User {
 
 	private static function getUser($UserName){
 		// GET request
+        $results = array();
 
+        //Get the uID
 		$query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
 		$uID = $query->execute([':UserName' => $UserName]);
-		$query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
-		return $query->execute([':uID' => $uID]);
 
+        //Get info from User's records in both User Data Tables
+		$query = New Query(SELECT, '* FROM `UserPersonalData` WHERE `UniqueID` =:uID');
+		$results = array_merge( $results, $query->execute([':uID' => $uID]));
+        $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
+		$results = array_merge( $results, $query->execute([':uID' => $uID]));
+
+        return $results;
 
 	}
 
 	private static function updateParams($UserName, $params){
+
+        $return = array();
 
         // Get UserID
 		$query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -220,23 +240,26 @@ class User {
                                 ."FROM INFORMATION_SCHEMA.COLUMNS "
                                 ."WHERE TABLE_NAME=:tableName"
                                 );
-        $UserTable_ColArray = $query->execute([':tableName' => 'UserTable']);
+        $colArray['UserPersonalData'] = $query->execute([':tableName' => 'UserPersonalData']);
+        $colArray['UserTable'] = $query->execute([':tableName' => 'UserTable']);
 
         // Loop through each column, and check whether a post variable has been created with that same column name
         // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
-        foreach ($UserTable_ColArray as $col){
-            if (isset($params[$col["COLUMN_NAME"]])){
-                $return[] = User::updateParam($uID, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
+        foreach ($colArray as $tableName => $columns){
+            foreach ($columns as $col){
+                if (isset($params[$col["COLUMN_NAME"]])){
+                    // Need to confirm action of array_merge
+                    $return = array_merge($return, User::updateParam($uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]));
+                }
             }
         }
-
         return $return;
 
 	}
 
-    private static function updateParam($uID, $column, $value){
+    private static function updateParam($uID, $tableName, $column, $value){
         //PUT request, acepting multiple arguments including user ID.
-        $query = New Query(UPDATE, "`UserTable` ".
+        $query = New Query(UPDATE, "$tableName ".
                             "SET $column=:$column ".
                             "WHERE `UniqueID` =:uID");
 		return $query->execute([":$column" => $value,':uID' => $uID]);
@@ -253,20 +276,39 @@ class User {
 		$query->execute();
 		$query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:uID');
 		$query->execute([':uID' => $uID]);
+		$query = New Query(DELETE, 'FROM `UserPersonalData` WHERE `UniqueID` =:uID');
+        $query->execute([':uID' => $uID]);
 		$query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:uID');
 		return $query->execute([':uID' => $uID]);
 
     }
 
 
+    public static function age($DoB){
+        $from = new DateTime($DoB);
+        $to   = new DateTime('today');
+        $age = $from->diff($to)->y;
+
+        return $age;
+    }
 
     public static function resetPassword($UserName){
 
         // function to restet password
         Output::setOutput('function currently not available');
 
-        //
+        // Gather identity data or security questions
+            // Needs to be enacted prior
+            // esoteric questions: e.g. hash username and store as password
+
+        // Verify security questions
+        // Send a token over a side-channel
+        // Allow user to change password (in the existing session)
+        // Logging and auditing password change attempts
+
+
     }
+
 
 
 
