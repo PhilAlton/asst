@@ -23,9 +23,9 @@ $apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
 $input = json_decode(file_get_contents('php://input'),true);
 
 // sanitise POST data UserName
-$input['UserName'] = null;          // This should never be sent in the post variables, instead, username should be sent in the header.
-                                    // This also prevents UserName being updated.
-$input['Password'] = null;          // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
+$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
+                                                            // This also prevents UserName being updated.
+$input['Password'] = $_SERVER["PHP_AUTH_PW"];               // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
 
 
 
