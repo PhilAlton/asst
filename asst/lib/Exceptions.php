@@ -13,13 +13,13 @@ abstract class LoggedException extends Exception
     public function __construct($message = "", $code = 0, Throwable $previous = NULL){
 
         // ensure proper logging of error
-        Self::log();
+        $this->logError();
         parent::__construct($message, $code, $previous);
 
     }
 
 
-    abstract public static function log();
+    abstract public static function logError();
 
 }
 
@@ -29,8 +29,8 @@ abstract class LoggedException extends Exception
 class UnableToAuthenticateUserCredentials extends LoggedException
 {
 
-    public static function log(){
-
+    public static function logError(){
+/*
     //    $query = new Query(SELECT, "LAST_INSERT_ID()");   /// will not work as cannot specify table
                                                                 // need to create a connection class to wrap all the
                                                                 // relavent connection variables. This should be a singleton instance
@@ -72,6 +72,8 @@ class UnableToAuthenticateUserCredentials extends LoggedException
                 self::update_CXTN_AUTHENTIC();
             }
 
+
+        */
     }
 
 
