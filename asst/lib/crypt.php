@@ -11,7 +11,7 @@ use Defuse\Crypto\KeyProtectedByPassword;
 
 function loadEncryptionKeyFromConfig()
 {
-    $keyfile = parse_ini_file(realpath('../../../private/keyfile.ini'));
+    $keyfile = parse_ini_file(realpath('/var/www/private/keyfile.ini'));
 	$key = $keyfile['KEY'];
 
 	return Key::loadFromAsciiSafeString($key);
