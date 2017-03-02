@@ -1,6 +1,27 @@
 {
-    "require": {
-        "defuse/php-encryption": "^2.0",
-        "phpdocumentor/phpdocumentor": "^2.9"
+  "name": "Helix-Tech/asst",
+  "description": "API to manage secure encrypted remote storage for data from the Ankylosing Spondylitis Symptom Tracker mobile apps",
+  "require": {
+    "php": ">=5.3.0",
+    "ext-pdo": "*",
+    "slim/slim": "2.4.*",
+    "slim/extras": "*",
+    "defuse/php-encryption": "^2.0",
+    "phpdocumentor/phpdocumentor": "^2.9"
+  },
+  "license": "Copyright Helix Tech Ltd, 2016",
+  "authors": [
+    {
+      "name": "Dr Philip Alton",
+      "email": "phil.alton@helix-tech.co.uj"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Asst\\": "asst/lib"
+    }
+  },
+  "archive": {
+    "exclude": [ "vendor", ".DS_Store", "*.log" ] 
+  }
 }

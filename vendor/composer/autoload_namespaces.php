@@ -7,7 +7,10 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/reflection/src', $vendorDir . '/phpdocumentor/reflection/tests/unit', $vendorDir . '/phpdocumentor/reflection/tests/mocks', $vendorDir . '/phpdocumentor/graphviz/src', $vendorDir . '/phpdocumentor/graphviz/tests/unit', $vendorDir . '/phpdocumentor/fileset/src', $vendorDir . '/phpdocumentor/fileset/tests/unit', $vendorDir . '/phpdocumentor/phpdocumentor/src', $vendorDir . '/phpdocumentor/phpdocumentor/tests/unit'),
+    'Twig_Extensions_' => array($vendorDir . '/slim/extras/Views/Extension'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'Slim\\Extras' => array($vendorDir . '/slim/extras'),
+    'Slim' => array($vendorDir . '/slim/slim'),
     'Pimple' => array($vendorDir . '/pimple/pimple/lib'),
     'PhpOption\\' => array($vendorDir . '/phpoption/phpoption/src'),
     'PhpCollection' => array($vendorDir . '/phpcollection/phpcollection/src'),

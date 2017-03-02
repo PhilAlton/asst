@@ -65,6 +65,10 @@ class ComposerStaticInit5503b38c7273bfc83b46e3a04675c515
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
         ),
+        'A' => 
+        array (
+            'Asst\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -184,6 +188,10 @@ class ComposerStaticInit5503b38c7273bfc83b46e3a04675c515
         array (
             0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
         ),
+        'Asst\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/asst/lib',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -205,9 +213,24 @@ class ComposerStaticInit5503b38c7273bfc83b46e3a04675c515
         ),
         'T' => 
         array (
+            'Twig_Extensions_' => 
+            array (
+                0 => __DIR__ . '/..' . '/slim/extras/Views/Extension',
+            ),
             'Twig_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
+            ),
+        ),
+        'S' => 
+        array (
+            'Slim\\Extras' => 
+            array (
+                0 => __DIR__ . '/..' . '/slim/extras',
+            ),
+            'Slim' => 
+            array (
+                0 => __DIR__ . '/..' . '/slim/slim',
             ),
         ),
         'P' => 
