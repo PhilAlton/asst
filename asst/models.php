@@ -227,8 +227,7 @@ class User {
 	}
 
 	private static function updateParams($UserName, $params){
-
-        $return = array();
+        $return;
 
         // Get UserID
 		$query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -249,7 +248,7 @@ class User {
             foreach ($columns as $col){
                 if (isset($params[$col["COLUMN_NAME"]])){
                     // Need to confirm action of array_merge
-                    $return = array_merge($return, User::updateParam($uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]));
+                    $return[] = User::updateParam($uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
                 }
             }
         }
