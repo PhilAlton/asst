@@ -18,10 +18,10 @@
   ],
   "autoload": {
     "psr-4": {
-      "Asst\\": "asst/lib"
+      "": "asst/lib/"
     }
   },
   "archive": {
-    "exclude": [ "vendor", ".DS_Store", "*.log" ] 
+    "exclude": [ "vendor", ".DS_Store", "*.log" ]
   }
 }

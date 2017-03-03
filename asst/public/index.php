@@ -1,5 +1,12 @@
 <?php
+
 require_once dirname(__FILE__) . '/../bootstrap.php';
+//include '..\lib\exceptions.php';
+
+
+//testClass::getTest();
+use asst\lib\UnableToAuthenticateUserCredentials;
+UnableToAuthenticateUserCredentials::logError();
 
 
 //Test segments

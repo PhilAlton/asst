@@ -1,4 +1,6 @@
 <?php
+namespace asst\lib;
+
 /**
  * Define custom exception classes
  *
@@ -8,7 +10,7 @@
 /**
  * Abstract class for exceptions which need logging
  */
-abstract class LoggedException extends Exception
+abstract class LoggedException extends \Exception
 {
     public function __construct($message = "", $code = 0, Throwable $previous = NULL){
 
@@ -30,6 +32,7 @@ class UnableToAuthenticateUserCredentials extends LoggedException
 {
 
     public static function logError(){
+
 /*
     //    $query = new Query(SELECT, "LAST_INSERT_ID()");   /// will not work as cannot specify table
                                                                 // need to create a connection class to wrap all the

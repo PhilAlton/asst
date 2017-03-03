@@ -1,8 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\asst"
+    "\\asst",
+    "\\asst\\lib",
+    "\\asst\\public",
+    "\\vendor",
+    "\\vendor\\composer",
+    "\\vendor\\defuse",
+    "\\vendor\\defuse\\php-encryption",
+    "\\vendor\\defuse\\php-encryption\\src"
   ],
-  "SelectedNode": "\\asst\\output.php",
+  "SelectedNode": "\\asst\\public\\index.php",
   "PreviewInSolutionExplorer": false
 }
