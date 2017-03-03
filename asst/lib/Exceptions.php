@@ -26,7 +26,7 @@ abstract class LoggedException extends \Exception
 }
 
 /**
- * Unable to Authenticate
+ * Exception: Unable to Authenticate User
  */
 class UnableToAuthenticateUserCredentials extends LoggedException
 {
