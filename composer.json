@@ -2,7 +2,7 @@
   "name": "Helix-Tech/asst",
   "description": "API to manage secure encrypted remote storage for data from the Ankylosing Spondylitis Symptom Tracker mobile apps",
   "require": {
-    "php": ">=5.3.0",
+    "php": ">=7.0.14",
     "ext-pdo": "*",
     "slim/slim": "2.4.*",
     "slim/extras": "*",
