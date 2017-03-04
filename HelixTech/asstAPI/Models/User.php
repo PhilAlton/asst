@@ -107,7 +107,7 @@
 							    )
 						    );
 
-			    // TODO: Devise AuthToken uses and method
+			    /** @todo: Devise AuthToken uses and method */
 			    $AuthToken = "randomauthtoken90";
 
 
@@ -146,7 +146,7 @@
 						    "(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant)"
 					    );
 
-                // Output should be set on the sucess of the following record insert
+                // Output should be set on the success of the following record insert
 			    $result[] = ($query->execute([':UniqueID' => $uID,
 							    ':Age' => User::age($params['DoB']),
 							    ':Gender' => $params['Gender'],
@@ -157,11 +157,10 @@
 
 
 			    // Create Data Table for User
-                //ALTER TABLE `UserPersonalData` CHANGE `UniqueID` `UniqueID` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT ;
 			    $query = New Query(
 						        CREATE, "TABLE DATA_TABLE_$uID".
 						        "(".
-							        "DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,".
+							        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
 							        "TimeStamp TIMESTAMP,".		// this might not be the correct way
 							        "Date date,".
 							        "Item_1 int(11),".
