@@ -1,4 +1,4 @@
-<?php namespace HelixTech\asstAPI\Models;
+<?php namespace HelixTech\asstAPI;
 
     use HelixTech\asstAPI\Query;
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
