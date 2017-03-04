@@ -6,7 +6,6 @@ use HelixTech\asstAPI\{Output};
 use HelixTech\asstAPI\Models\{Data, User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, InvalidURI};
 
-User::resetPassword("jom");
 try {
     if(!isset($_SERVER['HTTPS'])){throw new InsecureConnection("Connection must be established via HTTPS");} // ensure connection via HTTPS
 
