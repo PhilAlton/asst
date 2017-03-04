@@ -1,8 +1,7 @@
 <?php namespace HelixTech\asstAPI\Models;
 
-    use HelixTech\asstAPI\{Output, Query};
+    use HelixTech\asstAPI\{Output, Query, Crypt};
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
-    use function \HelixTech\asstAPI\{encrypt, decrypt};
 
     /**
      * Summary of User: class containing static methods to perform actions on the database
@@ -29,7 +28,7 @@
                     throw new \UnexpectedValueException($e);
                 } else {
                     // Else decrypt the password
-                    $password = decrypt($password);                                                             //FIX - decrypt should go in query class
+                    $password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
 
                 }
 
@@ -95,9 +94,9 @@
 
 		    } else {
 
-			    // Hash a new password for storing in the database.
-			    // The function automatically generates a cryptographically safe salt.
-			    $password =	encrypt(
+			// Hash a new password for storing in the database.
+            // The function automatically generates a cryptographically safe salt.
+			    $password =	Crypt::encrypt(
 							    password_hash
 							    (
 								    base64_encode
