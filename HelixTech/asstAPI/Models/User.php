@@ -141,9 +141,9 @@
 			    // Update UserTable with parameters
 			    $query = New Query(
 					    INSERT, "INTO UserTable".
-						    "(UniqueID, Age, Gender, Age_Of_Symptom_Onset, Research_Participant, NHS_Number)".
+						    "(UniqueID, Age, Gender, Age_Of_Symptom_Onset, Research_Participant)".
 					    "VALUES".
-						    "(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant, :NHS_Number)"
+						    "(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant)"
 					    );
 
                 // Output should be set on the sucess of the following record insert
