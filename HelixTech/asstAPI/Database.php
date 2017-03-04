@@ -23,8 +23,6 @@
             if (!isset($this->dbConnection)){
                 $this->config = parse_ini_file(realpath('/var/www/private/config.ini'));
 
-                var_dump($this->config);
-
                 // Set DSN
                 $dsn = "mysql:host={$this->config['DB_HOST']};dbname={$this->config['DB_NAME']};charset=utf8mb4";
 
@@ -38,6 +36,7 @@
                     $this->dbConnection = new PDO($dsn, $this->config['DB_USER'], $this->config['DB_PASSWORD'], $options);
                 }
                 catch(PDOException $err){
+                    echo "no connection";
                     $this->error = $err->getMessage();
                     Output::errorMsg($this->error);
                 }
