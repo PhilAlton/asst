@@ -32,7 +32,7 @@ class Crypt{
      */
     private static function UseEncryptionKey(callable $callBackFunction, ...$args){
         // retrieve key
-        $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst\\' : realpath('/var/www/private/'));
+        $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst\\' : realpath('/var/www/private//'));
 
         // Find the index of the argument passed as null
         // (this implies, to this function, that the argument in question should be updated with the encryption key)
