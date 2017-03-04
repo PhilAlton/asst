@@ -2,8 +2,8 @@
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
 
-use HelixTech\asstAPI\{Data, Output};
-use HelixTech\asstAPI\Models\User;
+use HelixTech\asstAPI\{Output};
+use HelixTech\asstAPI\Models\{Data, User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, InvalidURI};
 
 

@@ -1,5 +1,5 @@
-<?php namespace HelixTech\asstAPI;
-
+<?php namespace HelixTech\asstAPI\Models;
+    
   class Data {
 
 
