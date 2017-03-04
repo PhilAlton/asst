@@ -324,8 +324,8 @@
 
 
         public static function age($DoB){
-            $from = new DateTime($DoB);
-            $to   = new DateTime('today');
+            $from = new \DateTime($DoB);
+            $to   = new \DateTime('today');
             $age = $from->diff($to)->y;
 
             return $age;
