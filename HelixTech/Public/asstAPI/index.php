@@ -1,12 +1,12 @@
 <?php
-require_once dirname(dirname(dirname(__FILE__))) . '/../Docs/asstAPI/index.html';
+require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
 
 use HelixTech\asstAPI\{Output};
 use HelixTech\asstAPI\Models\{Data, User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, InvalidURI};
 
-
+User::resetPassword("jom");
 try {
     if(!isset($_SERVER['HTTPS'])){throw new InsecureConnection("Connection must be established via HTTPS");} // ensure connection via HTTPS
 
@@ -22,6 +22,7 @@ try {
     if(isset($input['UserName'])){$input['UserName'] = $_SERVER["PHP_AUTH_USER"];}               // This should never be sent in the post variables, instead, username should be sent in the header.
     if(isset($input['Password'])){$input['Password'] = $_SERVER["PHP_AUTH_PW"];}                 // This also prevents UserName being updated.
     // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
+
 
 
     try{
