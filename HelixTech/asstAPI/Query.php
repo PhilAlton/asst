@@ -26,6 +26,12 @@
         }
 
 
+        /**
+         * Summary of execute - execute a query taking in parameters to bind the SQL statement prepared in the constructor
+         * 
+         * @param mixed $params to be bound into the query
+         * @return mixed, 
+         */
         public function execute($params = null){
             $results;
 		    $this->database->query($this->query);

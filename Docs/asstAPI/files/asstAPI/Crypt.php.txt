@@ -1,14 +1,17 @@
-<?php
-namespace api\lib;
-//use Defuse\Crypto\Exception as Ex;
-//use Defuse\Crypto\File;
+<?php namespace HelixTech\asstAPI;
+
+
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
 //use Defuse\Crypto\KeyProtectedByPassword;
+//use Defuse\Crypto\Exception as Ex;
+//use Defuse\Crypto\File;
 
 
-
-
+/**
+ * HelixTech\asstAPI\loadEncryptionKeyFromConfig - retrieve the stored encryption key 
+ * @return mixed
+ */
 function loadEncryptionKeyFromConfig()
 {
     $keyfile = parse_ini_file(realpath('/var/www/private/keyfile.ini'));
@@ -17,7 +20,11 @@ function loadEncryptionKeyFromConfig()
 	return Key::loadFromAsciiSafeString($key);
 }
 
-
+/**
+ * HelixTech\asstAPI\encrypt: return ciphertext given plaintext
+ * @param mixed $input 
+ * @return mixed
+ */
 function encrypt($input){
 
 	$key = loadEncryptionKeyFromConfig();
@@ -25,6 +32,11 @@ function encrypt($input){
 	return $ciphertext;
 }
 
+/**
+ * Summary of HelixTech\asstAPI\decrypt: return plaintext from ciphertext
+ * @param mixed $input 
+ * @return mixed
+ */
 function decrypt($input){
 	$key = loadEncryptionKeyFromConfig();
 	try
@@ -37,7 +49,7 @@ function decrypt($input){
 		// intentionally modified by Eve trying to carry out an attack.
 
 		// ... handle this case in a way that's suitable to your application ...
-		Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown"."\n");
+		Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".$ex."\n");
 	}
 
 

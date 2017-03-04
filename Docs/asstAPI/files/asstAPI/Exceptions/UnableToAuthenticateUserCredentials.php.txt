@@ -6,6 +6,10 @@
 class UnableToAuthenticateUserCredentials extends AbstractLoggedException
 {
 
+    /**
+     * Summary of logError - log failures to authenticate user details
+     * @todo connect to the database to store log info
+     */
     public static function logError(){
 
 /*
