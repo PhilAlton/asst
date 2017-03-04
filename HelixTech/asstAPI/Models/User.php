@@ -151,7 +151,7 @@
 							    ':Age' => User::age($params['DoB']),
 							    ':Gender' => $params['Gender'],
 							    ':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
-							    ':Research_Participant' => $params['Research_Participant'],
+							    ':Research_Participant' => $params['Research_Participant']
 						]));
 
 
