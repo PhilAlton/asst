@@ -1,8 +1,13 @@
 <?php namespace HelixTech\asstAPI;
 
     use HelixTech\asstAPI\Query;
+    use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
     use function \HelixTech\asstAPI\{encrypt, decrypt};
 
+    /**
+     * Summary of User: class containing static methods to perform actions on the database
+     * - Actions associated with a particular user
+     */
     class User {
 
 
@@ -21,7 +26,7 @@
                 if (count($password)===0){
                     // If no password obtained then throw exception and handle.
                     $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
-                    throw new UnexpectedValueException($e);
+                    throw new \UnexpectedValueException($e);
                 } else {
                     // Else decrypt the password
                     $password = decrypt($password);                                                             //FIX - decrypt should go in query class
@@ -54,24 +59,32 @@
 	    }
 
 
+	    /**
+         * Summary of createUser: CreateUser function insertes a new record into the master tables, and establishes a User's Data table.
+         *
+         * create random SALT when creating a new user, store the SALT, and combine the POST["password"] with the SALT.
+         * base64 encode and then HASH using SHA384 the SALT.password combination
+         * Encrypt the password using (e.g using an SSL-like key)
+         * This key should be obtained from an ini file stored outside the server's accesible areas
+         * Store the result in the password column of the database
+         * ------->  Generate a random auth token
+         * (?) HASH the username (?use a different algorithm), and send this to the user's email as a link
+         *
+         * Send the Auth Token and hashed username back to the User's device for these to be stored.
+         *
+         * On clicking the link in the email, the auth token will be registered as verified, and can be used in authenticated transactions
+         * Further communication with the API should be via the hashed username and auth token.
+         *
+         *
+         *
+	     * @param mixed $params - passed in from the POST fields
+         *                          These parameters will be sanetised through binding via PDO
+         *
+         * @uses Output::setOutput() to monitor success
+         *
+	     */
 	    public static function createUser($params){
-		    // code to create new user, i.e update userTable and create new unique table
 
-
-
-    // User creation
-	    // create random SALT when creating a new user, store the SALT, and combine the POST["password"] with the SALT.
-	    // base64 encode and then HASH using SHA384 the SALT.password combination
-	    // Encrypt the password using (e.g using an SSL-like key)
-	    // This key should be obtained from an ini file stored outside the server's accesible areas
-	    // Store the result in the password column of the database
-	    // ------->  Generate a random auth token
-	    // (?) HASH the username (?use a different algorithm), and send this to the user's email as a link
-
-	    // Send the Auth Token and hashed username back to the User's device for these to be stored.
-
-	    // On clicking the link in the email, the auth token will be registered as verified, and can be used in authenticated transactions
-	    // Further communication with the API should be via the hashed username and auth token.
 
 		    //Ensure user of UserName does not already exist
 		    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -165,6 +178,14 @@
 		    }
 	    }
 
+	    /**
+	     * Summary of handleRequest - direct .../Users/{UserName} to the appropiate methdos
+	     * @param mixed $method - the HTTP VERB; functionality has been written so far for PUT, DELETE and GET for this endpoint
+	     * @param mixed $UserName - UserName as passed in through the HTTP header
+	     * @param mixed $params - Parameters passed in from the POST fields
+	     * @throws UnableToAuthenticateUserCredentials
+         *
+	     */
 	    public static function handleRequest($method, $UserName, $params){
 
             try{
@@ -215,7 +236,12 @@
 	    }
 
 
-
+	    /**
+         * Summary of getUser - mapped to endpoint for GET requests to .../Users/{UserName}
+         * @param mixed $UserName
+         * @see \HelixTech\asstAPI\User::handleRequest()
+	     * @return array
+	     */
 	    private static function getUser($UserName){
 		    // GET request
             $results = array();
@@ -234,6 +260,13 @@
 
 	    }
 
+
+	    /**
+        * Summary of updateParams - mapped to endpoint for PUT requests to .../Users/{UserName}
+	     * @param mixed $UserName
+	     * @param mixed $params
+	     * @return array
+	     */
 	    private static function updateParams($UserName, $params){
             $return;
 
