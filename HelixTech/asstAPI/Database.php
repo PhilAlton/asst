@@ -36,7 +36,6 @@
                     $this->dbConnection = new PDO($dsn, $this->config['DB_USER'], $this->config['DB_PASSWORD'], $options);
                 }
                 catch(PDOException $err){
-                    echo "no connection";
                     $this->error = $err->getMessage();
                     Output::errorMsg($this->error);
                 }

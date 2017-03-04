@@ -20,11 +20,11 @@
 	    private $queryType;
 
         public function __construct($queryType, $query){
-            echo "building queries...";
-
             $this->database = New Database;
 		    $this->queryType = $queryType;
             $this->query = $queryType." ".$query;
+
+            echo DELETE;
         }
 
 
