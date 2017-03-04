@@ -15,13 +15,15 @@
         /**
          * __construct - establish a connection to the database
          * Load config.ini file for database variables
-         * 
-         * 
+         *
+         *
          */
         public function __construct(){
-        
+
             if (!isset($this->dbConnection)){
                 $this->config = parse_ini_file(realpath('/var/www/private/config.ini'));
+
+                var_dump($this->config);
 
                 // Set DSN
                 $dsn = "mysql:host={$this->config['DB_HOST']};dbname={$this->config['DB_NAME']};charset=utf8mb4";
@@ -144,4 +146,4 @@
 
 
     }
-    ?>
+?>
