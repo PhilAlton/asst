@@ -3,7 +3,3 @@
     RemoveHandler .php
     ForceType text/plain
 </FilesMatch>
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^((?s).*)$ HelixTech/Public/asstAPI/index.php [QSA,L]
-</IfModule>
