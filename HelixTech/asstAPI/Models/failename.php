@@ -1,6 +1,6 @@
 <?php namespace HelixTech\asstAPI\Models;
 
-    use HelixTech\asstAPI\Query;
+    use HelixTech\asstAPI\{Output, Query};
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
     use function \HelixTech\asstAPI\{encrypt, decrypt};
 
