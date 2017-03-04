@@ -32,14 +32,14 @@ class Crypt{
      */
     private static function UseEncryptionKey(callable $callBackFunction, ...$args){
         // retrieve key
-        $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst\\' : realpath('/var/www/private//'));
+        $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst' : realpath('/var/www/private'));
 
         // Find the index of the argument passed as null
         // (this implies, to this function, that the argument in question should be updated with the encryption key)
         $indexOfNullArg = (array_search(null, $args));
 
         /** @param $args[$indexOfNullArg] modified: with encrpytion key */
-        $args[$indexOfNullArg] = Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'keyfile.ini')['KEY']);
+        $args[$indexOfNullArg] = Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']);
        
         // call the function deploying the key, with its other arguments as an array
         // set the return value of the fucntion, so that the return value can bubble up
