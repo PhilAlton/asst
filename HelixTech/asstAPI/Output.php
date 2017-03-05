@@ -81,10 +81,10 @@ class Output{
 
             // sanaitize output to remove Unique ID from the output
             echo "</br>".$output = json_encode(Output::getOutput());
-            $uIDcount = substr_count($output, "UniqueID");
+            $uIDcount = substr_count($output, 'UniqueID');
 
             for ($i = 0; $i < $uIDcount; $i++){
-                echo "</br>".$start = strpos($output, '\"UniqueID\"');
+                echo "</br>".$start = strpos($output, 'UniqueID');
                 echo "</br>".$sub = substr($output, $start);
                 echo "</br>".$end = strpos($sub, '",')+1;
                 echo "</br>".$uIDstr = substr($output, $start, $end +1);
