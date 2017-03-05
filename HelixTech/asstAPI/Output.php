@@ -31,10 +31,13 @@ class Output{
 		if(!empty(Output::getOutput())){
             $output = json_encode(Output::getOutput());
             for ($i = 0; $i <= substr_count($output, "UniqueID"); $i++){
-                $start = strpos($output, "UniqueID");
-                substr($output, $start);
-                $end = strpos($output, '"');
-                substr($output, $start, strlen($output)-$end);
+                echo "</br>start: ".$start = strpos($output, "UniqueID");
+                echo "</br>sub: ".substr($output, $start);
+                echo "</br>end: ".$end = strpos($output, '"');
+                echo "</br>total: ".$uIDstr = substr($output, $start, strlen($output)-$end);
+
+                echo "</br>replaced: ".str_replace($uIDstr, "", $output);
+
             }
 
 
