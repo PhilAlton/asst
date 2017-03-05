@@ -81,9 +81,9 @@ class Output{
 
             // sanaitize output to remove Unique ID from the output
             echo "</br>".$output = json_encode(Output::getOutput());
-            echo preg_replace(array('"/\":UniqueID\":\"\w*\",/"','"/\":UniqueID\":\"\w*\",/"'), "", $output);
-            
-            
+            echo preg_replace('/":*UniqueID":"\w*"/', "", $output);
+
+
             /*
             $uIDcount = substr_count($output, 'UniqueID');
 
