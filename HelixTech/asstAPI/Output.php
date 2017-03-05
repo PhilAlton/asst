@@ -19,13 +19,7 @@ class Output{
 
 	public static function setOutput($output){
 		Output::setHistory(Output::$output);
-		Output::$output = array_walk_recursive(
-            $output, function(&$value, $key){
-                if ($key == "UniqueID"){
-                    $value = $_SERVER["PHP_AUTH_USER"];
-                }
-            }
-        );
+		Output::$output = $output;
 	}
 
     public static function errorMsg($errMsg){
@@ -34,7 +28,11 @@ class Output{
     }
 
 	public static function go(){
-		if(!empty(Output::getOutput())){echo json_encode(Output::getOutput());}
+		if(!empty(Output::getOutput())){
+            $output = json_encode(Output::getOutput());
+            $output = str_replace('ReplaceThis', 'WithThis', $output);
+            echo $output;
+        }
 
         $errorLog = "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
                     ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
