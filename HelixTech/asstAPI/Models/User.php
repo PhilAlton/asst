@@ -30,9 +30,8 @@
                     throw new \UnexpectedValueException($e);
                 } else {
                     // Else decrypt the password
-                    User::$uID = $UserDetails[0];
-                    $password = $UserDetails[1];
-                    $password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
+                    User::$uID = $UserDetails["UniqueID"];
+                    $password = Crypt::decrypt($UserDetails["Password"]);                                                             //FIX - decrypt should go in query class
 
                 }
 
