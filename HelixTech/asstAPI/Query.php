@@ -107,7 +107,6 @@
 
             }
 
-            if(isset($results['UniqueID'])){unset($results['UniqueID']);}
 		    return $results;
         }
 

@@ -19,7 +19,14 @@ class Output{
 
 	public static function setOutput($output){
 		Output::setHistory(Output::$output);
-		Output::$output = $output;
+		Output::$output = array_walk_recursive(
+            $output, function(&$value, $key){
+                if ($key == "UniqueID"){
+                    $key = "UserName";
+                    $value = $_SERVER["PHP_AUTH_USER"];
+                }
+            }
+        );
 	}
 
     public static function errorMsg($errMsg){
