@@ -158,8 +158,7 @@
 						        ")"
 						        );
 
-                echo $result = $query->execute();
-			    $results = array_merge($results, $result);
+			    $results = array_merge($results, $query->execute(););
 
 
 
