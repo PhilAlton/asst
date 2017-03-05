@@ -22,7 +22,6 @@
 	            $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
 
                 $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
-                var_dump($UserDetails);
                 // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
                 if (count($UserDetails)===0){
                     // If no password obtained then throw exception and handle.
@@ -364,7 +363,7 @@
 
 	    private static function deleteUser($UserName){
 		    // DELETE request, accepting user ID;
-
+            echo User::$uID;
 		    $query = New Query(DROP, "TABLE DATA_TABLE_".User::$uID);
 		    $query->execute();
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:uID');
