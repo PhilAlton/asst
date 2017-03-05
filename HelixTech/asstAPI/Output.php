@@ -30,7 +30,8 @@ class Output{
 	public static function go(){
 		if(!empty(Output::getOutput())){
             $output = json_encode(Output::getOutput());
-            for ($i = 0; $i <= substr_count($output, "UniqueID"); $i++){
+            echo $uIDcount = substr_count($output, "UniqueID");
+            for ($i = 0; $i <= $uIDcount; $i++){
                 $start = strpos($output, "UniqueID")-1;
                 substr($output, $start);
                 $end = strpos($output, '",')+1;
