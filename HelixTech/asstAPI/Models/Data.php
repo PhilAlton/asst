@@ -1,6 +1,15 @@
 <?php namespace HelixTech\asstAPI\Models;
-    
-  class Data {
+    /**
+    * @author Philip Alton
+    * @copyright Helix Tech Ltd. 2017
+    * @file Data.php
+    * @package asstAPI
+    */
+
+    /**
+    * Summary of Data
+    */
+    class Data {
 
 
 	    public static function syncData(){

@@ -1,4 +1,10 @@
 <?php namespace HelixTech\asstAPI\Models;
+      /**
+       * @author Philip Alton
+       * @copyright Helix Tech Ltd. 2017
+       * @file Data.php
+       * @package asstAPI
+       */
 
     use HelixTech\asstAPI\{Output, Query, Crypt};
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
