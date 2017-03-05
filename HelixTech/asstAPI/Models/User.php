@@ -187,11 +187,12 @@
          */
         public static function validateParticipateResearch($params){
 
+            $results;
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:uID');
 		    $isResearchParticipant = $query->execute([':uID' => User::$uID]);
 
             if (!$isResearchParticipant){
-                $results = array_merge($results, User::participateResearch($UserName, $params));
+                $results = array_merge($results, User::participateResearch($params));
 
             } else {
                 $results = array_merge($results, array("Research_Participant" => true));
