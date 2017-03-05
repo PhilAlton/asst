@@ -22,16 +22,16 @@
 	            $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
 
                 $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
-                User::$uID = $UserDetails[0];
-                $password = $UserDetails[1];
 
                 // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
-                if (count($password)===0){
+                if (count($UserDetails)===0){
                     // If no password obtained then throw exception and handle.
                     $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
                     throw new \UnexpectedValueException($e);
                 } else {
                     // Else decrypt the password
+                    User::$uID = $UserDetails[0];
+                    $password = $UserDetails[1];
                     $password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
 
                 }
@@ -128,7 +128,7 @@
 			    // Retrieve the created primary key
 			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 			    User::$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
-                
+
 
 			    // Update UserTable with parameters
 			    $query = New Query(
