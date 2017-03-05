@@ -107,7 +107,7 @@
 
             }
 
-            !isset($results['UniqueID']) ?:$results['UniqueID'] = "";
+            if(isset($results['UniqueID'])){$results['UniqueID'] = "";}
 		    return $results;
         }
 
