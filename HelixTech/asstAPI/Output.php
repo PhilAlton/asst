@@ -84,11 +84,11 @@ class Output{
             $uIDcount = substr_count($output, "UniqueID");
 
             for ($i = 0; $i < $uIDcount; $i++){
-                echo $start = strpos($output, "UniqueID")-1;
-                echo $sub = substr($output, $start);
-                echo $end = strpos($sub, '",')+1;
-                echo $uIDstr = substr($output, $start, $end +2);
-
+                echo "</br>".$start = strpos($output, "UniqueID")-1;
+                echo "</br>".$sub = substr($output, $start);
+                echo "</br>".$end = strpos($sub, '",')+1;
+                echo "</br>".$uIDstr = substr($output, $start, $end +2);
+                echo"</br>";
                 $output = str_replace($uIDstr, "", $output);
             }
 
