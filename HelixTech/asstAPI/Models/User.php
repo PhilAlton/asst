@@ -86,7 +86,7 @@
 	     */
 	    public static function createUser($params){
 
-
+            $results = array();
 		    //Ensure user of UserName does not already exist
 		    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 		    $conflict = $query->execute([':UserName' => $params['UserName']]);
