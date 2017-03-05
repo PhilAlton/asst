@@ -341,7 +341,7 @@
 
 
                         // process the update query
-                        $results = array_merege($results, User::updateParam($tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]));
+                        $results = array_merge($results, User::updateParam($tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]));
                     }
                 }
             }
