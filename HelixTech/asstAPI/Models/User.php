@@ -121,7 +121,7 @@
 								    "(:UserName, :Password, '$AuthToken')"
 							    );
 
-			    $result[] = $query->execute([':UserName' => $params['UserName'], ':Password' => $password]);
+			    $results = array_merge($results, $query->execute([':UserName' => $params['UserName'], ':Password' => $password]));
 
 			    // Retrieve the created primary key
 			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -137,12 +137,12 @@
 					    );
 
                 // Output should be set on the success of the following record insert
-			    $result[] = ($query->execute([':UniqueID' => User::$uID,
+			    $results = array_merge($results, ($query->execute([':UniqueID' => User::$uID,
 							    ':Age' => User::age($params['DoB']),
 							    ':Gender' => $params['Gender'],
 							    ':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
 							    ':Research_Participant' => $params['Research_Participant']
-						]));
+						])));
 
 
 
@@ -158,21 +158,20 @@
 						        ")"
 						        );
 
-			    $result[] = $query->execute();
+			    $results = array_merge($results, $query->execute());
 
 
 
                 // If the User has agreed to be a reserach participant:
                 if ($params['Research_Participant'] == 1){
 
-                    /** @todo point towards research block */
-                    $result[] = User::participateResearch(User::$uID, $params);
+                    $results = array_merge($results, User::participateResearch(User::$uID, $params));
 
                 }
 
 
 
-                Output::setOutput($result);
+                Output::setOutput($results);
 
 
 		    }
@@ -192,14 +191,14 @@
 		    $isResearchParticipant = $query->execute([':uID' => User::$uID]);
 
             if (!$isResearchParticipant){
-                $result[] = User::participateResearch($UserName, $params);
+                $results = array_merge($results, User::participateResearch($UserName, $params));
 
             } else {
-                $result[] = array("Research_Participant" => true);
+                $results = array_merge($results, array("Research_Participant" => true));
 
             }
 
-            return $result;
+            return $results;
 
         }
 
@@ -216,17 +215,17 @@
                         "(:UniqueID, :Firstname, :Surname, :DoB)"
                     );
 
-            $result[] = ($query->execute([':UniqueID' => User::$uID,
+            $results = array_merge($results, ($query->execute([':UniqueID' => User::$uID,
                             ':Firstname' => $params['Firstname'],
                             ':Surname' => $params['Surname'],
-                            ':DoB' => $params['DoB']]));
+                            ':DoB' => $params['DoB']])));
 
 
             /** @todo need to create a further query to create a reserach data table for each research subject user */
 
 
 
-            return $result;
+            return $results;
 
         }
 
@@ -301,11 +300,10 @@
             $results = array();
 
             //Get info from User's records in both User Data Tables
+		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:uID');
+		    $results = array_merge( $results, $query->execute([':uID' => User::$uID]));
             $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
-		    $results[] = $query->execute([':uID' => User::$uID]);
-
-            $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:uID');
-		    $results[] = $query->execute([':uID' => User::$uID]);
+		    $results = array_merge( $results, $query->execute([':uID' => User::$uID]));
 
             return $results;
 
