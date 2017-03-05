@@ -366,7 +366,7 @@
 	    private static function deleteUser($UserName){
 		    // DELETE request, accepting user ID;
 
-		    $query = New Query(DROP, "TABLE DATA_TABLE_".User::$uID.);
+		    $query = New Query(DROP, "TABLE DATA_TABLE_".User::$uID);
 		    $query->execute();
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:uID');
 		    $query->execute([':uID' => User::$uID]);
