@@ -22,8 +22,8 @@ try {
     $input = json_decode(file_get_contents('php://input'),true);
 
     // sanitise POST data UserName
-    if(isset($input['UserName'])){$input['UserName'] = $_SERVER["PHP_AUTH_USER"];}               // This should never be sent in the post variables, instead, username should be sent in the header.
-    if(isset($input['Password'])){$input['Password'] = $_SERVER["PHP_AUTH_PW"];}                 // This also prevents UserName being updated.
+    $input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
+    $input['Password'] = $_SERVER["PHP_AUTH_PW"];               // This also prevents UserName being updated.
     // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
 
 
