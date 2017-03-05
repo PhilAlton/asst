@@ -31,18 +31,16 @@ class Output{
 		if(!empty(Output::getOutput())){
             $output = json_encode(Output::getOutput());
             echo $uIDcount = substr_count($output, "UniqueID");
-            for ($i = 0; $i <= $uIDcount; $i++){
+            for ($i = 0; $i < $uIDcount; $i++){
                 $start = strpos($output, "UniqueID")-1;
                 substr($output, $start);
                 $end = strpos($output, '",')+1;
                 $uIDstr = substr($output, $start, $end);
 
-                echo "</br>replaced: ".str_replace($uIDstr, "", $output);
+                echo "</br>replaced: ".$output = str_replace($uIDstr, "", $output);
 
             }
 
-
-            $output = str_replace('"UniqueID": "18",', '', $output);
             echo $output;
         }
 
