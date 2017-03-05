@@ -71,6 +71,11 @@
 				        http_response_code(201); // content created
 				        break;
 
+                    case CREATE:
+                        $results = "sucess";
+				        http_response_code(201); // content created
+				        break;
+
 			        case UPDATE:
 				        http_response_code(204); // No content *(request fulfilled)
 				        break;
