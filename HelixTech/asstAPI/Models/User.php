@@ -187,7 +187,7 @@
          */
         public static function validateParticipateResearch($params){
 
-            $results[];
+            $results = array();
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:uID');
 		    $isResearchParticipant = $query->execute([':uID' => User::$uID]);
 
@@ -206,7 +206,7 @@
 
         public static function participateResearch($params){
 
-            $results[];
+            $results = array();
             // Update ResearchTable with parameters
             /** @todo need to update this query to reflect changes to research table, adding baseline survey info */
             $query = New Query(
@@ -318,7 +318,7 @@
 	     * @return array
 	     */
 	    private static function updateParams($UserName, $params){
-            $return;
+            $results = array();
 
             // Asign columns in the User Table to an array
                 // This could be dynamically created from a call to the Table to show list of columns
@@ -343,11 +343,11 @@
 
 
                         // process the update query
-                        $return[] = User::updateParam($tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
+                        $results[] = User::updateParam($tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
                     }
                 }
             }
-            return $return;
+            return $results;
 
 	    }
 
