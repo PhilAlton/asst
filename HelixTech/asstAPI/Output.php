@@ -38,16 +38,16 @@ class Output{
      * @return string
      */
     private static function getHistory(){return Output::$history;}
-    
+
     /**
      * Summary of getError
      * @return string
      */
     private static function getError(){return Output::$error;}
-	
+
     /**
      * Summary of setHistory
-     * @param mixed $newOutput 
+     * @param mixed $newOutput
      */
     private static function setHistory($newOutput){
 		Output::$history = Output::$history."</br>".$newOutput;
@@ -55,16 +55,16 @@ class Output{
 
 	/**
 	 * Summary of setOutput
-	 * @param mixed $output 
+	 * @param mixed $output
 	 */
 	public static function setOutput($output){
 		Output::setHistory(Output::$output);
 		Output::$output = $output;
 	}
-    
+
     /**
      * Summary of errorMsg
-     * @param mixed $errMsg 
+     * @param mixed $errMsg
      */
     public static function errorMsg($errMsg){
         Output::$error = Output::$error."</br><b>".date("Y-m-d, H:i:s",time())." - </b>".$errMsg;
@@ -84,10 +84,10 @@ class Output{
             $uIDcount = substr_count($output, "UniqueID");
 
             for ($i = 0; $i < $uIDcount; $i++){
-                $start = strpos($output, "UniqueID")-1;
-                $sub = substr($output, $start);
-                $end = strpos($sub, '",')+1;
-                $uIDstr = substr($output, $start, $end +2);
+                echo $start = strpos($output, "UniqueID")-1;
+                echo $sub = substr($output, $start);
+                echo $end = strpos($sub, '",')+1;
+                echo $uIDstr = substr($output, $start, $end +2);
 
                 $output = str_replace($uIDstr, "", $output);
             }
@@ -111,7 +111,7 @@ class Output{
         $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</b></br>";
 
         $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
-        
+
         // Write error log to log file
         file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
 
