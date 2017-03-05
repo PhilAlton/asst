@@ -22,7 +22,7 @@
 	            $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
 
                 $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
-
+                var_dump($UserDetails);
                 // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
                 if (count($UserDetails)===0){
                     // If no password obtained then throw exception and handle.
