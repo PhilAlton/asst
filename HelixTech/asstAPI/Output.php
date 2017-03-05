@@ -81,7 +81,7 @@ class Output{
 
             // sanaitize output to remove Unique ID from the output
             $output = json_encode(Output::getOutput());
-            $output = preg_replace('/":*UniqueID":"\w*"?,/', "", $output);
+            $output = preg_replace('/":*UniqueID":"\w*",?/', "", $output);
 
             // return values sent to client in the HTTP body
             echo $output;
