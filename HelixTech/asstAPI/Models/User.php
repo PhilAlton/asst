@@ -164,9 +164,7 @@
 
                 // If the User has agreed to be a reserach participant:
                 if ($params['Research_Participant'] == 1){
-
                     $results = array_merge($results, User::participateResearch(User::$uID, $params));
-
                 }
 
 
@@ -343,7 +341,7 @@
 
 
                         // process the update query
-                        $results[] = User::updateParam($tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
+                        $results = array_merege($results, User::updateParam($tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]));
                     }
                 }
             }
