@@ -84,7 +84,7 @@ class Output{
             $uIDcount = substr_count($output, 'UniqueID');
 
             for ($i = 0; $i < $uIDcount; $i++){
-                echo "</br>".$start = strpos($output, 'UniqueID');
+                echo "</br>".$start = strpos($output, 'UniqueID')-1;
                 echo "</br>".$sub = substr($output, $start);
                 echo "</br>".$end = strpos($sub, '",')+1;
                 echo "</br>".$uIDstr = substr($output, $start, $end +1);
