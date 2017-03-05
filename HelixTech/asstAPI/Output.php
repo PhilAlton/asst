@@ -34,7 +34,7 @@ class Output{
                 echo "</br>start: ".$start = strpos($output, "UniqueID")-1;
                 echo "</br>sub: ".substr($output, $start);
                 echo "</br>end: ".$end = strpos($output, '",');
-                echo "</br>total: ".$uIDstr = substr($output, $start, strlen($output)-$end);
+                echo "</br>total: ".$uIDstr = substr($output, $start, $end);
 
                 echo "</br>replaced: ".str_replace($uIDstr, "", $output);
 
