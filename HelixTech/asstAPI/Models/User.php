@@ -340,12 +340,12 @@
                         if (($col["COLUMN_NAME"] == "Research_Participant")
                             and
                             ($params['Research_Participant'] == true))
-                        {User::validateParticipateResearch(User::$uID, $params);}
+                        {User::validateParticipateResearch($params);}
 
 
 
                         // process the update query
-                        $return[] = User::updateParam(User::$uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
+                        $return[] = User::updateParam($tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
                     }
                 }
             }
@@ -353,7 +353,7 @@
 
 	    }
 
-        private static function updateParam(User::$uID, $tableName, $column, $value){
+        private static function updateParam($tableName, $column, $value){
             //PUT request, acepting multiple arguments including user ID.
             $query = New Query(UPDATE, "$tableName ".
                                 "SET $column=:$column ".
