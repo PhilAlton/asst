@@ -79,7 +79,7 @@ class Output{
 	public static function go(){
 		if(!empty(Output::getOutput())){
 
-            // sanaitize output to remove Unique ID from the output
+            // sanaitize output to remove Unique ID from the output using preg_replace.
             $output = json_encode(Output::getOutput());
             $output = preg_replace('/":*UniqueID":"\w*",?/', "", $output);
 
