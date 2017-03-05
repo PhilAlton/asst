@@ -315,7 +315,12 @@
                     var_dump($col);
                     if (isset($params[$col["COLUMN_NAME"]])){
                         // check whether ResearchParticipant value is true
-                        if ($params['ResearchParticipant'] == true){User::participateResearch($UserName, $params);}
+                        if (($col["COLUMN_NAME"] == "Research_Participant") 
+                            and 
+                            ($params['Research_Participant'] == true))   
+                        {User::participateResearch($UserName, $params);}
+
+
 
                         // process the update query
                         $return[] = User::updateParam($uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
