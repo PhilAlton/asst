@@ -89,7 +89,7 @@ class Output{
                 $end = strpos($sub, '",')+1;
                 $uIDstr = substr($output, $start, $start + $end);
 
-      //          $output = str_replace($uIDstr, "", $output);
+                $output = str_replace($uIDstr, "", $output);
             }
 
             // return values sent to client in the HTTP body
