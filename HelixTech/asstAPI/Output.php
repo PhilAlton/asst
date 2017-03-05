@@ -30,7 +30,7 @@ class Output{
 	public static function go(){
 		if(!empty(Output::getOutput())){
             $output = json_encode(Output::getOutput());
-            $output = str_replace('ReplaceThis', 'WithThis', $output);
+            $output = str_replace('"UniqueID": "18",', '', $output);
             echo $output;
         }
 
