@@ -1,6 +1,6 @@
 <?php namespace HelixTech\asstAPI;
 
-    use HelixTech\asstAPI\Database;
+    use HelixTech\asstAPI\{Database, Crypt};
 
     //require 'database.php';
     define("INSERT", "INSERT");
@@ -28,9 +28,9 @@
 
         /**
          * Summary of execute - execute a query taking in parameters to bind the SQL statement prepared in the constructor
-         * 
+         *
          * @param mixed $params to be bound into the query
-         * @return mixed, 
+         * @return mixed,
          */
         public function execute($params = null){
             $results;
@@ -38,8 +38,8 @@
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
-			    //		encrypt
-					    $param,							// Encrypt all parameters here: erncrypt($param)
+			    //		Crypt::encrypt
+					    $param,							// Encrypt all parameters here: uncomment and add () to $param
 					    $value
 				    );
 			    }
@@ -63,7 +63,7 @@
 				        }
 
 				        // algorithm to decrypt all database output
-			            // array_walk_recursive($results, function(&$value, $key){$value = decrypt($value);});
+                        // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
                         http_response_code(200); // OK
 				        break;
 

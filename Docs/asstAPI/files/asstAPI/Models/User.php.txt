@@ -1,8 +1,7 @@
 <?php namespace HelixTech\asstAPI\Models;
 
-    use HelixTech\asstAPI\{Output, Query};
+    use HelixTech\asstAPI\{Output, Query, Crypt};
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
-    use function \HelixTech\asstAPI\{encrypt, decrypt};
 
     /**
      * Summary of User: class containing static methods to perform actions on the database
@@ -29,7 +28,7 @@
                     throw new \UnexpectedValueException($e);
                 } else {
                     // Else decrypt the password
-                    $password = decrypt($password);                                                             //FIX - decrypt should go in query class
+                    $password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
 
                 }
 
@@ -95,9 +94,9 @@
 
 		    } else {
 
-			    // Hash a new password for storing in the database.
-			    // The function automatically generates a cryptographically safe salt.
-			    $password =	encrypt(
+			// Hash a new password for storing in the database.
+            // The function automatically generates a cryptographically safe salt.
+			    $password =	Crypt::encrypt(
 							    password_hash
 							    (
 								    base64_encode
@@ -108,7 +107,7 @@
 							    )
 						    );
 
-			    // TODO: Devise AuthToken uses and method
+			    /** @todo: Devise AuthToken uses and method */
 			    $AuthToken = "randomauthtoken90";
 
 
@@ -142,27 +141,26 @@
 			    // Update UserTable with parameters
 			    $query = New Query(
 					    INSERT, "INTO UserTable".
-						    "(UniqueID, Age, Gender, Age_Of_Symptom_Onset, Research_Participant, NHS_Number)".
+						    "(UniqueID, Age, Gender, Age_Of_Symptom_Onset, Research_Participant)".
 					    "VALUES".
-						    "(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant, :NHS_Number)"
+						    "(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant)"
 					    );
 
-                // Output should be set on the sucess of the following record insert
+                // Output should be set on the success of the following record insert
 			    $result[] = ($query->execute([':UniqueID' => $uID,
 							    ':Age' => User::age($params['DoB']),
 							    ':Gender' => $params['Gender'],
 							    ':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
-							    ':Research_Participant' => $params['Research_Participant'],
-							    ':NHS_Number' => $params['NHS_Number']]));
+							    ':Research_Participant' => $params['Research_Participant']
+						]));
 
 
 
 			    // Create Data Table for User
-                //ALTER TABLE `UserPersonalData` CHANGE `UniqueID` `UniqueID` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT ;
 			    $query = New Query(
 						        CREATE, "TABLE DATA_TABLE_$uID".
 						        "(".
-							        "DataID int(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,".
+							        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
 							        "TimeStamp TIMESTAMP,".		// this might not be the correct way
 							        "Date date,".
 							        "Item_1 int(11),".
@@ -325,8 +323,8 @@
 
 
         public static function age($DoB){
-            $from = new DateTime($DoB);
-            $to   = new DateTime('today');
+            $from = new \DateTime($DoB);
+            $to   = new \DateTime('today');
             $age = $from->diff($to)->y;
 
             return $age;

@@ -15,11 +15,11 @@
         /**
          * __construct - establish a connection to the database
          * Load config.ini file for database variables
-         * 
-         * 
+         *
+         *
          */
         public function __construct(){
-        
+
             if (!isset($this->dbConnection)){
                 $this->config = parse_ini_file(realpath('/var/www/private/config.ini'));
 
@@ -144,4 +144,4 @@
 
 
     }
-    ?>
+?>

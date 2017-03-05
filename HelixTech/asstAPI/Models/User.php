@@ -125,18 +125,6 @@
 			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 			    $uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
 
-                // Update UserPersonalData with parameters
-			    $query = New Query(
-					    INSERT, "INTO UserPersonalData".
-						    "(UniqueID, Firstname, Surname, DoB)".
-					    "VALUES".
-						    "(:UniqueID, :Firstname, :Surname, :DoB)"
-					    );
-
-                $result[] = ($query->execute([':UniqueID' => $uID,
-							    ':Firstname' => $params['Firstname'],
-							    ':Surname' => $params['Surname'],
-							    ':DoB' => $params['DoB']]));
 
 			    // Update UserTable with parameters
 			    $query = New Query(
@@ -156,9 +144,9 @@
 
 
 
-			    // Create Data Table for User
+			    // Create General Data Table for User
 			    $query = New Query(
-						        CREATE, "TABLE DATA_TABLE_$uID".
+						        CREATE, "TABLE GEN_DATA_TABLE_$uID".
 						        "(".
 							        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
 							        "TimeStamp TIMESTAMP,".		// this might not be the correct way
@@ -170,14 +158,53 @@
 
 			    $result[] = $query->execute();
 
+
+
+                // If the User has agreed to be a reserach participant:
+                if ($params['Research_Participant'] == 1){
+
+                    /** @todo point towards research block */
+                    $result[] = User::participateResearch($UserName, $params);
+
+                }
+
+
+
                 Output::setOutput($result);
 
 
 		    }
 	    }
 
+
+
+
+        public static function participateResearch($UserName, $params){
+
+
+            // Update ResearchTable with parameters
+            $query = New Query(
+                    INSERT, "INTO ResearchTable".
+                        "(UniqueID, Firstname, Surname, DoB)".
+                    "VALUES".
+                        "(:UniqueID, :Firstname, :Surname, :DoB)"
+                    );
+
+            $result[] = ($query->execute([':UniqueID' => $uID,
+                            ':Firstname' => $params['Firstname'],
+                            ':Surname' => $params['Surname'],
+                            ':DoB' => $params['DoB']]));
+
+
+
+            return $result;
+
+        }
+
+
+
 	    /**
-	     * Summary of handleRequest - direct .../Users/{UserName} to the appropiate methdos
+         * Summary of handleRequest - direct .../Users/{UserName} to the appropiate methdos
 	     * @param mixed $method - the HTTP VERB; functionality has been written so far for PUT, DELETE and GET for this endpoint
 	     * @param mixed $UserName - UserName as passed in through the HTTP header
 	     * @param mixed $params - Parameters passed in from the POST fields
@@ -249,7 +276,7 @@
 		    $uID = $query->execute([':UserName' => $UserName]);
 
             //Get info from User's records in both User Data Tables
-		    $query = New Query(SELECT, '* FROM `UserPersonalData` WHERE `UniqueID` =:uID');
+		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:uID');
 		    $results = array_merge( $results, $query->execute([':uID' => $uID]));
             $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
 		    $results = array_merge( $results, $query->execute([':uID' => $uID]));
@@ -278,15 +305,19 @@
                                     ."FROM INFORMATION_SCHEMA.COLUMNS "
                                     ."WHERE TABLE_NAME=:tableName"
                                     );
-            $colArray['UserPersonalData'] = $query->execute([':tableName' => 'UserPersonalData']);
+            $colArray['ResearchTable'] = $query->execute([':tableName' => 'ResearchTable']);
             $colArray['UserTable'] = $query->execute([':tableName' => 'UserTable']);
 
             // Loop through each column, and check whether a post variable has been created with that same column name
             // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
             foreach ($colArray as $tableName => $columns){
                 foreach ($columns as $col){
+                    var_dump($col);
                     if (isset($params[$col["COLUMN_NAME"]])){
-                        // Need to confirm action of array_merge
+                        // check whether ResearchParticipant value is true
+                        if ($params['ResearchParticipant'] == true){User::participateResearch($UserName, $params);}
+
+                        // process the update query
                         $return[] = User::updateParam($uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
                     }
                 }
@@ -314,7 +345,7 @@
 		    $query->execute();
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:uID');
 		    $query->execute([':uID' => $uID]);
-		    $query = New Query(DELETE, 'FROM `UserPersonalData` WHERE `UniqueID` =:uID');
+		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:uID');
             $query->execute([':uID' => $uID]);
 		    $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:uID');
 		    return $query->execute([':uID' => $uID]);
