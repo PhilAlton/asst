@@ -302,10 +302,10 @@
 
             //Get info from User's records in both User Data Tables
             $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
-		    $results[] = $query->execute([':uID' => User::$uID]));
+		    $results[] = $query->execute([':uID' => User::$uID]);
 
             $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:uID');
-		    $results[] = $query->execute([':uID' => User::$uID]));
+		    $results[] = $query->execute([':uID' => User::$uID]);
 
             return $results;
 
