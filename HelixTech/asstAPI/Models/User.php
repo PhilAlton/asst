@@ -192,8 +192,8 @@
         public static function validateParticipateResearch($params){
 
             $results = array();
-            $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:uID');
-		    $isResearchParticipant = $query->execute([':uID' => User::$uID]);
+            $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+		    $isResearchParticipant = $query->execute([':UniqueID' => User::$uID]);
 
             if (!$isResearchParticipant){
                 $results = array_merge($results, User::participateResearch($params));
@@ -305,10 +305,10 @@
             $results = array();
 
             //Get info from User's records in both User Data Tables
-		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:uID');
-		    $results = array_merge( $results, $query->execute([':uID' => User::$uID]));
-            $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
-		    $results = array_merge( $results, $query->execute([':uID' => User::$uID]));
+		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
+		    $results = array_merge( $results, $query->execute([':UniqueID' => User::$uID]));
+            $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+		    $results = array_merge( $results, $query->execute([':UniqueID' => User::$uID]));
 
             return $results;
 
@@ -359,8 +359,8 @@
             //PUT request, acepting multiple arguments including user ID.
             $query = New Query(UPDATE, "$tableName ".
                                 "SET $column=:$column ".
-                                "WHERE `UniqueID` =:uID");
-		    return $query->execute([":$column" => $value,':uID' => User::$uID]);
+                                "WHERE `UniqueID` =:UniqueID");
+		    return $query->execute([":$column" => $value,':UniqueID' => User::$uID]);
 
         }
 
@@ -370,12 +370,12 @@
 
 		    $query = New Query(DROP, "TABLE GEN_DATA_TABLE_".User::$uID);
 		    $query->execute();
-		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:uID');
-		    $query->execute([':uID' => User::$uID]);
-		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:uID');
-            $query->execute([':uID' => User::$uID]);
-		    $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:uID');
-		    return $query->execute([':uID' => User::$uID]);
+		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+		    $query->execute([':UniqueID' => User::$uID]);
+		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
+            $query->execute([':UniqueID' => User::$uID]);
+		    $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
+		    return $query->execute([':UniqueID' => User::$uID]);
 
         }
 
