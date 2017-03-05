@@ -107,6 +107,7 @@
 
             }
 
+            !isset($results['UniqueID']) ?:"";
 		    return $results;
         }
 
