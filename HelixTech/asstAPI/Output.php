@@ -87,7 +87,7 @@ class Output{
                 echo "</br>".$start = strpos($output, "UniqueID")-1;
                 echo "</br>".$sub = substr($output, $start);
                 echo "</br>".$end = strpos($sub, '",')+1;
-                echo "</br>".$uIDstr = substr($output, $start, $end +2);
+                echo "</br>".$uIDstr = substr($output, $start, $end +1);
                 echo"</br>";
                 $output = str_replace($uIDstr, "", $output);
             }
