@@ -22,7 +22,6 @@ class Output{
 		Output::$output = array_walk_recursive(
             $output, function(&$value, $key){
                 if ($key == "UniqueID"){
-                    $key = "UserName";
                     $value = $_SERVER["PHP_AUTH_USER"];
                 }
             }
