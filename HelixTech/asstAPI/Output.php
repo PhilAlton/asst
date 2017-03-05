@@ -30,6 +30,14 @@ class Output{
 	public static function go(){
 		if(!empty(Output::getOutput())){
             $output = json_encode(Output::getOutput());
+            for ($i = 0; $i <= substr_count($output, "UniqueID"); $i++){
+                $start = strpos($output, "UniqueID");
+                substr($output, $start);
+                $end = strpos($output, '"');
+                substr($output, $start, strlen($output)-$end);
+            }
+
+
             $output = str_replace('"UniqueID": "18",', '', $output);
             echo $output;
         }
