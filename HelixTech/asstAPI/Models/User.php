@@ -187,7 +187,7 @@
          */
         public static function validateParticipateResearch($params){
 
-            $results;
+            $results[];
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:uID');
 		    $isResearchParticipant = $query->execute([':uID' => User::$uID]);
 
@@ -206,7 +206,7 @@
 
         public static function participateResearch($params){
 
-
+            $results[];
             // Update ResearchTable with parameters
             /** @todo need to update this query to reflect changes to research table, adding baseline survey info */
             $query = New Query(
