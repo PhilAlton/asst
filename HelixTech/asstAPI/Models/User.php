@@ -9,7 +9,8 @@
      */
     class User {
 
-
+        /** @param User::$uID = UniqueID for connected user (or created user) */
+        private static $uID;
 
 	    public static function authenticate(){
 
@@ -18,8 +19,11 @@
 
             try{
 	            // retrieve stored password string from database against UserName
-	            $query = New Query(SELECT, 'Password FROM `AuthTable` WHERE `UserName` =:UserName');
-	            $password = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
+	            $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
+
+                $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
+                User::$uID = $UserDetails[0];
+                $password = $UserDetails[1];
 
                 // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
                 if (count($password)===0){
@@ -123,8 +127,8 @@
 
 			    // Retrieve the created primary key
 			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-			    $uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
-
+			    User::$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
+                
 
 			    // Update UserTable with parameters
 			    $query = New Query(
@@ -135,7 +139,7 @@
 					    );
 
                 // Output should be set on the success of the following record insert
-			    $result[] = ($query->execute([':UniqueID' => $uID,
+			    $result[] = ($query->execute([':UniqueID' => User::$uID,
 							    ':Age' => User::age($params['DoB']),
 							    ':Gender' => $params['Gender'],
 							    ':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
@@ -146,7 +150,7 @@
 
 			    // Create General Data Table for User
 			    $query = New Query(
-						        CREATE, "TABLE GEN_DATA_TABLE_$uID".
+						        CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
 						        "(".
 							        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
 							        "TimeStamp TIMESTAMP,".		// this might not be the correct way
@@ -164,7 +168,7 @@
                 if ($params['Research_Participant'] == 1){
 
                     /** @todo point towards research block */
-                    $result[] = User::participateResearch($UserName, $params);
+                    $result[] = User::participateResearch(User::$uID, $params);
 
                 }
 
@@ -177,12 +181,36 @@
 	    }
 
 
+        /**
+         * Summary of validateParticipateResearch - queries the database regarding whether uID is registered as a research participant already
+         * Will invoke User::participateResearch, to register the User as a research subject.
+         * @param mixed User::$uID - UniqueId of the User
+         * @param mixed $params - Parameters from the input stream
+         * @return array - to be sent back to the client
+         */
+        public static function validateParticipateResearch($params){
+
+            $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:uID');
+		    $isResearchParticipant = $query->execute([':uID' => User::$uID]);
+
+            if (!$isResearchParticipant){
+                $result[] = User::participateResearch($UserName, $params);
+
+            } else {
+                $result[] = array("Research_Participant" => true);
+
+            }
+
+            return $result;
+
+        }
 
 
-        public static function participateResearch($UserName, $params){
+        public static function participateResearch($params){
 
 
             // Update ResearchTable with parameters
+            /** @todo need to update this query to reflect changes to research table, adding baseline survey info */
             $query = New Query(
                     INSERT, "INTO ResearchTable".
                         "(UniqueID, Firstname, Surname, DoB)".
@@ -190,10 +218,13 @@
                         "(:UniqueID, :Firstname, :Surname, :DoB)"
                     );
 
-            $result[] = ($query->execute([':UniqueID' => $uID,
+            $result[] = ($query->execute([':UniqueID' => User::$uID,
                             ':Firstname' => $params['Firstname'],
                             ':Surname' => $params['Surname'],
                             ':DoB' => $params['DoB']]));
+
+
+            /** @todo need to create a further query to create a reserach data table for each research subject user */
 
 
 
@@ -271,15 +302,11 @@
 		    // GET request
             $results = array();
 
-            //Get the uID
-		    $query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
-		    $uID = $query->execute([':UserName' => $UserName]);
-
             //Get info from User's records in both User Data Tables
 		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:uID');
-		    $results = array_merge( $results, $query->execute([':uID' => $uID]));
+		    $results = array_merge( $results, $query->execute([':uID' => User::$uID]));
             $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:uID');
-		    $results = array_merge( $results, $query->execute([':uID' => $uID]));
+		    $results = array_merge( $results, $query->execute([':uID' => User::$uID]));
 
             return $results;
 
@@ -295,10 +322,6 @@
 	    private static function updateParams($UserName, $params){
             $return;
 
-            // Get UserID
-		    $query = New Query(SELECT, '`UniqueID` FROM `AuthTable` WHERE `UserName` =:UserName');
-            $uID = $query->execute([':UserName' => $UserName]);
-
             // Asign columns in the User Table to an array
                 // This could be dynamically created from a call to the Table to show list of columns
             $query = New Query(SELECT, "COLUMN_NAME "
@@ -312,18 +335,17 @@
             // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
             foreach ($colArray as $tableName => $columns){
                 foreach ($columns as $col){
-                    var_dump($col);
                     if (isset($params[$col["COLUMN_NAME"]])){
                         // check whether ResearchParticipant value is true
-                        if (($col["COLUMN_NAME"] == "Research_Participant") 
-                            and 
-                            ($params['Research_Participant'] == true))   
-                        {User::participateResearch($UserName, $params);}
+                        if (($col["COLUMN_NAME"] == "Research_Participant")
+                            and
+                            ($params['Research_Participant'] == true))
+                        {User::validateParticipateResearch(User::$uID, $params);}
 
 
 
                         // process the update query
-                        $return[] = User::updateParam($uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
+                        $return[] = User::updateParam(User::$uID, $tableName, $col["COLUMN_NAME"], $params[$col["COLUMN_NAME"]]);
                     }
                 }
             }
@@ -331,29 +353,27 @@
 
 	    }
 
-        private static function updateParam($uID, $tableName, $column, $value){
+        private static function updateParam(User::$uID, $tableName, $column, $value){
             //PUT request, acepting multiple arguments including user ID.
             $query = New Query(UPDATE, "$tableName ".
                                 "SET $column=:$column ".
                                 "WHERE `UniqueID` =:uID");
-		    return $query->execute([":$column" => $value,':uID' => $uID]);
+		    return $query->execute([":$column" => $value,':uID' => User::$uID]);
 
         }
 
 
 	    private static function deleteUser($UserName){
 		    // DELETE request, accepting user ID;
-		    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-		    $uID = $query->execute([':UserName' => $UserName])['UniqueID'];
 
-		    $query = New Query(DROP, "TABLE DATA_TABLE_$uID");
+		    $query = New Query(DROP, "TABLE DATA_TABLE_".User::$uID.);
 		    $query->execute();
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:uID');
-		    $query->execute([':uID' => $uID]);
+		    $query->execute([':uID' => User::$uID]);
 		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:uID');
-            $query->execute([':uID' => $uID]);
+            $query->execute([':uID' => User::$uID]);
 		    $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:uID');
-		    return $query->execute([':uID' => $uID]);
+		    return $query->execute([':uID' => User::$uID]);
 
         }
 
