@@ -34,10 +34,7 @@ class Output{
 		Output::$history = Output::$history."</br>".$newOutput;
 	}
 
-	/**
-	 * Summary of setOutput
-	 * @param mixed $output
-	 */
+	/** @param mixed $output setter for Output::$output, which also sets $history via it's setter */
 	public static function setOutput($output){
 		Output::setHistory(Output::$output);
 		Output::$output = $output;
