@@ -59,6 +59,7 @@ class Output{
 
 //commit these changes
 //morechanges
+//Other
 // further
 
         // Construct error log header with connection details:
