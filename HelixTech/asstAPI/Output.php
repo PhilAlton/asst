@@ -53,7 +53,7 @@ class Output{
             $output = json_encode(Output::getOutput());
             $output = preg_replace('/":*UniqueID":"\w*",?/', "", $output);
 
-            // return values sent to client in the HTTP body.
+            // return values: sent to client in the HTTP body via echo.
             echo $output;
         }
 
