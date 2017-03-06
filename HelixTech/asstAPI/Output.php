@@ -12,15 +12,16 @@
  */
 class Output{
 
+# region MemberVariables
 	/** @var mixed - $output - to be JSON encoded and returned to the client */
 	private static $output;
-
 	/** @var mixed - $history - to be outputed to error log file */
 	private static $history;
-    
 	/** @var mixed - $error - to be ouputed to teh erro log file */
     private static $error;
+# endregion
 
+#region Setters and Getters
 	/** @return mixed getter Output::$output */
 	private static function getOutput(){return Output::$output;}
 
@@ -55,6 +56,7 @@ class Output{
         Output::$error = Output::$error."</br><b>".date("Y-m-d, H:i:s",time())." - </b>".$errMsg;
 
     }
+#endregion
 
 	/**
 	 * Summary of go - processes returns from buisness logic
