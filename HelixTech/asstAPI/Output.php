@@ -4,11 +4,13 @@
  * @copyright Helix Tech Ltd. 2017
  * @file Output.php
  * @package asstAPI
+ *
  */
 
 /**
  * Class to handle buisness logic return variables,
  * Including sanitizing output, and error logging.
+ *
  */
 class Output{
 
@@ -41,7 +43,7 @@ class Output{
 	/**
 	 * Summary of go - process output from buisness logic.
      * Passes back a JSON encoded string in the HTTP body to the client with return data,
-     * Writes errors to the error log file
+     * Writes errors to the error log file.
 	 * @return void
 	 */
 	public static function go(){
