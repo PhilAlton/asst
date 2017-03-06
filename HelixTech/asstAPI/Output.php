@@ -8,7 +8,7 @@
 
 /**
  * Class to handle buisness logic return variables
- * Including sanitizing output, and error logging
+ * Including sanitizing output, and error logging.
  */
 class Output{
 
