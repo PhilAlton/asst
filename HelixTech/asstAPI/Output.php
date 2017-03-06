@@ -40,10 +40,7 @@ class Output{
 		Output::$output = $output;
 	}
 
-    /**
-     * Summary of errorMsg
-     * @param mixed $errMsg
-     */
+    /** @param mixed $errMsg setter for Output::$error */
     public static function errorMsg($errMsg){
         Output::$error = Output::$error."</br><b>".date("Y-m-d, H:i:s",time())." - </b>".$errMsg;
 
