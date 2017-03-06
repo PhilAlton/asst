@@ -14,10 +14,8 @@ class Output{
 
 	/** @var mixed - $output - to be JSON encoded and returned to the client */
 	private static $output;
-	/**
-	 * Summary of $history
-	 * @var mixed
-	 */
+
+	/** @var mixed - $history - to be outputed to erro file */
 	private static $history;
     /**
      * Summary of $error
