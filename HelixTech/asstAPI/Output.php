@@ -57,6 +57,8 @@ class Output{
             echo $output;
         }
 
+//somecomment
+
         // Construct error log header with connection details:
 		/** @todo rewrite connection to pull from / link against connection class? Output should only output when an error is present*/
         $errorLog = "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
