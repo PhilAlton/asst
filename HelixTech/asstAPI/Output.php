@@ -30,22 +30,13 @@ class Output{
     private static function getError(){return Output::$error;}
 
     /** @param mixed $newOutput setter for Output::$history */
-    private static function setHistory($newOutput){
-		Output::$history = Output::$history."</br>".$newOutput;
-	}
-
+    private static function setHistory($newOutput){Output::$history = Output::$history."</br>".$newOutput;}
 	/** @param mixed $output setter for Output::$output, which also sets $history via it's setter */
-	public static function setOutput($output){
-		Output::setHistory(Output::$output);
-		Output::$output = $output;
-	}
-
+	public static function setOutput($output){Output::setHistory(Output::$output); Output::$output = $output;}
     /** @param mixed $errMsg setter for Output::$error */
-    public static function errorMsg($errMsg){
-        Output::$error = Output::$error."</br><b>".date("Y-m-d, H:i:s",time())." - </b>".$errMsg;
-
-    }
+    public static function errorMsg($errMsg){Output::$error = Output::$error."</br><b>".date("Y-m-d, H:i:s",time())." - </b>".$errMsg;}
 #endregion
+
 
 	/**
 	 * Summary of go - processes returns from buisness logic
