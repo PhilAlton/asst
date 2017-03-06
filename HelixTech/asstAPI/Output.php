@@ -21,10 +21,7 @@ class Output{
 	/** @var mixed - $error - to be ouputed to teh erro log file */
     private static $error;
 
-	/**
-	 * Summary of getOutput
-	 * @return mixed
-	 */
+	/** @return mixed getter Output::$output */
 	private static function getOutput(){return Output::$output;}
 
     /**
