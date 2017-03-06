@@ -56,21 +56,25 @@ class Output{
 
 
 
-        // Construct error log
+        // Construct error log header with connection details
         $errorLog = "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
                     ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
-        ."</br>To: <b>".$_SERVER['REQUEST_METHOD']."</b> @ <b>".$_SERVER['REQUEST_URI']."</b>"
+					."</br>To: <b>".$_SERVER['REQUEST_METHOD']."</b> @ <b>".$_SERVER['REQUEST_URI']."</b>"
                     ."</br>At: <b>".date("Y-m-d, H:i:s", $_SERVER['REQUEST_TIME'])."</b>"
-                    ."</br>".Output::getError();
+        
+		// Then output the error log            
+		."</br>".Output::getError();
+		
+		// Add history after
 		if (Output::getHistory() !== "</br>"){
 			$errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getHistory();
 		}
 
+		// Enclose entry to improve readability
         $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</b></br>";
 
-        $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
-
         // Write error log to log file
+        $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
         file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
 
 	}
