@@ -41,7 +41,7 @@ class Output{
 
 
 	/**
-	 * Summary of go - process output from buisness logic.
+	 * Summary of Output::go - process output from buisness logic.
      * Passes back a JSON encoded string in the HTTP body to the client with return data,
      * Writes errors to the error log file.
 	 * @return void
