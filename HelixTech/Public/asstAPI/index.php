@@ -23,7 +23,7 @@ use HelixTech\asstAPI\{Output};
 use HelixTech\asstAPI\Models\{Data, User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, InvalidURI};
 use HelixTech\asstAPI\Crypt;
-
+echo "cool words";
 Crypt::encrypt("cool words");
 Crypt::decrypt(Crypt::encrypt("cool words"));
 
