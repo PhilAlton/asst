@@ -24,10 +24,7 @@ class Output{
 	/** @return mixed getter Output::$output */
 	private static function getOutput(){return Output::$output;}
 
-    /**
-     * Summary of getHistory
-     * @return string
-     */
+    /** @return string getter Output:$history */
     private static function getHistory(){return Output::$history;}
 
     /**
