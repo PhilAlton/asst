@@ -12,10 +12,7 @@
  */
 class Output{
 
-	/**
-	 * Summary of $output - output to be JSON encoded and returned to the client
-	 * @var mixed - string on exit
-	 */
+	/** @var mixed - $output - to be JSON encoded and returned to the client */
 	private static $output;
 	/**
 	 * Summary of $history
