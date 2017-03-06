@@ -24,17 +24,12 @@ class Output{
 #region Setters and Getters
 	/** @return mixed getter Output::$output */
 	private static function getOutput(){return Output::$output;}
-
     /** @return string getter Output:$history */
     private static function getHistory(){return Output::$history;}
-
     /** @return string getting Output::$error */
     private static function getError(){return Output::$error;}
 
-    /**
-     * Summary of setHistory
-     * @param mixed $newOutput
-     */
+    /** @param mixed $newOutput setter for Output::$history */
     private static function setHistory($newOutput){
 		Output::$history = Output::$history."</br>".$newOutput;
 	}
