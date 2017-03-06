@@ -53,14 +53,14 @@ class Output{
             $output = json_encode(Output::getOutput());
             $output = preg_replace('/":*UniqueID":"\w*",?/', "", $output);
 
-            // return values sent to client in the HTTP body
+            // return values sent to client in the HTTP body.
             echo $output;
         }
 
 
 
-        // Construct error log header with connection details
-		/** @todo rewrite connection to pull from connection class? */
+        // Construct error log header with connection details:
+		/** @todo rewrite connection to pull from / link against connection class? Output should only output when an error is present*/
         $errorLog = "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
                     ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
 					."</br>To: <b>".$_SERVER['REQUEST_METHOD']."</b> @ <b>".$_SERVER['REQUEST_URI']."</b>"
