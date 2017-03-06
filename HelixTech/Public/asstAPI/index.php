@@ -23,9 +23,6 @@ use HelixTech\asstAPI\{Output};
 use HelixTech\asstAPI\Models\{Data, User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, InvalidURI};
 use HelixTech\asstAPI\Crypt;
-echo "cool words";
-Crypt::encrypt("cool words");
-Crypt::decrypt(Crypt::encrypt("cool words"));
 
 try {
     if(!isset($_SERVER['HTTPS'])){throw new InsecureConnection("Connection must be established via HTTPS");} // ensure connection via HTTPS
