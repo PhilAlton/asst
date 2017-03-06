@@ -42,6 +42,7 @@ class Output{
 	 * Summary of go - processes returns from buisness logic
      * Passes back a JSON encoded string in the HTTP body to the client with return data
      * Writes errors to the error log file
+	 * @return void
 	 */
 	public static function go(){
 		if(!empty(Output::getOutput())){
