@@ -27,10 +27,7 @@ class Output{
     /** @return string getter Output:$history */
     private static function getHistory(){return Output::$history;}
 
-    /**
-     * Summary of getError
-     * @return string
-     */
+    /** @return string getting Output::$error */
     private static function getError(){return Output::$error;}
 
     /**
