@@ -59,6 +59,7 @@ class Output{
 
 //commit these changes
 //some changes
+// some more changes
 
         // Construct error log header with connection details:
 		/** @todo rewrite connection to pull from / link against connection class? Output should only output when an error is present*/
