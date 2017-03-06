@@ -1,4 +1,21 @@
 <?php
+/**
+ * Landing point
+ * Establish safe connection
+ * Route URL and map to appropriate function
+ * Process output
+ * 
+ * @todo rewrite routing
+ * @todo link to connection class
+ * 
+ * @author Philip Alton
+ * @copyright Helix Tech Ltd. 2017
+ * @file index.php
+ * @package asstAPI
+ * 
+ * 
+ */
+
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
 

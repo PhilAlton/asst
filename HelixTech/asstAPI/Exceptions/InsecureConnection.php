@@ -2,6 +2,7 @@
 
     /**
      * Summary of InsecureConnection - log failures to connect to the API via HTTPS
+     * @todo error logging
      */
       class InsecureConnection extends AbstractLoggedException
       {

@@ -2,8 +2,11 @@
       /**
        * @author Philip Alton
        * @copyright Helix Tech Ltd. 2017
-       * @file Data.php
+       * @file User.php
        * @package asstAPI
+       * 
+       * @todo Rewrite models to abstract SQL queries
+       * 
        */
 
     use HelixTech\asstAPI\{Output, Query, Crypt};
@@ -128,6 +131,8 @@
 							    );
 
 			    $results = array_merge($results, $query->execute([':UserName' => $params['UserName'], ':Password' => $password]));
+                /** @todo sanitize output to remove password and swap for authtoken */
+
 
 			    // Retrieve the created primary key
 			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
@@ -153,7 +158,8 @@
 
 
 			    // Create General Data Table for User
-			    $query = New Query(
+			    /** @todo rewrite to reflect true database structure */
+                $query = New Query(
 						        CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
 						        "(".
 							        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
@@ -226,8 +232,19 @@
                             ':DoB' => $params['DoB']])));
 
 
-            /** @todo need to create a further query to create a reserach data table for each research subject user */
+            /** @todo need to amend this query to match true database structure */
+            $query = New Query(
+                CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
+                "(".
+                    "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
+						"TimeStamp TIMESTAMP,".		// this might not be the correct way 
+						"Date date,".
+						"ResearchItem_1 int(11),".
+						"ResearchItem_X TEXT".
+					")"
+				);
 
+			$query->execute();
 
 
             return $results;

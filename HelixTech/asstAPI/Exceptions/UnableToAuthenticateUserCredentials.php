@@ -2,6 +2,7 @@
 
 /**
  * Logged Exception: Unable to Authenticate
+ * @todo error logging
  */
 class UnableToAuthenticateUserCredentials extends AbstractLoggedException
 {

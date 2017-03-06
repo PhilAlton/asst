@@ -2,6 +2,7 @@
 
 /**
  * Abstract class for exceptions which need logging
+ * @todo error logging
  */
 abstract class AbstractLoggedException extends \Exception
 {
