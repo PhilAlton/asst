@@ -13,7 +13,7 @@
 class Output{
 
 	/**
-	 * Summary of $output
+	 * Summary of $output - output to be JSON encoded and returned to the client
 	 * @var mixed - string on exit
 	 */
 	private static $output;
