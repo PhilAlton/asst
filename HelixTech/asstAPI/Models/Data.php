@@ -32,13 +32,7 @@
          */
         public static function pushData($data){
 
-            CREATE TABLE GEN_DATA_TABLE_Test(
-		DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-		TimeStamp TIMESTAMP,
-		Date date,
-		Item_1 int(11),
-		Item_X TEXT
-)
+
         }
 
 
