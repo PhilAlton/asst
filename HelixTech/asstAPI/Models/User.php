@@ -257,12 +257,15 @@
                 CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
                 "(".
                     "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-						"TimeStamp TIMESTAMP,".		// this might not be the correct way 
-						"Date date,".
-						"ResearchItem_1 int(11),".
-						"ResearchItem_X TEXT".
-					")"
-				);
+                    "Date date,".
+                    "Sleep_1 tinyint UNSIGNED NOT NULL".
+                    "Sleep_2 tinyint UNSIGNED NOT NULL".
+                    "Sleep_3 tinyint UNSIGNED NOT NULL".
+                    "Q_Medications_Changed tinyint(1) NOT NULL".
+                    "Medication_Changes text null".
+                    "Currently_Smoking tinyint UNSIGNED NOT NULL".
+                ")"
+            );
 
 			$query->execute();
 
