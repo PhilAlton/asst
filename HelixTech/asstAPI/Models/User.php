@@ -158,16 +158,37 @@
 
 
 			    // Create General Data Table for User
-			    /** @todo rewrite to reflect true database structure */
                 $query = New Query(
-						        CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
-						        "(".
-							        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-							        "Date date,".                   // in the format yyyymmdd
-							        "Item_1 int(11),".
-							        "Item_X TEXT".
-						        ")"
-						        );
+                    CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
+                    "(".
+                        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
+                        "Date date NOT NULL,".
+                        "Basdai_1 tinyint UNSIGNED NOT NULL,".
+                        "Basdai_2 tinyint UNSIGNED NOT NULL,".
+                        "Basdai_3 tinyint UNSIGNED NOT NULL,".
+                        "Basdai_4 tinyint UNSIGNED NOT NULL,".
+                        "Basdai_5 tinyint UNSIGNED NOT NULL,".
+                        "Basdai_6 tinyint UNSIGNED NOT NULL,".
+                        "Basdai_Total decimal(4,2) UNSIGNED NOT NULL,".
+                        "Overall_Spinal_Pain tinyint UNSIGNED NOT NULL,".
+                        "Basfi_1 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_2 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_3 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_4 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_5 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_6 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_7 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_8 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_9 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_10 tinyint UNSIGNED NOT NULL,".
+                        "Basfi_Total tinyint UNSIGNED NOT NULL,".
+                        "Overall_Spondylitis_Activity tinyint UNSIGNED NOT NULL,".
+                        "Flare tinyint(1) NOT NULL,".
+                        "Flare_Duration text NULL,".
+                        "Areas_Affected text NULL,".
+                        "Flare_Freetext text NULL".
+                    ")"
+                );
 
 			    $query->execute();
 
