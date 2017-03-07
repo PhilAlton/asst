@@ -163,8 +163,7 @@
 						        CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
 						        "(".
 							        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-							        "TimeStamp TIMESTAMP,".		// this might not be the correct way
-							        "Date date,".
+							        "Date date,".                   // in the format yyyymmdd
 							        "Item_1 int(11),".
 							        "Item_X TEXT".
 						        ")"
