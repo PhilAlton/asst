@@ -18,11 +18,29 @@
 
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
-
-use HelixTech\asstAPI\{Output};
+use HelixTech\asstAPI\{Output, Crypt, Query};
 use HelixTech\asstAPI\Models\{Data, User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, InvalidURI};
-use HelixTech\asstAPI\Crypt;
+
+   
+
+            $query = New Query(
+                CREATE, "TABLE RCH_DATA_TABLE_ExampleUniqueID".
+                "(".
+                    "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
+                    "Date date,".
+                    "Sleep_1 tinyint UNSIGNED NOT NULL,".
+                    "Sleep_2 tinyint UNSIGNED NOT NULL,".
+                    "Sleep_3 tinyint UNSIGNED NOT NULL,".
+                    "Q_Medications_Changed tinyint(1) NOT NULL,".
+                    "Medication_Changes text null,".
+                    "Currently_Smoking tinyint UNSIGNED NOT NULL".
+                ")"
+            );
+
+			$query->execute();
+
+
 
 try {
     if(!isset($_SERVER['HTTPS'])){throw new InsecureConnection("Connection must be established via HTTPS");} // ensure connection via HTTPS
