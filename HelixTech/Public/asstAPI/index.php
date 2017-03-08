@@ -18,8 +18,6 @@ require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
-var_dump($_SERVER);
-
 Connection::connect();
 Router::route();
 Output::go();
