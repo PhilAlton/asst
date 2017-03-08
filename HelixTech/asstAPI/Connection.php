@@ -29,7 +29,7 @@ class Connection{
     private static $ip; public static function getIP(){return Connection::$ip;}
     private static $UserName; public static function getUserName(){return Connection::$UserName;}
     private static $password; public static function getPassword(){return Connection::$password;}
-    private static $connectionTime; public static function getConnectionTim(){return Connection::$connectionTime;}
+    private static $connectionTime; public static function getConnectionTime(){return Connection::$connectionTime;}
     private static $uri; public static function getURI(){return Connection::$uri;}
 
     private static $established = true; public static function isEstablished(){return Connection::$established;}
