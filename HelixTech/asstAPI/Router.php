@@ -67,7 +67,6 @@ class Router{
             Output::errorMsg("caught exception: ".$e->getMessage().".");
         }
         catch (ConnectionFailed $e) {
-            header("HTTP/1.0 418 I'm A Teapot");
             Output::errorMsg("Connection Failed: request terminated");
         }
 

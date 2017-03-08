@@ -147,7 +147,7 @@ class Connection{
             "VALUES (:UserName, :ip, :Request)"
         );
 
-        $query->execute([
+        $query->silentExecute([
             ':UserName' => Connection::$UserName,
             ':ip' => Connection::$ip,
             ':Request' => Connection::$uri
