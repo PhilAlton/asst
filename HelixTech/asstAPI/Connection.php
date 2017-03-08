@@ -67,7 +67,6 @@ class Connection{
             }
 
             Connection::sanitize();
-            echo "post sanitize";
 
         } catch (InsecureConnection $e){
             http_response_code(403);
@@ -79,7 +78,6 @@ class Connection{
             Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
         }
 
-        echo "prior to store";
         Connection::storeConnection();
 
     }
@@ -136,7 +134,6 @@ class Connection{
 
 
     private static function storeConnection(){
-        echo "in store connection";
         Connection::$UserName = (isset($_SERVER["PHP_AUTH_USER"])) ? $_SERVER["PHP_AUTH_USER"] : "ANON";
         Connection::$password = (isset($_SERVER["PHP_AUTH_PW"])) ? $_SERVER["PHP_AUTH_PW"] : "NOT SENT";
         Connection::$ip = $_SERVER['REMOTE_ADDR'];
@@ -155,7 +152,7 @@ class Connection{
             ]
         );
 
-        Connection::$cID = $query->lastInsertId();
+        echo Connection::$cID = $query->lastInsertId();
 
 
 
