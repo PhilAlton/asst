@@ -9,7 +9,7 @@
        * 
        */
 
-    use HelixTech\asstAPI\{Output, Query, Crypt};
+    use HelixTech\asstAPI\{Output, Connection, Query, Crypt};
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 
     /**
@@ -21,52 +21,6 @@
         /** @param User::$uID = UniqueID for connected user (or created user) */
         private static $uID;
 
-	    public static function authenticate(){
-
-		    // authenticate user session to enable access to api functions
-		    $q_auth = false;
-
-            try{
-	            // retrieve stored password string from database against UserName
-	            $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
-
-                $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
-                // TO-DO If control block will need to go into query class for null outputs, as this is where decryption will occur
-                if (count($UserDetails)===0){
-                    // If no password obtained then throw exception and handle.
-                    $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
-                    throw new \UnexpectedValueException($e);
-                } else {
-                    // Else decrypt the password
-                    User::$uID = $UserDetails["UniqueID"];
-                    $password = Crypt::decrypt($UserDetails["Password"]);                                                             //FIX - decrypt should go in query class
-
-                }
-
-                // Check if the hash of the entered login password, matches the stored hash.
-	            if (password_verify
-		            (base64_encode
-			            (
-				            hash('sha384', $_SERVER["PHP_AUTH_PW"], true)
-			            ),
-			            $password
-		            ))
-	            {
-		            // Success :D
-		            $q_auth = true;
-	            } else {
-		            // Failure :(
-		            http_response_code(401); // not authorised
-		            $q_auth = false;
-	            }
-            } catch (UnexpectedValueException $e) {
-                http_response_code(404);
-                Output::errorMsg("Unexpected Value: ".$e->getMessage().".");
-            }
-
-		    return $q_auth;
-
-	    }
 
 
 	    /**
@@ -287,7 +241,7 @@
 	    public static function handleRequest($method, $UserName, $params){
 
             try{
-		        if (User::authenticate($UserName, $params)){
+		        if (Connection::authenticate()){
 
 			        switch ($method) {
 				        /*			case 'POST':

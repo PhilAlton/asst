@@ -7,6 +7,7 @@
  *
  */
 
+use HelixTech\asstAPI\Connection;
 /**
  * Class to handle buisness logic return variables,
  * Including sanitizing output, and error logging.
@@ -57,28 +58,28 @@ class Output{
             echo $output;
         }
 
-        // Construct error log header with connection details:
-		/** @todo rewrite connection to pull from / link against connection class? Output should only output when an error is present*/
-        $errorLog = "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
-                    ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
-					."</br>To: <b>".$_SERVER['REQUEST_METHOD']."</b> @ <b>".$_SERVER['REQUEST_URI']."</b>"
-                    ."</br>At: <b>".date("Y-m-d, H:i:s", $_SERVER['REQUEST_TIME'])."</b>"
-        
-		// Then output the error log            
-		."</br>".Output::getError();
-		
-		// Add history after
-		if (Output::getHistory() !== "</br>"){
-			$errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getHistory();
-		}
+        if(!empty(Output::getError()) and Output::getHistory() !== "</br>"){
+            // Construct error log header with connection details:
+		    $errorLog = "</br>Connection from IP: <b>".Connection::getIP()."</b>"
+                        ."</br>As User: <b>".Connection::getUserName()."</b>"
+					    ."</br>To: <b>".Connection::getMethod()."</b> @ <b>".Connection::getURI()."</b>"
+                        ."</br>At: <b>".date("Y-m-d, H:i:s", Connection::getConnectionTime())."</b>"
 
-		// Enclose entry to improve readability
-        $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</b></br>";
+		    // Then output the error log
+		    ."</br>".Output::getError();
+            echo Output::getHistory();
+		    // Add history after
+		    if (Output::getHistory() !== "</br>"){
+			    $errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getHistory();
+		    }
 
-        // Write error log to log file:
-        $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
-        file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
+		    // Enclose entry to improve readability
+            $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</b></br>";
 
+            // Write error log to log file:
+            $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
+            file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
+        }
 	}
 
 

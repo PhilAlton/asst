@@ -19,6 +19,10 @@
         private $database;
 	    private $queryType;
 
+        public function lastInsertId(){
+            return $this->database->lastInsertId();
+        }
+
         public function __construct($queryType, $query){
             $this->database = New Database;
 		    $this->queryType = $queryType;
@@ -26,15 +30,26 @@
         }
 
 
-        /**
-         * Summary of execute - execute a query taking in parameters to bind the SQL statement prepared in the constructor
-         *
-         * @param mixed $params to be bound into the query
-         * @return mixed,
-         */
-        public function execute($params = null){
-            $results;
-		    $this->database->query($this->query);
+
+        public function silentExecute($params = null){
+            $this->buildQuery($params);
+            try {
+                $this->database->execute();
+            } catch (Exception $e) {
+                http_response_code(406);
+                Output::errorMsg(
+                    "caught exception: ".$e->getMessage()
+                    ." - with SQL Statement ".$this->query
+                    ." and these parameters:".json_encode($params)
+                );
+            }
+        }
+
+
+
+        public function buildQuery($params = null){
+
+            $this->database->query($this->query);
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
@@ -44,12 +59,22 @@
 				    );
 			    }
 		    }
+        }
 
+        /**
+         * Summary of execute - execute a query taking in parameters to bind the SQL statement prepared in the constructor
+         *
+         * @param mixed $params to be bound into the query
+         * @return mixed,
+         */
+        public function execute($params = null){
+
+            $this->buildQuery($params);
             $results = false;
 
             try {
                 $this->database->execute();
-		        $results = $params;
+                $results = $params;
 
                 switch ($this->queryType){
 			        case SELECT:
