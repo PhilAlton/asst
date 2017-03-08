@@ -11,7 +11,7 @@
 
 use HelixTech\asstAPI\{Connection};
 use HelixTech\asstAPI\Models\{Data, User};
-use HelixTech\asstAPI\Exceptions\{InvalidURI};
+use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed};
 
 /**
 * Summery of Router: class to map URL Endpoints to functions
@@ -30,6 +30,7 @@ class Router{
 
         // Switch to govern action based on URI
         try{
+            if (!Connection::isEstablished()){throw new ConnectionFailed;}
             if (Router::uri('asst/Users/..*') and ($request[2]==Connection::getUserName()))       // ensure that user specific end points are only accesible
             {
                 $UserName = $request[2];
@@ -61,11 +62,13 @@ class Router{
             }
 
 
-        }
-        catch (InvalidURI $e) {
+        } catch (InvalidURI $e) {
             http_response_code(404);
             Output::errorMsg("caught exception: ".$e->getMessage().".");
+        } catch (ConnectionFailed $e) {
+            Output::errorMsg("Connection Failed: request terminated");
         }
+
 
 
     }

@@ -32,6 +32,8 @@ class Connection{
     private static $connectionTime; public static function getConnectionTim(){return Connection::$connectionTime;}
     private static $uri; public static function getURI(){return Connection::$uri;}
 
+    private static $established = false; public static function isEstablished(){return Connection::$established;}
+
     /**  @var mixed $cID - ID of the Connection in the Database */
     private static $cID;
 
@@ -61,7 +63,7 @@ class Connection{
             }
 
             Connection::sanitize();
-
+            Connection::$established = true;
 
         } catch (InsecureConnection $e){
             http_response_code(403);
@@ -70,7 +72,6 @@ class Connection{
             http_response_code(403);
             Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
         }
-
 
         Connection::storeConnection();
 
@@ -102,7 +103,7 @@ class Connection{
             header("HTTP/1.0 418 I'm A Teapot");
             Output::errorMsg("Connection Failure: "
                                 ."BLACK LISTED INPUT DETECTED: "
-                                ."\'".$e->getMessage()."\'"." found in input"
+                                ."'".$e->getMessage()."'"." found in input. "
                                 ."System Administrator notified."
             );
         }

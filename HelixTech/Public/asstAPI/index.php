@@ -18,15 +18,8 @@ require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
-try{    // Exceptions handled at lower levels
-    Connection::connect();
-    } 
-
-catch (Exception $e){    
-    die("dying");
-}
-
-    Router::route();
-    Output::go();
+Connection::connect();
+Router::route();
+Output::go();
 
 ?>
