@@ -119,6 +119,7 @@ class Connection{
 
 
         // sanitise POST data UserName
+        var_dump(Connection::$input);
         Connection::$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
         Connection::$input['Password'] = $_SERVER["PHP_AUTH_PW"];               // This also prevents UserName being updated.
         // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
