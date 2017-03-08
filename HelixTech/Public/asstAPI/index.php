@@ -20,10 +20,13 @@ use HelixTech\asstAPI\{Connection, Router, Output};
 
 try{    // Exceptions handled at lower levels
     Connection::connect();
+    } 
+
+catch (Exception $e){    
+    die("dying");
+}
+
     Router::route();
-}
-Finally{
-     Output::go();
-}
+    Output::go();
 
 ?>
