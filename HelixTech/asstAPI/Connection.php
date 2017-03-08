@@ -32,7 +32,7 @@ class Connection{
     private static $connectionTime; public static function getConnectionTim(){return Connection::$connectionTime;}
     private static $uri; public static function getURI(){return Connection::$uri;}
 
-    private static $established = false; public static function isEstablished(){return Connection::$established;}
+    private static $established = true; public static function isEstablished(){return Connection::$established;}
 
     /**  @var mixed $cID - ID of the Connection in the Database */
     private static $cID;
@@ -63,7 +63,6 @@ class Connection{
             }
 
             Connection::sanitize();
-            Connection::$established = true;
 
         } catch (InsecureConnection $e){
             http_response_code(403);
@@ -108,7 +107,7 @@ class Connection{
                                 ."BLACK LISTED INPUT DETECTED: "
                                 ."'".$e->getMessage()."'"." found in input. "
                                 ."INPUT: ".$input
-                                ."System Administrator notified."
+                                ." - System Administrator notified."
             );
         }
 
