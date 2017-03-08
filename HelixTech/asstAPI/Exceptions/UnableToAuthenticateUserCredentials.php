@@ -1,6 +1,6 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
-use HelixTech\asstAPI\{Query, Connection);
+use HelixTech\asstAPI\{Query, Connection};
 /**
  * Logged Exception: Unable to Authenticate
  * @todo error logging

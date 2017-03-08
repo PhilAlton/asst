@@ -16,7 +16,7 @@
            * the system administrator, via slack.
            */
           public static function logError(){
-              $AbstractLoggedException::$message =+ "BlackList Attempt; ";
+            AbstractLoggedException::$message =+ "BlackList Attempt; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                    "SET CXTN_ERRORS=:msg ".
                    "WHERE `CXTN_ID` =:cID");
