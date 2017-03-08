@@ -119,7 +119,6 @@ class Connection{
 
 
         // sanitise POST data UserName
-        var_dump(Connection::$input);
         Connection::$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
         Connection::$input['Password'] = $_SERVER["PHP_AUTH_PW"];               // This also prevents UserName being updated.
         // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
@@ -131,8 +130,8 @@ class Connection{
 
     private static function storeConnection(){
 
-        Connection::$UserName = (isset($_SERVER["PHP_AUTH_USER"])) ?: "ANON";
-        Connection::$password = (isset($_SERVER["PHP_AUTH_PW"])) ?: "NOT SENT";
+        Connection::$UserName = (isset($_SERVER["PHP_AUTH_USER"])) ? $_SERVER["PHP_AUTH_USER"] : "ANON";
+        Connection::$password = (isset($_SERVER["PHP_AUTH_PW"])) ? $_SERVER["PHP_AUTH_PW"] : "NOT SENT";
         Connection::$ip = $_SERVER['REMOTE_ADDR'];
 
 
