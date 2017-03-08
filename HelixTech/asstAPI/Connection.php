@@ -152,7 +152,7 @@ class Connection{
             ]
         );
 
-        echo Connection::$cID = $query->lastInsertId();
+        Connection::$cID = $query->lastInsertId();
 
 
 
