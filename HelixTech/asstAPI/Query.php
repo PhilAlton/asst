@@ -20,7 +20,7 @@
 	    private $queryType;
 
         public function lastInsertId(){
-            return $his->database->lastInsertId();
+            return $this->database->lastInsertId();
         }
 
         public function __construct($queryType, $query){
