@@ -1,7 +1,7 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
       use HelixTech\asstAPI\{Query, Connection};
-      
+
       /**
        * Summary of ConnectionFailed - log failures to connect to the API
        */
@@ -17,7 +17,7 @@
               $query = New Query(UPDATE, "ConnectionLog ".
                      "SET CXTN_ERRORS=:msg".
                      "WHERE `CXTN_ID` =:cID");
-              $query->execute([':cID' => Connection::$cID, ':msg' => $message]);
+              $query->execute([':cID' => Connection::getCID(), ':msg' => $message]);
         }
 
 

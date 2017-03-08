@@ -16,7 +16,7 @@
               $query = New Query(UPDATE, "ConnectionLog ".
                      "SET CXTN_ERRORS=:msg".
                      "WHERE `CXTN_ID` =:cID");
-              $query->execute([':cID' => Connection::$cID, ':msg' => $message]);
+              $query->execute([':cID' => Connection::getCID(), ':msg' => $message]);
         }
 
 
