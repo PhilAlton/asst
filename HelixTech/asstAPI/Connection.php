@@ -47,10 +47,14 @@ class Connection{
             // get the HTTP method, path and body of the request
             Connection::$connectionTime = $_SERVER['REQUEST_TIME'];
             Connection::$method = $_SERVER['REQUEST_METHOD'];
+
+            Connection::analyse($_SERVER['REQUEST_URI']);
             Connection::$uri = $_SERVER['REQUEST_URI'];
             Connection::$request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
             Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift(Connection::$request));
+
             Connection::analyse(file_get_contents('php://input'));
+            Connection::$input = json_decode($input, true);
 
             // ensure connection via HTTPS
             if(!isset($_SERVER['HTTPS'])){
@@ -98,16 +102,13 @@ class Connection{
                 }
             }
 
-            Connection::$input = json_decode($input, true);
-
         } catch (BlackListedInput $e){
             header("HTTP/1.0 418 I'm A Teapot");
             Connection::$established = false;
             Output::errorMsg("Connection Failure: "
                                 ."BLACK LISTED INPUT DETECTED: "
-                                ."'".$e->getMessage()."'"." found in input. "
-                                ."INPUT: ".$input
-                                ." - System Administrator notified."
+                                ."'".$e->getMessage()."'"." found in input: "
+                                .$input." - System Administrator notified."
             );
         }
 
