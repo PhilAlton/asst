@@ -214,7 +214,7 @@ class Connection{
     private static function authentic(){
         // Success
         $query = New Query(UPDATE, "ConnectionLog ".
-                           "SET CXTN_AUTHENTIC=1".
+                           "SET CXTN_AUTHENTIC=1 ".
                            "WHERE `CXTN_ID` =:cID");
         $query->silentExecute([':cID' => Connection::$cID]);
         $q_auth = true;
@@ -226,7 +226,7 @@ class Connection{
         // Failure
         http_response_code(401); // not authorised
         $query = New Query(UPDATE, "ConnectionLog ".
-                       "SET CXTN_AUTHENTIC=0".
+                       "SET CXTN_AUTHENTIC=0 ".
                        "WHERE `CXTN_ID` =:cID");
         $query->silentExecute([':cID' => Connection::$cID]);
 
