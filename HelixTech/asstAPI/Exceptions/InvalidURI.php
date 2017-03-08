@@ -17,7 +17,7 @@
         *
         */
         public static function logError(){
-            AbstractLoggedException::$dbMessage =+ "Invalid URI requestd; ";
+            AbstractLoggedException::$dbMessage .= "Invalid URI requestd; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                    "SET CXTN_ERRORS=:msg ".
                    "WHERE `CXTN_ID` =:cID");
