@@ -19,7 +19,7 @@
     class User {
 
         /** @param User::$uID = UniqueID for connected user (or created user) */
-        private static $uID;
+        public static $uID;
 
 
 
