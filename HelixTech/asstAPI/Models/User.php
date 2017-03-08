@@ -9,7 +9,7 @@
        * 
        */
 
-    use HelixTech\asstAPI\{Output, Query, Crypt};
+    use HelixTech\asstAPI\{Output, Connection, Query, Crypt};
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 
     /**
