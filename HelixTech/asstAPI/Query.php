@@ -32,7 +32,7 @@
 
 
         public function silentExecute($params = null){
-            $this->buildQuery();
+            $this->buildQuery($params);
             try {
                 $this->database->execute();
             } catch (Exception $e) {
@@ -69,7 +69,7 @@
          */
         public function execute($params = null){
 
-            $this->buildQuery();
+            $this->buildQuery($params);
             $results = false;
 
             try {
