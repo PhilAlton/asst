@@ -12,6 +12,7 @@
            *
            */
         public static function logError(){
+            /*
             $query = new Query(SELECT, "CXTN_ERRORS FROM ConnectionLog "
                                     ."WHERE CXTN_ID =:cID"
                             );
@@ -22,6 +23,7 @@
                     "SET CXTN_ERRORS=:msg ".
                     "WHERE `CXTN_ID` =:cID");
             $query->silentExecute([':cID' => Connection::getCID(), ':msg' => $message]);
+         */
         }
 
 
