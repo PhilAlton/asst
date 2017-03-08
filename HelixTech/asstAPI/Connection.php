@@ -67,9 +67,11 @@ class Connection{
 
         } catch (InsecureConnection $e){
             http_response_code(403);
+            Connection::$established = false;
             Output::errorMsg("Connection Failure: ".$e->getMessage().".");
         } catch (UnableToAuthenticateUserCredentials $e) {
             http_response_code(403);
+            Connection::$established = false;
             Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
         }
 
@@ -101,6 +103,7 @@ class Connection{
 
         } catch (BlackListedInput $e){
             header("HTTP/1.0 418 I'm A Teapot");
+            Connection::$established = false;
             Output::errorMsg("Connection Failure: "
                                 ."BLACK LISTED INPUT DETECTED: "
                                 ."'".$e->getMessage()."'"." found in input. "
