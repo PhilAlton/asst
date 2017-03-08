@@ -8,7 +8,7 @@ use Maknz\Slack\Client;
 abstract class AbstractLoggedException extends \Exception
 {
 
-    public static $dbMessage;
+    public static $dbMessage = "";
 
     public function __construct($message = "", $code = 0, Throwable $previous = NULL){
 
