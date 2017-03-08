@@ -105,6 +105,7 @@ class Connection{
 
         } catch (BlackListedInput $e){
             header("HTTP/1.0 418 I'm A Teapot");
+            http_response_code(403);
             Connection::$established = false;
             Output::errorMsg("Connection Failure: "
                                 ."BLACK LISTED INPUT DETECTED: "
