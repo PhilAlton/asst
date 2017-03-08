@@ -15,8 +15,8 @@
            * This is a good indication of a attempted hack, and therefore a specific notification will be sent to
            * the system administrator
            */
-        public static function logError($message){
-            echo $message = $message;
+        public static function logError(){
+            $message = "BlackList Attempt";
             $query = New Query(UPDATE, "ConnectionLog ".
                    "SET `CXTN_ERRORS`=:msg ".
                    "WHERE `CXTN_ID` =:cID");

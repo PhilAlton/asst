@@ -16,7 +16,7 @@ abstract class AbstractLoggedException extends \Exception
     }
 
 
-    abstract public static function logError($message);
+    abstract public static function logError();
 
 
     public static function callSlack($message){
