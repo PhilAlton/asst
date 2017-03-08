@@ -129,8 +129,8 @@ class Connection{
 
     private static function storeConnection(){
 
-        Connection::$UserName = $_SERVER["PHP_AUTH_USER"];
-        Connection::$password = $_SERVER["PHP_AUTH_PW"];
+        Connection::$UserName = (isset($_SERVER["PHP_AUTH_USER"])) ?: "ANON";
+        Connection::$password = (isset($_SERVER["PHP_AUTH_PW"])) ?: "NOT SENT";
         Connection::$ip = $_SERVER['REMOTE_ADDR'];
 
 
