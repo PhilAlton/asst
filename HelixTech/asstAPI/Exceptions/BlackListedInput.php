@@ -15,13 +15,8 @@
            * This is a good indication of a attempted hack, and therefore a specific notification will be sent to
            * the system administrator, via slack.
            */
-        public static function logError(){
-            $query = new Query(SELECT, "CXTN_ERRORS FROM ConnectionLog "
-                                        ."WHERE CXTN_ID =:cID"
-                                );
-            $message = $query->silentExecute([':cID' => Connection::getCID()]);
-
-            $message = $message."BlackList Attempt; ";
+          public static function logError(){
+              $AbstractLoggedException::$message =+ "BlackList Attempt; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                    "SET CXTN_ERRORS=:msg ".
                    "WHERE `CXTN_ID` =:cID");
