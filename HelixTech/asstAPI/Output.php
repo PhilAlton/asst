@@ -67,7 +67,7 @@ class Output{
 
 		    // Then output the error log
 		    ."</br>".Output::getError();
-
+            echo Output::getHistory();
 		    // Add history after
 		    if (Output::getHistory() !== "</br>"){
 			    $errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getHistory();
