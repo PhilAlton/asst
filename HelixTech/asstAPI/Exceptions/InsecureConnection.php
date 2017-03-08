@@ -17,7 +17,7 @@ class InsecureConnection extends AbstractLoggedException
                             );
         $message = $query->silentExecute([':cID' => Connection::getCID()]);
 
-        $message = $message. = "Insecure Connection; ";
+        $message = $message."Insecure Connection; ";
         $query = New Query(UPDATE, "ConnectionLog ".
                 "SET CXTN_ERRORS=:msg ".
                 "WHERE `CXTN_ID` =:cID");

@@ -22,7 +22,7 @@
                                 );
             $message = $query->silentExecute([':cID' => Connection::getCID()]);
 
-            $message = $message. = "Invalid URI requestd; ";
+            $message = $message."Invalid URI requestd; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                    "SET CXTN_ERRORS=:msg ".
                    "WHERE `CXTN_ID` =:cID");

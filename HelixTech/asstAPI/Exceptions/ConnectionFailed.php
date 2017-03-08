@@ -17,7 +17,7 @@
                             );
             $message = $query->silentExecute([':cID' => Connection::getCID()]);
 
-            $message = $message. = "Connection Failed; ";
+            $message = $message."Connection Failed; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                     "SET CXTN_ERRORS=:msg ".
                     "WHERE `CXTN_ID` =:cID");
