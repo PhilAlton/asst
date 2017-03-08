@@ -21,9 +21,9 @@
                                 );
             $message = $query->silentExecute([':cID' => Connection::getCID()]);
 
-            echo $message = $message."BlackList Attempt; ";
+            $message = $message."BlackList Attempt; ";
             $query = New Query(UPDATE, "ConnectionLog ".
-                   "SET `CXTN_ERRORS`=:msg ".
+                   "SET CXTN_ERRORS=:msg ".
                    "WHERE `CXTN_ID` =:cID");
             $query->silentExecute([':cID' => Connection::getCID(), ':msg' => $message]);
 
