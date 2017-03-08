@@ -1,7 +1,7 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
       use HelixTech\asstAPI\{Query, Connection};
-      use Maknz\Slack\Client;
+
 
       /**
        * Summary of BlackListedInput - log attempts to send blacklisted input to the server

@@ -1,5 +1,6 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
+use Maknz\Slack\Client;
 /**
  * Abstract class for exceptions which need logging
  * @todo error logging
@@ -16,7 +17,7 @@ abstract class AbstractLoggedException extends \Exception
 
 
     abstract public static function logError($message);
-    
+
     public static function callSlack($message){
         echo "here";
         // Instantiate with defaults, so all messages created
