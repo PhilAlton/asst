@@ -21,7 +21,9 @@ use HelixTech\asstAPI\{Connection, Router, Output};
 try{    // Exceptions handled at lower levels
     Connection::connect();
     Router::route();
-    Output::go();
-} 
+}
+Finally{
+     Output::go();
+}
 
 ?>
