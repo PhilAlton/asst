@@ -134,10 +134,10 @@
 
 
         #region Functions exposing underlying database and statement functions
-        public function lastInsertId(){return $this->dbh->lastInsertId();}
-        public function beginTransaction(){return $this->dbh->beginTransaction();}
-        public function endTransaction(){return $this->dbh->commit();}
-        public function cancelTransaction(){return $this->dbh->rollBack();}
+        public function lastInsertId(){return $this->$dbConnection->lastInsertId();}
+        public function beginTransaction(){return $this->$dbConnection->beginTransaction();}
+        public function endTransaction(){return $this->$dbConnection->commit();}
+        public function cancelTransaction(){return $this->$dbConnection->rollBack();}
         public function debugDumpParams(){return $this->statement->debugDumpParams();}
         #endregion
 
