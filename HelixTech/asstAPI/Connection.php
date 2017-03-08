@@ -79,9 +79,22 @@ class Connection{
 
     private static function analyse($input){
 
+        $blackList = array(
+            "DROP",
+            "INSERT",
+            "DELETE",
+            "SELECT",
+            "alert(",
+            "<",">",
+            "://"
+        );
+
         try{
-
-
+            foreach ($blackList as $blackWord){
+                if (!(strpos($input, $blackWord) === false)){
+                    throw new BlackListedInput;
+                }
+            }
 
             Connection::$input = json_decode($input);
 
