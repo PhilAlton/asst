@@ -12,7 +12,8 @@
            * THis may indicate that a developer has not written their app consuming this API securely
            */
           public static function logError(){
-              echo "connection insecure you dickhead";
+
+
           }
 
 

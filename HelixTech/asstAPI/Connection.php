@@ -130,7 +130,7 @@ class Connection{
         $query->execute([
             ':UserName' => Connection::$UserName,
             ':ip' => Connection::$ip,
-            ':Request' => Connection::$request
+            ':Request' => Connection::$uri
             ]
         );
 
