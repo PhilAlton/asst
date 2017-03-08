@@ -53,7 +53,8 @@ class Connection{
             Connection::$request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
             Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift(Connection::$request));
 
-            Connection::analyse(file_get_contents('php://input'));
+            $input = file_get_contents('php://input');
+            Connection::analyse($input);
             Connection::$input = json_decode($input, true);
 
             // ensure connection via HTTPS
