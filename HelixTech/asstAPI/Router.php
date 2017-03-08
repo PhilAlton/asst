@@ -30,12 +30,11 @@ class Router{
 
         // Switch to govern action based on URI
         try{
-            if (Router::uri('asst/Users/..*') and ($request[2]==$_SERVER["PHP_AUTH_USER"]))       // ensure that user specific end points are only accesible
+            if (Router::uri('asst/Users/..*') and ($request[2]==Connection::getUserName()))       // ensure that user specific end points are only accesible
             {
                 $UserName = $request[2];
                 if (isset($request[3]))
                 {
-
                     switch($request[3])
                     {
                         case "data":
@@ -46,8 +45,7 @@ class Router{
                             //case for restetting password  "/asst/Users/$UserName/resetPassword"
                             User::resetPassword($UserName);
                             break;
-                        default:
-                            throw new InvalidURI("Invalid URI selected".$_SERVER['REQUEST_URI']);
+                        default: throw new InvalidURI("Invalid URI selected".Connection::getURI());
                     }
 
                 } else {
@@ -58,11 +56,8 @@ class Router{
             } elseif (Router::uri('asst/Users')){
                 // code for asst/Users (create new user)
                 User::createUser($input);
-
             } else {
-
-                throw new InvalidURI("Invalid URI selected".$_SERVER['REQUEST_URI']);
-
+                throw new InvalidURI("Invalid URI selected".Connection::getURI());
             }
 
 
@@ -78,7 +73,7 @@ class Router{
 
     private static function uri($match){
         $match = "#".$match."#";
-        return preg_match($match, $_SERVER['REQUEST_URI']);
+        return preg_match($match, Connection::getURI());
 
     }
 

@@ -11,7 +11,7 @@
  *
  */
 
-use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection};
+use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, BlackListedInput};
 use HelixTech\asstAPI\{Query, User, Crypt};
 
 
@@ -26,18 +26,32 @@ class Connection{
     private static $input; public static function getInput(){return Connection::$input;}
     private static $apiRoot; public static function getAPIroot(){return Connection::$apiRoot;}
 
-    /**  @var mixed $cID - ID of the Connection in the Database */
-    private static $cID;
-
     private static $ip; public static function getIP(){return Connection::$ip;}
     private static $UserName; public static function getUserName(){return Connection::$UserName;}
     private static $password; public static function getPassword(){return Connection::$password;}
     private static $connectionTime; public static function getConnectionTim(){return Connection::$connectionTime;}
+    private static $uri; public static function getURI(){return Connection::$uri;}
+
+    /**  @var mixed $cID - ID of the Connection in the Database */
+    private static $cID;
+
 
 
     public static function connect(){
 
         try {
+
+
+            // get the HTTP method, path and body of the request
+            Connection::$connectionTime = $_SERVER['REQUEST_TIME'];
+            Connection::$method = $_SERVER['REQUEST_METHOD'];
+            Connection::$uri = $_SERVER['REQUEST_URI'];
+            Connection::$request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
+            Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
+            Connection::analyse(file_get_contents('php://input'));
+
+            Connection::sanitize();
+
             // ensure connection via HTTPS
             if(!isset($_SERVER['HTTPS'])){
                 throw new InsecureConnection("Connection must be established via HTTPS");
@@ -49,25 +63,6 @@ class Connection{
             }
 
 
-            // get the HTTP method, path and body of the request
-            Connection::$method = $_SERVER['REQUEST_METHOD'];
-            Connection::$request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
-            Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
-            Connection::$input = json_decode(file_get_contents('php://input'),true);
-
-
-            // Sanitise input of UserName
-            $_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
-
-
-            // sanitise POST data UserName
-            Connection::$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
-            Connection::$input['Password'] = $_SERVER["PHP_AUTH_PW"];               // This also prevents UserName being updated.
-            // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
-
-
-
-
         } catch (InsecureConnection $e){
             http_response_code(403);
             Output::errorMsg("Connection Failure: ".$e->getMessage().".");
@@ -77,6 +72,54 @@ class Connection{
         }
 
 
+        Connection::storeConnection();
+
+    }
+
+
+    private static function analyse($input){
+
+        try{
+
+
+
+            Connection::$input = json_decode($input);
+
+        } catch (BlackListedInput $e){
+            header("HTTP/1.0 418 I'm A Teapot");
+            Output::errorMsg("Connection Failure: "
+                                ."BLACK LISTED INPUT DETECTED"
+                                ."System Administrator notified."
+                            );
+        }
+
+    }
+
+
+
+
+    private static function sanitize(){
+
+        // Sanitise input of UserName
+        $_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
+
+
+        // sanitise POST data UserName
+        Connection::$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
+        Connection::$input['Password'] = $_SERVER["PHP_AUTH_PW"];               // This also prevents UserName being updated.
+        // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
+
+    }
+
+
+
+
+    private static function storeConnection(){
+
+        Connection::$UserName = $_SERVER["PHP_AUTH_USER"];
+        Connection::$password = $_SERVER["PHP_AUTH_PW"];
+        Connection::$ip = $_SERVER['REMOTE_ADDR'];
+
 
         $query = New Query(
             INSERT, "INTO ConnectionLog".
@@ -85,13 +128,14 @@ class Connection{
         );
 
         $query->execute([
-            ':UserName' => Connection::$input['UserName'],
-            ':ip' => $_SERVER['REMOTE_ADDR'],
+            ':UserName' => Connection::$UserName,
+            ':ip' => Connection::$ip,
             ':Request' => Connection::$request
             ]
         );
 
         Connection::$cID = $query->lastInsertId();
+
 
 
     }
@@ -111,8 +155,8 @@ class Connection{
             // retrieve stored password string from database against UserName
             $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
             $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
-            
-            
+
+
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
                 // If no password obtained then throw exception and handle.
