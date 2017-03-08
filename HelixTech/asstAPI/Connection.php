@@ -107,6 +107,7 @@ class Connection{
             Output::errorMsg("Connection Failure: "
                                 ."BLACK LISTED INPUT DETECTED: "
                                 ."'".$e->getMessage()."'"." found in input. "
+                                ."INPUT: ".$input
                                 ."System Administrator notified."
             );
         }
