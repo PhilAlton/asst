@@ -35,7 +35,7 @@ class Connection{
     private static $established = true; public static function isEstablished(){return Connection::$established;}
 
     /**  @var mixed $cID - ID of the Connection in the Database */
-    private static $cID; public static function getCID(){return Connection::getCID;}
+    private static $cID; public static function getCID(){return Connection::$cID;}
 
 
 
@@ -196,7 +196,7 @@ class Connection{
                 $q_auth = true;
 
             } else {
-                Connection::notAuthentic(); 
+                Connection::notAuthentic();
                 $q_auth = false;
             }
 
