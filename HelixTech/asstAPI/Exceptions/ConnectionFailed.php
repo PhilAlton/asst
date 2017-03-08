@@ -15,9 +15,9 @@
             $query = new Query(SELECT, "CXTN_ERRORS FROM ConnectionLog "
                                     ."WHERE CXTN_ID =:cID"
                             );
-            $message = $query->silentExecute([':cID' => Connection::getCID()]);
+            echo "1".$message = $query->silentExecute([':cID' => Connection::getCID()]);
 
-            $message = $message."Connection Failed; ";
+            echo "2".$message = $message."Connection Failed; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                     "SET CXTN_ERRORS=:msg ".
                     "WHERE `CXTN_ID` =:cID");
