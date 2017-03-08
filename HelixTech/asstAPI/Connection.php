@@ -223,12 +223,12 @@ class Connection{
     }
 
 
-    private static function notAuthentic(){
+    public static function notAuthentic(){
         // Failure
         http_response_code(401); // not authorised
         $query = New Query(UPDATE, "ConnectionLog ".
                        "SET CXTN_AUTHENTIC=0".
-                                       "WHERE `CXTN_ID` =:cID");
+                       "WHERE `CXTN_ID` =:cID");
         $query->execute([':cID' => Connection::$cID]);
 
 
