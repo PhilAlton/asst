@@ -13,7 +13,12 @@ class UnableToAuthenticateUserCredentials extends AbstractLoggedException
      * @todo connect to the database to store log info
      */
     public static function logError(){
-        $message = "Failed authentication; ";
+        $query = new Query(SELECT, "CXTN_ERRORS FROM ConnectionLog "
+                                ."WHERE CXTN_ID =:cID"
+                            );
+        $message = $query->silentExecute([':cID' => Connection::getCID()]);
+
+        $message = $message. = "Failed authentication; ";
         $query = New Query(UPDATE, "ConnectionLog ".
                "SET CXTN_ERRORS=:msg ".
                "WHERE `CXTN_ID` =:cID");

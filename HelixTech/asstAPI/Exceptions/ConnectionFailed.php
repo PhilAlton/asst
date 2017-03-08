@@ -9,15 +9,19 @@
       {
           /**
            * Summary of ConnectionFailed
-           * @todo connect to the database to store log info for failed attempts to connect to the API
            *
            */
-          public static function logError(){
-              $message = "Connection Failed; ";
-              $query = New Query(UPDATE, "ConnectionLog ".
-                     "SET CXTN_ERRORS=:msg ".
-                     "WHERE `CXTN_ID` =:cID");
-              $query->silentExecute([':cID' => Connection::getCID(), ':msg' => $message]);
+        public static function logError(){
+            $query = new Query(SELECT, "CXTN_ERRORS FROM ConnectionLog "
+                                    ."WHERE CXTN_ID =:cID"
+                            );
+            $message = $query->silentExecute([':cID' => Connection::getCID()]);
+
+            $message = $message. = "Connection Failed; ";
+            $query = New Query(UPDATE, "ConnectionLog ".
+                    "SET CXTN_ERRORS=:msg ".
+                    "WHERE `CXTN_ID` =:cID");
+            $query->silentExecute([':cID' => Connection::getCID(), ':msg' => $message]);
         }
 
 

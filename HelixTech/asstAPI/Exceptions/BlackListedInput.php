@@ -16,7 +16,12 @@
            * the system administrator, via slack.
            */
         public static function logError(){
-            $message = "BlackList Attempt; ";
+            $query = new Query(SELECT, "CXTN_ERRORS FROM ConnectionLog "
+                                        ."WHERE CXTN_ID =:cID"
+                                );
+            $message = $query->silentExecute([':cID' => Connection::getCID()]);
+
+            $message = $message."BlackList Attempt; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                    "SET `CXTN_ERRORS`=:msg ".
                    "WHERE `CXTN_ID` =:cID");
