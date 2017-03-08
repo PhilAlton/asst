@@ -35,7 +35,7 @@ class Connection{
     private static $established = true; public static function isEstablished(){return Connection::$established;}
 
     /**  @var mixed $cID - ID of the Connection in the Database */
-    private static $cID;
+    private static $cID; public static function getCID(){return Connection::getCID;}
 
 
 
@@ -191,25 +191,14 @@ class Connection{
             if (password_verify(
                     base64_encode(hash('sha384', $_SERVER["PHP_AUTH_PW"], true)),
                     $password
-                ))
+                )){
+                Connection::authentic();
+                $q_auth = true;
 
-                    {   // Success
-                        User::$uID = $UserDetails["UniqueID"];
-                        $query = New Query(UPDATE, "ConnectionLog ".
-                                           "SET CXTN_AUTHENTIC=1".
-                                           "WHERE `CXTN_ID` =:cID");
-                        $query->execute([':cID' => Connection::$cID]);
-                        $q_auth = true;
-
-            } else {    // Failure
-                        http_response_code(401); // not authorised
-                        $query = New Query(UPDATE, "ConnectionLog ".
-                                       "SET CXTN_AUTHENTIC=0".
-                                       "WHERE `CXTN_ID` =:cID");
-                        $query->execute([':cID' => Connection::$cID]);
-                        $q_auth = false;
+            } else {
+                Connection::notAuthentic(); 
+                $q_auth = false;
             }
-
 
         }
         catch (UnexpectedValueException $e) {
@@ -218,6 +207,30 @@ class Connection{
         }
 
         return $q_auth;
+
+    }
+
+
+    private static function authentic(){
+        // Success
+        User::$uID = $UserDetails["UniqueID"];
+        $query = New Query(UPDATE, "ConnectionLog ".
+                           "SET CXTN_AUTHENTIC=1".
+                           "WHERE `CXTN_ID` =:cID");
+        $query->execute([':cID' => Connection::$cID]);
+        $q_auth = true;
+
+    }
+
+
+    private static function notAuthentic(){
+        // Failure
+        http_response_code(401); // not authorised
+        $query = New Query(UPDATE, "ConnectionLog ".
+                       "SET CXTN_AUTHENTIC=0".
+                                       "WHERE `CXTN_ID` =:cID");
+        $query->execute([':cID' => Connection::$cID]);
+
 
     }
 

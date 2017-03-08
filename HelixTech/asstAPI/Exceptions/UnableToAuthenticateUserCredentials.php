@@ -1,5 +1,6 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
+use HelixTech\asstAPI\Connection;
 /**
  * Logged Exception: Unable to Authenticate
  * @todo error logging
@@ -13,19 +14,14 @@ class UnableToAuthenticateUserCredentials extends AbstractLoggedException
      */
     public static function logError(){
 
-/*
-    //    $query = new Query(SELECT, "LAST_INSERT_ID()");   /// will not work as cannot specify table
-                                                                // need to create a connection class to wrap all the
-                                                                // relavent connection variables. This should be a singleton instance
-                                                                // this class should contain all the relavent connection details, including
-                                                                // the Unique ID of the connection database representation
-   //     $uID = $query->execute();
-                                                                // the following query will then read as specified in execute
+
+
+// the following query will then read as specified in execute
 
         $query = New Query(UPDATE, "ConnectionLog ".
                            "SET CXTN_AUTHENTIC=:value ".
                            "WHERE `UniqueID` =:uID");
-		$query->execute([":value" => false, ":uID" => Connection::getConnection()->getID()]);
+		$query->execute([":value" => false, ":uID" => Connection::getCID()]);
 
 
 
