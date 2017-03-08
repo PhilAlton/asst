@@ -1,6 +1,8 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
       use HelixTech\asstAPI\{Query, Connection};
+      use Maknz\Slack\Client;
+
       /**
        * Summary of BlackListedInput - log attempts to send blacklisted input to the server
        * @todo system admin notification
@@ -34,7 +36,7 @@
                 'link_names' => true
             ];
 
-            $client = new Maknz\Slack\Client('https://hooks.slack.com/services/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', $settings);
+            $client = new Client('https://hooks.slack.com/services/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', $settings);
 
             $client->send('BlackListed word detected in HTTP input');
 
