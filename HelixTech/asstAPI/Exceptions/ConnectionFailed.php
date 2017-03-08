@@ -1,5 +1,7 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
+      use HelixTech\asstAPI\{Query, Connection};
+      
       /**
        * Summary of ConnectionFailed - log failures to connect to the API
        */

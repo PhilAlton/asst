@@ -1,6 +1,6 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
-    use HelixTech\asstAPI\Connection;
+     use HelixTech\asstAPI\{Query, Connection};
     /**
     * Logged Exception: Attempted Access to Invalid URI
     */

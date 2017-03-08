@@ -1,5 +1,6 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
+      use HelixTech\asstAPI\{Query, Connection};
     /**
      * Summary of InsecureConnection - log failures to connect to the API via HTTPS
      */

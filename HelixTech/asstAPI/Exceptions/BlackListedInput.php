@@ -1,5 +1,6 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
+      use HelixTech\asstAPI\{Query, Connection};
       /**
        * Summary of BlackListedInput - log attempts to send blacklisted input to the server
        * @todo system admin notification
