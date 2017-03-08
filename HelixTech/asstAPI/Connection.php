@@ -92,7 +92,7 @@ class Connection{
         try{
             foreach ($blackList as $blackWord){
                 if (!(strpos($input, $blackWord) === false)){
-                    throw new BlackListedInput;
+                    throw new BlackListedInput($blackWord);
                 }
             }
 
@@ -101,7 +101,8 @@ class Connection{
         } catch (BlackListedInput $e){
             header("HTTP/1.0 418 I'm A Teapot");
             Output::errorMsg("Connection Failure: "
-                                ."BLACK LISTED INPUT DETECTED"
+                                ."BLACK LISTED INPUT DETECTED: "
+                                ."\'".$e->getMessage()."\'"." found in input"
                                 ."System Administrator notified."
             );
         }
