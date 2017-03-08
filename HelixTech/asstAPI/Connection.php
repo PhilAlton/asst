@@ -47,10 +47,8 @@ class Connection{
             Connection::$method = $_SERVER['REQUEST_METHOD'];
             Connection::$uri = $_SERVER['REQUEST_URI'];
             Connection::$request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
-            Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
+            Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift(Connection::$request));
             Connection::analyse(file_get_contents('php://input'));
-
-            Connection::sanitize();
 
             // ensure connection via HTTPS
             if(!isset($_SERVER['HTTPS'])){
@@ -61,6 +59,8 @@ class Connection{
             if (!isset($_SERVER["PHP_AUTH_USER"])){
                 throw new UnableToAuthenticateUserCredentials ("User details not sent in header");
             }
+
+            Connection::sanitize();
 
 
         } catch (InsecureConnection $e){
@@ -90,7 +90,7 @@ class Connection{
             Output::errorMsg("Connection Failure: "
                                 ."BLACK LISTED INPUT DETECTED"
                                 ."System Administrator notified."
-                            );
+            );
         }
 
     }
