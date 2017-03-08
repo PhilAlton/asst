@@ -17,7 +17,7 @@ class UnableToAuthenticateUserCredentials extends AbstractLoggedException
         $query = New Query(UPDATE, "ConnectionLog ".
                "SET CXTN_ERRORS=:msg ".
                "WHERE `CXTN_ID` =:cID");
-        $query->silentExecute([':cID' => Connection::getCID(), ':msg' => $message]);
+        $query->silentExecute([':cID' => Connection::getCID(), ':msg' => AbstractLoggedException::$dbMessage]);
     }
 
 
