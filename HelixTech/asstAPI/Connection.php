@@ -190,6 +190,7 @@ class Connection{
                     base64_encode(hash('sha384', $_SERVER["PHP_AUTH_PW"], true)),
                     $password
                 )){
+                User::$uID = $UserDetails["UniqueID"];
                 Connection::authentic();
                 $q_auth = true;
 
@@ -211,7 +212,6 @@ class Connection{
 
     private static function authentic(){
         // Success
-        User::$uID = $UserDetails["UniqueID"];
         $query = New Query(UPDATE, "ConnectionLog ".
                            "SET CXTN_AUTHENTIC=1".
                            "WHERE `CXTN_ID` =:cID");
