@@ -6,6 +6,7 @@
     "ext-pdo": "*",
     "defuse/php-encryption": "^2.0",
     "phpdocumentor/phpdocumentor": "^2.9",
+    "maknz/slack":  "*"
   },
   "license": "Copyright Helix Tech Ltd, 2016",
   "authors": [
