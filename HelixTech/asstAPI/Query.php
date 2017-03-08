@@ -19,6 +19,10 @@
         private $database;
 	    private $queryType;
 
+        public function lastInsertId(){
+            return $his->database->lastInsertId();
+        }
+
         public function __construct($queryType, $query){
             $this->database = New Database;
 		    $this->queryType = $queryType;

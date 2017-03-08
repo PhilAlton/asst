@@ -11,6 +11,9 @@
  *
  */
 
+use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection};
+use HelixTech\asstAPI\{Query, User, Crypt};
+
 
 /**
  * Connection class to register, store and error log connection details
@@ -18,12 +21,139 @@
  */
 class Connection{
 
-    public function __construct(){
+    private static $method; public static function getMethod(){return Connection::$method;}
+    private static $request; public static function getRequest(){return Connection::$request;}
+    private static $input; public static function getInput(){return Connection::$input;}
+    private static $apiRoot; public static function getAPIroot(){return Connection::$apiRoot;}
 
-        "</br>Connection from IP: <b>".$_SERVER['REMOTE_ADDR']."</b>"
-        ."</br>As User: <b>".(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'ANON.')."</b>"
-		."</br>To: <b>".$_SERVER['REQUEST_METHOD']."</b> @ <b>".$_SERVER['REQUEST_URI']."</b>"
-        ."</br>At: <b>".date("Y-m-d, H:i:s", $_SERVER['REQUEST_TIME'])."</b>"
+    /**  @var mixed $cID - ID of the Connection in the Database */
+    private static $cID;
+
+    private static $ip; public static function getIP(){return Connection::$ip;}
+    private static $UserName; public static function getUserName(){return Connection::$UserName;}
+    private static $password; public static function getPassword(){return Connection::$password;}
+    private static $connectionTime; public static function getConnectionTim(){return Connection::$connectionTime;}
+
+
+    public static function connect(){
+
+        try {
+            // ensure connection via HTTPS
+            if(!isset($_SERVER['HTTPS'])){
+                throw new InsecureConnection("Connection must be established via HTTPS");
+            }
+
+            //ensure connected with UserName and Password
+            if (!isset($_SERVER["PHP_AUTH_USER"])){
+                throw new UnableToAuthenticateUserCredentials ("User details not sent in header");
+            }
+
+
+            // get the HTTP method, path and body of the request
+            Connection::$method = $_SERVER['REQUEST_METHOD'];
+            Connection::$request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
+            Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift($request));
+            Connection::$input = json_decode(file_get_contents('php://input'),true);
+
+
+            // Sanitise input of UserName
+            $_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
+
+
+            // sanitise POST data UserName
+            Connection::$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
+            Connection::$input['Password'] = $_SERVER["PHP_AUTH_PW"];               // This also prevents UserName being updated.
+            // A new password may be (in the future) sent via POST, but for now, this should not be updatable through this method.
+
+
+
+
+        } catch (InsecureConnection $e){
+            http_response_code(403);
+            Output::errorMsg("Connection Failure: ".$e->getMessage().".");
+        } catch (UnableToAuthenticateUserCredentials $e) {
+            http_response_code(403);
+            Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
+        }
+
+
+
+        $query = New Query(
+            INSERT, "INTO ConnectionLog".
+            "(CXTN_USER, CXTN_IP, CXTN_REQUEST)".
+            "VALUES (:UserName, :ip, :Request)"
+        );
+
+        $query->execute([
+            ':UserName' => Connection::$input['UserName'],
+            ':ip' => $_SERVER['REMOTE_ADDR'],
+            ':Request' => Connection::$request
+            ]
+        );
+
+        Connection::$cID = $query->lastInsertId();
+
+
+    }
+
+
+    /**
+     * Summary of authenticate: called when other class wishes to give connection access to protected resources
+     * @throws \UnexpectedValueException
+     * @return boolean $q_auth (success vs failure)
+     */
+    public static function authenticate(){
+
+        // authenticate user session to enable access to api functions
+        $q_auth = false;
+
+        try{
+            // retrieve stored password string from database against UserName
+            $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
+            $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
+            
+            
+            /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
+            if (count($UserDetails)===0){
+                // If no password obtained then throw exception and handle.
+                $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
+                throw new \UnexpectedValueException($e);
+            } else {
+                // Else decrypt the password
+                $password = Crypt::decrypt($UserDetails["Password"]);                                                             //FIX - decrypt should go in query class
+            }
+
+            // Check if the hash of the entered login password, matches the stored hash.
+            if (password_verify(
+                    base64_encode(hash('sha384', $_SERVER["PHP_AUTH_PW"], true)),
+                    $password
+                ))
+
+                    {   // Success
+                        User::$uID = $UserDetails["UniqueID"];
+                        $query = New Query(UPDATE, "ConnectionLog ".
+                                           "SET CXTN_AUTHENTIC=1".
+                                           "WHERE `CXTN_ID` =:cID");
+                        $query->execute([':cID' => Connection::$cID]);
+                        $q_auth = true;
+
+            } else {    // Failure
+                        http_response_code(401); // not authorised
+                        $query = New Query(UPDATE, "ConnectionLog ".
+                                       "SET CXTN_AUTHENTIC=0".
+                                       "WHERE `CXTN_ID` =:cID");
+                        $query->execute([':cID' => Connection::$cID]);
+                        $q_auth = false;
+            }
+
+
+        }
+        catch (UnexpectedValueException $e) {
+            http_response_code(401);
+            Output::errorMsg("Unexpected Value: ".$e->getMessage().".");
+        }
+
+        return $q_auth;
 
     }
 
