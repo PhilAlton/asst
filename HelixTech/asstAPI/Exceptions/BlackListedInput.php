@@ -16,7 +16,8 @@
            * the system administrator
            */
         public static function logError($message){
-            $message = $message."...   ";
+            echo "child ".$message;
+            echo $message = $message."...   ";
             $query = New Query(UPDATE, "ConnectionLog ".
                    "SET `CXTN_ERRORS`=:msg ".
                    "WHERE `CXTN_ID` =:cID");
