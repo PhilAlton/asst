@@ -18,8 +18,8 @@ abstract class AbstractLoggedException extends \Exception
 
     abstract public static function logError($message);
 
+
     public static function callSlack($message){
-        echo "here";
         // Instantiate with defaults, so all messages created
         // will be sent from 'Cyril' and to the #accounting channel
         // by default. Any names like @regan or #channel will also be linked.

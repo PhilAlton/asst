@@ -43,7 +43,6 @@ class Connection{
 
         try {
 
-
             // get the HTTP method, path and body of the request
             Connection::$connectionTime = $_SERVER['REQUEST_TIME'];
             Connection::$method = $_SERVER['REQUEST_METHOD'];
@@ -68,6 +67,7 @@ class Connection{
             }
 
             Connection::sanitize();
+            echo "post sanitize";
 
         } catch (InsecureConnection $e){
             http_response_code(403);
@@ -79,6 +79,7 @@ class Connection{
             Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
         }
 
+        echo "prior to store";
         Connection::storeConnection();
 
     }
@@ -135,15 +136,15 @@ class Connection{
 
 
     private static function storeConnection(){
-
+        echo "in store connection";
         Connection::$UserName = (isset($_SERVER["PHP_AUTH_USER"])) ? $_SERVER["PHP_AUTH_USER"] : "ANON";
         Connection::$password = (isset($_SERVER["PHP_AUTH_PW"])) ? $_SERVER["PHP_AUTH_PW"] : "NOT SENT";
         Connection::$ip = $_SERVER['REMOTE_ADDR'];
 
 
         $query = New Query(
-            INSERT, "INTO ConnectionLog".
-            "(CXTN_USER, CXTN_IP, CXTN_REQUEST)".
+            INSERT, "INTO ConnectionLog ".
+            "(CXTN_USER, CXTN_IP, CXTN_REQUEST) ".
             "VALUES (:UserName, :ip, :Request)"
         );
 
@@ -217,7 +218,7 @@ class Connection{
         $query = New Query(UPDATE, "ConnectionLog ".
                            "SET CXTN_AUTHENTIC=1".
                            "WHERE `CXTN_ID` =:cID");
-        $query->execute([':cID' => Connection::$cID]);
+        $query->silentExecute([':cID' => Connection::$cID]);
         $q_auth = true;
 
     }
@@ -229,7 +230,7 @@ class Connection{
         $query = New Query(UPDATE, "ConnectionLog ".
                        "SET CXTN_AUTHENTIC=0".
                        "WHERE `CXTN_ID` =:cID");
-        $query->execute([':cID' => Connection::$cID]);
+        $query->silentExecute([':cID' => Connection::$cID]);
 
 
     }
