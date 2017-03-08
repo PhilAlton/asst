@@ -12,7 +12,7 @@ class InsecureConnection extends AbstractLoggedException
     * THis may indicate that a developer has not written their app consuming this API securely
     */
     public static function logError(){
-        AbstractLoggedException::$message =+ "Insecure Connection; ";
+        AbstractLoggedException::$dbMessage =+ "Insecure Connection; ";
         $query = New Query(UPDATE, "ConnectionLog ".
                 "SET CXTN_ERRORS=:msg ".
                 "WHERE `CXTN_ID` =:cID");

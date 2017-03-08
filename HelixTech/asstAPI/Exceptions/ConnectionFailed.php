@@ -12,7 +12,7 @@
            *
            */
           public static function logError(){
-            AbstractLoggedException::$message =+ "Connection Failed; ";
+              AbstractLoggedException::$dbMessage =+ "Connection Failed; ";
             $query = New Query(UPDATE, "ConnectionLog ".
                     "SET CXTN_ERRORS=:msg ".
                     "WHERE `CXTN_ID` =:cID");
