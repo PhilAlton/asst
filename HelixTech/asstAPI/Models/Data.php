@@ -42,12 +42,12 @@ class Data {
 
 				        case 'PUT':
 					        // call method to push a single data set
-                            Output::setOutput(Data::pushData($data['date'], $data));
+                            Output::setOutput(Data::pushData($data['date'], $data));    // single data set only, Router will accept mutiple
 					        break;
 
 				        case 'GET':
 					        // call method to get Data
-					        Output::setOutput(Data::pullData($data['date']));
+					        Output::setOutput(Data::pullData($data['date']));       //$data['date'] can be an array requesting multiple data sets
 					        break;
 
 				        default:
@@ -119,7 +119,9 @@ class Data {
                     $results = array_push($results, Array($countColumn => $isConsistent));
 
                 } else {
-                    // data not consistent - needs to be fixed
+                    // data not consistent - needs to be 
+                    
+                    // send back list of all dates in the for that table
 
                 }        
             }
