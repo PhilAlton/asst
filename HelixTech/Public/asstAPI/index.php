@@ -18,7 +18,7 @@ require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
-var_dump(json_decode('{"1":"one", "2":"two"}'));
+var_dump(json_decode('{"1":"one", "2":"two"}{"3":"three"}'), true);
 
 Connection::connect();
 Router::route();
