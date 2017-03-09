@@ -269,9 +269,7 @@
 				        // throw exception
 
 			        }
-
-                    //	Output::setOutput('need to return json representation or success string');
-
+                    
 		        } else {
 			        Output::setOutput('Invalid Username/Password Combination');
                     $e = "Failed to validate UserName against Password";

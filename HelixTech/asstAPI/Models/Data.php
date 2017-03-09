@@ -8,7 +8,8 @@
  * @todo write sync methods
  */
 
-use HelixTech\asstAPI\{Output, Connection, Query, Crypt};
+use HelixTech\asstAPI\{Output, Connection, Query};
+use HelixTech\asstAPI\Models\{User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 
 
@@ -29,14 +30,31 @@ class Data {
  *
  */
 
-
-
-    public static function handleSync($data){
+    public static function syncData($method, $data){
         try{
             if (Connection::authenticate()){
 
+                    switch ($method) {
+                        case 'POST':
+                            // call method to do something syncingness.
+                            Output::setOutput(Data::syncAllData($data));
+                            break;
 
+				        case 'PUT':
+					        // call method to push a single data set
+                            Output::setOutput(Data::pushData($data['date'], $data));
+					        break;
 
+				        case 'GET':
+					        // call method to get Data
+					        Output::setOutput(Data::pullData($data['date']));
+					        break;
+
+				        default:
+                            Output::errorMsg("HTML verb has no corisponding API action");
+				        // throw exception
+
+			        }
 
             } else {
                 Output::setOutput('Invalid Username/Password Combination');
@@ -58,10 +76,12 @@ class Data {
      * Summary of pushData: send a single data item to the server database
      * @param mixed $Data
      */
-    public static function pushData(){
-
-
-
+    public static function pushData($date, $data){
+        // check data does not already exist
+            // if so then terminate
+            // throw data conflict error_get_last
+        
+        // else run add data item to table(s)
     }
 
 
@@ -70,9 +90,9 @@ class Data {
      * @param mixed $data
      * @return array $results
      */
-    public static function pullData($data){
+    public static function pullData($date){
         $results = Array();
-
+        // SQL query to return $data against date for User::username
 
 
         return $results;
@@ -81,26 +101,57 @@ class Data {
 
 
     /**
-     * Summary of checkDataConsistency:
-     * @param mixed $count
+     * Summary of syncAllData:
      */
-    public static function checkDataConsistency($count){
+    public static function syncAllData($data){
+        // method to get user data against timestamp and either update (call postData),
+        //	or withdraw (call pullData) any additional server data and pass back to user
+
+        $results = Array();
+
+        $countArray = Array('ResearchTable' => 'Rch_Data_Count', 'UserTable' => 'Gen_Data_count');
+        foreach ($countArray as $table => $countColumn){
+            if (isset($data[$countColumn])){
+                
+                $isConsistent = checkDataConsistency($table, $countColumn, $data[$countColumn]);
+                
+                if ($isConsistent){
+                    $results = array_push($results, Array($countColumn => $isConsistent));
+
+                } else {
+                    // data not consistent - needs to be fixed
+
+                }        
+            }
+        }
 
 
     }
-
 
 
 
     /**
-     * Summary of syncData:
+     * Summary of checkDataConsistency:
+     * @param mixed $count
      */
-    public static function syncData(){
-        // method to get user data against timestamp and either update (call postData),
-        //	or withdraw (call pullData) any additional server data and pass back to user
+    public static function checkDataConsistency($table, $columnName, $count){
+        $isConsistent;    
+        
+        $query = New Query(SELET, "$columnName FROM $table WHERE UniqueID = :uID");
+        $countAPI = $query->execute([':uID' => User::$uID]);
 
+            if (floatval($count) === floatval($countAPI)){
+                $isConsistent = true;
+            } else {
+                $isConsistent = false;
+            }
 
+        return $isConsistent;
     }
+
+
+
+
 
 
 

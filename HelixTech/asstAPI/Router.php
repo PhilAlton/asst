@@ -38,9 +38,9 @@ class Router{
                 {
                     switch($request[3])
                     {
-                        case "data":
-                            // case for /asst/Users/Id/Data      "/asst/Users/$UserName/data"
-                            Data::syncData($UserName);
+                        case "sync":
+                            // case for /asst/Users/Id/Data      "/asst/Users/$UserName/sync"
+                            Data::syncData($method, $input);
                             break;
                         case "resetPassword":
                             //case for restetting password  "/asst/Users/$UserName/resetPassword"
