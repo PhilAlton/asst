@@ -4,9 +4,9 @@
        * @copyright Helix Tech Ltd. 2017
        * @file User.php
        * @package asstAPI
-       * 
+       *
        * @todo Rewrite models to abstract SQL queries
-       * 
+       *
        */
 
     use HelixTech\asstAPI\{Output, Connection, Query, Crypt};
@@ -362,6 +362,13 @@
 	    private static function deleteUser($UserName){
 		    // DELETE request, accepting user ID;
 
+            $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+		    $isRchParticipant = $query->execute([':UniqueID' => User::$uID]);
+            echo "is:".$isRchParticipant;
+            if ($isRchParticipant){
+                $query = New Query(DROP, "TABLE RCH_DATA_TABLE_".User::$uID);
+		        $query->execute();
+            }
 		    $query = New Query(DROP, "TABLE GEN_DATA_TABLE_".User::$uID);
 		    $query->execute();
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
@@ -369,6 +376,7 @@
 		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
             $query->execute([':UniqueID' => User::$uID]);
 		    $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
+
 		    return $query->execute([':UniqueID' => User::$uID]);
 
         }
