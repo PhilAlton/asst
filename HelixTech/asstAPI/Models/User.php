@@ -364,7 +364,6 @@
 
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		    $isRchParticipant = $query->execute([':UniqueID' => User::$uID]);
-            echo "is:".$isRchParticipant;
             if ($isRchParticipant){
                 $query = New Query(DROP, "TABLE RCH_DATA_TABLE_".User::$uID);
 		        $query->execute();
