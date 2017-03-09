@@ -109,6 +109,7 @@ class Data {
 
         $results = Array();
 
+        $userTableArray = Array('RCH_DATA_TABLE_','GEN_DATA_TABLE_');
         $countArray = Array('ResearchTable' => 'Rch_Data_Count', 'UserTable' => 'Gen_Data_count');
         foreach ($countArray as $table => $countColumn){
             if (isset($data[$countColumn])){
@@ -119,8 +120,11 @@ class Data {
                     $results = array_push($results, Array($countColumn => $isConsistent));
 
                 } else {
-                    // data not consistent - needs to be 
-                    
+                    // data not consistent - needs to be updated
+                    foreach ($userTableArray as $userTable){
+                        $query = New Query(SELECT, "Date from $userTable".User::$uID);
+                        $results = array_push($results, $query->execute());
+                    }
                     // send back list of all dates in the for that table
 
                 }        
