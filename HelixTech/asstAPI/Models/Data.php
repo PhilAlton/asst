@@ -42,7 +42,7 @@ class Data {
 
 				        case 'PUT':
 					        // call method to push a single data set
-                            Output::setOutput(Data::pushData($data['date'], $data));    // single data set only, Router will accept mutiple
+                            Output::setOutput(Data::pushData($data));    // single data set only, Router will accept mutiple
 					        break;
 
 				        case 'GET':
@@ -76,12 +76,20 @@ class Data {
      * Summary of pushData: send a single data item to the server database
      * @param mixed $Data
      */
-    public static function pushData($date, $data){
+    public static function pushData($data){
         // check data does not already exist
+        $query = New Query(SELECT, "* from $userTable".User::$uID
+                             ." WHERE date = :date"
+                           );
+        $results = array_push($results, array($userTable => $query->execute()));
             // if so then terminate
             // throw data conflict error_get_last
-        
+
         // else run add data item to table(s)
+
+        // update count var with new data-as-integer
+
+
     }
 
 
@@ -91,8 +99,17 @@ class Data {
      * @return array $results
      */
     public static function pullData($date){
+
         $results = Array();
-        // SQL query to return $data against date for User::username
+        $userTableArray = Array('RCH_DATA_TABLE_','GEN_DATA_TABLE_');
+
+        // SQL query to return $data against date for User::uID
+        foreach ($userTableArray as $userTable){
+            $query = New Query(SELECT, "* from $userTable".User::$uID
+                                  ." WHERE date = :date"
+                                );
+            $results = array_push($results, array($userTable => $query->execute()));
+        }
 
 
         return $results;
@@ -113,21 +130,22 @@ class Data {
         $countArray = Array('ResearchTable' => 'Rch_Data_Count', 'UserTable' => 'Gen_Data_count');
         foreach ($countArray as $table => $countColumn){
             if (isset($data[$countColumn])){
-                
+
                 $isConsistent = checkDataConsistency($table, $countColumn, $data[$countColumn]);
-                
+
                 if ($isConsistent){
                     $results = array_push($results, Array($countColumn => $isConsistent));
 
                 } else {
                     // data not consistent - needs to be updated
+                    // send back list of all dates in the for that table
                     foreach ($userTableArray as $userTable){
                         $query = New Query(SELECT, "Date from $userTable".User::$uID);
-                        $results = array_push($results, $query->execute());
+                        $results = array_push($results, array($userTable => $query->execute()));
                     }
-                    // send back list of all dates in the for that table
 
-                }        
+
+                }
             }
         }
 
@@ -141,8 +159,8 @@ class Data {
      * @param mixed $count
      */
     public static function checkDataConsistency($table, $columnName, $count){
-        $isConsistent;    
-        
+        $isConsistent;
+
         $query = New Query(SELET, "$columnName FROM $table WHERE UniqueID = :uID");
         $countAPI = $query->execute([':uID' => User::$uID]);
 
@@ -153,35 +171,6 @@ class Data {
             }
 
         return $isConsistent;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * Summary of syncLastThree: check the last three records and sync where needed
-     */
-    public static function syncLastThree(){
-
-
-    }
-
-    /**
-     * Summary of snycAllData: return
-     */
-    public static function pullAllData(){
-
-
     }
 
 

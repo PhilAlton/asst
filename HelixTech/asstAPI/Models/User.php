@@ -116,7 +116,7 @@
                     CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
                     "(".
                         "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-                        "Date date NOT NULL,".
+                        "Date date NOT NULL UNIQUE,".
                         "Basdai_1 tinyint UNSIGNED NOT NULL,".
                         "Basdai_2 tinyint UNSIGNED NOT NULL,".
                         "Basdai_3 tinyint UNSIGNED NOT NULL,".
@@ -211,7 +211,7 @@
                 CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
                 "(".
                     "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-                    "Date date,".
+                    "Date date NOT NULL UNIQUE,".
                     "Sleep_1 tinyint UNSIGNED NOT NULL,".
                     "Sleep_2 tinyint UNSIGNED NOT NULL,".
                     "Sleep_3 tinyint UNSIGNED NOT NULL,".
