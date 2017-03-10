@@ -78,10 +78,15 @@ class Data {
      */
     public static function pushData($data){
         // check data does not already exist
-        $query = New Query(SELECT, "* from $userTable".User::$uID
+        foreach ($userTable as $table){
+            $query = New Query(SELECT, "1 from $userTable".User::$uID
                              ." WHERE date = :date"
                            );
-        $results = array_push($results, array($userTable => $query->execute()));
+            $results = array_push($results, array($userTable => $query->execute()));
+
+
+        }
+
             // if so then terminate
             // throw data conflict error_get_last
 

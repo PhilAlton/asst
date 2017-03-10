@@ -61,7 +61,7 @@
 
 			// Hash a new password for storing in the database.
             // The function automatically generates a cryptographically safe salt.
-			    $password =	Crypt::encrypt(
+			    $password =	(
 							    password_hash
 							    (
 								    base64_encode
