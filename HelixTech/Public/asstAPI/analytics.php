@@ -1,7 +1,7 @@
 <?php
 
 use Defuse\Crypto\KeyProtectedByPassword;
-use Defuse\Crypto\Defuse\Crypto;
+use Defuse\Crypto\Crypto;
 use HelixTech\asstAPI\Query;
 
 
