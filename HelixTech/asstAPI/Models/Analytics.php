@@ -12,12 +12,14 @@ class Analytics{
                $query = new Query(SELECT, "COUNT(DISTINCT CXTN_IP) FROM ConnectionLog");
                $numDistinctIP = $query->execute();
 
+               $query = new Query(SELECT, "COUNT(DISTINCT CXTN_USER) FROM ConnectionLog");
+               $numDistinctUsers = $query->execute();
+
                $query = new Query(SELECT, "* FROM ConnectionLog ORDER BY CXTN_USER, CXTN_IP");
                $CnxtsByIP = $query->execute();
 
-               $analyticResults = array(")
-               var_dump($numDistinctIP);
-               var_dump($CnxtsByIP);
+               $analyticResults = array("DISTINCT_IP_COUNT" => $numDistinctIP,  "DISTINCT_USER_COUNT" => $numDistinctUsers, "Data", $CnxtsByIP);
+
 
 
             } else {
