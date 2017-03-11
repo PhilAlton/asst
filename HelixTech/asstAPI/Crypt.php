@@ -103,7 +103,7 @@ class Crypt{
 
 
     public static function decryptWithUserKey($protected_key_encoded, $password){
-        Crypt::$personalKey = KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
+        Crypt::$personalKey = \Defuse\Crypto\KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
 
     }
 
