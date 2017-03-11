@@ -25,13 +25,13 @@ class Router{
         $method = Connection::getMethod();
         $request = Connection::getRequest();
         $input = Connection::getInput();
-
+        $root = Connection::getAPIroot();
 
 
         // Switch to govern action based on URI
         try{
             if (!Connection::isEstablished()){throw new ConnectionFailed;}
-            if (Router::uri('asst/Users/..*') and ($request[2]==Connection::getUserName()))       // ensure that user specific end points are only accesible
+            if (Router::uri($root.'/Users/..*') and ($request[2]==Connection::getUserName()))       // ensure that user specific end points are only accesible
             {
                 $UserName = $request[2];
                 if (isset($request[3]))
@@ -54,10 +54,10 @@ class Router{
                     User::handleRequest($method, $UserName, $input);
                 }
 
-            } elseif (Router::uri('asst/Users')){
+            } elseif (Router::uri($root.'/Users')){
                 // code for asst/Users (create new user)
                 User::createUser($input);
-            } elseif (Router::uri('asst/Analytics')){
+            } elseif (Router::uri($root.'/Analytics')){
                 // code for asst/Analytics
                 Analytics::display();
             } else {
