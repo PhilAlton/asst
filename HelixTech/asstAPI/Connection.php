@@ -165,14 +165,14 @@ class Connection{
      * @throws \UnexpectedValueException
      * @return boolean $q_auth (success vs failure)
      */
-    public static function authenticate(){
+    public static function authenticate($table = 'AuthTable'){
 
         // authenticate user session to enable access to api functions
         $q_auth = false;
 
         try{
             // retrieve stored password string from database against UserName
-            $query = New Query(SELECT, 'UniqueID, Password FROM `AuthTable` WHERE `UserName` =:UserName');
+            $query = New Query(SELECT, "UniqueID, Password FROM `$table` WHERE `UserName` =:UserName");
             $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
 
 

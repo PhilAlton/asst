@@ -1,4 +1,6 @@
 <?php
+//output for analytics
+
 
 
 

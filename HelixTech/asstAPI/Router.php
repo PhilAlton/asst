@@ -10,7 +10,7 @@
 
 
 use HelixTech\asstAPI\{Connection};
-use HelixTech\asstAPI\Models\{Data, User};
+use HelixTech\asstAPI\Models\{Data, User, Analytics};
 use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed};
 
 /**
@@ -57,6 +57,9 @@ class Router{
             } elseif (Router::uri('asst/Users')){
                 // code for asst/Users (create new user)
                 User::createUser($input);
+            } elseif (Router::uri('asst/Analytics')){
+                // code for asst/Analytics
+                Analytics::display();
             } else {
                 throw new InvalidURI("Invalid URI selected".Connection::getURI());
             }
