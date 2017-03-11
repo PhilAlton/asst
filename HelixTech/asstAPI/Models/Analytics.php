@@ -15,10 +15,10 @@ class Analytics{
                $query = new Query(SELECT, "COUNT(DISTINCT CXTN_USER) FROM ConnectionLog");
                $numDistinctUsers = $query->execute();
 
-               $query = new Query(SELECT, "* FROM ConnectionLog WHERE CXTN_ERRORS<>null ORDER BY CXTN_USER, CXTN_IP");
+               $query = new Query(SELECT, "* FROM ConnectionLog WHERE CXTN_ERRORS <> null ORDER BY CXTN_USER, CXTN_IP");
                $CnxtsByIP = $query->execute();
 
-               $analyticResults = array("DISTINCT_IP_COUNT" => $numDistinctIP,  "DISTINCT_USER_COUNT" => $numDistinctUsers, "Data", $CnxtsByIP);
+               $analyticResults = array("DISTINCT_IP_COUNT" => $numDistinctIP,  "DISTINCT_USER_COUNT" => $numDistinctUsers, "Data" => $CnxtsByIP);
                Output::setOutput($analyticResults);
 
 
