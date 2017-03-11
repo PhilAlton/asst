@@ -206,7 +206,7 @@ class Connection{
             }
 
         }
-        catch (UnexpectedValueException $e) {
+        catch (\UnexpectedValueException $e) {
             http_response_code(401);
             Output::errorMsg("Unexpected Value: ".$e->getMessage().".");
         }
