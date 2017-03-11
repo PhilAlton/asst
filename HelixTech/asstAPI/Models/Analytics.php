@@ -19,7 +19,7 @@ class Analytics{
                $CnxtsByIP = $query->execute();
 
                $analyticResults = array("DISTINCT_IP_COUNT" => $numDistinctIP,  "DISTINCT_USER_COUNT" => $numDistinctUsers, "Data" => $CnxtsByIP);
-               Output::setOutput($analyticResults);
+        //       Output::setOutput($analyticResults);
 
 
             } else {
