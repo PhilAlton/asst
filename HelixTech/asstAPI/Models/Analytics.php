@@ -9,7 +9,7 @@ class Analytics{
        try{
            if (Connection::authenticate('AdminTable')){
 
-               $query = new Query(SELECT, "COUNT(DISTINCT CXTN_ID) FROM ConnectionLog");
+               $query = new Query(SELECT, "COUNT(DISTINCT CXTN_IP) FROM ConnectionLog");
                $numDistinctIP = $query->execute();
 
                $query = new Query(SELECT, "* FROM ConnectionLog GROUP BY CXTN_ID");
