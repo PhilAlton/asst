@@ -44,7 +44,7 @@ class Crypt{
         $indexOfNullArg = (array_search(null, $args));
 
         /** @param $args[$indexOfNullArg] modified: with encrpytion key */
-        $args[$indexOfNullArg] = Crypt::keyIsGeneral ?
+        $args[$indexOfNullArg] = Crypt::$keyIsGeneral ?
                 Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']):
                 Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]);
 
