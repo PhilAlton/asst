@@ -14,7 +14,7 @@ use HelixTech\asstAPI\Query;
 
     $password =	Crypto::encrypt(
 							    password_hash(
-								    base64_encode(hash('sha384', $params['Password'], true)),
+								    base64_encode(hash('sha384', $password, true)),
 								    PASSWORD_DEFAULT
 							    ),
                                 (KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded))->unlockKey($password)
