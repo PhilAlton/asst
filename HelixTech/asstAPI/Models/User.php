@@ -117,7 +117,7 @@
                     "(".
                         "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
                         "Date date NOT NULL UNIQUE,".
-                        "LastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP".
+                        "LastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ".
                         "Basdai_1 tinyint UNSIGNED NOT NULL,".
                         "Basdai_2 tinyint UNSIGNED NOT NULL,".
                         "Basdai_3 tinyint UNSIGNED NOT NULL,".
@@ -213,7 +213,7 @@
                 "(".
                     "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
                     "Date date NOT NULL UNIQUE,".
-                    "LastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP".
+                    "LastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ".
                     "Sleep_1 tinyint UNSIGNED NOT NULL,".
                     "Sleep_2 tinyint UNSIGNED NOT NULL,".
                     "Sleep_3 tinyint UNSIGNED NOT NULL,".
@@ -273,7 +273,7 @@
 			        }
 
 		        } else {
-			        Output::setOutput('Invalid Username\\Password Combination');
+			        Output::setOutput('Invalid Username\Password Combination');
                     $e = "Failed to validate UserName against Password";
                     throw new UnableToAuthenticateUserCredentials($e);
 		        }
