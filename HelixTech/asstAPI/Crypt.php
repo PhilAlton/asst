@@ -46,7 +46,6 @@ class Crypt{
                 Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]):
                 Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']);
 
-        var_dump($args[$indexOfNullArg]);
         // call the function deploying the key, with its other arguments as an array
         // set the return value of the fucntion, so that the return value can bubble up
         $return = call_user_func_array($callBackFunction, $args);
@@ -81,7 +80,7 @@ class Crypt{
      */
     public static function decrypt($input){
         $plaintext = "";
-        echo "input: ".$input;
+
         try {
             // call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
             $plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
