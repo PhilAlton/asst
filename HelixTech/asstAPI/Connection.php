@@ -172,7 +172,7 @@ class Connection{
 
         try{
             // retrieve stored password string from database against UserName
-            $query = New Query(SELECT, "UniqueID, Password FROM `$table` WHERE `UserName` =:UserName");
+            $query = New Query(SELECT, "* FROM `$table` WHERE `UserName` =:UserName");
             $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
 
 
