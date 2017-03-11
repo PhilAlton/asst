@@ -49,9 +49,6 @@ class Crypt{
                 Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]);
 
         echo "</br>".Crypt::$keyIsGeneral."</br>";
-        var_dump($args[$indexOfNullArg]);
-        var_dump(Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']));
-        var_dump(Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]));
 
         // call the function deploying the key, with its other arguments as an array
         // set the return value of the fucntion, so that the return value can bubble up

@@ -13,10 +13,10 @@ class Analytics{
                $numDistinctIP = $query->execute();
 
                $query = new Query(SELECT, "* FROM ConnectionLog GROUP BY CXTN_ID");
-   //            $CnxtsByIP = $query->execute();
+               $CnxtsByIP = $query->execute();
 
                var_dump($numDistinctIP);
-   //            var_dump($CnxtsByIP);
+               var_dump($CnxtsByIP);
 
 
             } else {
