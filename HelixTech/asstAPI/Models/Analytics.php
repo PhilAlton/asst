@@ -1,6 +1,7 @@
 <?php namespace HelixTech\asstAPI\Models;
 
 use HelixTech\asstAPI\{Connection, Query};
+use HelixTech\asstAPI\Exceptions\UnableToAuthenticateUserCredentials;
 
 class Analytics{
 

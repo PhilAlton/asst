@@ -88,6 +88,8 @@ class Crypt{
             $plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
 
 	    } catch (\Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException $ex) {
+
+            echo "error";
 		    // An attack! Either the wrong key was loaded, or the ciphertext has
 		    // changed since it was created -- either corrupted in the database or
 		    // intentionally modified by someone trying to carry out an attack.
