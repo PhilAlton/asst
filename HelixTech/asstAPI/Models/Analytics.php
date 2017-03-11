@@ -15,7 +15,7 @@ class Analytics{
                $CnxtsByIP = $query->execute();
 
                var_dump($numDistinctIP);
-               var_dump($CnxtsByIP);
+   //            var_dump($CnxtsByIP);
 
 
             } else {
