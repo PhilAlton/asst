@@ -22,12 +22,12 @@ use HelixTech\asstAPI\Query;
 
     echo $userName ."</br>". $password . "</br>" . $protected_key_encoded;
     $query = new Query(INSERT, "INTO AdminTable ".
-                         "(Firstname, Surname, Key)".
+                         "(Firstname, Surname, UserKey)".
                     "VALUES ".
-                        "(:UserName, :Password, :Key)"
+                        "(:UserName, :Password, :UserKey)"
                     );
 
-    $query->execute([':Username'=>$userName, ':Password'=>$password,':Key'=>$protected_key_encoded]);
+    $query->execute([':Username'=>$userName, ':Password'=>$password,':UserKey'=>$protected_key_encoded]);
 
 
 
