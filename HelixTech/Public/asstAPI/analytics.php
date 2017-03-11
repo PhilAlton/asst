@@ -25,7 +25,7 @@ use HelixTech\asstAPI\Query;
                     "VALUES".
                         "(:UserName, :Password, :Key)"
                     );
-    $query->execute([':Username'=>$userName, 'Password'=>$password,':Key'=>$protected_key_encoded]);
+    $query->execute([':Username'=>$userName, ':Password'=>$password,':Key'=>$protected_key_encoded]);
 
 
 
