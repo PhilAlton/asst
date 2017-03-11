@@ -1,6 +1,6 @@
 <?php namespace HelixTech\asstAPI\Models;
 
-use HelixTech\asstAPI\{Connection, Query};
+use HelixTech\asstAPI\{Connection, Query, Output};
 use HelixTech\asstAPI\Exceptions\UnableToAuthenticateUserCredentials;
 
 class Analytics{
@@ -19,7 +19,7 @@ class Analytics{
                $CnxtsByIP = $query->execute();
 
                $analyticResults = array("DISTINCT_IP_COUNT" => $numDistinctIP,  "DISTINCT_USER_COUNT" => $numDistinctUsers, "Data", $CnxtsByIP);
-
+               Output::setOutput($analyticResults);
 
 
             } else {
