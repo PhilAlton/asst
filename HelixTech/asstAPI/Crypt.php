@@ -7,9 +7,8 @@
 
 use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
-//use Defuse\Crypto\KeyProtectedByPassword;
-//use Defuse\Crypto\Exception as Ex;
-//use Defuse\Crypto\File;
+use Defuse\Crypto\KeyProtectedByPassword;
+use Defuse\Crypto\Exception as Ex;
 
 
 /**
@@ -78,16 +77,17 @@ class Crypt{
     /**
      * Summary of HelixTech\asstAPI\decrypt: return plaintext from ciphertext
      * @param mixed $input cyphertext
-     * @throws \Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException if the data has become corrupted
+     * @throws Ex\WrongKeyOrModifiedCiphertextException if the data has become corrupted
      * @return mixed plaintext
      */
     public static function decrypt($input){
+        $plaintext;
 
         try {
             // call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
             $plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
 
-	    } catch (\Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException $ex) {
+	    } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
 
 		    // An attack! Either the wrong key was loaded, or the ciphertext has
 		    // changed since it was created -- either corrupted in the database or
@@ -104,7 +104,7 @@ class Crypt{
 
 
     public static function decryptWithUserKey($protected_key_encoded, $password){
-        Crypt::$personalKey = \Defuse\Crypto\KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
+        Crypt::$personalKey = KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
         Crypt::$keyIsGeneral = false;
     }
 
