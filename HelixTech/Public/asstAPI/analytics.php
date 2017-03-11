@@ -20,15 +20,10 @@ use HelixTech\asstAPI\Query;
                                 (KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded))->unlockKey($password)
 						    );
 
-    echo $userName ."</br>". $password . "</br>" . $protected_key_encoded;
-    $query = new Query(INSERT, "INTO AdminTable ".
-                         "(Firstname, Surname, UserKey)".
-                    "VALUES ".
-                        "(:UserName, :Password, :UserKey)"
+    $query = new Query(INSERT, "INTO AdminTable (Firstname, Surname, UserKey)".
+                    "VALUES (:UserName, :Password, :UserKey)"
                     );
-
-    $query->execute([':Username'=>$userName, ':Password'=>$password,':UserKey'=>$protected_key_encoded]);
-
+    $query->execute([':UserName' => $userName, ':Password' => $password, ':UserKey' => $protected_key_encoded]);
 
 
 
