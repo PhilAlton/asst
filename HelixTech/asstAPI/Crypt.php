@@ -30,7 +30,6 @@ class Crypt{
      * @return mixed
      */
 
-    private static $keyIsGeneral = true;
     private static $personalKey;
 
 
@@ -43,9 +42,9 @@ class Crypt{
         $indexOfNullArg = (array_search(null, $args));
 
         /** @param $args[$indexOfNullArg] modified: with encrpytion key */
-        $args[$indexOfNullArg] = Crypt::$keyIsGeneral ?
-                Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']):
-                Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]);
+        $args[$indexOfNullArg] = isset(Crypt::$personalKey) ?
+                Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]):
+                Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']);
 
 
         // call the function deploying the key, with its other arguments as an array
@@ -107,7 +106,6 @@ class Crypt{
 
     public static function decryptWithUserKey($protected_key_encoded, $password){
         Crypt::$personalKey = KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
-        Crypt::$keyIsGeneral = false;
     }
 
 

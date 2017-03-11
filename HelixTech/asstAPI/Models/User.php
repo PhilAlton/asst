@@ -273,7 +273,7 @@
 			        }
 
 		        } else {
-			        Output::setOutput('Invalid Username/Password Combination');
+			        Output::setOutput('Invalid Username\\Password Combination');
                     $e = "Failed to validate UserName against Password";
                     throw new UnableToAuthenticateUserCredentials($e);
 		        }
