@@ -30,24 +30,28 @@ class Data {
  *
  */
 
+    private static $userTableArray = Array();
+
     public static function syncData($method, $data){
         try{
             if (Connection::authenticate()){
 
+                // Ensure correct tables are looked at.
+                $this->userTableArray = array_push($this->userTableArray, 'GEN_DATA_TABLE_');
+                $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+                $isRchParticipant = $query->execute([':UniqueID' => User::$uID]);
+                if ($isRchParticipant){$this->userTableArray = array_push($this->userTableArray, 'RCH_DATA_TABLE_');}
+
+
                     switch ($method) {
                         case 'POST':
                             // call method to do something syncingness.
-                            Output::setOutput(Data::syncAllData($data));
+                            Output::setOutput(Data::postDataSet($data));       // add a single data set to the table
                             break;
-
-				        case 'PUT':
-					        // call method to push a single data set
-                            Output::setOutput(Data::pushData($data));    // single data set only, Router will accept mutiple
-					        break;
 
 				        case 'GET':
 					        // call method to get Data
-					        Output::setOutput(Data::pullData($data['date']));       //$data['date'] can be an array requesting multiple data sets
+					        Output::setOutput(Data::syncAllData($data['remoteLastUpdate']));       //$data['remoteLastUpdate'] - last time remote client was sync'd with the database
 					        break;
 
 				        default:
@@ -78,12 +82,36 @@ class Data {
      */
     public static function pushData($data){
         // check data does not already exist
-        foreach ($userTable as $table){
-            $query = New Query(SELECT, "1 from $userTable".User::$uID
-                             ." WHERE date = :date"
-                           );
-            $results = array_push($results, array($userTable => $query->execute()));
+        $results = array();
+        foreach ($this->userTableArray as $userTable){
 
+
+
+
+
+            $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
+            $conflict = $query->execute([':date' => $date]);
+
+
+            if (count($conflict) !== 0){
+
+			    Output::errorMsg("database conflict, data set $date in $userTable alraedy exists");
+		    } else {
+
+                $query = New Query(SELECT, "COLUMN_NAME "
+                                   ."FROM INFORMATION_SCHEMA.COLUMNS "
+                                   ."WHERE TABLE_NAME=:tableName"
+                                   );
+                $colArray['ResearchTable'] = $query->execute([':tableName' => 'ResearchTable']);
+                $colArray['UserTable'] = $query->execute([':tableName' => 'UserTable']);
+
+                    $query = New Query(INSERT, ""
+
+                        );
+
+                    $results = array_push($results, array($userTable => $query->execute()));
+
+            }
 
         }
 
@@ -93,6 +121,10 @@ class Data {
         // else run add data item to table(s)
 
         // update count var with new data-as-integer
+
+
+        //output results
+        return $results;
 
 
     }
@@ -106,16 +138,12 @@ class Data {
     public static function pullData($date){
 
         $results = Array();
-        $userTableArray = Array('RCH_DATA_TABLE_','GEN_DATA_TABLE_');
 
         // SQL query to return $data against date for User::uID
-        foreach ($userTableArray as $userTable){
-            $query = New Query(SELECT, "* from $userTable".User::$uID
-                                  ." WHERE date = :date"
-                                );
+        foreach ($this->userTableArray as $userTable){
+            $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE date = :date");
             $results = array_push($results, array($userTable => $query->execute()));
         }
-
 
         return $results;
     }
@@ -131,7 +159,6 @@ class Data {
 
         $results = Array();
 
-        $userTableArray = Array('RCH_DATA_TABLE_','GEN_DATA_TABLE_');
         $countArray = Array('ResearchTable' => 'Rch_Data_Count', 'UserTable' => 'Gen_Data_count');
         foreach ($countArray as $table => $countColumn){
             if (isset($data[$countColumn])){
@@ -143,8 +170,9 @@ class Data {
 
                 } else {
                     // data not consistent - needs to be updated
-                    // send back list of all dates in the for that table
-                    foreach ($userTableArray as $userTable){
+                    // send back a list of all dates for that table
+                    // client can then compare
+                    foreach ($this->userTableArray as $userTable){
                         $query = New Query(SELECT, "Date from $userTable".User::$uID);
                         $results = array_push($results, array($userTable => $query->execute()));
                     }

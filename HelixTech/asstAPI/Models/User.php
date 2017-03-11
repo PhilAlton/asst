@@ -61,7 +61,7 @@
 
 			// Hash a new password for storing in the database.
             // The function automatically generates a cryptographically safe salt.
-			    $password =	(
+			    $password =	Crypt::encrypt(
 							    password_hash
 							    (
 								    base64_encode
@@ -117,6 +117,7 @@
                     "(".
                         "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
                         "Date date NOT NULL UNIQUE,".
+                        "LastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP".
                         "Basdai_1 tinyint UNSIGNED NOT NULL,".
                         "Basdai_2 tinyint UNSIGNED NOT NULL,".
                         "Basdai_3 tinyint UNSIGNED NOT NULL,".
@@ -212,6 +213,7 @@
                 "(".
                     "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
                     "Date date NOT NULL UNIQUE,".
+                    "LastUpdate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP".
                     "Sleep_1 tinyint UNSIGNED NOT NULL,".
                     "Sleep_2 tinyint UNSIGNED NOT NULL,".
                     "Sleep_3 tinyint UNSIGNED NOT NULL,".
@@ -269,7 +271,7 @@
 				        // throw exception
 
 			        }
-                    
+
 		        } else {
 			        Output::setOutput('Invalid Username/Password Combination');
                     $e = "Failed to validate UserName against Password";
