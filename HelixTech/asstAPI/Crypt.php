@@ -83,6 +83,8 @@ class Crypt{
     public static function decrypt($input){
         $plaintext;
 
+        echo "isGen: ".$keyIsGeneral;
+
         try {
             // call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
             $plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
