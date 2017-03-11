@@ -183,6 +183,11 @@ class Connection{
                 throw new \UnexpectedValueException($e);
             } else {
                 // Else decrypt the password
+                    // for admin table, key is protected by password
+                if ($table == "AdminTable"){
+                    Crypt::decryptWithUserKey($UserDetails["Key"], $_SERVER["PHP_AUTH_PW"]);
+                }
+
                 $password = Crypt::decrypt($UserDetails["Password"]);                                                             //FIX - decrypt should go in query class
             }
 

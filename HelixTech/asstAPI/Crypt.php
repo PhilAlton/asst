@@ -30,6 +30,11 @@ class Crypt{
      *
      * @return mixed
      */
+
+    private static $keyIsGeneral = true;
+    private static $personalKey;
+
+
     private static function UseEncryptionKey(callable $callBackFunction, ...$args){
         // retrieve key
         $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst' : realpath('/var/www/private'));
@@ -39,17 +44,20 @@ class Crypt{
         $indexOfNullArg = (array_search(null, $args));
 
         /** @param $args[$indexOfNullArg] modified: with encrpytion key */
-        $args[$indexOfNullArg] = Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']);
-       
+        $args[$indexOfNullArg] = $this->keyIsGeneral ?
+                Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']):
+                Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]);
+
+
         // call the function deploying the key, with its other arguments as an array
         // set the return value of the fucntion, so that the return value can bubble up
         $return = call_user_func_array($callBackFunction, $args);
-        
+
         // Store a random string of bytes in the key index, in order to remove the index
         $args[$indexOfNullArg] = random_bytes(102);
         // Then set the index to null in order to free up the memory to further protect the encryption key
         $args[$indexOfNullArg] = null;
-        
+
         return $return;
     }
 
@@ -92,6 +100,14 @@ class Crypt{
 
         return $plaintext;
     }
+
+
+    public static function decryptWithUserKey($protected_key_encoded, $password){
+        Crypt::$personalKey = KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
+
+    }
+
+
 }
 
 ?>
