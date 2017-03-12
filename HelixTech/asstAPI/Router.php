@@ -26,8 +26,7 @@ class Router{
         $request = Connection::getRequest();
         $input = Connection::getInput();
         $root = Connection::getAPIroot();
-        echo "</br>Connection: ".Connection::getURI();
-        echo "</br>API Root: ".$root;
+
 
         // Switch to govern action based on URI
         try{
