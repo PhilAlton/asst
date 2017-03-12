@@ -174,7 +174,7 @@ class Connection{
             // retrieve stored password string from database against UserName
             $query = New Query(SELECT, "* FROM `$table` WHERE `UserName` =:UserName");
             $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
-
+            echo "this is strange";
             var_dump($UserDetails);
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
