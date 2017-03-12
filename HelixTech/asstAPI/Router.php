@@ -32,12 +32,12 @@ class Router{
         // Switch to govern action based on URI
         try{
             if (!Connection::isEstablished()){throw new ConnectionFailed;}
-            if (Router::uri($root.'/Users/..*') and ($request[2]==Connection::getUserName()))       // ensure that user specific end points are only accesible
+            if (Router::uri($root.'/Users/..*') and ($request[1]==Connection::getUserName()))       // ensure that user specific end points are only accesible
             {
-                $UserName = $request[2];
-                if (isset($request[3]))
+                $UserName = $request[1];
+                if (isset($request[2]))
                 {
-                    switch($request[3])
+                    switch($request[2])
                     {
                         case "sync":
                             // case for /asst/Users/Id/Data      "/asst/Users/$UserName/sync"
