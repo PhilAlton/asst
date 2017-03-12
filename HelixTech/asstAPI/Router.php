@@ -26,7 +26,8 @@ class Router{
         $request = Connection::getRequest();
         $input = Connection::getInput();
         $root = Connection::getAPIroot();
-
+        echo "</br>Connection: ".Connection::getURI();
+        echo "</br>API Root: ".Connection::getAPIroot;
 
         // Switch to govern action based on URI
         try{
@@ -95,7 +96,7 @@ class Router{
     *    $connection = new Connection();
     *    $route = new Route();
     *    $route->toEndpoint($connection->getVerb(), $connection->getMethod())
-    *    
+    *
     *
     * in Router.php:
     *
