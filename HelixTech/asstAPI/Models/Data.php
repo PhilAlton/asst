@@ -46,12 +46,12 @@ class Data {
                     switch ($method) {
                         case 'POST':
                             // call method to do something syncingness.
-                            Output::setOutput(Data::postDataSet($data));       // add a single data set to the table
+                            Output::setOutput(Data::pushData($data));       // add a single data set to the table
                             break;
 
 				        case 'GET':
 					        // call method to get Data
-					        Output::setOutput(Data::syncAllData($data['remoteLastUpdate']));       //$data['remoteLastUpdate'] - last time remote client was sync'd with the database
+					        Output::setOutput(Data::pullData($data['lastUpdate']));       //$data['remoteLastUpdate'] - last time remote client was sync'd with the database
 					        break;
 
 				        default:
@@ -135,14 +135,14 @@ class Data {
      * @param mixed $data
      * @return array $results
      */
-    public static function pullData($date){
+    public static function pullData($remoteLastUpdate){
 
         $results = Array();
 
         // SQL query to return $data against date for User::uID
         foreach ($this->userTableArray as $userTable){
-            $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE date = :date");
-            $results = array_push($results, array($userTable => $query->execute()));
+            $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE LastUpdate > :remoteLastUpdate");
+            $results = array_push($results, array($userTable => $query->execute([':remoteLastUpdate' => $remoteLastUpdate])));
         }
 
         return $results;
@@ -150,9 +150,12 @@ class Data {
 
 
 
+// Code to test for database consistency 
+//     May be incorporated into a subsequent version of the API
     /**
      * Summary of syncAllData:
-     */
+
+     
     public static function syncAllData($data){
         // method to get user data against timestamp and either update (call postData),
         //	or withdraw (call pullData) any additional server data and pass back to user
@@ -186,11 +189,12 @@ class Data {
     }
 
 
-
+*/
     /**
      * Summary of checkDataConsistency:
      * @param mixed $count
-     */
+     *
+     
     public static function checkDataConsistency($table, $columnName, $count){
         $isConsistent;
 
@@ -205,7 +209,7 @@ class Data {
 
         return $isConsistent;
     }
-
+*/
 
 }
 ?>
