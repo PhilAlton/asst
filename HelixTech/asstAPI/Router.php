@@ -22,15 +22,18 @@ class Router{
 
     public static function route(){
 
-        $method = Connection::getMethod();
-        $request = Connection::getRequest();
-        $input = Connection::getInput();
-        $root = Connection::getAPIroot();
-
 
         // Switch to govern action based on URI
         try{
             if (!Connection::isEstablished()){throw new ConnectionFailed;}
+
+            echo $method = Connection::getMethod();
+            $request = Connection::getRequest();
+            $input = Connection::getInput();
+            echo $root = Connection::getAPIroot();
+
+            echo var_dump($request);
+
             if (Router::uri($root.'/Users/..*') and ($request[1]==Connection::getUserName()))       // ensure that user specific end points are only accesible
             {
                 $UserName = $request[1];
