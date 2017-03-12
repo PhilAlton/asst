@@ -32,6 +32,8 @@ class Data {
 
     private static $userTableArray = Array();
 
+
+
     public static function syncData($method, $data){
         try{
             if (Connection::authenticate()){
@@ -83,45 +85,49 @@ class Data {
     public static function pushData($data){
         // check data does not already exist
         $results = array();
+
         foreach ($this->userTableArray as $userTable){
 
-
-
-
-
+            // Handle any conflicts
             $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
             $conflict = $query->execute([':date' => $date]);
 
 
             if (count($conflict) !== 0){
-
-			    Output::errorMsg("database conflict, data set $date in $userTable alraedy exists");
+                $results = array_push($results, Array($userTable => "database conflict, data-set $date in $userTable alraedy exists"));
 		    } else {
+            // If no conflicts then proceed:
 
+                // generate array of possible columns
                 $query = New Query(SELECT, "COLUMN_NAME "
                                    ."FROM INFORMATION_SCHEMA.COLUMNS "
                                    ."WHERE TABLE_NAME=:tableName"
                                    );
-                $colArray['ResearchTable'] = $query->execute([':tableName' => 'ResearchTable']);
-                $colArray['UserTable'] = $query->execute([':tableName' => 'UserTable']);
+                $columns = $query->execute([':tableName' => $userTable]);
 
-                    $query = New Query(INSERT, ""
+                // Unify coluns and values
+                $values = Array();
+                foreach ($columns as $column){
+                    if (!isset($data[$column])){
+                        unset($columns[array_search($column, $columns)]);
+                    } else {
+                        $values = array_push($values, $data[$column]);
+                    }
+                }
 
-                        );
+                // stringify columns and values
+                $columnString = implode(", ", $columns);
+                $valueString = implode(", ", $values);
 
-                    $results = array_push($results, array($userTable => $query->execute()));
-
+                // create and execute query to insert data-set
+                $query = New Query(INSERT, "INTO $userTable (".$columnString.") VALUES (".$valueString.")");
+                $results = array_push($results, $query->execute());                  
             }
 
         }
 
-            // if so then terminate
-            // throw data conflict error_get_last
 
-        // else run add data item to table(s)
-
-        // update count var with new data-as-integer
-
+        /** @todo in V2: update count var with new data-as-integer */  
 
         //output results
         return $results;

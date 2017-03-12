@@ -92,14 +92,18 @@ class Router{
     * @code
     *
     * in index.php:
-    *    MapToEndpoint(VERB, URL)
+    *    $connection = new Connection();
+    *    $route = new Route();
+    *    $route->toEndpoint($connection->getVerb(), $connection->getMethod())
+    *    
     *
     * in Router.php:
     *
-    *    Public Static Function MapToEndpoint($method, $url){
+    *    Public Function toEndpoint($method, $url){
     *        for the first entity in the url (i.e. between / /){
+    *       e.g. $entity = array_shift(&$url)
     *
-    *            Entity::Route($method, rest of url);
+    *            Entity::Route($method, &$url);
     *
     *    }
     *
