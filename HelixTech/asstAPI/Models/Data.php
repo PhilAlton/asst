@@ -90,7 +90,7 @@ class Data {
 
             // Handle any conflicts
             $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
-            $conflict = $query->execute([':date' => $date]);
+            $conflict = $query->execute([':date' => $data['Date']]);
 
 
             if (count($conflict) !== 0){
