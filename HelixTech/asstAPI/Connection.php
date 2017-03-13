@@ -60,8 +60,8 @@ class Connection{
             $input = json_decode($input, true);
 
             Connection::$input = array();
-            Connection::$input = !is_array($input) ?:  array_merge(Connection::$input, $input);
-            Connection::$input = !is_array($input) ?:  array_merge(Connection::$input, $_GET);
+            Connection::$input = !is_array($input) ? Connection::$input : array_merge(Connection::$input, $input);
+            Connection::$input = !is_array($input) ? Connection::$input : array_merge(Connection::$input, $_GET);
 
 
             var_dump(Connection::$input);
