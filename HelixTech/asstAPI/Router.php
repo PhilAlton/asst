@@ -43,7 +43,7 @@ class Router{
                 {
                     switch($request[2])
                     {
-                        case "sync":
+                        case "sync" + ($request[2]).slice("sync".length):
                             // case for /asst/Users/Id/Data      "/asst/Users/$UserName/sync"
                             Data::syncData($method, $input);
                             break;
