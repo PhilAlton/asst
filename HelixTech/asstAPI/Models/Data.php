@@ -86,7 +86,7 @@ class Data {
         // check data does not already exist
         $results = array();
 
-        var_dump($data);
+        echo "</br>data: ";var_dump($data);
         foreach (Data::$userTableArray as $userTable){
 
             // Handle any conflicts
