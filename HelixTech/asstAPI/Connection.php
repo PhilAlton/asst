@@ -64,7 +64,7 @@ class Connection{
                 var_dump(Connection::$input);
                 var_dump($_GET);
 
-                Connection::$input=array_push(Connection::$input,$_GET);
+                array_push(Connection::$input,$_GET);
             }
 
             var_dump(Connection::$input);
