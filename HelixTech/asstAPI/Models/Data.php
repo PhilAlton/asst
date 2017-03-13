@@ -39,10 +39,10 @@ class Data {
             if (Connection::authenticate()){
 
                 // Ensure correct tables are looked at.
-                Data::$userTableArray = array_push(Data::$userTableArray, 'GEN_DATA_TABLE_');
+                array_push(Data::$userTableArray, 'GEN_DATA_TABLE_');
                 $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
                 $isRchParticipant = $query->execute([':UniqueID' => User::$uID]);
-                if ($isRchParticipant){Data::$userTableArray = array_push(Data::$userTableArray, 'RCH_DATA_TABLE_');}
+                if ($isRchParticipant){array_push(Data::$userTableArray, 'RCH_DATA_TABLE_');}
 
 
                     switch ($method) {

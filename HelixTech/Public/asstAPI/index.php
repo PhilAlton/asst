@@ -19,11 +19,6 @@ require_once 'analytics.php';
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
-$array = array();
-$array= array_merge($array, "this");
-$arrayarray_merge($array, "more");
-var_dump($array);
-
 Connection::connect();
 Router::route();
 Output::go();
