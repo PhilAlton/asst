@@ -39,10 +39,10 @@ class Data {
             if (Connection::authenticate()){
 
                 // Ensure correct tables are looked at.
-                $this->userTableArray = array_push($this->userTableArray, 'GEN_DATA_TABLE_');
+                Data::$userTableArray = array_push($this->userTableArray, 'GEN_DATA_TABLE_');
                 $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
                 $isRchParticipant = $query->execute([':UniqueID' => User::$uID]);
-                if ($isRchParticipant){$this->userTableArray = array_push($this->userTableArray, 'RCH_DATA_TABLE_');}
+                if ($isRchParticipant){$this->userTableArray = array_push(Data::$userTableArray, 'RCH_DATA_TABLE_');}
 
 
                     switch ($method) {
@@ -86,7 +86,7 @@ class Data {
         // check data does not already exist
         $results = array();
 
-        foreach ($this->userTableArray as $userTable){
+        foreach (Data::$userTableArray as $userTable){
 
             // Handle any conflicts
             $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
@@ -121,13 +121,13 @@ class Data {
 
                 // create and execute query to insert data-set
                 $query = New Query(INSERT, "INTO $userTable (".$columnString.") VALUES (".$valueString.")");
-                $results = array_push($results, $query->execute());                  
+                $results = array_push($results, $query->execute());
             }
 
         }
 
 
-        /** @todo in V2: update count var with new data-as-integer */  
+        /** @todo in V2: update count var with new data-as-integer */
 
         //output results
         return $results;
@@ -146,7 +146,7 @@ class Data {
         $results = Array();
 
         // SQL query to return $data against date for User::uID
-        foreach ($this->userTableArray as $userTable){
+        foreach (Data::$userTableArray as $userTable){
             $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE LastUpdate > :remoteLastUpdate");
             $results = array_push($results, array($userTable => $query->execute([':remoteLastUpdate' => $remoteLastUpdate])));
         }
@@ -156,12 +156,12 @@ class Data {
 
 
 
-// Code to test for database consistency 
+// Code to test for database consistency
 //     May be incorporated into a subsequent version of the API
     /**
      * Summary of syncAllData:
 
-     
+
     public static function syncAllData($data){
         // method to get user data against timestamp and either update (call postData),
         //	or withdraw (call pullData) any additional server data and pass back to user
@@ -200,7 +200,7 @@ class Data {
      * Summary of checkDataConsistency:
      * @param mixed $count
      *
-     
+
     public static function checkDataConsistency($table, $columnName, $count){
         $isConsistent;
 
