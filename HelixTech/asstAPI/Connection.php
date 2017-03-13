@@ -57,6 +57,7 @@ class Connection{
             echo $input = file_get_contents('php://input');
             Connection::analyse($input);
             Connection::analyse(json_encode($_GET));
+            echo $input;
             $input = json_decode($input, true);
             var_dump($input);
             Connection::$input = array();
