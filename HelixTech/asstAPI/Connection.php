@@ -47,15 +47,18 @@ class Connection{
             // get the HTTP method, path and body of the request
             Connection::$connectionTime = $_SERVER['REQUEST_TIME'];
             Connection::$method = $_SERVER['REQUEST_METHOD'];
+            Connection::$input = array();
 
             Connection::analyse($_SERVER['REQUEST_URI']);
             Connection::$uri = $_SERVER['REQUEST_URI'];
-            Connection::$request = explode('/', trim($_SERVER['REQUEST_URI'],'/'));
+            $splitReqGet = explode('?', $_SERVER['REQUEST_URI']);
+            if(isset($splitReqGet[1])){Connection::$input = array_push(Connection::$input, $splitReqGet[1]);}
+            Connection::$request = explode('/', trim($splitReqGet[0],'/'));
             Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift(Connection::$request));
 
             $input = file_get_contents('php://input');
             Connection::analyse($input);
-            Connection::$input = json_decode($input, true);
+            Connection::$input = array_push(Connection::$input, json_decode($input, true));
 
             // ensure connection via HTTPS
             if(!isset($_SERVER['HTTPS'])){
