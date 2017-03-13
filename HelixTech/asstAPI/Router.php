@@ -34,6 +34,8 @@ class Router{
 
             echo $request[1];
             echo Connection::getUserName();
+            echo isset($request[1]);
+            echo "</br>";
             if (isset($request[1]) and $request[1]==Connection::getUserName()){
                 echo "here";
                 throw new AttemptedToAccessUnauthorisedResources;
