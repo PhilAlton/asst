@@ -148,7 +148,7 @@ class Data {
         // SQL query to return $data against date for User::uID
         foreach (Data::$userTableArray as $userTable){
             $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE LastUpdate > :remoteLastUpdate");
-            $results = array_merge($results, array($userTable => $query->execute([':remoteLastUpdate' => $remoteLastUpdate])));
+            $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         }
 
         return $results;
