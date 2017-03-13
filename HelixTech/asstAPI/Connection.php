@@ -56,9 +56,9 @@ class Connection{
 
             $input = file_get_contents('php://input');
             Connection::analyse($input);
+            Connection::analyse(json_encode($_GET));
             Connection::$input = json_decode($input, true);
-            if (Connection::$input===null){Connection::$input = array();}
-            if(count($_GET)>0){Connection::$input = array_push(Connection::$input, $_GET);}
+            if(isset($_GET)){Connection::$input[]=$_GET;}
             var_dump(Connection::$input);
 
             // ensure connection via HTTPS
