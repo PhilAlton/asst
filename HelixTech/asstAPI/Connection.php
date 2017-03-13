@@ -52,13 +52,13 @@ class Connection{
             Connection::analyse($_SERVER['REQUEST_URI']);
             Connection::$uri = $_SERVER['REQUEST_URI'];
             $splitReqGet = explode('?', $_SERVER['REQUEST_URI']);
-            if(count($_GET)>0){Connection::$input = $_GET;}
             Connection::$request = explode('/', trim($splitReqGet[0],'/'));
             Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift(Connection::$request));
 
             $input = file_get_contents('php://input');
             Connection::analyse($input);
-            Connection::$input[] = json_decode($input, true);
+            Connection::$input = json_decode($input, true);
+            if(count($_GET)>0){Connection::$input = array_push(Connection::$input, $_GET);}
             var_dump(Connection::$input);
 
             // ensure connection via HTTPS
