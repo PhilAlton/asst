@@ -64,8 +64,6 @@ class Connection{
             Connection::$input = !is_array($_GET) ? Connection::$input : array_merge(Connection::$input, $_GET);
 
 
-            var_dump(Connection::$input);
-
             // ensure connection via HTTPS
             if(!isset($_SERVER['HTTPS'])){
                 throw new InsecureConnection("Connection must be established via HTTPS");

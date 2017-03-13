@@ -94,7 +94,7 @@ class Data {
 
 
             if (count($conflict) !== 0){
-                $results = array_push($results, Array($userTable => "database conflict, data-set $date in $userTable alraedy exists"));
+                $results = array_merge($results, Array($userTable => "database conflict, data-set $date in $userTable alraedy exists"));
 		    } else {
             // If no conflicts then proceed:
 
@@ -111,7 +111,7 @@ class Data {
                     if (!isset($data[$column])){
                         unset($columns[array_search($column, $columns)]);
                     } else {
-                        $values = array_push($values, $data[$column]);
+                        $values = array_merge($values, $data[$column]);
                     }
                 }
 
@@ -121,7 +121,7 @@ class Data {
 
                 // create and execute query to insert data-set
                 $query = New Query(INSERT, "INTO $userTable (".$columnString.") VALUES (".$valueString.")");
-                $results = array_push($results, $query->execute());
+                $results = array_merge($results, $query->execute());
             }
 
         }
@@ -148,7 +148,7 @@ class Data {
         // SQL query to return $data against date for User::uID
         foreach (Data::$userTableArray as $userTable){
             $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE LastUpdate > :remoteLastUpdate");
-            $results = array_push($results, array($userTable => $query->execute([':remoteLastUpdate' => $remoteLastUpdate])));
+            $results = array_merge($results, array($userTable => $query->execute([':remoteLastUpdate' => $remoteLastUpdate])));
         }
 
         return $results;
