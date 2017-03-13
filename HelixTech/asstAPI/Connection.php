@@ -47,7 +47,6 @@ class Connection{
             // get the HTTP method, path and body of the request
             Connection::$connectionTime = $_SERVER['REQUEST_TIME'];
             Connection::$method = $_SERVER['REQUEST_METHOD'];
-            Connection::$input = array();
 
             Connection::analyse($_SERVER['REQUEST_URI']);
             Connection::$uri = $_SERVER['REQUEST_URI'];
@@ -58,6 +57,7 @@ class Connection{
             $input = file_get_contents('php://input');
             Connection::analyse($input);
             Connection::$input = json_decode($input, true);
+            if (Connection::$input===null){Connection::$input = array();}
             if(count($_GET)>0){Connection::$input = array_push(Connection::$input, $_GET);}
             var_dump(Connection::$input);
 
