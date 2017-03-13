@@ -61,6 +61,9 @@ class Connection{
 
             if(isset($_GET)){
                 Connection::$input = Connection::$input===null ? array(): Connection::$input;
+                var_dump(Connection::$input);
+                var_dump($_GET);
+
                 Connection::$input=array_push(Connection::$input,$_GET);
             }
 
