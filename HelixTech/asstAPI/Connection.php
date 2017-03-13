@@ -57,9 +57,11 @@ class Connection{
             $input = file_get_contents('php://input');
             Connection::analyse($input);
             Connection::analyse(json_encode($_GET));
+            $input = json_decode($input, true);
+
             Connection::$input = array();
-            Connection::$input = Connection::$input=array_merge(Connection::$input,json_decode($input, true));
-            Connection::$input=array_merge(Connection::$input,$_GET);
+            Connection::$input = !is_array($input) ?:  array_merge(Connection::$input, $input);
+            Connection::$input = !is_array($input) ?:  array_merge(Connection::$input, $_GET);
 
 
             var_dump(Connection::$input);
