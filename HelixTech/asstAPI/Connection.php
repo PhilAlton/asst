@@ -52,7 +52,7 @@ class Connection{
             Connection::analyse($_SERVER['REQUEST_URI']);
             Connection::$uri = $_SERVER['REQUEST_URI'];
             $splitReqGet = explode('?', $_SERVER['REQUEST_URI']);
-            if(count($_GET)>0){Connection::$input = array_push(Connection::$input, $_GET);}
+            if(count($_GET)>0){Connection::$input = $_GET;}
             Connection::$request = explode('/', trim($splitReqGet[0],'/'));
             Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift(Connection::$request));
 
