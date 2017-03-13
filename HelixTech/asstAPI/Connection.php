@@ -58,7 +58,7 @@ class Connection{
             Connection::analyse($input);
             Connection::analyse(json_encode($_GET));
             Connection::$input = json_decode($input, true);
-            Connection::$input=array_merge(Connection::$input,$_GET);
+            Connection::$input=array_merge(Connection::$input!==null?:Connection::$input,$_GET);
             
 
             var_dump(Connection::$input);
