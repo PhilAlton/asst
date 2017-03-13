@@ -58,11 +58,11 @@ class Connection{
             Connection::analyse($input);
             Connection::analyse(json_encode($_GET));
 
-            Connection::$input = array();
-            Connection::$input = !is_array($input) ? Connection::$input : array_merge(Connection::$input, json_decode($input, true));
-            Connection::$input = !is_array($_GET) ? Connection::$input : array_merge(Connection::$input, $_GET);
+            $input = json_decode($input, true);
 
-            var_dump(Connection::$input);
+            Connection::$input = array();
+            Connection::$input = !is_array($input) ? Connection::$input : array_merge(Connection::$input, $input);
+            Connection::$input = !is_array($_GET) ? Connection::$input : array_merge(Connection::$input, $_GET);
 
             // ensure connection via HTTPS
             if(!isset($_SERVER['HTTPS'])){
