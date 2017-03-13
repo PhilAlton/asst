@@ -18,7 +18,7 @@
 
 
             // ALert system admin via slack
-            parent::callSLack('BlackListed word detected in HTTP input');
+            parent::callSLack('Unauthorised Access Attempted');
         }
 
 
