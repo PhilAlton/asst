@@ -32,6 +32,8 @@ class Router{
             $input = Connection::getInput();
             $root = Connection::getAPIroot();
 
+            echo $request[1];
+            echo Connection::getUserName();
             if (isset($request[1]) and $request[1]==Connection::getUserName()){
                 throw new AttemptedToAccessUnauthorisedResources;
             }
