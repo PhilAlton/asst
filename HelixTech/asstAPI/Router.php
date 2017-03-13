@@ -32,12 +32,7 @@ class Router{
             $input = Connection::getInput();
             $root = Connection::getAPIroot();
 
-            echo $request[1];
-            echo Connection::getUserName();
-            echo isset($request[1]);
-            echo "</br>";
-            if (isset($request[1]) and $request[1]==Connection::getUserName()){
-                echo "here";
+            if (isset($request[1]) and $request[1]<>Connection::getUserName()){
                 throw new AttemptedToAccessUnauthorisedResources;
             }
 
@@ -78,9 +73,10 @@ class Router{
         } catch (InvalidURI $e) {
             http_response_code(404);
             Output::errorMsg("caught exception: ".$e->getMessage().".");
-        }
-        catch (ConnectionFailed $e) {
+        } catch (ConnectionFailed $e) {
             Output::errorMsg("Connection Failed: request terminated");
+        } catch (AttemptedToAccessUnauthorisedResources $e){
+            Output::errorMsg("User details do not match requested resources");
         }
 
 
