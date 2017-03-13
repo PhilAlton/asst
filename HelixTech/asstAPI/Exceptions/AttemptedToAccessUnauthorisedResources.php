@@ -4,7 +4,7 @@
        * Summary of BlackListedInput - log attempts to send blacklisted input to the server
        * @todo system admin notification
        */
-      class BlackListedInput extends AbstractLoggedException
+      class AttemptedToAccessUnauthorisedResources extends AbstractLoggedException
       {
           /**
            * Summary of BlackListedInput
@@ -13,9 +13,10 @@
            * the system administrator, via slack.
            */
           public static function logError(){
-            AbstractLoggedException::$dbMessage .= "BlackList Attempt; ";
+            AbstractLoggedException::$dbMessage .= "Attempted Unauthorised Access; ";
             parent::log();
-    
+
+
             // ALert system admin via slack
             parent::callSLack('BlackListed word detected in HTTP input');
         }

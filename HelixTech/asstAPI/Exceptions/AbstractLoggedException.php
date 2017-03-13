@@ -1,6 +1,7 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
 use Maknz\Slack\Client;
+use HelixTech\asstAPI\{Query, Connection};
 /**
  * Abstract class for exceptions which need logging
  * @todo error logging
@@ -21,6 +22,10 @@ abstract class AbstractLoggedException extends \Exception
 
     abstract public static function logError();
 
+    public static function log(){
+        $query = New Query(UPDATE, "ConnectionLog SET CXTN_ERRORS=:msg WHERE `CXTN_ID` =:cID");
+        $query->silentExecute([':msg' => AbstractLoggedException::$dbMessage, ':cID' => Connection::getCID()]);
+    }
 
     public static function callSlack($message){
         // Instantiate with defaults, so all messages created
@@ -35,8 +40,6 @@ abstract class AbstractLoggedException extends \Exception
         $client = new Client('https://hooks.slack.com/services/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', $settings);
 
         $client->send($message);
-
-
     }
 
 }

@@ -11,7 +11,7 @@
 
 use HelixTech\asstAPI\{Connection};
 use HelixTech\asstAPI\Models\{Data, User, Analytics};
-use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed};
+use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed, AttemptedToAccessUnauthorisedResources};
 
 /**
 * Summery of Router: class to map URL Endpoints to functions
@@ -27,14 +27,16 @@ class Router{
         try{
             if (!Connection::isEstablished()){throw new ConnectionFailed;}
 
-            echo $method = Connection::getMethod();
+            $method = Connection::getMethod();
             $request = Connection::getRequest();
             $input = Connection::getInput();
-            echo $root = Connection::getAPIroot();
+            $root = Connection::getAPIroot();
 
-            echo var_dump($request);
+            if (isset($request[1]) and $request[1]==Connection::getUserName()){
+                throw new AttemptedToAccessUnauthorisedResources;
+            }
 
-            if (Router::uri($root.'/Users/..*') and ($request[1]==Connection::getUserName()))       // ensure that user specific end points are only accesible
+            if (Router::uri($root.'/Users/..*'))       // ensure that user specific end points are only accesible
             {
                 $UserName = $request[1];
                 if (isset($request[2]))

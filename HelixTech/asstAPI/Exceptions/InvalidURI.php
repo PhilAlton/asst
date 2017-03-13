@@ -1,6 +1,5 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
-     use HelixTech\asstAPI\{Query, Connection};
     /**
     * Logged Exception: Attempted Access to Invalid URI
     */
@@ -18,11 +17,8 @@
         */
         public static function logError(){
             AbstractLoggedException::$dbMessage .= "Invalid URI requestd; ";
-            $query = New Query(UPDATE, "ConnectionLog ".
-                   "SET CXTN_ERRORS=:msg ".
-                   "WHERE `CXTN_ID` =:cID");
-            $query->silentExecute([':cID' => Connection::getCID(), ':msg' => AbstractLoggedException::$dbMessage]);
-        }
+            parent::log();
+    }
 
 
     }

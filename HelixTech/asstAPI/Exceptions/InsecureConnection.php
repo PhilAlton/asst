@@ -1,6 +1,5 @@
 <?php namespace HelixTech\asstAPI\Exceptions;
 
-use HelixTech\asstAPI\{Query, Connection};
 /**
 * Summary of InsecureConnection - log failures to connect to the API via HTTPS
 */
@@ -13,13 +12,10 @@ class InsecureConnection extends AbstractLoggedException
     */
     public static function logError(){
         AbstractLoggedException::$dbMessage .= "Insecure Connection; ";
-        $query = New Query(UPDATE, "ConnectionLog ".
-                "SET CXTN_ERRORS=:msg ".
-                "WHERE `CXTN_ID` =:cID");
-        $query->silentExecute([':cID' => Connection::getCID(), ':msg' => AbstractLoggedException::$dbMessage]);
+        parent::log();
+    }
+
+
 }
-
-
-      }
 
 ?>
