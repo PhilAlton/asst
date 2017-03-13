@@ -54,7 +54,7 @@ class Connection{
             Connection::$request = explode('/', trim($splitReqGet[0],'/'));
             Connection::$apiRoot = preg_replace('/[^a-z0-9_]+/i','',array_shift(Connection::$request));
 
-            $input = file_get_contents('php://input');
+            echo $input = file_get_contents('php://input');
             Connection::analyse($input);
             Connection::analyse(json_encode($_GET));
             $input = json_decode($input, true);
