@@ -156,7 +156,7 @@ class Connection{
         $query->silentExecute([
             ':UserName' => Connection::$UserName,
             ':ip' => Connection::$ip,
-            ':Request' => Connection::$uri
+            ':Request' => Connection::$method."@".Connection::$uri
             ]
         );
 
