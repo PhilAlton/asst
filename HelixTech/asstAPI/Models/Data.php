@@ -111,13 +111,16 @@ class Data {
                     if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columns[array_search($column, $columns)]);
                     } else {
-                        $values = array_merge($values, $data[$column]);
+                        $values = array_merge($values, $data[$column['COLUMN_NAME']]);
                     }
                 }
 
                 // stringify columns and values
                 $columnString = implode(", ", $columns);
                 $valueString = implode(", ", $values);
+
+                echo"</br>".$columnString;
+                echo"</br>".$valueString;
 
                 // create and execute query to insert data-set
                 $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$valueString.")");
