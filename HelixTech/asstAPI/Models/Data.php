@@ -140,7 +140,7 @@ class Data {
 
     /**
      * Summary of pullData: request a single data item from the server database
-     * @param mixed $remoteLastUpdate - submit as linux timestamp
+     * @param mixed $data
      * @return array $results
      */
     public static function pullData($remoteLastUpdate){
@@ -149,7 +149,7 @@ class Data {
 
         // SQL query to return $data against date for User::uID
         foreach (Data::$userTableArray as $userTable){
-            $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE DataID > 2");
+            $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE LastUpdate > :remoteLastUpdate");
             $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         }
 
