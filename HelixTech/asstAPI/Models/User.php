@@ -360,7 +360,7 @@
 
 	    private static function deleteUser($UserName){
 		    // DELETE request, accepting user ID;
-
+        echo "here we before";
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		    $isRchParticipant = $query->execute([':UniqueID' => User::$uID]);
             if ($isRchParticipant){
