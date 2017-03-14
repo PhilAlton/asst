@@ -18,7 +18,7 @@ require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 require_once 'analytics.php';
 
 use HelixTech\asstAPI\{Connection, Router, Output};
-
+echo "what is this";
 Connection::connect();
 Router::route();
 Output::go();

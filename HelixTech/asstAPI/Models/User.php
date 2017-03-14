@@ -257,7 +257,6 @@
 
 				        case 'DELETE':
 					        // call method to delete
-                            echo "the fuck?";
 					        Output::setOutput(User::deleteUser($UserName));
 					        break;
 
