@@ -375,7 +375,7 @@
             $query->execute([':UniqueID' => User::$uID]);
 		    $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
 
-		    return $query->execute([':UniqueID' => User::$uID]);
+		    var_dump($query->execute([':UniqueID' => User::$uID]));
 
         }
 
