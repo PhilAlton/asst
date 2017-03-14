@@ -121,11 +121,9 @@ class Data {
                 $boundColumns = ":".implode(", :", $columnNames);
                 $boundValues = array_combine(explode(", ", $boundColumns) , $values);
 
-                var_dump($boundValues);
-
                 // create and execute query to insert data-set
                 $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$boundColumns.")");
-                $results = array_merge($results, $query->execute());
+                $results = array_merge($results, $query->execute($boundValues));
             }
 
         }
