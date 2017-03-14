@@ -53,7 +53,7 @@ class Data {
 
 				        case 'GET':
 					        // call method to get Data
-					        Output::setOutput(Data::pullData($data['lastUpdateAt']));       //$data['remoteLastUpdate'] - last time remote client was sync'd with the database
+					        Output::setOutput(Data::pullData($data['lastUpdate']));       //$data['remoteLastUpdate'] - last time remote client was sync'd with the database
 					        break;
 
 				        default:
