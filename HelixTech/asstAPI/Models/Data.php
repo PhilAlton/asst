@@ -86,7 +86,6 @@ class Data {
         // check data does not already exist
         $results = array();
 
-        echo "</br>data: ";var_dump($data);
         foreach (Data::$userTableArray as $userTable){
 
             // Handle any conflicts
@@ -104,7 +103,7 @@ class Data {
                                    ."FROM INFORMATION_SCHEMA.COLUMNS "
                                    ."WHERE TABLE_NAME=:tableName"
                                    );
-                $columns = $query->execute([':tableName' => $userTable]);
+                $columns = $query->execute([':tableName' => ($userTable.User::$uID)]);
 
                 // Unify coluns and values
                 $values = Array();
@@ -121,7 +120,7 @@ class Data {
                 $valueString = implode(", ", $values);
 
                 // create and execute query to insert data-set
-                $query = New Query(INSERT, "INTO $userTable (".$columnString.") VALUES (".$valueString.")");
+                $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$valueString.")");
                 $results = array_merge($results, $query->execute());
             }
 
