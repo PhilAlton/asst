@@ -111,7 +111,7 @@ class Data {
                     if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columns[array_search($column, $columns)]);
                     } else {
-                        $values = array_merge($values, $data[$column['COLUMN_NAME']]);
+                        $values[] = $data[$column['COLUMN_NAME']];
                     }
                 }
 
