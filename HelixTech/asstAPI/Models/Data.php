@@ -117,7 +117,7 @@ class Data {
                 }
 
                 // stringify columns and values
-                $columnString = implode(", ", $columnNames);
+                $columnString = ":".implode(", :", $columnNames);
                 $valueString = implode(", ", $values);
 
                 echo"</br>".$columnString;
