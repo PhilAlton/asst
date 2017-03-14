@@ -106,7 +106,8 @@
 				        break;
 
 			        case DELETE:
-				        http_response_code(200); // No content *(request fulfilled)
+				        http_response_code(204); // No content *(request fulfilled)
+                        http_response_code(201);
 				        break;
 
 			        case DROP:
