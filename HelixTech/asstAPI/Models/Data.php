@@ -110,14 +110,11 @@ class Data {
                 foreach ($columns as $column){
                     $columnNames[] = $column['COLUMN_NAME'];
                     if (!isset($data[$column['COLUMN_NAME']])){
-                        unset($columnNames[array_search($column, $columnNames)]);
+                        unset($columnNames[array_search($column['COLUMN_NAME'], $columnNames)]);
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
                 }
-
-                var_dump($columnNames);
-                var_dump($values);
 
                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
