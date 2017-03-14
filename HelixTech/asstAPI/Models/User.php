@@ -206,7 +206,7 @@
                             ':Surname' => $params['Surname'],
                             ':DoB' => $params['DoB']])));
 
-
+            var_dump($results);
             /** @todo need to amend this query to match true database structure */
             $query = New Query(
                 CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
