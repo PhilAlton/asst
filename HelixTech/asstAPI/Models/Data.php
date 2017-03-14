@@ -106,10 +106,11 @@ class Data {
                 $columns = $query->execute([':tableName' => ($userTable.User::$uID)]);
 
                 // Unify coluns and values
-                $values = Array();
+                $values = Array(); $columnNames = Array();
                 foreach ($columns as $column){
+                    $columnNames[] = $column['COLUMN_NAME'];
                     if (!isset($data[$column['COLUMN_NAME']])){
-                        unset($columns[array_search($column, $columns)]);
+                        unset($columnNames[array_search($column, $columnNames)]);
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
