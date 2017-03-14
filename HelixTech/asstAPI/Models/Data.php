@@ -94,7 +94,7 @@ class Data {
 
 
             if (count($conflict) !== 0){
-                $results = array_merge($results, Array($userTable => "database conflict, data-set $date in $userTable alraedy exists"));
+                $results = array_merge($results, Array($userTable => "database conflict, data-set {$data['Date']} in $userTable alraedy exists"));
 		    } else {
             // If no conflicts then proceed:
 
@@ -117,14 +117,14 @@ class Data {
                 }
 
                 // stringify columns and values
-                $columnString = ":".implode(", :", $columnNames);
-                $valueString = implode(", ", $values);
+                $columnString = implode(", ", $columnNames);
+                $boundColumns = ":".implode(", :", $columnNames);
+                $boundValues = array_combine(explode(", ", $boundColumns) , $values);
 
-                echo"</br>".$columnString;
-                echo"</br>".$valueString;
+                var_dump($boundValues);
 
                 // create and execute query to insert data-set
-                $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$valueString.")");
+                $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$boundColumns.")");
                 $results = array_merge($results, $query->execute());
             }
 
