@@ -116,11 +116,11 @@ class Data {
                     }
                 }
 
-                var_dump($columns);
+                var_dump($columnNames);
                 var_dump($values);
 
                 // stringify columns and values
-                $columnString = implode(", ", $columns);
+                $columnString = implode(", ", $columnNames);
                 $valueString = implode(", ", $values);
 
                 echo"</br>".$columnString;
