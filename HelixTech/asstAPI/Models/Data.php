@@ -104,12 +104,11 @@ class Data {
                                    ."WHERE TABLE_NAME=:tableName"
                                    );
                 $columns = $query->execute([':tableName' => ($userTable.User::$uID)]);
-                var_dump($columns);
 
                 // Unify coluns and values
                 $values = Array();
                 foreach ($columns as $column){
-                    if (!isset($data[$column])){
+                    if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columns[array_search($column, $columns)]);
                     } else {
                         $values = array_merge($values, $data[$column]);
