@@ -56,7 +56,6 @@ class Output{
 
             // return values: sent to client in the HTTP body via echo.
             echo $output;
-            http_response_code(204);
         }
 
         if(!empty(Output::getError()) and Output::getHistory() !== "</br>"){
