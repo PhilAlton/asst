@@ -104,6 +104,7 @@ class Data {
                                    ."WHERE TABLE_NAME=:tableName"
                                    );
                 $columns = $query->execute([':tableName' => ($userTable.User::$uID)]);
+                var_dump($columns);
 
                 // Unify coluns and values
                 $values = Array();
