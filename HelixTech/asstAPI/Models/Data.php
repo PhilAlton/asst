@@ -8,7 +8,7 @@
  * @todo write sync methods
  */
 
-use HelixTech\asstAPI\{Output, Connection, Query};
+use HelixTech\asstAPI\{Output, Connection, Query, Paginate};
 use HelixTech\asstAPI\Models\{User};
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 
@@ -143,7 +143,7 @@ class Data {
      * @param mixed $data
      * @return array $results
      */
-    public static function pullData($remoteLastUpdate){
+    public static function pullData($remoteLastUpdate, $paginationLimit = 50){
 
         $results = Array();
 
@@ -151,6 +151,10 @@ class Data {
         foreach (Data::$userTableArray as $userTable){
             $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate");
             $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        }
+
+        if (count($results) > $paginationLimit){
+            $results = Paginate::create($results, $paginationLimit);
         }
 
         return $results;
