@@ -161,15 +161,12 @@ class Data {
             }
         }
         
-        echo "here";
 
         $query = New Query(SELECT, "* from $firstTable"
                                     ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
                                     .$join
                                     ." ORDER BY $firstTable.Date"
                                     );
-
-        var_dump($query);
 
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
 

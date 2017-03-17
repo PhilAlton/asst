@@ -72,8 +72,11 @@
             $this->buildQuery($params);
             $results = false;
 
+            echo "before execute";
+
             try {
                 $this->database->execute();
+                echo "after execute";
                 $results = $params;
 
                 switch ($this->queryType){
