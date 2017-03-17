@@ -102,8 +102,21 @@
          * @return mixed
          */
         public function execute(){
+            try{
+                    $execute = $this->statement->execute();
+            
+            } catch (\Exception $e) {
+                    echo "exception thrown on execute: ".$e->getMessage();
+                }
+            return $execute;
+        }
+
+        /*
+                public function execute(){
             return $this->statement->execute();
         }
+
+        */
 
 
 

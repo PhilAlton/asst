@@ -72,7 +72,7 @@
             $this->buildQuery($params);
             $results = false;
 
-            echo "before execute";
+            echo "before execute: ".$this->query;
 
             try {
                 $this->database->execute();
