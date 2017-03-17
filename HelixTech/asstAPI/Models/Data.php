@@ -149,28 +149,23 @@ class Data {
 
         // SQL query to return $data against date for User::uID
         $i = 0;
-        $firstTable = "";
-        $innerJoin = "";
-        $joinOn = "";
+        $join = "";
         
         foreach (Data::$userTableArray as $userTable){    
             $i++;     
             if ($i == 1){
                 $firstTable = $userTable.User::$uID;
             } else {
-                
+                $nextTable = $userTable.User::$uID;
+                $join = $join." FULL JOIN ".$nextTable." ON $firstable.Data = $nextTable.Data";
             }
- 
         }
         
-        $innerJoin = "INNER JOIN ".$innerJoin;
-        $joinOn = "ON ".$firstTable."Date = ";
-
 
         $query = New Query(SELECT, "* from $firstTable"
                                     ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
-                                    ." INNER JOIN $userTable.User::$uID"
-                                    ." ON table.Date = table2.Date"
+                                    .$join
+                                    ." ORDER BY $firstTable.Date"
                                     );
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
 
