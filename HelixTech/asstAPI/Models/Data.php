@@ -148,10 +148,31 @@ class Data {
         $results = Array();
 
         // SQL query to return $data against date for User::uID
-        foreach (Data::$userTableArray as $userTable){
-            $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate");
-            $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        $i = 0;
+        $firstTable = "";
+        $innerJoin = "";
+        $joinOn = "";
+        
+        foreach (Data::$userTableArray as $userTable){    
+            $i++;     
+            if ($i == 1){
+                $firstTable = $userTable.User::$uID;
+            } else {
+                
+            }
+ 
         }
+        
+        $innerJoin = "INNER JOIN ".$innerJoin;
+        $joinOn = "ON ".$firstTable."Date = ";
+
+
+        $query = New Query(SELECT, "* from $firstTable"
+                                    ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
+                                    ." INNER JOIN $userTable.User::$uID"
+                                    ." ON table.Date = table2.Date"
+                                    );
+        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
 
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
