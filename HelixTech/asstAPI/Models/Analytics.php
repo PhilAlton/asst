@@ -18,7 +18,8 @@ class Analytics{
 
                $timePeriod = time() - (7 * 24 * 60 * 60);
                $query = new Query(SELECT, "COUNT(*) FROM ConnectionLog WHERE UNIX_TIMESTAMP(CXTN_TIME) > $timePeriod");
-               $numAPIRequestsINlastWeekPerDay = ($query->execute())/7;
+               var_dump($query);
+                $numAPIRequestsINlastWeekPerDay = ($query->execute())/7;
 
                $query = new Query(SELECT, "* FROM ConnectionLog WHERE CXTN_ERRORS IS NOT NULL ORDER BY CXTN_USER, CXTN_IP");
                $CnxtsByIP = $query->execute();
