@@ -106,6 +106,7 @@
             try{return $this->statement->execute();} 
             catch (\Exception $e) {
                 Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
+                http_response_code(500);
             }
         }
 
