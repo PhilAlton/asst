@@ -177,7 +177,8 @@ class Connection{
         // authenticate user session to enable access to api functions
         $q_auth = false;
 
-        try{
+        try{        
+
             // retrieve stored password string from database against UserName
             $query = New Query(SELECT, "* FROM `$table` WHERE `UserName` =:UserName");
             $UserDetails = $query->execute([':UserName' => $_SERVER["PHP_AUTH_USER"]]);
@@ -189,12 +190,15 @@ class Connection{
                 throw new \UnexpectedValueException($e);
             } else {
                 // Else decrypt the password
+
                     // for admin table, key is protected by password
                 if ($table == "AdminTable"){
                     Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
                 }
 
-                $password = Crypt::decrypt($UserDetails["Password"]);                                                             //FIX - decrypt should go in query class
+                //Load either the authToken from the database, or the password, depending on which the user has supplied
+                $password = (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False) ? $UserDetails["AuthToken"] : $UserDetails["Password"];
+                $password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
             }
 
             // Check if the hash of the entered login password, matches the stored hash.

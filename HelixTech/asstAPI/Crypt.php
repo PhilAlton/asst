@@ -9,7 +9,7 @@ use Defuse\Crypto\Key;
 use Defuse\Crypto\Crypto;
 use Defuse\Crypto\KeyProtectedByPassword;
 use Defuse\Crypto\Exception as Ex;
-
+use HelixTech\asstAPI\Exceptions\{DecryptionFailureInvalidKeyOrCorruptData};
 
 /**
  * Summary of Crypt: Class containing functions related to the encryption and decryption of data
@@ -93,9 +93,11 @@ class Crypt{
 
 		    // ... handle this case
             Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".$ex."\n");
-            /** @todo need to set up logging for corrupted data */
+            Throw new DecryptionFailureInvalidKeyOrCorruptData;
 
-	    }
+	    } catch (DecryptionFailureInvalidKeyOrCorruptData $e){
+            http_response_code(404);
+        }
 
         return $plaintext;
     }

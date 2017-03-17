@@ -4,7 +4,7 @@
        * Summary of BlackListedInput - log attempts to send blacklisted input to the server
        * @todo system admin notification
        */
-      class BlackListedInput extends AbstractLoggedException
+      class DecryptionFailureInvalidKeyOrCorruptData extends AbstractLoggedException
       {
           /**
            * Summary of BlackListedInput
@@ -13,11 +13,11 @@
            * the system administrator, via slack.
            */
           public static function logError(){
-            AbstractLoggedException::$dbMessage .= "BlackList Attempt; ";
+            AbstractLoggedException::$dbMessage .= "Decrpytion failure; ";
             parent::log();
     
             // ALert system admin via slack
-            parent::callSLack('BlackListed word - '.AbstractLoggedException::$errorMessage.' - detected in HTTP input');
+            parent::callSLack('Decryption failure - Database corrupt or Key invalid');
         }
 
 

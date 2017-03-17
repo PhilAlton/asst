@@ -73,15 +73,25 @@
 						    );
 
 			    /** @todo: Devise AuthToken uses and method */
-			    $AuthToken = "randomauthtoken90";
-
+                $length = 20; // Length of auth token
+			    $AuthToken = bin2hex(random_bytes($length));
+                $protectedAuthToken = Crypt::encrypt(
+							    password_hash
+							    (
+								    base64_encode
+								    (
+									    hash('sha384', $AuthToken, true)
+								    ),
+								    PASSWORD_DEFAULT
+							    )
+						    ); 
 
 			    // Update AuthTable with parameters:
 			    $query = New Query(
 							    INSERT, "INTO AuthTable".
 								    "(UserName, Password, AuthToken)".
 							    "VALUES".
-								    "(:UserName, :Password, '$AuthToken')"
+								    "(:UserName, :Password, '$protectedAuthToken')"
 							    );
 
 			    $results = array_merge($results, $query->execute([':UserName' => $params['UserName'], ':Password' => $password]));
@@ -91,7 +101,11 @@
 			    // Retrieve the created primary key
 			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 			    User::$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
+                
 
+                // Change password returned to authtoken led by username
+                $results['Password'] = $params['UserName']."=".$AuthToken;
+                
 
 			    // Update UserTable with parameters
 			    $query = New Query(

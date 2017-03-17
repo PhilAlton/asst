@@ -16,7 +16,7 @@ class Analytics{
                $query = new Query(SELECT, "COUNT(DISTINCT CXTN_USER) FROM ConnectionLog");
                $numDistinctUsers = $query->execute();
 
-               $timePeriod = time() + (7 * 24 * 60 * 60);
+               $timePeriod = time() - (7 * 24 * 60 * 60);
                $query = new Query(SELECT, "COUNT(*) FROM ConnectionLog WHERE UNIX_TIMESTAMP(CXTN_TIME) > $timePeriod");
                $numAPIRequestsINlastWeekPerDay = ($query->execute())/7;
 
@@ -31,6 +31,8 @@ class Analytics{
                                     "DISTINCT_USER_COUNT" => $numDistinctUsers, 
                                     "AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
                                     "Data" => $CnxtsByIP);
+
+               include $_Server['DOCUMENT_ROOT/asst/HelixTech/Public/asstAPI/analytics.php'].'.php';
                Output::setOutput($analyticResults);
 
 
