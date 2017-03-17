@@ -1,6 +1,7 @@
 <?php namespace HelixTech\asstAPI;
 
-      use \PDO as PDO;
+    use \PDO as PDO;
+    use HelixTech\asstAPI\{Output};
 
 
     /**
@@ -102,13 +103,10 @@
          * @return mixed
          */
         public function execute(){
-            try{
-                    $execute = $this->statement->execute();
-            
-            } catch (\Exception $e) {
-                    echo "exception thrown on execute: ".$e->getMessage();
-                }
-            return $execute;
+            try{return $this->statement->execute();} 
+            catch (\Exception $e) {
+                Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
+            }
         }
 
         /*
