@@ -129,7 +129,7 @@
             $results;
             try{ $results = $this->statement->fetchAll(PDO::FETCH_ASSOC);} 
             catch (\Exception $e) {
-                Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
+                Output::errorMsg("Exception thrown in fetching results of Query: ".$e->getMessage());
                 http_response_code(500);
             }
             return $results;

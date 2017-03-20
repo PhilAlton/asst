@@ -168,10 +168,10 @@ class Data {
                                     ." ORDER BY $firstTable.Date"
                                     );
 
-        $query = New Query (SELECT, "* from GEN_DATA_TABLE_100 WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate as A RIGHT JOIN SELECT * FROM RCH_DATA_TABLE_100 WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate AS B ON A.Date = B.Date ORDER BY A.Date");
+        $query = New Query (SELECT, "* from GEN_DATA_TABLE_100 as A RIGHT JOIN SELECT * FROM RCH_DATA_TABLE_100  ON A.Date = B.Date");
 
-     //   $results = array_merge($results, $query->execute());
-        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate, ':remoteLastUpdate' => $remoteLastUpdate]));
+        $results = array_merge($results, $query->execute());
+     //   $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate, ':remoteLastUpdate' => $remoteLastUpdate]));
         var_dump($results);
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
