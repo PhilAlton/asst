@@ -172,7 +172,7 @@ class Data {
 
      //   $results = array_merge($results, $query->execute());
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-        
+        var_dump($results);
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
         }
