@@ -170,7 +170,7 @@ class Data {
 echo "pre execute";
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         
-        var_dump($results);
+        var_dump($query);
         echo "after execute";
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
