@@ -170,8 +170,8 @@ class Data {
 
         $query = New Query (SELECT, "* from GEN_DATA_TABLE_100 WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate as A");
 
-        $results = array_merge($results, $query->execute());
-     //   $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate, ':remoteLastUpdate' => $remoteLastUpdate]));
+     //   $results = array_merge($results, $query->execute());
+        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
