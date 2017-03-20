@@ -127,7 +127,7 @@
          */
         public function resultset(){
             $results;
-            try{ $this->statement->fetchAll(PDO::FETCH_ASSOC);} 
+            try{ $results = $this->statement->fetchAll(PDO::FETCH_ASSOC);} 
             catch (\Exception $e) {
                 Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
                 http_response_code(500);
