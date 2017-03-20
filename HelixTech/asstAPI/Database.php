@@ -103,11 +103,13 @@
          * @return mixed
          */
         public function execute(){
-            try{return $this->statement->execute();} 
+            $results;
+            try{$results = $this->statement->execute();} 
             catch (\Exception $e) {
                 Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
                 http_response_code(500);
             }
+            return $results;
         }
 
         /*
