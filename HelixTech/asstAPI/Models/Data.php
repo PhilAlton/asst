@@ -163,8 +163,8 @@ class Data {
         
 
         $query = New Query(SELECT, "* from $firstTable"
+                                    .$join
                                     ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
-      //                              .$join
                                     ." ORDER BY $firstTable.Date"
                                     );
 
