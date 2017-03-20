@@ -168,9 +168,10 @@ class Data {
                                     ." ORDER BY $firstTable.Date"
                                     );
 
-        $query = New Query (SELECT, "* from GEN_DATA_TABLE_100, RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date");
+        $query = New Query (SELECT, "* from GEN_DATA_TABLE_100 FULL OUTER JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date");
 
-        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        $results = array_merge($results, $query->execute());
+     //   $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
