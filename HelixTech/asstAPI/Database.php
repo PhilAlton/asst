@@ -104,9 +104,8 @@
          */
         public function execute(){
             $results;
-            try{$results = $this->statement->execute();} 
+            try{            ECHO "HERE"; $results = $this->statement->execute();} 
             catch (\Exception $e) {
-            ECHO "HERE";
                 Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
                 http_response_code(500);
             }
