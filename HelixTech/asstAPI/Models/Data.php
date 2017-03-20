@@ -168,7 +168,7 @@ class Data {
                                     ." ORDER BY $firstTable.Date"
                                     );
 
-        $query = New Query (SELECT, "* from GEN_DATA_TABLE_100 as A");
+        $query = New Query (SELECT, "* from GEN_DATA_TABLE_100 WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate as A");
 
         $results = array_merge($results, $query->execute());
      //   $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate, ':remoteLastUpdate' => $remoteLastUpdate]));
