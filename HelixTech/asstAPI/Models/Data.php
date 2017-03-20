@@ -157,14 +157,14 @@ class Data {
                 $firstTable = $userTable.User::$uID;
             } else {
                 $nextTable = $userTable.User::$uID;
-                $join = $join." FULL OUTER JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $join = $join." FULL JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
             }
         }
         
 
         $query = New Query(SELECT, "* from $firstTable"
                                     .$join
-                                                                        ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
+                                    ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
                                     ." ORDER BY $firstTable.Date"
                                     );
 echo "pre execute";
