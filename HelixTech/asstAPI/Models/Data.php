@@ -157,7 +157,7 @@ class Data {
                 $firstTable = $userTable.User::$uID;
             } else {
                 $nextTable = $userTable.User::$uID;
-                $join = $join." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $join = $join." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
             }
         }
         
