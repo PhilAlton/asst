@@ -104,7 +104,7 @@
          */
         public function execute(){
             $results;
-            try{            ECHO "HERE"; $results = $this->statement->execute();} 
+            try{ $results = $this->statement->execute();} 
             catch (\Exception $e) {
                 Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
                 http_response_code(500);
@@ -126,9 +126,20 @@
          * @return mixed
          */
         public function resultset(){
-            return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+            $results;
+            try{ $this->statement->fetchAll(PDO::FETCH_ASSOC);} 
+            catch (\Exception $e) {
+                Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
+                http_response_code(500);
+            }
+            return $results;
         }
 
+         /*
+        public function resultset(){
+            return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+        */
 
 
         /**
