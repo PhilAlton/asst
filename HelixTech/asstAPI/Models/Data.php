@@ -157,7 +157,7 @@ class Data {
                 $firstTable = $userTable.User::$uID;
             } else {
                 $nextTable = $userTable.User::$uID;
-                $join = $join." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $join = $join." FULL OUTER JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
             }
         }
         
@@ -167,11 +167,9 @@ class Data {
                         //            ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
                                     ." ORDER BY $firstTable.Date"
                                     );
-echo "pre execute";
+
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         
-        var_dump($query);
-        echo "after execute";
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
         }
