@@ -171,7 +171,7 @@ class Data {
                             ." $firstTable"
                                     .$leftJoin
                                     .$whereClause
-                                //    ." ORDER BY $firstTable.Date"
+                                    ." ORDER BY $firstTable.Date"
           //                          .")"
           //              ." UNION"
           //              ." SELECT * from"
