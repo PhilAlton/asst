@@ -169,8 +169,8 @@ class Data {
         $query = New Query(SELECT, "* from $firstTable"
                                     .$leftJoin
                                     .$whereClause
-                            ."UNION"
-                            ."SELECT * from $firstTable"
+                            ." UNION"
+                            ." SELECT * from $firstTable"
                                     .$rightJoin
                                     .$whereClaus
                                     .$endWhere
@@ -178,7 +178,10 @@ class Data {
         );
 
         var_dump($query);
-
+     //   "SELECT * from GEN_DATA_TABLE_100 
+    //        LEFT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date 
+     //       WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate 
+     //       AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate UNION SELECT * from GEN_DATA_TABLE_100 RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date ORDER BY GEN_DATA_TABLE_100.Date"
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
         if (count($results) > $paginationLimit){
