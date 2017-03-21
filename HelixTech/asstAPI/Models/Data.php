@@ -177,6 +177,7 @@ class Data {
                             ." ORDER BY $firstTable.Date"
         );
 
+        var_dump($query);
 
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
