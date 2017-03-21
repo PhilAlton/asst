@@ -170,14 +170,16 @@ class Data {
                             ." (SELECT * FROM $firstTable"
                                     .$leftJoin
                                     .$whereClause
-                                    ." ORDER BY $firstTable.Date) TONE"
+                                //    ." ORDER BY $firstTable.Date"
+                                    .") TONE"
                         ." UNION"
                         ." SELECT * from"
                             ." (SELECT * FROM $firstTable"
                                     .$rightJoin
                                     .$whereClause
                                     .$endWhere
-                                    ." ORDER BY $firstTable.Date) TTWO"
+                               //     ." ORDER BY $firstTable.Date"
+                                    .") TTWO"
         );
 
 
