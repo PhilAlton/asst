@@ -161,7 +161,7 @@ class Data {
                 $rightJoin = $join." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $leftJoin = $join." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $whereClause = $whereClause." AND UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate";
-                $endWhere." AND $firstTable.DataID IS NULL";
+                $endWhere = " AND $firstTable.DataID IS NULL";
             }
         }
         
