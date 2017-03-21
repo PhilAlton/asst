@@ -167,11 +167,12 @@ class Data {
         
 
         $query = New Query(SELECT, "* from"
-                            ." (SELECT * FROM $firstTable"
+                            //." (SELECT * FROM 
+                            ." $firstTable"
                                     .$leftJoin
                                     .$whereClause
                                 //    ." ORDER BY $firstTable.Date"
-                                    .")"
+          //                          .")"
           //              ." UNION"
           //              ." SELECT * from"
           //                  ." (SELECT * FROM $firstTable"
