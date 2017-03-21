@@ -168,9 +168,11 @@ class Data {
                                     .$join
                                     .$whereClause
                                     ." ORDER BY $firstTable.Date"
-                                    );
+        );
 
-       $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        var_dump($query);
+
+        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
