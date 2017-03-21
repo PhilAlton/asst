@@ -155,23 +155,22 @@ class Data {
             $i++;     
             if ($i == 1){
                 $firstTable = $userTable.User::$uID;
+                $whereClause = " WHERE UNIX_TIMESTAMP(".$firstTable.") > :remoteLastUpdate";
             } else {
                 $nextTable = $userTable.User::$uID;
                 $join = $join." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $whereClause = $whereClause." AND WHERE UNIX_TIMESTAMP(".$nextTable.") > :remoteLastUpdate";
             }
         }
         
 
         $query = New Query(SELECT, "* from $firstTable"
                                     .$join
-                                    ." WHERE UNIX_TIMESTAMP(LastUpdate) > :remoteLastUpdate"
+                                    .$whereClause
                                     ." ORDER BY $firstTable.Date"
                                     );
 
-        $query = New Query (SELECT, "* from GEN_DATA_TABLE_100 RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate");
-
-     //   $results = array_merge($results, $query->execute());
-        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+       $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
