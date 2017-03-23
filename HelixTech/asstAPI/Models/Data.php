@@ -177,7 +177,7 @@ class Data {
                         ." * FROM $firstTable"
                                     .$rightJoin
                                     .$whereClause
-                //                    .$endWhere
+                                    .$endWhere
                                //     ." ORDER BY $firstTable.Date"
         );
 
