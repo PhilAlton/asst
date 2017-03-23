@@ -166,6 +166,9 @@ class Data {
         }
         
 
+
+
+
         $query = New Query(SELECT, "" 
                      //   ."* FROM $firstTable"
                       //              .$leftJoin
