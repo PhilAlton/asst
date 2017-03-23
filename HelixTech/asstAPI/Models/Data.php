@@ -166,20 +166,17 @@ class Data {
         }
         
 
-        $query = New Query(SELECT, "* from"
-                            ." (SELECT * FROM $firstTable"
-                                    .$leftJoin
-                                    .$whereClause
-                                //    ." ORDER BY $firstTable.Date"
-                                    .") TONE"
-                        ." UNION"
-                        ." SELECT * from"
-                            ." (SELECT * FROM $firstTable"
+        $query = New Query(SELECT, "" 
+                     //   ."* FROM $firstTable"
+                      //              .$leftJoin
+                     //               .$whereClause
+                     //           //    ." ORDER BY $firstTable.Date"
+                     //   ." UNION"
+                        ." SELECT * FROM $firstTable"
                                     .$rightJoin
                                     .$whereClause
                                     .$endWhere
                                //     ." ORDER BY $firstTable.Date"
-                                    .") TTWO"
         );
 
 
