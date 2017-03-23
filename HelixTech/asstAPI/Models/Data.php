@@ -166,7 +166,7 @@ class Data {
         }
         
 
-
+        echo "this";
         $query = New Query(SELECT, "" 
                      //   ."* FROM $firstTable"
                       //              .$leftJoin
