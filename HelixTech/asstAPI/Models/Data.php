@@ -166,7 +166,6 @@ class Data {
         }
         
 
-        echo "this";
         http_response_code(200);
         $query = New Query(SELECT, "" 
                      //   ."* FROM $firstTable"
@@ -178,7 +177,7 @@ class Data {
                         ." * FROM $firstTable"
                                     .$rightJoin
                                     .$whereClause
-                                    .$endWhere
+                //                    .$endWhere
                                //     ." ORDER BY $firstTable.Date"
         );
 
