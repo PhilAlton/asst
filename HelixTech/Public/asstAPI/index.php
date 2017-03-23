@@ -19,6 +19,8 @@ require_once 'analytics.php';
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
+echo "this";
+
 Connection::connect();
 Router::route();
 Output::go();
