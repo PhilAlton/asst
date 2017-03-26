@@ -111,6 +111,7 @@ class Data {
                     $columnNames[] = $column['COLUMN_NAME'];
                     if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columnNames[array_search($column['COLUMN_NAME'], $columnNames)]);
+                        if(count($columnNames)==1){unset($columnNames['Date']);}
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
