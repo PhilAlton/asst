@@ -159,7 +159,7 @@ class Data {
                 $whereClause = " WHERE UNIX_TIMESTAMP(".$firstTable.".LastUpdate) > :remoteLastUpdate";
             } else {
                 $nextTable = $userTable.User::$uID;
-                $rightJoin = $join." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $rightJoin = $join." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $leftJoin = $join." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $whereClause = $whereClause." AND UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate";
                 $endWhere = " AND $firstTable.Date IS NULL";
@@ -178,7 +178,7 @@ class Data {
                         ." * FROM $firstTable"
                                     .$rightJoin
                                     .$whereClause
-                                    .$endWhere
+              //                      .$endWhere
                                //     ." ORDER BY $firstTable.Date"
         );
 
