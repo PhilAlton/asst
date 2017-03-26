@@ -119,7 +119,8 @@ class Data {
                 
 
                 // stringify columns and values
-                echo"Hrr". $columnString = implode(", ", $columnNames);
+                $columnString = implode(", ", $columnNames);
+                Output::errorMsg($columnString);
                 $boundColumns = ":".implode(", :", $columnNames);
                 $boundValues = array_combine(explode(", ", $boundColumns) , $values);
 
