@@ -120,9 +120,9 @@ class Data {
 
                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
-                Output::errorMsg(count($columnString, COUNT_RECURSIVE));
+                Output::errorMsg(count($columnNames, COUNT_RECURSIVE));
                 Output::errorMsg($columnString);
-                Output::setOutput(count($columnString, COUNT_RECURSIVE));
+                Output::setOutput(count($columnNames, COUNT_RECURSIVE));
                 Output::setOutput($columnString);
                 $boundColumns = ":".implode(", :", $columnNames);
                 $boundValues = array_combine(explode(", ", $boundColumns) , $values);
