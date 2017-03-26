@@ -115,6 +115,8 @@ class Data {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
                 } 
+                Output::errorMsg(count($columnNames));
+                Output::setOutput(count($columnNames));
                 if (count($columnNames)===1){unset($$columnNames['Date']);}
                 
 
