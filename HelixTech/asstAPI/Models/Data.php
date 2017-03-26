@@ -116,9 +116,10 @@ class Data {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
                 }
+                
 
                 // stringify columns and values
-                $columnString = implode(", ", $columnNames);
+                echo $columnString = implode(", ", $columnNames);
                 $boundColumns = ":".implode(", :", $columnNames);
                 $boundValues = array_combine(explode(", ", $boundColumns) , $values);
 
