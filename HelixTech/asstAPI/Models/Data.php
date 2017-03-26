@@ -111,7 +111,7 @@ class Data {
                     $columnNames[] = $column['COLUMN_NAME'];
                     if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columnNames[array_search($column['COLUMN_NAME'], $columnNames)]);
-                        if(count($columnNames, COUNT_RECURSIVE)===1){Output::setOutput( implode(", ", $columnNames)); Output::errorMsg( implode(", ", $columnNames)); unset($columnNames['Date']); unset($columnNames['DataID']); unset($columnNames['LastUpdate']);}
+                        Output::setOutput( implode(", ", $columnNames)); Output::errorMsg( implode(", ", $columnNames)); 
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
