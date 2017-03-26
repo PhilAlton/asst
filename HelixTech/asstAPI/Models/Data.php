@@ -111,7 +111,7 @@ class Data {
                     $columnNames[] = $column['COLUMN_NAME'];
                     if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columnNames[array_search($column['COLUMN_NAME'], $columnNames)]);
-                        if(count($columnNames)===1){Output::setOutput("here"); unset($columnNames['Date']); unset($columnNames['DataID']); unset($columnNames['LastUpdate']);}
+                        if(count($columnNames)===1){                Output::errorMsg("here"); Output::setOutput("here"); unset($columnNames['Date']); unset($columnNames['DataID']); unset($columnNames['LastUpdate']);}
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
@@ -120,6 +120,8 @@ class Data {
 
                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
+                Output::errorMsg(count($columnString));
+                Output::errorMsg($columnString);
                 Output::setOutput(count($columnString));
                 Output::setOutput($columnString);
                 $boundColumns = ":".implode(", :", $columnNames);
