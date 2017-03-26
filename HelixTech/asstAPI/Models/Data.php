@@ -114,8 +114,8 @@ class Data {
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
-                    Output::setOutput( implode(", ", $columnNames)); Output::errorMsg( implode(", ", $columnNames)); 
-                }
+                } 
+                if (count($columnNames)===1){unset($$columnNames['Date']);}
                 
 
                 // stringify columns and values
