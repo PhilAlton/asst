@@ -169,16 +169,16 @@ class Data {
 
         http_response_code(200);
         $query = New Query(SELECT, "" 
-                     //   ."* FROM $firstTable"
-                      //              .$leftJoin
-                     //               .$whereClause
-                     //           //    ." ORDER BY $firstTable.Date"
-                     //   ." UNION"
-                      //  ." SELECT" 
+                        ."* FROM $firstTable"
+                                    .$leftJoin
+                                    .$whereClause
+                                //    ." ORDER BY $firstTable.Date"
+                        ." UNION"
+                        ." SELECT" 
                         ." * FROM $firstTable"
                                     .$rightJoin
                                     .$whereClause
-                                    .$endWhere
+                  //                  .$endWhere
                                //     ." ORDER BY $firstTable.Date"
         );
 
