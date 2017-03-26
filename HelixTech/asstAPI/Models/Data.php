@@ -120,8 +120,8 @@ class Data {
 
                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
-                Output::setOutput(count($columnString));
-                Output::setOutput($columnString);
+                Output::errorMsg(count($columnString));
+                Output::errorMsg($columnString);
                 $boundColumns = ":".implode(", :", $columnNames);
                 $boundValues = array_combine(explode(", ", $boundColumns) , $values);
 
