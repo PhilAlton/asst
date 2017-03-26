@@ -121,6 +121,7 @@ class Data {
                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
                 Output::errorMsg($columnString);
+                Output::setOutput($columnString);
                 $boundColumns = ":".implode(", :", $columnNames);
                 $boundValues = array_combine(explode(", ", $boundColumns) , $values);
 
