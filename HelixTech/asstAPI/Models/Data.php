@@ -161,9 +161,11 @@ class Data {
             $i++;     
             if ($i == 1){
                 $firstTable = $userTable.User::$uID;
+                $tables = $firstTable;
                 $whereClause = " WHERE UNIX_TIMESTAMP(".$firstTable.".LastUpdate) > :remoteLastUpdate";
             } else {
                 $nextTable = $userTable.User::$uID;
+                $tables = $tables.", ".$nextTable;
                 $rightJoin = $rightJoin." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $leftJoin = $leftJoin." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $whereClause = $whereClause." AND UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate";
@@ -173,8 +175,8 @@ class Data {
         
 
         $query = New Query(SELECT, "" 
-                        ."* FROM $firstTable"
-                                    .$leftJoin
+                        ."* FROM $tables"
+     //                               .$leftJoin
                                     .$whereClause
      //                           //    ." ORDER BY $firstTable.Date"
      //                   ." UNION"
