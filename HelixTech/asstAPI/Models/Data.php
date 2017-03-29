@@ -174,7 +174,7 @@ class Data {
 
         $query = New Query(SELECT, "" 
                         ."* FROM $firstTable"
-     //                               .$leftJoin
+                                    .$rightJoin
                                     .$whereClause
      //                           //    ." ORDER BY $firstTable.Date"
      //                   ." UNION"
