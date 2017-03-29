@@ -186,7 +186,7 @@ class Data {
                                //     ." ORDER BY $firstTable.Date"
         );
 
-        Output::errorMsg($query);
+        Output::errorMsg(var_dump($query));
 
 
 /*"SELECT * from GEN_DATA_TABLE_100 
