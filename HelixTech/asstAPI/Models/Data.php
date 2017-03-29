@@ -111,14 +111,14 @@ class Data {
                     $columnNames[] = $column['COLUMN_NAME'];
                     if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columnNames[array_search($column['COLUMN_NAME'], $columnNames)]);
+                        if (count($columnNames)===1){
+                            unset($columnNames[array_search('Date', $columnNames)]);
+                        }
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
                 } 
 
-                if (count($columnNames)===1){
-                    unset($columnNames[array_search('Date', $columnNames)]);
-                }
 
                                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
