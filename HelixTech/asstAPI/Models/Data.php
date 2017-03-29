@@ -119,14 +119,15 @@ class Data {
                 Output::setOutput(count($columnNames));
                 Output::errorMsg("after");
                 Output::setOutput("after");
-                if (count($columnNames)===1){unset($columnNames['Date']);}
+                if (count($columnNames)===1){                Output::errorMsg("in");
+                Output::setOutput("in");unset($columnNames['Date']);}
                 
 
                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
-                Output::errorMsg(count($columnNames, COUNT_RECURSIVE));
+                Output::errorMsg(count($columnNames));
                 Output::errorMsg($columnString);
-                Output::setOutput(count($columnNames, COUNT_RECURSIVE));
+                Output::setOutput(count($columnNames));
                 Output::setOutput($columnString);
                 $boundColumns = ":".implode(", :", $columnNames);
                 $boundValues = array_combine(explode(", ", $boundColumns) , $values);
