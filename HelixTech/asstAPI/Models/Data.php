@@ -117,7 +117,7 @@ class Data {
                 } 
 
                 if (count($columnNames)===1){
-                    unset($columnNames[array_search($column['Date'], $columnNames)]);
+                    unset($columnNames[array_search('Date', $columnNames)]);
                 }
 
                                 // stringify columns and values
