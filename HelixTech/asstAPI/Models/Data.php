@@ -173,12 +173,12 @@ class Data {
         
 
         $query = New Query(SELECT, "" 
-                        ."* FROM $firstTable"
-                                    .$leftJoin
-                                    .$whereClause
+     //                   ."* FROM $firstTable"
+     //                               .$leftJoin
+     //                               .$whereClause
      //                           //    ." ORDER BY $firstTable.Date"
-                        ." UNION"
-                        ." SELECT" 
+     //                   ." UNION"
+     //                   ." SELECT" 
                         ." * FROM $firstTable"
                                     .$rightJoin
                                     .$whereClause
@@ -186,7 +186,6 @@ class Data {
                                //     ." ORDER BY $firstTable.Date"
         );
 
-        Output::errorMsg(var_dump($query));
 
 
 /*"SELECT * from GEN_DATA_TABLE_100 
