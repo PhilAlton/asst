@@ -117,6 +117,8 @@ class Data {
                 } 
                 Output::errorMsg(count($columnNames));
                 Output::setOutput(count($columnNames));
+                Output::errorMsg(count("after"));
+                Output::setOutput(count("after"));
                 if (count($columnNames)===1){unset($columnNames['Date']);}
                 
 
