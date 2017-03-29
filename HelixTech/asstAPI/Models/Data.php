@@ -115,16 +115,12 @@ class Data {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
                 } 
-                Output::errorMsg(count($columnNames));
-                Output::setOutput(count($columnNames));
-                Output::errorMsg("after");
-                Output::setOutput("after");
-                if (count($columnNames)===1){                Output::errorMsg("in");
-                Output::setOutput("in");unset($columnNames["Date"]);}
-                Output::errorMsg("?date".implode(", ", $columnNames));
-                Output::setOutput("?date".implode(", ", $columnNames));
 
-                // stringify columns and values
+                if (count($columnNames)===1){
+                    unset($columnNames[array_search($column['Date'], $columnNames)]);
+                }
+
+                                // stringify columns and values
                 $columnString = implode(", ", $columnNames);
                 Output::errorMsg(count($columnNames));
                 Output::errorMsg($columnString);
