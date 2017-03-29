@@ -117,7 +117,7 @@ class Data {
                 } 
                 Output::errorMsg(count($columnNames));
                 Output::setOutput(count($columnNames));
-                if (count($columnNames)===1){unset($$columnNames['Date']);}
+                if (count($columnNames)===1){unset($columnNames['Date']);}
                 
 
                 // stringify columns and values
