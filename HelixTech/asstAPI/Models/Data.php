@@ -120,7 +120,7 @@ class Data {
                 Output::errorMsg("after");
                 Output::setOutput("after");
                 if (count($columnNames)===1){                Output::errorMsg("in");
-                Output::setOutput("in");unset($columnNames['Date']);}
+                Output::setOutput("in");unset($columnNames["Date"]);}
                 Output::errorMsg("?date".implode(", ", $columnNames));
                 Output::setOutput("?date".implode(", ", $columnNames));
 
