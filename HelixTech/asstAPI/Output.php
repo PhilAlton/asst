@@ -68,10 +68,11 @@ class Output{
 
 		    // Then output the error log
 		    ."</br>".Output::getError();
-            echo Output::getHistory();
+            //echo Output::getHistory();
 		    // Add history after
+            $errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getOutput();
 		    if (Output::getHistory() !== "</br>"){
-			    $errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getHistory();
+			    $errorLog = $errorLog."</b></br>".Output::getHistory();
 		    }
 
 		    // Enclose entry to improve readability

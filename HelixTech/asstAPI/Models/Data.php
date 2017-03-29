@@ -111,23 +111,25 @@ class Data {
                     $columnNames[] = $column['COLUMN_NAME'];
                     if (!isset($data[$column['COLUMN_NAME']])){
                         unset($columnNames[array_search($column['COLUMN_NAME'], $columnNames)]);
-                        if (count($columnNames)===1){
-                            unset($columnNames[array_search('Date', $columnNames)]);
-                        }
                     } else {
                         $values[] = $data[$column['COLUMN_NAME']];
                     }
                 } 
 
+                if (count($columnNames)===1){
+                    //dont run the query
+                    unset($columnNames[array_search('Date', $columnNames)]);
+                } else {
+                    // stringify columns and values
+                    $columnString = implode(", ", $columnNames);
+                    $boundColumns = ":".implode(", :", $columnNames);
+                    $boundValues = array_combine(explode(", ", $boundColumns) , $values);
 
-                                // stringify columns and values
-                $columnString = implode(", ", $columnNames);
-                $boundColumns = ":".implode(", :", $columnNames);
-                $boundValues = array_combine(explode(", ", $boundColumns) , $values);
+                    // create and execute query to insert data-set
+                    $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$boundColumns.")");
+                    $results = array_merge($results, $query->execute($boundValues));
+                } 
 
-                // create and execute query to insert data-set
-                $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$boundColumns.")");
-                $results = array_merge($results, $query->execute($boundValues));
             }
 
         }
