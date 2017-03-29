@@ -121,8 +121,8 @@ class Data {
                 Output::setOutput("after");
                 if (count($columnNames)===1){                Output::errorMsg("in");
                 Output::setOutput("in");unset($columnNames['Date']);}
-                                Output::errorMsg(count($columnNames));
-                Output::setOutput(count("?date".$columnNames));
+                Output::errorMsg("?date".implode(", ", $columnNames));
+                Output::setOutput("?date".implode(", ", $columnNames));
 
                 // stringify columns and values
                 $columnString = implode(", ", $columnNames);
