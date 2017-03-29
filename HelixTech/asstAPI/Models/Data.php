@@ -164,8 +164,8 @@ class Data {
                 $whereClause = " WHERE UNIX_TIMESTAMP(".$firstTable.".LastUpdate) > :remoteLastUpdate";
             } else {
                 $nextTable = $userTable.User::$uID;
-                $rightJoin = $join." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
-                $leftJoin = $join." FULL JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $rightJoin = $rightJoin." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $leftJoin = $leftJoin." FULL JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $whereClause = $whereClause." AND UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate";
                 $endWhere = " AND $firstTable.Date IS NULL";
             }
