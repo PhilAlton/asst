@@ -175,7 +175,7 @@ class Data {
         
 
         $query = New Query(SELECT, "" 
-                        ."$firstTable.*, $nextTable.* FROM $firstTable"
+                        ."$firstTable.Date, $nextTable.Date FROM $firstTable"
                                     .$leftJoin
                                     .$whereClause
      //                           //    ." ORDER BY $firstTable.Date"
