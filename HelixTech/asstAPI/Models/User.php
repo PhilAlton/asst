@@ -129,7 +129,7 @@
                 $query = New Query(
                     CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
                     "(".
-                        "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
+                        "GenDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
                         "Date date NOT NULL UNIQUE,".
                         "LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
                         "Basdai_1 tinyint UNSIGNED NOT NULL,".
@@ -224,7 +224,7 @@
             $query = New Query(
                 CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
                 "(".
-                    "DataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
+                    "RchDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
                     "Date date NOT NULL UNIQUE,".
                     "LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
                     "Sleep_1 tinyint UNSIGNED NOT NULL,".

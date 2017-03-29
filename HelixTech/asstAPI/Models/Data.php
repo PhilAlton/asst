@@ -167,7 +167,7 @@ class Data {
                 $nextTable = $userTable.User::$uID;
                 $tables = $tables.", ".$nextTable;
                 $rightJoin = $rightJoin." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
-                $leftJoin = $leftJoin." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $leftJoin = $leftJoin." FULL OUTER JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $whereClause = $whereClause." AND UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate";
                 $endWhere = " AND $firstTable.Date IS NULL";
             }
@@ -175,8 +175,8 @@ class Data {
         
 
         $query = New Query(SELECT, "" 
-                        ."* FROM $tables"
-     //                               .$leftJoin
+                        ."* FROM $firstTable"
+                                    .$leftJoin
                                     .$whereClause
      //                           //    ." ORDER BY $firstTable.Date"
      //                   ." UNION"
