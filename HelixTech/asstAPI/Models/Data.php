@@ -165,7 +165,7 @@ class Data {
             } else {
                 $nextTable = $userTable.User::$uID;
                 $rightJoin = $rightJoin." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
-                $leftJoin = $leftJoin." FULL JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
+                $leftJoin = $leftJoin." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $whereClause = $whereClause." AND UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate";
                 $endWhere = " AND $firstTable.Date IS NULL";
             }
