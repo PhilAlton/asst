@@ -175,7 +175,7 @@ class Data {
         
 
         $query = New Query(SELECT, "" 
-                        ."($firstTable.Date, $firstTable.Basfi_5, $nextTable.Sleep_2) FROM $firstTable"
+                        ."$firstTable.* FROM $firstTable"
                                     .$leftJoin
                                     .$whereClause
      //                           //    ." ORDER BY $firstTable.Date"
