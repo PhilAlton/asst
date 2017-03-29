@@ -177,11 +177,11 @@ class Data {
                                     .$leftJoin
                                     .$whereClause
      //                           //    ." ORDER BY $firstTable.Date"
-     //                   ." UNION"
-     //                   ." SELECT" 
-     //                   ." * FROM $firstTable"
-     //                               .$rightJoin
-     //                               .$whereClause
+                        ." UNION"
+                        ." SELECT" 
+                        ." * FROM $firstTable"
+                                    .$rightJoin
+                                    .$whereClause
                   //                  .$endWhere
                                //     ." ORDER BY $firstTable.Date"
         );
