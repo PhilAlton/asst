@@ -186,6 +186,8 @@ class Data {
                                //     ." ORDER BY $firstTable.Date"
         );
 
+        Output::setOutput($query);
+
 
 /*"SELECT * from GEN_DATA_TABLE_100 
 LEFT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date 
