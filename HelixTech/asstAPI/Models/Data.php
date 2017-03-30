@@ -214,7 +214,7 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
             ."AND RCH_DATA_TABLE_100.Date IS NULL"
         );
 
-
+        echo "here";
         $results = array_merge($results, $query->executeMultiTableQuery([':remoteLastUpdate' => $remoteLastUpdate]));
     
         //$tmpResults = $query->execute([':remoteLastUpdate' => $remoteLastUpdate]);
