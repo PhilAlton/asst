@@ -201,13 +201,13 @@ AND GEN_DATA_TABLE_100.DataID IS NULL
 ORDER BY GEN_DATA_TABLE_100.Date"*/
 
         $query = new Query(SELECT, 
-            "* from GEN_DATA_TABLE_100 "
-            ."RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
+  //          "* from GEN_DATA_TABLE_100 "
+  //          ."RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
   //          ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
-            ."WHERE (UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate OR RCH_DATA_TABLE_100.LastUpdate IS NULL)"
-            ."UNION "
-            ."SELECT " 
-            ."* from RCH_DATA_TABLE_100 "
+  //          ."WHERE (UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate OR RCH_DATA_TABLE_100.LastUpdate IS NULL)"
+  //          ."UNION "
+  //          ."SELECT " 
+            "* from RCH_DATA_TABLE_100 "
             ."RIGHT JOIN GEN_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
             ."WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
   //          ."AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
