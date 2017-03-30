@@ -190,47 +190,22 @@ class Data {
 
 
 
-/*"SELECT * from GEN_DATA_TABLE_100 
-LEFT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date 
-WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate 
-AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate 
-UNION 
- SELECT * from GEN_DATA_TABLE_100 
-RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date 
-AND GEN_DATA_TABLE_100.DataID IS NULL
-ORDER BY GEN_DATA_TABLE_100.Date"*/
-
-        $query = new Query(SELECT, 
-            "* from GEN_DATA_TABLE_100 "
-            ."RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
-            ."WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
-  //          ."WHERE (UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate OR RCH_DATA_TABLE_100.LastUpdate IS NULL)"
-            ."UNION "
-            ."SELECT ". 
-            "* from GEN_DATA_TABLE_100 "
-            ."LEFT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
-            ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
-  //          ."AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
-            ."AND RCH_DATA_TABLE_100.Date IS NULL"
-        );
-
-
+/*
         $query1 = new Query(SELECT, 
             "* from GEN_DATA_TABLE_100 "
             ."INNER JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
             ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
             ."OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
         );
-
-        $query2 = New Query(SELECT,
+*/
+        $query1 = New Query(SELECT,
             "* from GEN_DATA_TABLE_100"
             ." RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date"
             ." WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
             ." OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"          
-//            ." AND GEN_DATA_TABLE_100.Date IS NULL"
         );
 
-        $query3 = New Query(SELECT,
+        $query2 = New Query(SELECT,
             "* from RCH_DATA_TABLE_100"
             ." RIGHT JOIN GEN_DATA_TABLE_100 ON RCH_DATA_TABLE_100.Date = GEN_DATA_TABLE_100.Date"
             ." WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
@@ -239,8 +214,8 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
 
 
         //$results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-        $results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-        $results = array_merge($results, $query3->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        $results[] = $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]);
+        $results[] = $query3->execute([':remoteLastUpdate' => $remoteLastUpdate]);
     
         //$tmpResults = $query->execute([':remoteLastUpdate' => $remoteLastUpdate]);
         //$results = array_merge($results, $tmpResults);
