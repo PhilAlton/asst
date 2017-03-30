@@ -214,10 +214,9 @@ class Data {
 
 
         //$results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-        $results[] = $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]);
-        //var_dump($results);
-        $results[] = $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]);
-        //var_dump($results);
+        $results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        $results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+    
         //$tmpResults = $query->execute([':remoteLastUpdate' => $remoteLastUpdate]);
         //$results = array_merge($results, $tmpResults);
 
