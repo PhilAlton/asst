@@ -55,6 +55,7 @@ class Output{
             $output = preg_replace('/":*UniqueID":"\w*",?/', "", $output);
 
             // return values: sent to client in the HTTP body via echo.
+            header('Content-Type: application/json');
             echo $output;
 
         }
