@@ -213,10 +213,14 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
         );
 
 
-        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+    //    $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+    
+    $tmpResults = $query->execute([':remoteLastUpdate' => $remoteLastUpdate]);
+    $results = array_merge($results, $tmpResults);
+
     var_dump(results);
         if (count($results) > $paginationLimit){
-            $results = Paginate::create($results, $paginationLimit);
+     //       $results = Paginate::create($results, $paginationLimit);
         }
      //   var_dump($results);
         return $results;
