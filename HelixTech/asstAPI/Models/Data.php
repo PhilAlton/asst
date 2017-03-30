@@ -238,8 +238,8 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
 
 
     //    $results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-        $results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-    //    $results = array_merge($results, $query3->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+    //    $results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        $results = array_merge($results, $query3->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
         //$tmpResults = $query->execute([':remoteLastUpdate' => $remoteLastUpdate]);
         //$results = array_merge($results, $tmpResults);
