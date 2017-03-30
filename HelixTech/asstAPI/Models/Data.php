@@ -226,7 +226,8 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
             "* from GEN_DATA_TABLE_100"
             ." RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date"
             ." WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
-            ." AND GEN_DATA_TABLE_100.Date IS NULL"
+            ."OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "          
+//            ." AND GEN_DATA_TABLE_100.Date IS NULL"
         );
 
         $query3 = New Query(SELECT,
@@ -237,7 +238,7 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
         );
 
 
-        $results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        //$results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         $results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         $results = array_merge($results, $query3->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
