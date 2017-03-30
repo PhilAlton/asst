@@ -205,12 +205,12 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
             ."INNER JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
             ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
             ."OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
-            ."UNION "
-            ."SELECT * from GEN_DATA_TABLE_100 "
-            ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
-            ."UNION "
-            ."SELECT * from RCH_DATA_TABLE_100 "
-            ."WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
+//            ."UNION "
+//            ."SELECT * from GEN_DATA_TABLE_100 "
+//            ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
+//            ."UNION "
+//            ."SELECT * from RCH_DATA_TABLE_100 "
+//            ."WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
         );
 
         $results = array_merge($results, $query->executeMultiTableQuery([':remoteLastUpdate' => $remoteLastUpdate]));
