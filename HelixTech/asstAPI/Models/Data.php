@@ -162,13 +162,13 @@ class Data {
             if ($i == 1){
                 $firstTable = $userTable.User::$uID;
                 $tables = $firstTable;
-                $whereClause = " WHERE UNIX_TIMESTAMP(".$firstTable.".LastUpdate) > :remoteLastUpdate";
+                $whereClause = " WHERE (UNIX_TIMESTAMP(".$firstTable.".LastUpdate) > :remoteLastUpdate OR ".$firstTable."LastUpdate IS NULL)";
             } else {
                 $nextTable = $userTable.User::$uID;
                 $tables = $tables.", ".$nextTable;
                 $rightJoin = $rightJoin." RIGHT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
                 $leftJoin = $leftJoin." LEFT JOIN ".$nextTable." ON $firstTable.Date = $nextTable.Date";
-                $whereClause = $whereClause." AND UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate";
+                $whereClause = $whereClause." AND (UNIX_TIMESTAMP(".$nextTable.".LastUpdate) > :remoteLastUpdate OR ".$nextTable."LastUpdate IS NULL)";
                 $endWhere = " AND $firstTable.Date IS NULL";
             }
         }
@@ -203,7 +203,7 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
         $query = new Query(SELECT, 
             "* from GEN_DATA_TABLE_100 "
             ."LEFT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
-  //          ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
+            ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
   //          ."AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
   //          ."UNION "
   //          ."SELECT * from GEN_DATA_TABLE_100 "
