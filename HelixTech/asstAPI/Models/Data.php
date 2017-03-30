@@ -232,7 +232,7 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
         $query3 = New Query(SELECT,
             "* from RCH_DATA_TABLE_100"
             ." RIGHT JOIN GEN_DATA_TABLE_100 ON RCH_DATA_TABLE_100.Date = GEN_DATA_TABLE_100.Date"
-            ." WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > : "
+            ." WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
             ." AND RCH_DATA_TABLE_100.Date IS NULL"
         );
 
