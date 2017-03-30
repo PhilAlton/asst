@@ -213,12 +213,12 @@ class Data {
         );
 
 
-        //$results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         $results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
         $results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
     
 // need to amend $results adding to account for single returns
-
+//      from both query 1 and query 2; else return structure becomes jagged array
+//  Also need to create queries dynamically....
     
     
         if (count($results) > $paginationLimit){
