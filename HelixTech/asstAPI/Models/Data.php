@@ -214,7 +214,7 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
 
 
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-    
+    var_dump(results);
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
         }
