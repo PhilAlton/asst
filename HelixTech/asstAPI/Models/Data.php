@@ -226,7 +226,7 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
             "* from GEN_DATA_TABLE_100"
             ." RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date"
             ." WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
-            ."OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "          
+            ." OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"          
 //            ." AND GEN_DATA_TABLE_100.Date IS NULL"
         );
 
