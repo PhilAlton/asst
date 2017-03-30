@@ -164,8 +164,8 @@
         public function endTransaction(){return $this->dbConnection->commit();}
         public function cancelTransaction(){return $this->dbConnection->rollBack();}
         public function debugDumpParams(){return $this->statement->debugDumpParams();}
-        public function setToFetchColumnsWithTableNames(){$PDO->setAttribute(PDO::ATTR_FETCH_TABLE_NAMES, true);}
-        public function setToFetchColumnsWithoutTableNames(){$PDO->setAttribute(PDO::ATTR_FETCH_TABLE_NAMES, false);}
+        public function setToFetchColumnsWithTableNames(){echo "in";$this->dbConnection->setAttribute(PDO::ATTR_FETCH_TABLE_NAMES, true);}
+        public function setToFetchColumnsWithoutTableNames(){$this->dbConnection->setAttribute(PDO::ATTR_FETCH_TABLE_NAMES, false);}
         #endregion
 
 
