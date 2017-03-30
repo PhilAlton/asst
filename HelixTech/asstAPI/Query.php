@@ -23,12 +23,19 @@
             return $this->database->lastInsertId();
         }
 
+
         public function __construct($queryType, $query){
             $this->database = New Database;
 		    $this->queryType = $queryType;
             $this->query = $queryType." ".$query;
         }
 
+
+        public function executeMultiTableQuery($params = null){
+            $this->database->setToFetchColumnsWithTableNames();
+            $this->execute($params);
+            $this->database->setToFetchColumnsWithoutTableNames();
+        }
 
 
         public function silentExecute($params = null){

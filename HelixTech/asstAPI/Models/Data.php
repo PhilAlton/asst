@@ -215,7 +215,7 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
         );
 
 
-        $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+        $results = array_merge($results, $query->executeMultiTableQuery([':remoteLastUpdate' => $remoteLastUpdate]));
     
         //$tmpResults = $query->execute([':remoteLastUpdate' => $remoteLastUpdate]);
         //$results = array_merge($results, $tmpResults);
