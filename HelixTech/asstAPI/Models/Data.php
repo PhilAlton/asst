@@ -223,16 +223,16 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
         );
 
         $query2 = New Query(SELECT,
-            "* from GEN_DATA_TABLE_100 "
-            ." RIGHT JOIN RCH_DATA_TABLE_100"
-            ." WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
+            "* from GEN_DATA_TABLE_100"
+            ." RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date"
+            ." WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
             ." AND GEN_DATA_TABLE_100.Date IS NULL"
         );
 
         $query3 = New Query(SELECT,
-            "* from RCH_DATA_TABLE_100 "
-            ." RIGHT JOIN GEN_DATA_TABLE_100"
-            ." WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
+            "* from RCH_DATA_TABLE_100"
+            ." RIGHT JOIN GEN_DATA_TABLE_100 ON RCH_DATA_TABLE_100.Date = GEN_DATA_TABLE_100.Date"
+            ." WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > : "
             ." AND RCH_DATA_TABLE_100.Date IS NULL"
         );
 
