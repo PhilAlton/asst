@@ -203,9 +203,9 @@ ORDER BY GEN_DATA_TABLE_100.Date"*/
         $query = new Query(SELECT, 
             "* from GEN_DATA_TABLE_100 "
             ."RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
-            ."WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
+            ."WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
   //          ."WHERE (UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate OR RCH_DATA_TABLE_100.LastUpdate IS NULL)"
-            ."UNION ALL "
+            ."UNION "
             ."SELECT ". 
             "* from RCH_DATA_TABLE_100 "
             ."RIGHT JOIN GEN_DATA_TABLE_100 ON RCH_DATA_TABLE_100.Date = GEN_DATA_TABLE_100.Date "
