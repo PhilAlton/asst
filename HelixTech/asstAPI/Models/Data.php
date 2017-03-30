@@ -200,17 +200,17 @@ RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Da
 AND GEN_DATA_TABLE_100.DataID IS NULL
 ORDER BY GEN_DATA_TABLE_100.Date"*/
 
-        $query = new Query(SELECT, 
-            "* from GEN_DATA_TABLE_100 "
-            ."LEFT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
-            ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
+  //      $query = new Query(SELECT, 
+  //          "* from GEN_DATA_TABLE_100 "
+  //          ."LEFT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
+  //          ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
   //          ."AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
   //          ."UNION "
   //          ."SELECT * from GEN_DATA_TABLE_100 "
   //          ."RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date "
   //          ."WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
   //          ."AND UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
-        );
+  //      );
 
 
         $results = array_merge($results, $query->execute([':remoteLastUpdate' => $remoteLastUpdate]));
