@@ -32,13 +32,10 @@
 
 
         public function executeMultiTableQuery($params = null){
-            echo "prior";
             $this->database->setToFetchColumnsWithTableNames();
-            echo "execute";
-            $this->execute($params);
-            echo "then";
+            $return = $this->execute($params);
             $this->database->setToFetchColumnsWithoutTableNames();
-            echo "finally";
+            return $return;
         }
 
 
