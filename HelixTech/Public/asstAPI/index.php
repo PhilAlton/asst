@@ -18,9 +18,9 @@
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 require_once 'analytics.php';
 $filename = 'https://who.is/whois-ip/ip-address/40.77.167.135';
-$handle = fopen ($filename,"r");
-$contents = file_get_contents($handle);
-fclose($filename);
+//$handle = fopen ($filename,"r");
+$contents = file_get_contents($filename);
+//fclose($handle);
 echo $contents;
 
 use HelixTech\asstAPI\{Connection, Router, Output};
