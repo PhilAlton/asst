@@ -27,11 +27,10 @@ $whois = substr($whois, $start+49, $end-$start-49);
 $whois = explode("\n", $whois);
 $whoisAssoc = Array();
 foreach ($whois as $who){
-var_dump($who);
 	$temp = explode(":",$who);
-	$whoType = $temp[0];
-	$who = $temp[1];
-	$whoisAssoc[$whoType] = $who;
+	if (isset($temp[1])){
+		$whoisAssoc[$temp[0];] = $temp[1];
+	}
 }
 var_dump($whois);
 var_dump($whoisAssoc);
