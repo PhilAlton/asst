@@ -24,9 +24,9 @@ $whois = file_get_contents($filename);
 $start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 $end = strpos($whois, '</pre>', $start);
 $whois = substr($whois, $start+49, $end-$start-49);
-//$whois = explode('&#10', $whois);
-echo htmlentities($whois);
-//var_dump($whois);
+$whois = explode("\n", $whois);
+
+var_dump($whois);
 //echo $whois['NetName'].", ".$whois['Organization'];
 
 use HelixTech\asstAPI\{Connection, Router, Output};
