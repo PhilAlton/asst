@@ -22,7 +22,7 @@ $whois = file_get_contents($filename);
 
 $start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 $end = strpos($whois, '</pre>', $start);
-echo json_decode(substr($whois, $start+49, $end-$start-49),true);
+var_dump(json_decode(substr($whois, $start+49, $end-$start-49),true));
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
