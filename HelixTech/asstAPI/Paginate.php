@@ -66,7 +66,7 @@ class Paginate{
 
     private static function createLink($pageRef, $pageNum){
 
-        $suffix = "-".$pageNum.".php";   
+        $suffix = "-".$pageNum.".html";   
         $filePath = $pageRef.$suffix;
         return $filePath;
     }
