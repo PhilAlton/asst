@@ -23,7 +23,7 @@ $filename = 'https://who.is/whois-ip/ip-address/40.77.167.135';
 $whois = file_get_contents($filename);
 $start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 $end = strpos($whois, '</pre>', $start);
-$whois = explode('&#13', substr($whois, $start+49, $end-$start-49));
+$whois = explode('&#10', substr($whois, $start+49, $end-$start-49));
 var_dump($whois);
 echo $whois['NetName'].", ".$whois['Organization'];
 
