@@ -28,10 +28,12 @@ abstract class AbstractLoggedException extends \Exception
 		$whois = "";
 		$filename = 'https://who.is/whois-ip/ip-address/'.Connection::getIP();
 		$whois = file_get_contents($filename);
+
+						echo($whois);
 		$start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 		$end = strpos($whois, '</pre>', $start);
 		$whois = substr($whois, $start+49, $end-$start-49);
-				echo($whois);
+
 
 		$whois = explode("\n", $whois);
 		$whoisAssoc = Array();
