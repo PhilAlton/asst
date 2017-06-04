@@ -25,7 +25,7 @@ $start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 $end = strpos($whois, '</pre>', $start);
 $whois = substr($whois, $start+49, $end-$start-49);
 $whois = explode("\n", $whois);
-for ($whois as &$whoType => &$who){
+foreach ($whois as &$whoType => &$who){
 	$temp = explode(":",$who);
 	$whoType = $temp[0];
 	$who = $temp[1];
