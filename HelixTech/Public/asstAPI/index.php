@@ -27,6 +27,7 @@ $whois = substr($whois, $start+49, $end-$start-49);
 $whois = explode("\n", $whois);
 $whoisAssoc = Array();
 foreach ($whois as $who){
+var_dump($who);
 	$temp = explode(":",$who);
 	$whoType = $temp[0];
 	$who = $temp[1];
