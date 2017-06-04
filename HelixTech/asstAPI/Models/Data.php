@@ -174,11 +174,11 @@ class Data {
         }
         
 
-        $query = New Query(SELECT, "" 
-                        ."* FROM $firstTable"
-                                    .$leftJoin
-                                    .$whereClause
-     //                           //    ." ORDER BY $firstTable.Date"
+     //   $query = New Query(SELECT, "" 
+     //                   ."* FROM $firstTable"
+     //                               .$leftJoin
+     //                               .$whereClause
+     //                               ." ORDER BY $firstTable.Date"
      //                   ." UNION"
      //                   ." SELECT" 
      //                   ." * FROM $firstTable"
@@ -186,7 +186,7 @@ class Data {
      //                               .$whereClause
                   //                  .$endWhere
                                //     ." ORDER BY $firstTable.Date"
-        );
+     //   );
 
 
 
@@ -222,7 +222,7 @@ class Data {
     
     
         if (count($results) > $paginationLimit){
-     //       $results = Paginate::create($results, $paginationLimit);
+            $results = Paginate::create($results, $paginationLimit);
         }
      //   var_dump($results);
         return $results;
