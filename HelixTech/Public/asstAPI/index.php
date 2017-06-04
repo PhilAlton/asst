@@ -21,7 +21,7 @@ $filename = 'https://who.is/whois-ip/ip-address/40.77.167.135';
 $whois = file_get_contents($filename);
 
 $start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
-$end = strpos($whois, $start, '</div>');
+$end = strpos($whois, '</div>', $start);
 echo substr($whois, $start+44, $end);
 
 use HelixTech\asstAPI\{Connection, Router, Output};
