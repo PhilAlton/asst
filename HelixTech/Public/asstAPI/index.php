@@ -17,8 +17,10 @@
 
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 require_once 'analytics.php';
-$handle = fopen ('https://who.is/whois-ip/ip-address/40.77.167.135',"r");
-echo fread($handle,EOF);
+$filename = 'https://who.is/whois-ip/ip-address/40.77.167.135'
+$handle = fopen ($filename,"r");
+echo fread($handle,filesize($filename));
+fclose($filename);
 use HelixTech\asstAPI\{Connection, Router, Output};
 
 
