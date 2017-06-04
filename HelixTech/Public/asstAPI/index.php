@@ -22,7 +22,11 @@ $whois = file_get_contents($filename);
 
 
 echo substr($whois, 
-	strpos($whois, '<div class="col-md-12 queryResponseBodyKey"')
+	strpos($whois, '<div class="col-md-12 queryResponseBodyKey"')+44,
+	strpos($whois, 
+		strpos($whois, '<div class="col-md-12 queryResponseBodyKey"')+44,
+		'</div>'
+	)
 );
 
 use HelixTech\asstAPI\{Connection, Router, Output};
