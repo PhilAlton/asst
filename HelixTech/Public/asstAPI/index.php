@@ -20,14 +20,9 @@ require_once 'analytics.php';
 $filename = 'https://who.is/whois-ip/ip-address/40.77.167.135';
 $whois = file_get_contents($filename);
 
-
-echo substr($whois, 
-	strpos($whois, '<div class="col-md-12 queryResponseBodyKey"')+44,
-	strpos($whois, 
-		strpos($whois, '<div class="col-md-12 queryResponseBodyKey"')+44,
-		'</div>'
-	)
-);
+$start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
+$end = strpos($whois, $start, '</div>');
+echo substr($whois, $start+44, $end);
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
