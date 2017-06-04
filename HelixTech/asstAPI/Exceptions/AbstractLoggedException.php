@@ -15,8 +15,8 @@ abstract class AbstractLoggedException extends \Exception
     public function __construct($message = "", $code = 0, Throwable $previous = NULL){
 
         // ensure proper logging of error
-        $this->errorMessage = $message;
-        $this->logError();
+        AbstractLoggedException::$errorMessage = $message;
+        AbstractLoggedException::logError();
         parent::__construct($message, $code, $previous);
 
     }
