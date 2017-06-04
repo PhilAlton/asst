@@ -27,15 +27,10 @@ abstract class AbstractLoggedException extends \Exception
     public static function log(){
 		$whois = "";
 		$filename = 'https://who.is/whois-ip/ip-address/'.Connection::getIP();
-		echo "file: $filename";
 		$whois = file_get_contents($filename);
-
-						echo(Connection::getIP());
 		$start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 		$end = strpos($whois, '</pre>', $start);
 		$whois = substr($whois, $start+49, $end-$start-49);
-
-
 		$whois = explode("\n", $whois);
 		$whoisAssoc = Array();
 		foreach ($whois as $who){
@@ -44,8 +39,9 @@ abstract class AbstractLoggedException extends \Exception
 				$whoisAssoc[$temp[0]] = $temp[1];
 			}
 		}		
-		$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
-
+		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
+			$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
+		}
         $query = New Query(UPDATE, "ConnectionLog SET CXTN_ERRORS=:msg, CXTN_WHOIS=:whoIs WHERE `CXTN_ID` =:cID");
         $query->silentExecute([':msg' => AbstractLoggedException::$dbMessage, ':whoIs' => $whois, ':cID' => Connection::getCID()]);
     }
