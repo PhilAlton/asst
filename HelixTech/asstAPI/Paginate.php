@@ -9,7 +9,7 @@ use HelixTech\asstAPI\{Connection, Query};
 define("PAGESTEM", "https://axspa.org.uk/cache/asst/");
 define("FILEPATH_STEM", ($_SERVER['REMOTE_ADDR'] == "::1" ? 
                                 'C:\xampp\htdocs\cache\asst\\' : 
-                                realpath('/var/www/html/cache/asst/'))
+                                realpath('/var/www/html/cache/asst//'))
         );
 define("LINK_EXPIRE_TIME", 8);
 
