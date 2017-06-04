@@ -38,7 +38,8 @@ abstract class AbstractLoggedException extends \Exception
 			if (isset($temp[1])){
 				$whoisAssoc[$temp[0]] = $temp[1];
 			}
-		}
+		
+		var_dump($whoisAssoc);
 		$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
 
         $query = New Query(UPDATE, "ConnectionLog SET CXTN_ERRORS=:msg, CXTN_WHOIS=:whoIs WHERE `CXTN_ID` =:cID");
