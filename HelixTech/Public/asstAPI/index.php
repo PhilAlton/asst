@@ -17,9 +17,7 @@
 
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 require_once 'analytics.php';
-ini_set("allow_url_include", true);
-fopen ('https://who.is/whois-ip/ip-address/40.77.167.135');
-ini_set("allow_url_include", false);
+fopen ('https://who.is/whois-ip/ip-address/40.77.167.135',"r");
 use HelixTech\asstAPI\{Connection, Router, Output};
 
 
