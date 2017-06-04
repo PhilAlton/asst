@@ -74,7 +74,7 @@ class Paginate{
 
     private static function writeFile($filePath, $page){
     
-        file_put_contents(FILEPATH_STEM.'/'.$filePath, $page, LOCK_EX);
+        file_put_contents(FILEPATH_STEM.'/'.$filePath, $page, 10);
 
     }
 
