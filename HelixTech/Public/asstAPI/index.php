@@ -25,14 +25,15 @@ $start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 $end = strpos($whois, '</pre>', $start);
 $whois = substr($whois, $start+49, $end-$start-49);
 $whois = explode("\n", $whois);
-foreach ($whois as $whoType => &$who){
+$whoisAssoc = Array();
+foreach ($whois as $who){
 	$temp = explode(":",$who);
 	$whoType = $temp[0];
 	$who = $temp[1];
-
+	$whoisAssoc[$whoType] = $who;
 }
 
-var_dump($whois);
+var_dump($whoisAssoc);
 //echo $whois['NetName'].", ".$whois['Organization'];
 
 use HelixTech\asstAPI\{Connection, Router, Output};
