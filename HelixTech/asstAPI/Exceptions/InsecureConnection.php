@@ -10,7 +10,7 @@ class InsecureConnection extends AbstractLoggedException
     * @todo connect to the database to store log info for attempts to connect via HTTP
     * THis may indicate that a developer has not written their app consuming this API securely
     */
-    public static function logError(){
+    public function logError(){
         AbstractLoggedException::$dbMessage .= "Insecure Connection; ";
         parent::log();
     }

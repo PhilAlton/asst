@@ -12,7 +12,7 @@
            * This is a good indication of a attempted hack, and therefore a specific notification will be sent to
            * the system administrator, via slack.
            */
-          public static function logError(){
+          public function logError(){
             AbstractLoggedException::$dbMessage .= "Decrpytion failure; ";
             parent::log();
     

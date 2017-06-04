@@ -16,13 +16,13 @@ abstract class AbstractLoggedException extends \Exception
 
         // ensure proper logging of error
         self::$errorMessage = $message;
-        self::logError();
+        $this->logError();
         parent::__construct($message, $code, $previous);
 
     }
 
 
-    abstract public static function logError();
+    abstract public function logError();
 
     public static function log(){
         $query = New Query(UPDATE, "ConnectionLog SET CXTN_ERRORS=:msg WHERE `CXTN_ID` =:cID");

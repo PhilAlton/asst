@@ -9,7 +9,7 @@
          * Summary of ConnectionFailed
          *
          */
-        public static function logError(){
+        public function logError(){
             AbstractLoggedException::$dbMessage .= "Connection Failed; ";
             parent::log();
         }

@@ -15,7 +15,7 @@
         *
         *
         */
-        public static function logError(){
+        public function logError(){
             AbstractLoggedException::$dbMessage .= "Invalid URI requestd; ";
             parent::log();
     }
