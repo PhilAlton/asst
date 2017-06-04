@@ -33,7 +33,7 @@ foreach ($whois as $who){
 	}
 }
 
-//var_dump($whoisAssoc);
+var_dump($whoisAssoc);
 echo $whois['NetName'].", ".$whois['Organization'];
 
 use HelixTech\asstAPI\{Connection, Router, Output};
