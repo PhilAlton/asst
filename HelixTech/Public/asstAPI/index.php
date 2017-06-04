@@ -32,7 +32,7 @@ foreach ($whois as $who){
 	$who = $temp[1];
 	$whoisAssoc[$whoType] = $who;
 }
-
+var_dump($whois);
 var_dump($whoisAssoc);
 //echo $whois['NetName'].", ".$whois['Organization'];
 
