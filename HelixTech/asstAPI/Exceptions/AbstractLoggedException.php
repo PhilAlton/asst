@@ -39,6 +39,7 @@ abstract class AbstractLoggedException extends \Exception
 				$whoisAssoc[$temp[0]] = $temp[1];
 			}
 		}		
+		$whois = "";
 		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
 			$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
 		}
@@ -46,7 +47,7 @@ abstract class AbstractLoggedException extends \Exception
         $query->silentExecute([':msg' => AbstractLoggedException::$dbMessage, ':cID' => Connection::getCID()]);
 
 		$query = New Query(UPDATE, "ConnectionLog SET CXTN_WHOIS=:whoIs WHERE `CXTN_ID` =:cID");
-   //     $query->silentExecute([':whoIs' => $whois, ':cID' => Connection::getCID()]);
+        $query->silentExecute([':whoIs' => $whois, ':cID' => Connection::getCID()]);
     }
 
     public static function callSlack($message){
