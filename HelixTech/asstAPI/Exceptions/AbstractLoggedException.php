@@ -27,7 +27,7 @@ abstract class AbstractLoggedException extends \Exception
     public static function log(){
 		$whois = "";
 		$filename = 'https://who.is/whois-ip/ip-address/'.Connection::getIP();
-		echo $filename;
+		echo "file: $filename";
 		$whois = file_get_contents($filename);
 
 						echo(Connection::getIP());
