@@ -38,7 +38,7 @@ abstract class AbstractLoggedException extends \Exception
 			if (isset($temp[1])){
 				$whoisAssoc[$temp[0]] = $temp[1];
 			}
-		
+		}		
 		var_dump($whoisAssoc);
 		$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
 
