@@ -29,10 +29,10 @@ $whoisAssoc = Array();
 foreach ($whois as $who){
 	$temp = explode(":",$who);
 	if (isset($temp[1])){
-		$whoisAssoc[$temp[0];] = $temp[1];
+		$whoisAssoc[$temp[0]] = $temp[1];
 	}
 }
-var_dump($whois);
+
 var_dump($whoisAssoc);
 //echo $whois['NetName'].", ".$whois['Organization'];
 
