@@ -13,12 +13,13 @@
  *
  *
  */
+ 
 
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 require_once 'analytics.php';
-
+allow_url_include=1;
 include ('https://who.is/whois-ip/ip-address/40.77.167.135');
-
+allow_url_include=0;
 use HelixTech\asstAPI\{Connection, Router, Output};
 
 
