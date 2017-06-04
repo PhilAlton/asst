@@ -17,13 +17,14 @@
 
 require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 require_once 'analytics.php';
+
+
 $filename = 'https://who.is/whois-ip/ip-address/40.77.167.135';
 $whois = file_get_contents($filename);
-
 $start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 $end = strpos($whois, '</pre>', $start);
 $whois = explode(":", substr($whois, $start+49, $end-$start-49));
-var_dump($whois);
+echo $whois['NetName'].", ".$whois['Organization'];
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
