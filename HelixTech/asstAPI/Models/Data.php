@@ -222,9 +222,9 @@ class Data {
     
     
         if (count($results) > $paginationLimit){
-  //          $results = Paginate::create($results, $paginationLimit);
+            $results = Paginate::create($results, $paginationLimit);
         }
-     //   var_dump($results);
+        var_dump($results);
         return $results;
     }
 
