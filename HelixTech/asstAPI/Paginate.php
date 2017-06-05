@@ -64,24 +64,8 @@ class Paginate{
 			$data[$dataKey] = array_merge($data[$dataKey], array("Page" => $filePath));
 		}
 
-
+		//create the next page
 		Paginate::loadNextPage($pageRef, $pageNum, $data);
-
-		/*
-        //construct the initial paths
-        $filePath = Paginate::createLink($pageRef, $pageNum);
-        $filePath2 = Paginate::createLink($pageRef, ($pageNum+1));
-        
-        //update data with links to cache pages
-        $data[0][] = array("Page" => PAGESTEM.$filePath);     
-        $data[($pageNum)] = array_merge($data[$pageNum], array("Page" => PAGESTEM.$filePath2));
-        
-
-		//create and write the cached page
-        $page = Paginate::loadTemplate($pageRef, $pageNum, $data);
-        
-        Paginate::writeFile($filePath, $page);
-		*/
 
         // Store in database reference to cache
         $query = new Query(INSERT, "INTO cache (cacheLink, pages, expiresOn) ".
@@ -153,9 +137,6 @@ class Paginate{
     private static function loadNextPage($pageRef, $pageNum, $data){
         //construct the path for the next page
         $filePath = Paginate::createLink($pageRef, $pageNum);
-        
-        //update data with links to cache pages
-        //$data[$pageNum][] = array("Page" => PAGESTEM.$filePath);     
 
         // create the next page
         $page = Paginate::loadTemplate($pageRef, $pageNum, $data);
