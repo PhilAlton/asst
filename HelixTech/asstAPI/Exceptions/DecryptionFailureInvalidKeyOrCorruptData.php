@@ -17,7 +17,7 @@
             parent::log();
     
             // ALert system admin via slack
-            parent::callSLack('Decryption failure - Database corrupt or Key invalid');
+            parent::callSlack('Decryption failure - Database corrupt or Key invalid');
         }
 
 

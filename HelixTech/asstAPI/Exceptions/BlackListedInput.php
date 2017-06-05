@@ -17,7 +17,7 @@
             parent::log();
     
             // ALert system admin via slack
-            parent::callSLack('BlackListed word - '.AbstractLoggedException::$errorMessage.' - detected in HTTP input');
+            parent::callSlack('BlackListed word - '.AbstractLoggedException::$errorMessage.' - detected in HTTP input');
         }
 
 

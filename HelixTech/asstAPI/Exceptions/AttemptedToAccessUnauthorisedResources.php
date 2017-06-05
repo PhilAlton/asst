@@ -18,7 +18,7 @@
 
 
             // ALert system admin via slack
-            parent::callSLack('Unauthorised Access Attempted');
+            parent::callSlack('Unauthorised Access Attempted');
         }
 
 

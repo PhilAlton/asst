@@ -100,29 +100,35 @@ class Paginate{
        
         return $pageLayout = 
             "<?php "
+			// Link cache file to the API files
             ."\n "."require_once dirname(dirname(dirname(__FILE__))).'/asst/HelixTech/bootstrap.php';"
-        //    ."\n "."require_once dirname(__FILE__).'/.php';"
             ."\n "."use HelixTech\asstAPI\{Connection, Paginate, Query, Output};"
+			."\n "."use HelixTech\asstAPI\Exceptions\{ConnectionFailed, AttemptedToAccessUnauthorisedResources};"
             ."\n "."Connection::connect();"
             ."\n "."try {"
-                ."\n "."if (!Connection::isEstablished()){throw new ConnectionFailed;}"
-                ."\n "."\$filePath = '$pageRef';"
-                ."\n "."\$nextPage = $pageNum + 1;"
-                ."\n "."\$totalPages = ".count($data).";"
-                //the dataset for this page must be updated 
-                //  to contain the link of the following page
-                ."\n "."\$result=json_decode('".json_encode($data[$pageNum])."');"
-                ."\n "."if (\$nextPage < \$totalPages){"
-                    // Execute code to load the next page
-                    ."\n "."\$allData=json_decode('".json_encode($data)."');" 
-                    ."\n "."Paginate::loadNextPage('$pageRef', \$nextPage, \$allData);"
-                ."\n "."} else {"
-                    // execute code to delete cached pages (update the DataBase)
-                    ."\n "."\$query = New Query(UPDATE, 'cache '."
-                                ."\n "."'SET expired=1 '."
-                                ."\n "."'WHERE cacheLink = :pageRef');"
-		            ."\n "."\$query->silentExecute([':pageRef' => '$pageRef']);"
-                ."\n "."}"
+				// Ensure Connection is valid
+				."\n "."if (!Connection::isEstablished()){throw new ConnectionFailed;}"
+				."\n "."if (explode('-asstAPIcache-',$pageRef)[0]<>Connection::getUserName(){"
+					."\n "."throw new AttemptedToAccessUnauthorisedResources;"
+				."\n "."}"
+				// Create page specific parameters
+				."\n "."\$filePath = '$pageRef';"
+				."\n "."\$nextPage = $pageNum + 1;"
+				."\n "."\$totalPages = ".count($data).";"
+				// Output the next set of results
+				."\n "."\$result=json_decode('".json_encode($data[$pageNum])."');"
+				."\n "."if (\$nextPage < \$totalPages){"
+					// Either execute code to load the next page
+					."\n "."\$allData=json_decode('".json_encode($data)."');" 
+					."\n "."Paginate::loadNextPage('$pageRef', \$nextPage, \$allData);"
+				."\n "."} else {"
+					// Or execute code to delete cached pages (update the DataBase)
+					."\n "."\$query = New Query(UPDATE, 'cache '."
+								."\n "."'SET expired=1 '."
+								."\n "."'WHERE cacheLink = :pageRef');"
+					."\n "."\$query->silentExecute([':pageRef' => '$pageRef']);"
+				."\n "."}"
+				// Flush the output
 				."\n "."Output::setOutput(\$result);"
             ."\n "."} catch (ConnectionFailed \$e) {"
                 ."\n "."Output::errorMsg('Connection Failed: request terminated');"
