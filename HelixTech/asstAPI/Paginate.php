@@ -105,10 +105,8 @@ class Paginate{
             ."\n "."require_once dirname(dirname(dirname(__FILE__))).'/asst/HelixTech/bootstrap.php';"
             ."\n "."use HelixTech\asstAPI\{Connection, Paginate, Query, Output};"
 			."\n "."use HelixTech\asstAPI\Exceptions\{ConnectionFailed, AttemptedToAccessUnauthorisedResources};"
-    //        ."\n "."Connection::connect();"
             ."\n "."try {"
-				// Ensure Connection is valid
-	//			."\n "."if (!Connection::isEstablished()){throw new ConnectionFailed;}"
+				// Ensure Connection is to a valid resource
 				."\n "."if (explode('-asstAPIcache-','$pageRef')[0]<>Connection::getUserName()){"
 					."\n "."throw new AttemptedToAccessUnauthorisedResources;"
 				."\n "."}"
@@ -131,8 +129,7 @@ class Paginate{
 				."\n "."}"
 				// Flush the output
 				."\n "."Output::setOutput(\$result);"
-    //        ."\n "."} catch (ConnectionFailed \$e) {"
-    //            ."\n "."Output::errorMsg('Connection Failed: request terminated');"
+			// Handle Errors
             ."\n "."} catch (AttemptedToAccessUnauthorisedResources \$e){"
 				."\n "."Output::errorMsg('User details do not match requested resources');"
 			."\n "."}"
