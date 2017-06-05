@@ -109,7 +109,7 @@ class Paginate{
             ."\n "."Connection::connect();"
             ."\n "."try {"
                 ."\n "."if (!Connection::isEstablished()){throw new ConnectionFailed;}"
-                ."\n "."\$filePath = $pageRef;"
+                ."\n "."\$filePath = '$pageRef';"
                 ."\n "."\$nextPage = $pageNum + 1;"
                 ."\n "."\$totalPages = ".count($data).";"
                 //the dataset for this page must be updated 
