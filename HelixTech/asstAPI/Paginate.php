@@ -118,7 +118,7 @@ class Paginate{
                 ."\n "."if (\$nextPage <= \$totalPages){"
                     // Execute code to load the next page
                     ."\n "."\$allData=json_decode('".json_encode($data)."');" 
-                    ."\n "."Paginate::loadNextPage($pageRef, \$nextPage, \$allData);"
+                    ."\n "."Paginate::loadNextPage('$pageRef', \$nextPage, \$allData);"
                 ."\n "."} else {"
                     // execute code to delete cached pages (update the DataBase)
                     ."\n "."\$query = New Query(UPDATE, 'cache '."
