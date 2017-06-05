@@ -127,7 +127,7 @@ class Paginate{
                 ."\n "."\$totalPages = ".count($data).";"
                 //the dataset for this page must be updated 
                 //  to contain the link of the following page
-                ."\n "."echo '".json_encode($data[$pageNum])."';"
+                ."\n "."\$result = '".json_encode($data[$pageNum])."';"
                 ."\n "."if (\$nextPage < \$totalPages){"
                     // Execute code to load the next page
                     ."\n "."\$allData=json_decode('".json_encode($data)."');" 
@@ -139,6 +139,7 @@ class Paginate{
                                 ."\n "."'WHERE cacheLink = :pageRef');"
 		            ."\n "."\$query->silentExecute([':pageRef' => '$pageRef']);"
                 ."\n "."}"
+				."\n "."Output::setOutput(\$result);"
             ."\n "."} catch (ConnectionFailed \$e) {"
                 ."\n "."Output::errorMsg('Connection Failed: request terminated');"
             ."\n "."}"
@@ -173,10 +174,10 @@ class Paginate{
         // get all expired cache links
         $query = New Query(SELECT, "cacheLink, pages from cache where expired = 1");
         $expiredLinks = $query->execute();
-
+		var_dump($expiredLinks);
         // loop through each link and remove the cache file
         foreach ($expiredLinks as $link){
-            for ($i=1; $i <= $link['pages']; $i++){
+            for ($i=1; $i <= $link['Pages']; $i++){
                 $file =  FILEPATH_STEM.Paginate::createLink($link['cacheLink'], $i);
                 if (file_exists($file)){unlink($file);}
             }
