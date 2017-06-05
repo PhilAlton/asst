@@ -57,14 +57,25 @@ class Paginate{
         $pageRef = Connection::getUserName()."-asstAPIcache-".uniqid();  
         $pageNum = 1;
 
+
+		//construct all the file paths and update data to include the links to the next page
+		foreach ($data as $dataKey => $dataItem){
+			$filePath = ($dataKey+1) < count($data) ? $filePath = Paginate::createLink($pageRef, $dataKey+1) : "No Further Pages";
+			$data[$dataKey] = array_merge($data[$pageNum], array("Page" => PAGESTEM.$filePath));
+		}
+
+
+		/*
         //construct the initial paths
         $filePath = Paginate::createLink($pageRef, $pageNum);
         $filePath2 = Paginate::createLink($pageRef, ($pageNum+1));
         
         //update data with links to cache pages
         $data[0][] = array("Page" => PAGESTEM.$filePath);     
-        $data[($pageNum)][] = array("Page" => PAGESTEM.$filePath2);
-        
+        $data[($pageNum)] = array_merge($data[$pageNum], array("Page" => PAGESTEM.$filePath2));
+        */
+
+		//create and write the cached page
         $page = Paginate::loadTemplate($pageRef, $pageNum, $data);
         
         Paginate::writeFile($filePath, $page);
@@ -141,7 +152,7 @@ class Paginate{
         $filePath = Paginate::createLink($pageRef, $pageNum);
         
         //update data with links to cache pages
-        $data[$pageNum][] = array("Page" => PAGESTEM.$filePath);     
+        //$data[$pageNum][] = array("Page" => PAGESTEM.$filePath);     
 
         // create the next page
         $page = Paginate::loadTemplate($pageRef, $pageNum, $data);
