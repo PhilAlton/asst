@@ -32,12 +32,12 @@ class Router{
             $input = Connection::getInput();
             $root = Connection::getAPIroot();
 
-            if (isset($request[1]) and $request[1]<>Connection::getUserName()){
-                throw new AttemptedToAccessUnauthorisedResources;
-            }
 
             if (Router::uri($root.'/Users/..*'))       // ensure that user specific end points are only accesible
             {
+			    if (isset($request[1]) and $request[1]<>Connection::getUserName()){
+					throw new AttemptedToAccessUnauthorisedResources;
+				}
                 $UserName = $request[1];
                 if (isset($request[2]))
                 {
