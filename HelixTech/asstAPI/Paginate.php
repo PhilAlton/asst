@@ -108,7 +108,7 @@ class Paginate{
             ."\n "."try {"
 				// Ensure Connection is valid
 				."\n "."if (!Connection::isEstablished()){throw new ConnectionFailed;}"
-				."\n "."if (explode('-asstAPIcache-',$pageRef)[0]<>Connection::getUserName(){"
+				."\n "."if (explode('-asstAPIcache-','$pageRef')[0]<>Connection::getUserName(){"
 					."\n "."throw new AttemptedToAccessUnauthorisedResources;"
 				."\n "."}"
 				// Create page specific parameters
