@@ -5,6 +5,7 @@
  */
 
 use HelixTech\asstAPI\{Connection, Query};
+use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 
 define("PAGESTEM", "https://axspa.org.uk/asst/Cache/");
 define("FILEPATH_STEM", ($_SERVER['REMOTE_ADDR'] == "::1" ? 
