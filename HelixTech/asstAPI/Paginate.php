@@ -177,7 +177,7 @@ class Paginate{
 		var_dump($expiredLinks);
         // loop through each link and remove the cache file
         foreach ($expiredLinks as $link){
-            for ($i=1; $i <= $link['Pages']; $i++){
+            for ($i=1; $i <= $link['pages']; $i++){
                 $file =  FILEPATH_STEM.Paginate::createLink($link['cacheLink'], $i);
                 if (file_exists($file)){unlink($file);}
             }

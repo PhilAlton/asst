@@ -157,6 +157,7 @@ class Data {
         $i = 0;
         $join = "";
         
+		/*
         foreach (Data::$userTableArray as $userTable){    
             $i++;     
             if ($i == 1){
@@ -172,8 +173,8 @@ class Data {
                 $endWhere = " AND $firstTable.Date IS NULL";
             }
         }
-        
-
+        */
+		
      //   $query = New Query(SELECT, "" 
      //                   ."* FROM $firstTable"
      //                               .$leftJoin
