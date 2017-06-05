@@ -9,7 +9,7 @@
  */
 
 
-use HelixTech\asstAPI\{Connection};
+use HelixTech\asstAPI\{Connection, Paginate};
 use HelixTech\asstAPI\Models\{Data, User, Analytics};
 use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed, AttemptedToAccessUnauthorisedResources};
 
@@ -62,6 +62,12 @@ class Router{
             } elseif (Router::uri($root.'/Users')){
                 // code for asst/Users (create new user)
                 User::createUser($input);
+			} elseif (Router::uri($root.'/Cache')){
+                // code for asst/Cache (withdraw paginated data)
+				//@todo: need to validate user!
+				$cachefile = $request[1];
+				$UserName = explode('-asstAPIcache-',$cachefile)[0];
+				Paginate::retrieve($UserName, $cachefile);
             } elseif (Router::uri($root.'/Analytics')){
                 // code for asst/Analytics
                 Analytics::display();

@@ -6,7 +6,7 @@
 
 use HelixTech\asstAPI\{Connection, Query};
 
-define("PAGESTEM", "https://axspa.org.uk/cache/asst/");
+define("PAGESTEM", "https://axspa.org.uk/asst/Cache/");
 define("FILEPATH_STEM", ($_SERVER['REMOTE_ADDR'] == "::1" ? 
                                 'C:\xampp\htdocs\cache\asst\\' : 
                                 realpath('/var/www/html/cache/asst'))
@@ -18,6 +18,13 @@ define("LINK_EXPIRE_TIME", 8);
   *
   */
 class Paginate{
+
+	public static function retrieve($UserName, $cachefile){
+		if (Connection::authenticate()){
+			include(FILEPATH_STEM.'/'.$cachefile);
+		}
+
+	}
 
 
     public static function create($data, $paginationLimit = 50){
@@ -36,7 +43,7 @@ class Paginate{
         // When loaded, will need to construct page 3
         //      $data[1]
 
-        $pageRef = Connection::getUserName()."-".uniqid();  
+        $pageRef = Connection::getUserName()."-asstAPIcache-".uniqid();  
         $pageNum = 1;
 
         //construct the initial paths
@@ -87,7 +94,7 @@ class Paginate{
             "<?php "
             ." "."require_once dirname(dirname(dirname(_FILE_))).'/asst/HelixTech/bootstrap.php';"
             ." "."require_once dirname(_FILE_).'/.php';"
-            ." "."use HelixTech\asstAPI\{Connection, Pagination, Query};"
+            ." "."use HelixTech\asstAPI\{Connection, Paginate, Query};"
             ." "."Connection::connect();"
             ." "."try {"
                 ." "."if (!Connection::isEstablished()){throw new ConnectionFailed;}"
@@ -100,7 +107,7 @@ class Paginate{
                 ." "."if (\$nextPage <= \$totalPages){"
                     // Execute code to load the next page
                     ." "."\$allData=json_decode".json_encode($data).";" 
-                    ." "."Pagination::loadNextPage(\$pageRef, \$nextPage, \$allData);"
+                    ." "."Paginate::loadNextPage(\$pageRef, \$nextPage, \$allData);"
                 ." "."} else {"
                     // execute code to delete cached pages (update the DataBase)
                     ." "."\$query = New Query(UPDATE, 'cache '."
@@ -146,7 +153,7 @@ class Paginate{
         // loop through each link and remove the cache file
         foreach ($expiredLinks as $link){
             for ($i=1; $i <= $link['pages']; $i++){
-                $file =  FILEPATH_STEM.Pagination::createLink($link['cacheLink'], $i);
+                $file =  FILEPATH_STEM.Paginate::createLink($link['cacheLink'], $i);
                 if (file_exists($file)){unlink($file);}
             }
         }
