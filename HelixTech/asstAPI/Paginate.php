@@ -180,6 +180,8 @@ class Paginate{
             for ($i=1; $i <= $link['pages']; $i++){
                 $file =  FILEPATH_STEM."/".Paginate::createLink($link['cacheLink'], $i);
                 if (file_exists($file)){unlink($file);}
+				$query = New Query(DELETE, 'FROM `cache` WHERE `cacheLink` =:cacheLink');
+				$query->execute([':cacheLink' => $link['cacheLink']]);
             }
         }
 
