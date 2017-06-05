@@ -127,7 +127,7 @@ class Paginate{
                 ."\n "."\$totalPages = ".count($data).";"
                 //the dataset for this page must be updated 
                 //  to contain the link of the following page
-                ."\n "."echo '".json_encode($data[$pageNum])."';"
+                ."\n "."Output::setOutput('".json_encode($data[$pageNum])."');"
                 ."\n "."if (\$nextPage < \$totalPages){"
                     // Execute code to load the next page
                     ."\n "."\$allData=json_decode('".json_encode($data)."');" 
@@ -137,7 +137,7 @@ class Paginate{
                     ."\n "."\$query = New Query(UPDATE, 'cache '."
                                 ."\n "."'SET expired=1 '."
                                 ."\n "."'WHERE cacheLink = :pageRef');"
-		            ."\n "."Output::setOutput("."\$query->execute([':pageRef' => '$pageRef']));"
+		            ."\n "."\$query->execute([':pageRef' => '$pageRef']);"
                 ."\n "."}"
             ."\n "."} catch (ConnectionFailed \$e) {"
                 ."\n "."Output::errorMsg('Connection Failed: request terminated');"
