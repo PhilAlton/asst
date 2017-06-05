@@ -137,7 +137,7 @@ class Paginate{
                     ."\n "."\$query = New Query(UPDATE, 'cache '."
                                 ."\n "."'SET expired=1 '."
                                 ."\n "."'WHERE cacheLink = :pageRef');"
-		            ."\n "."\$query->execute([':pageRef' => '$pageRef']);"
+		            ."\n "."\$query->silentExecute([':pageRef' => '$pageRef']);"
                 ."\n "."}"
             ."\n "."} catch (ConnectionFailed \$e) {"
                 ."\n "."Output::errorMsg('Connection Failed: request terminated');"
