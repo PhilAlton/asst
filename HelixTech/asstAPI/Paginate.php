@@ -127,7 +127,7 @@ class Paginate{
                 ."\n "."\$totalPages = ".count($data).";"
                 //the dataset for this page must be updated 
                 //  to contain the link of the following page
-                ."\n "."Output::setOutput(".$data[$pageNum].");"
+                ."\n "."echo '".json_encode($data[$pageNum])."';"
                 ."\n "."if (\$nextPage < \$totalPages){"
                     // Execute code to load the next page
                     ."\n "."\$allData=json_decode('".json_encode($data)."');" 
