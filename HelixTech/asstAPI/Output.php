@@ -84,6 +84,7 @@ class Output{
             echo "thes";
 			file_put_contents(($errorLog_PATH).'/error2.html', $errorLog, 10);
         }
+		file_put_contents(($errorLog_PATH).'/error2.html', "thisisanerrorfile", 10);
 	}
 
 
