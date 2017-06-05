@@ -114,10 +114,10 @@ class Paginate{
                 ."\n "."\$totalPages = ".count($data).";"
                 //the dataset for this page must be updated 
                 //  to contain the link of the following page
-                ."\n "."echo ".json_encode($data[$pageNum]).";"
+                ."\n "."echo '".json_encode($data[$pageNum])."';"
                 ."\n "."if (\$nextPage <= \$totalPages){"
                     // Execute code to load the next page
-                    ."\n "."\$allData=json_decode".json_encode($data).";" 
+                    ."\n "."\$allData=json_decode(".json_encode($data).");" 
                     ."\n "."Paginate::loadNextPage(\$pageRef, \$nextPage, \$allData);"
                 ."\n "."} else {"
                     // execute code to delete cached pages (update the DataBase)
