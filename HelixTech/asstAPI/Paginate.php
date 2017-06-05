@@ -55,7 +55,7 @@ class Paginate{
         //      $data[1]
 
         $pageRef = Connection::getUserName()."-asstAPIcache-".uniqid();  
-        $pageNum = 1;
+        $pageNum = 0;
 
         //construct the initial paths
         $filePath = Paginate::createLink($pageRef, $pageNum);
