@@ -179,6 +179,7 @@ class Paginate{
         foreach ($expiredLinks as $link){
             for ($i=1; $i <= $link['pages']; $i++){
                 $file =  FILEPATH_STEM.Paginate::createLink($link['cacheLink'], $i);
+				echo $file;
                 if (file_exists($file)){unlink($file);}
             }
         }
