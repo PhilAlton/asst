@@ -20,9 +20,20 @@ define("LINK_EXPIRE_TIME", 8);
 class Paginate{
 
 	public static function retrieve($UserName, $cachefile){
-		if (Connection::authenticate()){
-			include(FILEPATH_STEM.'/'.$cachefile);
-		}
+		try{
+			if (Connection::authenticate()){
+				include(FILEPATH_STEM.'/'.$cachefile);
+
+		    } else {
+			    Output::setOutput('Invalid Username\Password Combination');
+                $e = "Failed to validate UserName against Password";
+                throw new UnableToAuthenticateUserCredentials($e);
+		    }
+        } catch (UnableToAuthenticateUserCredentials $e){
+            http_response_code(401);
+            Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
+
+        }
 
 	}
 
