@@ -108,7 +108,7 @@ class Paginate{
             ."\n "."try {"
 				// Ensure Connection is valid
 				."\n "."if (!Connection::isEstablished()){throw new ConnectionFailed;}"
-				."\n "."if (explode('-asstAPIcache-','$pageRef')[0]<>Connection::getUserName(){"
+				."\n "."if (explode('-asstAPIcache-','$pageRef')[0]<>Connection::getUserName()){"
 					."\n "."throw new AttemptedToAccessUnauthorisedResources;"
 				."\n "."}"
 				// Create page specific parameters
@@ -132,7 +132,9 @@ class Paginate{
 				."\n "."Output::setOutput(\$result);"
             ."\n "."} catch (ConnectionFailed \$e) {"
                 ."\n "."Output::errorMsg('Connection Failed: request terminated');"
-            ."\n "."}"
+            ."\n "."} catch (AttemptedToAccessUnauthorisedResources \$e){"
+				."\n "."Output::errorMsg('User details do not match requested resources');"
+			."\n "."}"
             ."\n ?>"
             ;
 
