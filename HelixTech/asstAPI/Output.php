@@ -84,7 +84,8 @@ class Output{
             echo "thes";
 			file_put_contents(($errorLog_PATH).'/error2.html', $errorLog, 10);
         }
-		file_put_contents(($errorLog_PATH).'/error2.html', "thisisanerrorfile", 10);
+		$errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
+		file_put_contents(($errorLog_PATH).'/error.html', "thisisanerrorfile", 10);
 	}
 
 
