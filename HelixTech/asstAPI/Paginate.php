@@ -60,8 +60,8 @@ class Paginate{
 
 		//construct all the file paths and update data to include the links to the next page
 		foreach ($data as $dataKey => $dataItem){
-			$filePath = ($dataKey+1) < count($data) ? $filePath = Paginate::createLink($pageRef, $dataKey+1) : "No Further Pages";
-			$data[$dataKey] = array_merge($data[$dataKey], array("Page" => PAGESTEM.$filePath));
+			$filePath = ($dataKey+1) < count($data) ? $filePath = PAGESTEM.Paginate::createLink($pageRef, $dataKey+1) : null;
+			$data[$dataKey] = array_merge($data[$dataKey], array("Page" => $filePath));
 		}
 
 
