@@ -48,14 +48,14 @@ class Paginate{
         // And devide into chunks based on $paginationLimit.
         $data = array_chunk($data, $paginationLimit, true);
 
-        // Construct page 2 ("page 1" data sent in initial request)
+        // Construct page 1 ("page 0" data sent in initial request)
         // Contains and displays the second fifty data items
         // Contains and passes forward the complete data set
-        // When loaded, will need to construct page 3
+        // When loaded, will need to construct page 2
         //      $data[1]
 
         $pageRef = Connection::getUserName()."-asstAPIcache-".uniqid();  
-        $pageNum = 0;
+        $pageNum = 1;
 
         //construct the initial paths
         $filePath = Paginate::createLink($pageRef, $pageNum);
@@ -63,7 +63,7 @@ class Paginate{
         
         //update data with links to cache pages
         $data[0][] = array("Page" => PAGESTEM.$filePath);     
-        $data[($pageNum+1)][] = array("Page" => PAGESTEM.$filePath2);
+        $data[($pageNum)][] = array("Page" => PAGESTEM.$filePath2);
         
         $page = Paginate::loadTemplate($pageRef, $pageNum, $data);
         
