@@ -136,7 +136,7 @@ class Paginate{
                     // execute code to delete cached pages (update the DataBase)
                     ."\n "."\$query = New Query(UPDATE, 'cache '."
                                 ."\n "."'SET expired=1 '."
-                                ."\n "."'WHERE cacheLink = ".$pageRef."');"
+                                ."\n "."'WHERE cacheLink = "."'".$pageRef."'"."');"
 		            ."\n "."return \$query->execute();"
                 ."\n "."}"
             ."\n "."} catch (ConnectionFailed \$e) {"
