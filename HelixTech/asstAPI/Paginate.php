@@ -103,8 +103,8 @@ class Paginate{
        
         return $pageLayout = 
             "<?php "
-            ."\n "."require_once dirname(dirname(dirname(_FILE_))).'/asst/HelixTech/bootstrap.php';"
-            ."\n "."require_once dirname(_FILE_).'/.php';"
+            ."\n "."require_once dirname(dirname(dirname(__FILE__))).'/asst/HelixTech/bootstrap.php';"
+            ."\n "."require_once dirname(__FILE__).'/.php';"
             ."\n "."use HelixTech\asstAPI\{Connection, Paginate, Query};"
             ."\n "."Connection::connect();"
             ."\n "."try {"
