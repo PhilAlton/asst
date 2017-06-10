@@ -88,12 +88,28 @@
 
 
                 //Encrypt and hash secret questions and asnwers
-                $secQ1 = $params['SecretQuestion1'];
-                $secQ2 = $params['SecretQuestion2'];
-
-                $secA1 = $params['SecretAnswer1'];
-                $secA2 = $params['SecretAnswer2'];
+                $secA1 = password_hash
+							    (
+								    base64_encode
+								    (
+									    hash('sha384', $params['SecretAnswer1'], true)
+								    ),
+								    PASSWORD_DEFAULT
+							    );
                 
+                
+                
+                $secA2 = password_hash
+							    (
+								    base64_encode
+								    (
+									    hash('sha384', $params['SecretAnswer2'], true)
+								    ),
+								    PASSWORD_DEFAULT
+							    );
+
+                $secQ1 = "Question:".$params['SecretQuestion1']."Answer:".$secA1;
+                $secQ2 = "Question:".$params['SecretQuestion2']."Answer:".$SecA2;
 
 
 			    // Update AuthTable with parameters:
@@ -126,7 +142,8 @@
 					    );
 
                 // Output should be set on the success of the following record insert
-			    $results = array_merge($results, ($query->execute([':UniqueID' => User::$uID,
+			    $results = array_merge($results, ($query->execute([
+                                ':UniqueID' => User::$uID,
 							    ':Age' => User::age($params['DoB']),
 							    ':Gender' => $params['Gender'],
 							    ':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
@@ -420,6 +437,15 @@
             // Gather identity data or security questions
                 // Needs to be enacted prior
                 // esoteric questions: e.g. hash username and store as password
+
+            $results = array();
+
+            //Get secret questions and answers
+		    $query = New Query(SELECT, 'SecQ1, SecQ2 FROM `AuthTable` WHERE `UserName` =:UserName');
+		    $results = array_merge( $results, $query->execute([':UserName' => $params['UserName']]));
+
+            
+
 
             // Verify security questions
             // Send a token over a side-channel
