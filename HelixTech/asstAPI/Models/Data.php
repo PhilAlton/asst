@@ -149,7 +149,7 @@ class Data {
      * @param mixed $data
      * @return array $results
      */
-    public static function pullData($remoteLastUpdate, $paginationLimit = 20){
+    public static function pullData($remoteLastUpdate, $paginationLimit = 50){
 
         $results = Array();
 

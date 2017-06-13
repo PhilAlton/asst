@@ -159,12 +159,12 @@ class Paginate{
         $query->execute();
 
         // get all expired cache links
-        $query = New Query(SELECT, "cacheLink, pages from cache where expired = 1");
+        $query = New Query(SELECT, "cacheLink, Pages from cache where expired = 1");
         $expiredLinks = $query->execute();
-
+		var_dump($expiredLinks);
         // loop through each link and remove the cache file
         foreach ($expiredLinks as $link){
-            for ($i=1; $i <= $link['pages']; $i++){
+            for ($i=1; $i <= $link['Pages']; $i++){
                 $file =  FILEPATH_STEM."/".Paginate::createLink($link['cacheLink'], $i);
                 if (file_exists($file)){unlink($file);}
 				$query = New Query(DELETE, 'FROM `cache` WHERE `cacheLink` =:cacheLink');
