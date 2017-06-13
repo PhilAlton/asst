@@ -200,7 +200,7 @@ class Data {
         );
 */
 
-		if (count(Data::$userTableArray) = 1){
+		if (count(Data::$userTableArray) == 1){
 		
 			$genTable = "GEN_DATA_TABLE_".User::$uID;
 
