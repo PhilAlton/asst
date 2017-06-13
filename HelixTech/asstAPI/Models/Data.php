@@ -243,12 +243,9 @@ class Data {
 //      from both query 1 and query 2; else return structure becomes jagged array
 //  Also need to create queries dynamically....
     
-    var_dump($results);
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
         }
-	echo "</br></br></br>";
-	var_dump($results);
         return $results;
     }
 
