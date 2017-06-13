@@ -530,7 +530,7 @@
 			} catch (UnableToAuthenticateUserCredentials $e){
 				http_response_code(401);
 				Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
-
+			}
 
         }
 
