@@ -7,7 +7,6 @@
  * @file Connection.php
  * @package asstAPI
  *
- * @todo write connection class
  *
  */
 
@@ -69,7 +68,7 @@ class Connection{
                 throw new InsecureConnection("Connection must be established via HTTPS");
             }
 
-            //ensure connected with UserName and Password
+            //ensure connected with UserName
             if (!isset($_SERVER["PHP_AUTH_USER"])){
                 throw new UnableToAuthenticateUserCredentials ("User details not sent in header");
             }

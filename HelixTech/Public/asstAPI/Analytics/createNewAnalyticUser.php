@@ -18,7 +18,7 @@ $password =	Crypto::encrypt(
                                 PASSWORD_DEFAULT
                             ),
                             (KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded))->unlockKey($password)
-                        );
+						);
 
 $query = new Query(INSERT, "INTO AdminTable (UserName, Password, UserKey)".
                 "VALUES (:UserName, :Password, :UserKey)"

@@ -62,20 +62,27 @@ class Router{
             } elseif (Router::uri($root.'/Users')){
                 // code for asst/Users (create new user)
                 User::createUser($input);
+
 			} elseif (Router::uri($root.'/Cache')){
                 // code for asst/Cache (withdraw paginated data)
 				//@todo: need to validate user!
 				$cachefile = $request[1];
 				$UserName = explode('-asstAPIcache-',$cachefile)[0];
 				Paginate::retrieve($UserName, $cachefile);
+
+            } elseif (Router::uri($root.'/passwordReset')){
+                // proceed with password reset
+				User::passwordReset();
+
             } elseif (Router::uri($root.'/Analytics')){
                 // code for asst/Analytics
                 Analytics::display();
+
             } else {
                 throw new InvalidURI("Invalid URI selected".Connection::getURI());
             }
 
-
+			
         } catch (InvalidURI $e) {
             http_response_code(404);
             Output::errorMsg("caught exception: ".$e->getMessage().".");

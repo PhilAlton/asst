@@ -199,23 +199,45 @@ class Data {
             ."OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate "
         );
 */
-        $query1 = New Query(SELECT,
-            "* from GEN_DATA_TABLE_100"
-            ." RIGHT JOIN RCH_DATA_TABLE_100 ON GEN_DATA_TABLE_100.Date = RCH_DATA_TABLE_100.Date"
-            ." WHERE UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
-            ." OR UNIX_TIMESTAMP(RCH_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"          
-        );
 
-        $query2 = New Query(SELECT,
-            "* from RCH_DATA_TABLE_100"
-            ." RIGHT JOIN GEN_DATA_TABLE_100 ON RCH_DATA_TABLE_100.Date = GEN_DATA_TABLE_100.Date"
-            ." WHERE UNIX_TIMESTAMP(GEN_DATA_TABLE_100.LastUpdate) > :remoteLastUpdate"
-            ." AND RCH_DATA_TABLE_100.Date IS NULL"
-        );
+		if (count(Data::$userTableArray) = 1){
+		
+			genTable = "GEN_DATA_TABLE_".User::$uID;
+
+			$query1 = New Query(SELECT,
+				"* from $genTable"
+				." WHERE UNIX_TIMESTAMP($genTable.LastUpdate) > :remoteLastUpdate"       
+			);
+
+			$results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+
+		} else {
+		
+			genTable = "GEN_DATA_TABLE_".User::$uID;
+			$rchTable = "RCH_DATA_TABLE_".User::$uID;
+
+			$query1 = New Query(SELECT,
+				"* from $genTable"
+				." RIGHT JOIN $rchTable ON $genTable.Date = $rchTable.Date"
+				." WHERE UNIX_TIMESTAMP($genTable.LastUpdate) > :remoteLastUpdate"
+				." OR UNIX_TIMESTAMP($rchTable.LastUpdate) > :remoteLastUpdate"          
+			);
+
+		
+			$query2 = New Query(SELECT,
+				"* from $rchTable"
+				." RIGHT JOIN $genTable ON $rchTable.Date = $genTable.Date"
+				." WHERE UNIX_TIMESTAMP($genTable.LastUpdate) > :remoteLastUpdate"
+				." AND $rchTable.Date IS NULL"
+			);
 
 
-        $results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
-        $results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+			$results = array_merge($results, $query1->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+			$results = array_merge($results, $query2->execute([':remoteLastUpdate' => $remoteLastUpdate]));
+
+		}
+
+
     
 // need to amend $results adding to account for single returns
 //      from both query 1 and query 2; else return structure becomes jagged array
@@ -225,7 +247,7 @@ class Data {
         if (count($results) > $paginationLimit){
             $results = Paginate::create($results, $paginationLimit);
         }
-      //  var_dump($results);
+
         return $results;
     }
 

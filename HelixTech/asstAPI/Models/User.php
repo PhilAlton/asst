@@ -12,6 +12,17 @@
     use HelixTech\asstAPI\{Output, Connection, Query, Crypt};
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 
+
+	// Definitions for passwor resetting
+	define("PAGESTEM", "https://axspa.org.uk/asst/Users/");
+	define("FILEPATH_STEM", ($_SERVER['REMOTE_ADDR'] == "::1" ? 
+                                'C:\xampp\htdocs\autopage\asst\\' : 
+                                realpath('/var/www/html/autopage/asst'))
+        );
+	define("RESET_EXPIRE_TIME", 8);
+
+
+
     /**
      * Summary of User: class containing static methods to perform actions on the database
      * - Actions associated with a particular user
@@ -429,30 +440,96 @@
             return $age;
         }
 
-        public static function resetPassword($UserName){
+
+		public static function passwordResetPage(){
+		
+			// Show password reset page
+
+			// Once button in pressed to submit:
+
+			// Display pop up "If this email address is registered with us, then you should recieve 
+			//		a unique link, in your email inbox, to reset your password, momentarily"	
+			
+
+	// Could the above be done on the apps instead? 
+
+			// Make an http request to the API requesting:
+			//		https://*username*@axspa.org.uk/asst/passwordResetProceed
+
+		}
+
+
+
+		public static function passwordReset(){
+
+			// Logic to take username from page ?as post variable and send email
+			//		or we might be able to make this function instrinsic to the page
+				
+				// Accept submitted username and validate these	
+					// else error code if no such user
+					// create requestPasswordResetForNonExistantUser error
+
+				// Create user specific password reset endpoint
+					// i.e. a code generated page containing the secret questions for the user (from the database)
+					// Save this file in the /var/www/html/autopage/asst folder
+					// This page needs to contain the secret answers and question, from the database
+
+					//Get secret questions and answers
+					$query = New Query(SELECT, 'SecQ1, SecQ2 FROM `AuthTable` WHERE `UserName` =:UserName');
+					$results = array_merge( $results, $query->execute([':UserName' => $params['UserName']]));
+
+					// Log whether secre questions and answers match
+						// create secretAnswersInvalid error
+						// this error should generate an alert, if there is much activity against it
+						// However, this level of analytics will need to fall in to the analytics class
+						// And not form part of the error's own class
+
+					// if secret answers do match up, then display the password reset page
+
+				// Generate a link to this page
+				//	i.e ensure router is able to process the link to such pages
+				//	i.e. at the Users/*username*/resetPassword endpoint
+
+				// Email out the link to the username
+
+			// Log the attempt to reset password (it's actually already logged 
+			//		by virtue of the connection monitoring that we employ against all request)
+
+
+
+		}
+
+
+        public static function resetPassword($UserName, $userResetPage){
 
             // function to restet password
             Output::setOutput('function currently not available');
 
-            // Gather identity data or security questions
-                // Needs to be enacted prior
-                // esoteric questions: e.g. hash username and store as password
-
-            $results = array();
-
-            //Get secret questions and answers
-		    $query = New Query(SELECT, 'SecQ1, SecQ2 FROM `AuthTable` WHERE `UserName` =:UserName');
-		    $results = array_merge( $results, $query->execute([':UserName' => $params['UserName']]));
-
-            
+			
 
 
+            // Gather identity data or security questions - completed at user registration
+            // Get secret questions and answers 
             // Verify security questions
-            // Send a token over a side-channel
+            // Send a token over a side-channel - this has been done by forcing email address to initiate the next part of the reset
             // Allow user to change password (in the existing session)
-            // Logging and auditing password change attempts
+            // Logging and auditing password change attempts000000
 
 
+			try{
+				if (Connection::authenticate()){
+
+					// Pull the user specific reset page
+					include(FILEPATH_STEM.'/'.$userResetPage);
+
+				} else {
+					Output::setOutput('Invalid Username\Password Combination');
+					$e = "Failed to validate UserName against Password";
+					throw new UnableToAuthenticateUserCredentials($e);
+				}
+			} catch (UnableToAuthenticateUserCredentials $e){
+				http_response_code(401);
+				Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
 
 
         }
