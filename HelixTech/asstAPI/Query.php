@@ -75,7 +75,7 @@
          * @param mixed $params to be bound into the query
          * @return mixed,
          */
-        public function execute(1, $compress, $params = null){
+        public function execute($compress, $params = null){
 
             $this->buildQuery($params);
             $results = false;
