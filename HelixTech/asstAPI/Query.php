@@ -59,7 +59,7 @@
 
             $this->database->query($this->query);
 		    if (isset($params)){
-			var_dump($params);
+			var_dump($this->query);
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
 			    //		Crypt::encrypt
