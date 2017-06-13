@@ -36,9 +36,6 @@ class Router{
             if (Router::uri($root.'/Users/..*'))       // ensure that user specific end points are only accesible
             {
 			    if (isset($request[1]) and $request[1]<>Connection::getUserName()){
-				echo $request[1];
-				echo Connection::getUserName;
-
 					throw new AttemptedToAccessUnauthorisedResources;
 				}
                 $UserName = $request[1];
