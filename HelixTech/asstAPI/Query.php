@@ -39,7 +39,7 @@
         }
 
 
-        public function silentexecute(1, $params = null){
+        public function silentexecute($params = null){
             $this->buildQuery($params);
             try {
                 $this->database->execute(1);
