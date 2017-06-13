@@ -202,7 +202,7 @@ class Data {
 
 		if (count(Data::$userTableArray) = 1){
 		
-			genTable = "GEN_DATA_TABLE_".User::$uID;
+			$genTable = "GEN_DATA_TABLE_".User::$uID;
 
 			$query1 = New Query(SELECT,
 				"* from $genTable"
@@ -213,7 +213,7 @@ class Data {
 
 		} else {
 		
-			genTable = "GEN_DATA_TABLE_".User::$uID;
+			$genTable = "GEN_DATA_TABLE_".User::$uID;
 			$rchTable = "RCH_DATA_TABLE_".User::$uID;
 
 			$query1 = New Query(SELECT,
