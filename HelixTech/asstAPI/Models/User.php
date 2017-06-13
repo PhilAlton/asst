@@ -13,15 +13,6 @@
     use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 
 
-	// Definitions for passwor resetting
-	define("PAGESTEM", "https://axspa.org.uk/asst/Users/");
-	define("FILEPATH_STEM", ($_SERVER['REMOTE_ADDR'] == "::1" ? 
-                                'C:\xampp\htdocs\autopage\asst\\' : 
-                                realpath('/var/www/html/autopage/asst'))
-        );
-	define("RESET_EXPIRE_TIME", 8);
-
-
 
     /**
      * Summary of User: class containing static methods to perform actions on the database
