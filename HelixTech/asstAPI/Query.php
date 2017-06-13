@@ -39,10 +39,10 @@
         }
 
 
-        public function silentexecute($params = null){
+        public function silentexecute($compress, $params = null){
             $this->buildQuery($params);
             try {
-                $this->database->execute(1);
+                $this->database->execute();
             } catch (Exception $e) {
                 http_response_code(406);
                 Output::errorMsg(
