@@ -54,7 +54,7 @@
             $results = array();
 		    //Ensure user of UserName does not already exist
 		    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-		    $conflict = $query->execute([':UserName' => $params['UserName']]);
+		    $conflict = $query->execute(1, [':UserName' => $params['UserName']]);
 		    if (count($conflict) !== 0){
 			    http_response_code(409);
 			    Output::errorMsg("database conflict, user {$params['UserName']} alraedy exists");
@@ -122,13 +122,13 @@
 								    "(:UserName, :Password, '$protectedAuthToken', :secQ1, :secQ2)"
 							    );
 
-			    $results = array_merge($results, $query->execute([':UserName' => $params['UserName'], ':Password' => $password, ':secQ1' => $secQ1, ':secQ2' => $secQ2]));
+			    $results = array_merge($results, $query->execute(1, [':UserName' => $params['UserName'], ':Password' => $password, ':secQ1' => $secQ1, ':secQ2' => $secQ2]));
                 /** @todo sanitize output to remove password and swap for authtoken */
 
 
 			    // Retrieve the created primary key
 			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-			    User::$uID = $query->execute([':UserName' => $params['UserName']])['UniqueID'];
+			    User::$uID = $query->execute(1, [':UserName' => $params['UserName']])['UniqueID'];
                 
 
                 // Change password returned to authtoken led by username
@@ -144,7 +144,7 @@
 					    );
 
                 // Output should be set on the success of the following record insert
-			    $results = array_merge($results, ($query->execute([
+			    $results = array_merge($results, ($query->execute(1, [
                                 ':UniqueID' => User::$uID,
 							    ':Age' => User::age($params['DoB']),
 							    ':Gender' => $params['Gender'],
@@ -188,7 +188,7 @@
                     ")"
                 );
 
-			    $query->execute();
+			    $query->execute(1);
 
 
 
@@ -217,7 +217,7 @@
 
             $results = array();
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		    $isResearchParticipant = $query->execute([':UniqueID' => User::$uID]);
+		    $isResearchParticipant = $query->execute(1, [':UniqueID' => User::$uID]);
 
             if (!$isResearchParticipant){
                 $results = array_merge($results, User::participateResearch($params));
@@ -244,7 +244,7 @@
                         "(:UniqueID, :Firstname, :Surname, :DoB)"
                     );
 
-            $results = array_merge($results, ($query->execute([':UniqueID' => User::$uID,
+            $results = array_merge($results, ($query->execute(1, [':UniqueID' => User::$uID,
                             ':Firstname' => $params['Firstname'],
                             ':Surname' => $params['Surname'],
                             ':DoB' => $params['DoB']])));
@@ -265,7 +265,7 @@
                 ")"
             );
 
-			$query->execute();
+			$query->execute(1);
 
 
             return $results;
@@ -342,9 +342,9 @@
 
             //Get info from User's records in both User Data Tables
 		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
-		    $results = array_merge( $results, $query->execute([':UniqueID' => User::$uID]));
+		    $results = array_merge( $results, $query->execute(1, [':UniqueID' => User::$uID]));
             $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		    $results = array_merge( $results, $query->execute([':UniqueID' => User::$uID]));
+		    $results = array_merge( $results, $query->execute(1, [':UniqueID' => User::$uID]));
 
             return $results;
 
@@ -366,8 +366,8 @@
                                     ."FROM INFORMATION_SCHEMA.COLUMNS "
                                     ."WHERE TABLE_NAME=:tableName"
                                     );
-            $colArray['ResearchTable'] = $query->execute([':tableName' => 'ResearchTable']);
-            $colArray['UserTable'] = $query->execute([':tableName' => 'UserTable']);
+            $colArray['ResearchTable'] = $query->execute(1, [':tableName' => 'ResearchTable']);
+            $colArray['UserTable'] = $query->execute(1, [':tableName' => 'UserTable']);
 
             // Loop through each column, and check whether a post variable has been created with that same column name
             // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
@@ -396,7 +396,7 @@
             $query = New Query(UPDATE, "$tableName ".
                                 "SET $column=:$column ".
                                 "WHERE `UniqueID` =:UniqueID");
-		    return $query->execute([":$column" => $value,':UniqueID' => User::$uID]);
+		    return $query->execute(1, [":$column" => $value,':UniqueID' => User::$uID]);
 
         }
 
@@ -405,20 +405,20 @@
 		    // DELETE request, accepting user ID;
 
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		    $isRchParticipant = $query->execute([':UniqueID' => User::$uID]);
+		    $isRchParticipant = $query->execute(1, [':UniqueID' => User::$uID]);
             if ($isRchParticipant){
                 $query = New Query(DROP, "TABLE RCH_DATA_TABLE_".User::$uID);
-		        $query->execute();
+		        $query->execute(1);
             }
 		    $query = New Query(DROP, "TABLE GEN_DATA_TABLE_".User::$uID);
-		    $query->execute();
+		    $query->execute(1);
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		    $query->execute([':UniqueID' => User::$uID]);
+		    $query->execute(1, [':UniqueID' => User::$uID]);
 		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
-            $query->execute([':UniqueID' => User::$uID]);
+            $query->execute(1, [':UniqueID' => User::$uID]);
 		    $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
 
-		    return $query->execute([':UniqueID' => User::$uID]);
+		    return $query->execute(1, [':UniqueID' => User::$uID]);
 
         }
 
@@ -467,7 +467,7 @@
 
 					//Get secret questions and answers
 					$query = New Query(SELECT, 'SecQ1, SecQ2 FROM `AuthTable` WHERE `UserName` =:UserName');
-					$results = array_merge( $results, $query->execute([':UserName' => $params['UserName']]));
+					$results = array_merge( $results, $query->execute(1, [':UserName' => $params['UserName']]));
 
 					// Log whether secre questions and answers match
 						// create secretAnswersInvalid error

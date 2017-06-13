@@ -33,16 +33,16 @@
 
         public function executeMultiTableQuery($params = null){
             $this->database->setToFetchColumnsWithTableNames();
-            $return = $this->execute($params);
+            $return = $this->execute(1, $params);
             $this->database->setToFetchColumnsWithoutTableNames();
             return $return;
         }
 
 
-        public function silentExecute($params = null){
+        public function silentexecute(1, $params = null){
             $this->buildQuery($params);
             try {
-                $this->database->execute();
+                $this->database->execute(1);
             } catch (Exception $e) {
                 http_response_code(406);
                 Output::errorMsg(
@@ -75,25 +75,27 @@
          * @param mixed $params to be bound into the query
          * @return mixed,
          */
-        public function execute($params = null){
+        public function execute(1, $compress, $params = null){
 
             $this->buildQuery($params);
             $results = false;
 
             try {
-                $this->database->execute();
+                $this->database->execute(1);
                 $results = $params;
 
                 switch ($this->queryType){
 			        case SELECT:
 				        $results = $this->database->resultset();
 
-				        // reduce output in case of single row, or single result
-				        if (count($results) == 1)
-				        {
-					        foreach ($results as $result){$results = $result;}
-					        if (count($results) == 1){foreach ($results as $result){$results = $result;}}
-				        }
+						// reduce output in case of single row, or single result
+						if ($compress == 1){
+							if (count($results) == 1)
+							{
+								foreach ($results as $result){$results = $result;}
+								if (count($results) == 1){foreach ($results as $result){$results = $result;}}
+							}
+						}
 
 				        // algorithm to decrypt all database output
                         // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});

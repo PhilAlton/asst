@@ -71,7 +71,7 @@ class Paginate{
         // Store in database reference to cache
         $query = new Query(INSERT, "INTO cache (cacheLink, pages, expiresOn) ".
                         "VALUES (:pageRef, :pages, CURRENT_TIMESTAMP + INTERVAL ".LINK_EXPIRE_TIME." HOUR)");
-        $query->execute([":pageRef" => $pageRef, ":pages" => count($data)]);
+        $query->execute(1, [":pageRef" => $pageRef, ":pages" => count($data)]);
 
 
         // Return the first data set, now including a link to the next page
@@ -125,7 +125,7 @@ class Paginate{
 					."\n "."\$query = New Query(UPDATE, 'cache '."
 								."\n "."'SET expired=1 '."
 								."\n "."'WHERE cacheLink = :pageRef');"
-					."\n "."\$query->silentExecute([':pageRef' => '$pageRef']);"
+					."\n "."\$query->silentexecute(1, [':pageRef' => '$pageRef']);"
 				."\n "."}"
 				// Flush the output
 				."\n "."Output::setOutput(\$result);"
@@ -156,11 +156,11 @@ class Paginate{
         // Update expired cache
         $query = New Query(UPDATE, "cache SET expired=1 ".
             "WHERE UNIX_TIMESTAMP(expiresOn) < UNIX_TIMESTAMP(CURRENT_TIMESTAMP)");
-        $query->execute();
+        $query->execute(1);
 
         // get all expired cache links
         $query = New Query(SELECT, "cacheLink, Pages from cache where expired = 1");
-        $expiredLinks = $query->execute();
+        $expiredLinks = $query->execute(0);
 		var_dump($expiredLinks);
         // loop through each link and remove the cache file
         foreach ($expiredLinks as $link){
@@ -168,7 +168,7 @@ class Paginate{
                 $file =  FILEPATH_STEM."/".Paginate::createLink($link['cacheLink'], $i);
                 if (file_exists($file)){unlink($file);}
 				$query = New Query(DELETE, 'FROM `cache` WHERE `cacheLink` =:cacheLink');
-				$query->execute([':cacheLink' => $link['cacheLink']]);
+				$query->execute(1, [':cacheLink' => $link['cacheLink']]);
             }
         }
 
