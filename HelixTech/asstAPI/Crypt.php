@@ -35,25 +35,22 @@ class Crypt{
 
     private static function UseEncryptionKey(callable $callBackFunction, ...$args){
         // retrieve key
-		echo "here";
-		var_dump($callBackFunction);
-		var_dump($args);
         $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst' : realpath('/var/www/private'));
-		echo $private_PATH;
+
         // Find the index of the argument passed as null
         // (this implies, to this function, that the argument in question should be updated with the encryption key)
         $indexOfNullArg = (array_search(null, $args));
-		echo $indexOfNullArg;
+
         /** @param $args[$indexOfNullArg] modified: with encrpytion key */
         $args[$indexOfNullArg] = isset(Crypt::$personalKey) ?
                 Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]):
                 Key::loadFromAsciiSafeString(parse_ini_file($private_PATH.'/keyfile.ini')['KEY']);
-
+var_dump($args[$indexOfNullArg]);
         // call the function deploying the key, with its other arguments as an array
         // set the return value of the fucntion, so that the return value can bubble up
         $return = call_user_func_array($callBackFunction, $args);
 
-		var_dump($args[$indexOfNullArg]);
+		
 		var_dump($return);
 
         // Store a random string of bytes in the key index, in order to remove the index
