@@ -35,6 +35,9 @@ class Crypt{
 
     private static function UseEncryptionKey(callable $callBackFunction, ...$args){
         // retrieve key
+		echo "here";
+		var_dump($callBackFunction);
+		var_dump($args);
         $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst' : realpath('/var/www/private'));
 
         // Find the index of the argument passed as null
