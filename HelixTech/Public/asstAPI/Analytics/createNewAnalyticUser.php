@@ -23,7 +23,7 @@ $password =	Crypto::encrypt(
 $query = new Query(INSERT, "INTO AdminTable (UserName, Password, UserKey)".
                 "VALUES (:UserName, :Password, :UserKey)"
                 );
-$query->execute(1, [':UserName' => $userName, ':Password' => $password, ':UserKey' => $protected_key_encoded]);
+$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $userName, ':Password' => $password, ':UserKey' => $protected_key_encoded]);
 
 
 

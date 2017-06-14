@@ -9,6 +9,8 @@
     define("CREATE", "CREATE");
     define("DELETE", "DELETE");
     define("DROP", "DROP");
+	define('SIMPLIFY_QUERY_RESULTS_ON', 'SIMPLIFY_QUERY_RESULTS_ON');
+	define('SIMPLIFY_QUERY_RESULTS_OFF', 'SIMPLIFY_QUERY_RESULTS_OFF');
 
 
 
@@ -33,13 +35,13 @@
 
         public function executeMultiTableQuery($params = null){
             $this->database->setToFetchColumnsWithTableNames();
-            $return = $this->execute(1, $params);
+            $return = $this->execute(SIMPLIFY_QUERY_RESULTS_ON,  $params);
             $this->database->setToFetchColumnsWithoutTableNames();
             return $return;
         }
 
 
-        public function silentexecute($compress, $params = null){
+        public function silentexecute($simplifyQueryResults, $params = null){
             $this->buildQuery($params);
             try {
                 $this->database->execute();
@@ -75,7 +77,7 @@
          * @param mixed $params to be bound into the query
          * @return mixed,
          */
-        public function execute($compress, $params = null){
+        public function execute($simplifyQueryResults, $params = null){
 
             $this->buildQuery($params);
             $results = false;
@@ -89,7 +91,7 @@
 				        $results = $this->database->resultset();
 
 						// reduce output in case of single row, or single result
-						if ($compress == 1){
+						if ($simplifyQueryResults == "SIMPLIFY_QUERY_RESULTS_ON"){
 							if (count($results) == 1)
 							{
 								foreach ($results as $result){$results = $result;}

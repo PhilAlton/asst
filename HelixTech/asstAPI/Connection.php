@@ -152,7 +152,7 @@ class Connection{
             "VALUES (:UserName, :ip, :Request)"
         );
 
-        $query->silentexecute(1, [
+        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [
             ':UserName' => Connection::$UserName,
             ':ip' => Connection::$ip,
             ':Request' => Connection::$method."@".Connection::$uri
@@ -180,7 +180,7 @@ class Connection{
 
             // retrieve stored password string from database against UserName
             $query = New Query(SELECT, "* FROM `$table` WHERE `UserName` =:UserName");
-            $UserDetails = $query->execute(1, [':UserName' => $_SERVER["PHP_AUTH_USER"]]);
+            $UserDetails = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $_SERVER["PHP_AUTH_USER"]]);
 
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
@@ -230,7 +230,7 @@ class Connection{
         $query = New Query(UPDATE, "ConnectionLog ".
                            "SET CXTN_AUTHENTIC=1 ".
                            "WHERE `CXTN_ID` =:cID");
-        $query->silentexecute(1, [':cID' => Connection::$cID]);
+        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':cID' => Connection::$cID]);
         $q_auth = true;
 
     }
@@ -242,7 +242,7 @@ class Connection{
         $query = New Query(UPDATE, "ConnectionLog ".
                        "SET CXTN_AUTHENTIC=0 ".
                        "WHERE `CXTN_ID` =:cID");
-        $query->silentexecute(1, [':cID' => Connection::$cID]);
+        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':cID' => Connection::$cID]);
 
 
     }

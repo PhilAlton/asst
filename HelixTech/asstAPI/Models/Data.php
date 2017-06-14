@@ -41,7 +41,7 @@ class Data {
                 // Ensure correct tables are looked at.
                 array_push(Data::$userTableArray, 'GEN_DATA_TABLE_');
                 $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-                $isRchParticipant = $query->execute(1, [':UniqueID' => User::$uID]);
+                $isRchParticipant = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
                 if ($isRchParticipant){array_push(Data::$userTableArray, 'RCH_DATA_TABLE_');}
 
 
@@ -90,7 +90,7 @@ class Data {
 
             // Handle any conflicts
             $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
-            $conflict = $query->execute(1, [':date' => $data['Date']]);
+            $conflict = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':date' => $data['Date']]);
 
 
             if (count($conflict) !== 0){
@@ -103,7 +103,7 @@ class Data {
                                    ."FROM INFORMATION_SCHEMA.COLUMNS "
                                    ."WHERE TABLE_NAME=:tableName"
                                    );
-                $columns = $query->execute(1, [':tableName' => ($userTable.User::$uID)]);
+                $columns = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':tableName' => ($userTable.User::$uID)]);
 
                 // Unify coluns and values
                 $values = Array(); $columnNames = Array();
@@ -127,7 +127,7 @@ class Data {
 
                     // create and execute query to insert data-set
                     $query = New Query(INSERT, "INTO $userTable".User::$uID."(".$columnString.") VALUES (".$boundColumns.")");
-                    $results = array_merge($results, $query->execute(1, $boundValues));
+                    $results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  $boundValues));
                 } 
 
             }
@@ -209,7 +209,7 @@ class Data {
 				." WHERE UNIX_TIMESTAMP($genTable.LastUpdate) > :remoteLastUpdate"       
 			);
 
-			$results = array_merge($results, $query1->execute(0, [':remoteLastUpdate' => $remoteLastUpdate]));
+			$results = array_merge($results, $query1->execute(SIMPLIFY_QUERY_RESULTS_OFF,  [':remoteLastUpdate' => $remoteLastUpdate]));
 
 		} else {
 		
@@ -232,8 +232,8 @@ class Data {
 			);
 
 
-			$results = array_merge($results, $query1->execute(0, [':remoteLastUpdate' => $remoteLastUpdate]));
-			$results = array_merge($results, $query2->execute(0, [':remoteLastUpdate' => $remoteLastUpdate]));
+			$results = array_merge($results, $query1->execute(SIMPLIFY_QUERY_RESULTS_OFF,  [':remoteLastUpdate' => $remoteLastUpdate]));
+			$results = array_merge($results, $query2->execute(SIMPLIFY_QUERY_RESULTS_OFF,  [':remoteLastUpdate' => $remoteLastUpdate]));
 
 		}
 
@@ -300,7 +300,7 @@ class Data {
         $isConsistent;
 
         $query = New Query(SELET, "$columnName FROM $table WHERE UniqueID = :uID");
-        $countAPI = $query->execute(1, [':uID' => User::$uID]);
+        $countAPI = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':uID' => User::$uID]);
 
             if (floatval($count) === floatval($countAPI)){
                 $isConsistent = true;
