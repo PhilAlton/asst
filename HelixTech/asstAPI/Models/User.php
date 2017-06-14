@@ -93,7 +93,7 @@
                 $secA1 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer1'], true)),PASSWORD_DEFAULT);                            
                 $secA2 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer2'], true)),PASSWORD_DEFAULT);
                 $secQ1 = "Question:".$params['SecretQuestion1']."Answer:".$secA1;
-                $secQ2 = "Question:".$params['SecretQuestion2']."Answer:".$SecA2;
+                $secQ2 = "Question:".$params['SecretQuestion2']."Answer:".$secA2;
 
 
 			    // Update AuthTable with parameters:
