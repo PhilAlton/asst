@@ -87,6 +87,7 @@ class Crypt{
 		try {
 			try {
 				// call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
+				var_dump($input);
 				$plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
 
 			} catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
