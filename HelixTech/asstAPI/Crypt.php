@@ -48,7 +48,7 @@ class Crypt{
 
         // call the function deploying the key, with its other arguments as an array
         // set the return value of the fucntion, so that the return value can bubble up
-        $return = Defuse\Crypto\Crypto::decrypt($args[0], $args[$indexOfNullArg]);
+        $return = Crypto::decrypt($args[0], $args[$indexOfNullArg]);
 		//call_user_func_array($callBackFunction, $args);
 
 		echo "here";
