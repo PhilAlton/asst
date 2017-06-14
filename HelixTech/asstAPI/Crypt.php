@@ -48,10 +48,8 @@ class Crypt{
 
         // call the function deploying the key, with its other arguments as an array
         // set the return value of the fucntion, so that the return value can bubble up
-        $return = Crypto::decrypt($args[0], $args[$indexOfNullArg]);
-		//call_user_func_array($callBackFunction, $args);
+        $return = call_user_func_array($callBackFunction, $args);
 
-		var_dump(array("this", $return));
         // Store a random string of bytes in the key index, in order to remove the index
         $args[$indexOfNullArg] = random_bytes(102);
         // Then set the index to null in order to free up the memory to further protect the encryption key
@@ -86,7 +84,6 @@ class Crypt{
 		try {
 			try {
 				// call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
-				var_dump($input);
 				$plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
 
 			} catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
