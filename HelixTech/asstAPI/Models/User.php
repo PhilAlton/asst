@@ -76,7 +76,7 @@
 
 			    /** @todo: Devise AuthToken uses and method */
                 $length = 20; // Length of auth token
-			    $AuthToken = bin2hex(random_bytes($length));
+			    $AuthToken = $params['UserName']."=".bin2hex(random_bytes($length));
                 $protectedAuthToken = Crypt::encrypt(
 							    password_hash
 							    (
