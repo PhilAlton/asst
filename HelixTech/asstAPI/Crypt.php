@@ -80,7 +80,7 @@ class Crypt{
      */
     public static function decrypt($input){
         $plaintext = "";
-		var_dump($input);
+
 		try {
 			try {
 				// call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
