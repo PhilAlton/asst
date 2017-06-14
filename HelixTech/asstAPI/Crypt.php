@@ -80,22 +80,24 @@ class Crypt{
      */
     public static function decrypt($input){
         $plaintext = "";
+		var_dump($input);
+		try {
+			try {
+				// call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
+				$plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
 
-        try {
-            // call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
-            $plaintext = Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::decrypt", $input, $key = null);
+			} catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
 
-	    } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
+				// An attack! Either the wrong key was loaded, or the ciphertext has
+				// changed since it was created -- either corrupted in the database or
+				// intentionally modified by someone trying to carry out an attack.
 
-		    // An attack! Either the wrong key was loaded, or the ciphertext has
-		    // changed since it was created -- either corrupted in the database or
-		    // intentionally modified by someone trying to carry out an attack.
+				// ... handle this case
+				Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".$ex."\n");
+				Throw new DecryptionFailureInvalidKeyOrCorruptData;
 
-		    // ... handle this case
-            Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".$ex."\n");
-            Throw new DecryptionFailureInvalidKeyOrCorruptData;
-
-	    } catch (DecryptionFailureInvalidKeyOrCorruptData $e){
+			} 
+		} catch (DecryptionFailureInvalidKeyOrCorruptData $e){
             http_response_code(404);
         }
 
