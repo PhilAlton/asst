@@ -114,7 +114,7 @@
                 
 
                 // Change password returned to authtoken led by username
-                $results[':Password'] = $params['UserName']."=".$AuthToken;
+                $results[':AuthToken'] = $params['UserName']."=".$AuthToken;
                 
 
 			    // Update UserTable with parameters
