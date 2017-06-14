@@ -50,6 +50,9 @@ class Crypt{
         // set the return value of the fucntion, so that the return value can bubble up
         $return = call_user_func_array($callBackFunction, $args);
 
+		var_dump($args[$indexOfNullArg]);
+		var_dump($return);
+
         // Store a random string of bytes in the key index, in order to remove the index
         $args[$indexOfNullArg] = random_bytes(102);
         // Then set the index to null in order to free up the memory to further protect the encryption key
