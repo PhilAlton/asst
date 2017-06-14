@@ -101,10 +101,10 @@
 							    INSERT, "INTO AuthTable".
 								    "(UserName, Password, AuthToken, SecQ1, SecQ2)".
 							    "VALUES".
-								    "(:UserName, :Password, '$protectedAuthToken', :secQ1, :secQ2)"
+								    "(:UserName, :Password, :AuthToken, :secQ1, :secQ2)"
 							    );
 
-			    $results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName'], ':Password' => $password, ':secQ1' => $secQ1, ':secQ2' => $secQ2]));
+			    $results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName'], ':Password' => $password, ':AuthToken' => $protectedAuthToken, :secQ1' => $secQ1, ':secQ2' => $secQ2]));
                 /** @todo sanitize output to remove password and swap for authtoken */
 
 
