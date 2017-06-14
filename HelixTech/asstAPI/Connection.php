@@ -200,6 +200,8 @@ class Connection{
                 $password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
             }
 
+			var_dump($password);
+
             // Check if the hash of the entered login password, matches the stored hash.
             if (password_verify(
                     base64_encode(hash('sha384', $_SERVER["PHP_AUTH_PW"], true)),
