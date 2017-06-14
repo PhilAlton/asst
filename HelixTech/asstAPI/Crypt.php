@@ -39,11 +39,11 @@ class Crypt{
 		var_dump($callBackFunction);
 		var_dump($args);
         $private_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\private\asst' : realpath('/var/www/private'));
-
+		echo $private_PATH;
         // Find the index of the argument passed as null
         // (this implies, to this function, that the argument in question should be updated with the encryption key)
         $indexOfNullArg = (array_search(null, $args));
-
+		echo $indexOfNullArg;
         /** @param $args[$indexOfNullArg] modified: with encrpytion key */
         $args[$indexOfNullArg] = isset(Crypt::$personalKey) ?
                 Crypt::$personalKey->unlockKey($_SERVER["PHP_AUTH_PW"]):
