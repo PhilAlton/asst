@@ -199,7 +199,17 @@ class Connection{
                 $password = (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False) ? $UserDetails["AuthToken"] : $UserDetails["Password"];
                 var_dump($password);
 				$password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
-            }
+            
+				$a = Array(
+					Crypt::decrypt("def50200cdf075500a74b42b5b62c2f038c9ef0a59cb19475944d7efb0e5d7b0"),
+					Crypt::decrypt("def50200d31af6bd8273bc9803fc65cbcbcf1e15d10d48609197ec6b6c1d0ee1e6e56d011f16883abb53759ccf144b3c251bb7714997076225579582b42797a28e069eb0ea015d8bb7bee400fd1acb2af3527c496e1005b406848683f210a83b727d4d4e7c64c61794e1e006babe536255ce9de2cec0744757c0ab6db4bf03ee42062e2007f70504b616110c86885a24"),
+					Crypt::decrypt("def50200782defb75f3f97b88dfdf13e487913942e55d1ebe5639b55cb44ac62"),
+					Crypt::decrypt($password),
+					Crypt::decrypt("def50200f9316cff3301dc55b1821f51c314733431ab9e146fbec3bbdb1a2453714f0517e324cfc332bd2d1501119b5586acebe3af680221ba77b6756fc70dbeed5a7db6eeaf450768a429d7d4055689bd6374d03446b398e3114b4cc0b79e7c61559fb6e14926bfe69c0d1c1161e7b0290a895ef5a40a1de0a5c0919047ebf7f4e3a9e80d1b3e83573584b93aa83eaf")
+				);
+
+				var_dump($a);
+			}
 
 			var_dump($password);
             // Check if the hash of the entered login password, matches the stored hash.
