@@ -50,7 +50,7 @@ var_dump($args[$indexOfNullArg]);
         // set the return value of the fucntion, so that the return value can bubble up
         $return = call_user_func_array($callBackFunction, $args);
 
-		
+		echo "here";
 		var_dump($return);
 
         // Store a random string of bytes in the key index, in order to remove the index
