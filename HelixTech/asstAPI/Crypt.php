@@ -51,7 +51,7 @@ class Crypt{
         $return = Crypto::decrypt($args[0], $args[$indexOfNullArg]);
 		//call_user_func_array($callBackFunction, $args);
 
-		var_dump(array("this", $return);
+		var_dump(array("this", $return));
         // Store a random string of bytes in the key index, in order to remove the index
         $args[$indexOfNullArg] = random_bytes(102);
         // Then set the index to null in order to free up the memory to further protect the encryption key
