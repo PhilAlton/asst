@@ -29,6 +29,7 @@ class Connection{
     private static $ip; public static function getIP(){return Connection::$ip;}
     private static $UserName; public static function getUserName(){return Connection::$UserName;}
     private static $password; public static function getPassword(){return Connection::$password;}
+	private static $AuthToken; public static function getAuthToken(){return Connection::$AuthToken;}
     private static $connectionTime; public static function getConnectionTime(){return Connection::$connectionTime;}
     private static $uri; public static function getURI(){return Connection::$uri;}
 
@@ -62,6 +63,7 @@ class Connection{
             Connection::$input = array();
             Connection::$input = !is_array($input) ? Connection::$input : array_merge(Connection::$input, $input);
             Connection::$input = !is_array($_GET) ? Connection::$input : array_merge(Connection::$input, $_GET);
+			Connection::$AuthToken = false;
 
             // ensure connection via HTTPS
             if(!isset($_SERVER['HTTPS'])){
@@ -196,7 +198,16 @@ class Connection{
                 }
 
                 //Load either the authToken from the database, or the password, depending on which the user has supplied
-                $password = (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False) ? $UserDetails["AuthToken"] : $UserDetails["Password"];
+				if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
+					// Token has been supplied
+					$password = $UserDetails["AuthToken"];
+				} else {
+					// Password has been supplied
+					$password = $UserDetails["Password"];
+					//Return authtoken to be used in future requests
+					Connection::$AuthToken = $UserDetails["AuthTokenPlain"];
+				}
+
 				$password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
 			}
 
