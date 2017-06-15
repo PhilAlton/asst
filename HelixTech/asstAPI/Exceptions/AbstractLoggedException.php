@@ -62,10 +62,13 @@ abstract class AbstractLoggedException extends \Exception
 			$whois = file_get_contents($filename);
 
 			// If data is returned, then store this in the database
+
+				// First isolate and grab the organisation name
 			$start = strpos($whois, 'Responsible organisation:');
 			$end = strpos($whois, '</a>', $start);
 			$whoisAssoc['Organization'] = substr($whois, $start+135, $end-$start-135);
 			
+				// Then isolate and grab the NetName
 			$start = $end;
 			$end = strpos($whois, '</ul>', $start);
 			$whois = substr($whois, $start, $end-$start);
@@ -74,7 +77,8 @@ abstract class AbstractLoggedException extends \Exception
 			$end = strpos($whois, '</li>', $start);
 			$whoisAssoc['NetName'] = substr($whois, $start+17, $end-$start-17);
 
-			var_dump(Array($start,$end,$whoisAssoc['Organization'],$whoisAssoc['NetName']));
+			// Combine the data to be incorporated into the slack message
+			$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
 			
 		}
 
@@ -105,7 +109,7 @@ abstract class AbstractLoggedException extends \Exception
 
         $client = new Client('https://hooks.slack.com/services/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', $settings);
 
-        //$client->send($message);
+        $client->send($message);
     }
 
 }
