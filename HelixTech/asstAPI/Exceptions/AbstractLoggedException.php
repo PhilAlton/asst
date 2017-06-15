@@ -87,7 +87,7 @@ abstract class AbstractLoggedException extends \Exception
 			var_dump($whois);
 			
 			// If data is returned, then store this in the database
-			if ($result !== FALSE) { 
+			if (isset($result)) { 
 				$whois = "RESULT!";
 				var_dump($result);
 			}
