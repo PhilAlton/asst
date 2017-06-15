@@ -49,7 +49,6 @@ abstract class AbstractLoggedException extends \Exception
 		}		
 		
 		// If data is returned for Organization and NetName, then recored this
-		$whois = "";
 		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
 			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 		} else {
