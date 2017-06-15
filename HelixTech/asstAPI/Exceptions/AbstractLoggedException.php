@@ -68,14 +68,20 @@ abstract class AbstractLoggedException extends \Exception
 				$ipParts[0].".0.0.0/8"
 			);
 
-			try{
-				$filename = 'https://rest.db.ripe.net/RIPE/inetnum/94.197.121.52/8';//.Connection::getIP();
-				$whois = file_get_contents($filename);
-				var_dump($whois);
-			} catch (Exception $e) {
-				var_dump($e);
+			
+		//	$filename = 'https://rest.db.ripe.net/RIPE/inetnum/94.197.121.52/8';//.Connection::getIP();
+		//	$whois = file_get_contents($filename);
+		//	var_dump($whois);
+
+			$content = @file_get_contents("https://rest.db.ripe.net/RIPE/inetnum/94.197.121.52/8");
+			if (strpos($http_response_header[0], "200")) { 
+				var_dump("SUCCESS");
+			} else { 
+				var_dump("FAILED");
 			}
 
+
+			
 
 
 			// If data is returned, then store this in the database
