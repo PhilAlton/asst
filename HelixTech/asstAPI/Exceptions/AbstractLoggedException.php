@@ -53,7 +53,9 @@ abstract class AbstractLoggedException extends \Exception
 		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
 			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 		} else {
-			$whois = $whoisAssoc[0].", ".$whoisAssoc[1];
+			$whoisAssoc['Organization'] = $whoisAssoc[0];
+			$whoisAssoc['NetName'] = $whoisAssoc[1];
+			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 		}
 
 		// If returned data points to RIPE Network Coordination Centre (RIPE), 
