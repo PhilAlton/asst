@@ -59,7 +59,8 @@ abstract class AbstractLoggedException extends \Exception
 
 			$url = 'https://apps.db.ripe.net/search/query.html';
 
-			$data = array('search' => 'search', 
+			$data = array( 'javax.faces.ViewState' => '3147467234903193619%3A3057047362548758189',
+							'search' => 'search', 
 							'search%3Abflagcheckbox' => 'on',
 							'search%3AdoSearch' => 'Search',
 							'search%3AqueryString' => '94.197.121.52',
