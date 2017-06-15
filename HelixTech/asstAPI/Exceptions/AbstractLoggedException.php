@@ -82,7 +82,7 @@ abstract class AbstractLoggedException extends \Exception
 			$result = file_get_contents($url, false, $context);
 		*/
 
-			$filename = 'https://rest-test.db.ripe.net/test/ipaddress/'.Connection::getIP();
+			$filename = 'https://rest-test.db.ripe.net/test/inetnum/'.Connection::getIP();
 			$whois = file_get_contents($filename);
 			var_dump($whois);
 			
