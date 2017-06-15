@@ -64,7 +64,7 @@ abstract class AbstractLoggedException extends \Exception
 							'search%3AdoSearch' => 'Search',
 							'search%3AqueryString' => '94.197.121.52',
 							'search%3Asources' => 'RIPE'
-			)  
+			);
    
 			$options = array(
 				'http' => array(
@@ -73,6 +73,7 @@ abstract class AbstractLoggedException extends \Exception
 					'content' => http_build_query($data)
 				)
 			);
+
 			$context  = stream_context_create($options);
 			$result = file_get_contents($url, false, $context);
 
