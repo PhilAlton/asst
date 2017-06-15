@@ -73,12 +73,14 @@ abstract class AbstractLoggedException extends \Exception
 		//	$whois = file_get_contents($filename);
 		//	var_dump($whois);
 
-			$content = @file_get_contents("https://rest.db.ripe.net/RIPE/inetnum/94.197.0.0/16");
-			if (strpos($http_response_header[0], "200")) { 
-				var_dump("SUCCESS");
-			} else { 
-				var_dump("FAILED");
+			foreach ($ipRanges as $ipPart){
+				$content = @file_get_contents("https://rest.db.ripe.net/RIPE/inetnum/".$ipPart);
+				if (strpos($http_response_header[0], "200")) { 
+					var_dump($ipPart);
+					break;
+				}
 			}
+				
 
 
 			
