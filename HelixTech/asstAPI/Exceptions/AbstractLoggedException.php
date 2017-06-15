@@ -56,8 +56,8 @@ abstract class AbstractLoggedException extends \Exception
         // by default. Any names like @regan or #channel will also be linked.
 		$message = $message.
 						  "\"\n"."Connection from IP: *".Connection::getIP()
-                        ."*\"\n"."As User: *".Connection::getUserName()
-					    ."*\"\n"."To: ".Connection::getMethod()." @ ".Connection::getURI();
+                        ."*\"\nAs User: *".Connection::getUserName()
+					    ."*\"\nTo: ".Connection::getMethod()." @ ".Connection::getURI();
 
 
         $settings = [
