@@ -38,7 +38,7 @@ abstract class AbstractLoggedException extends \Exception
 		$end = strpos($whois, '</pre>', $start);
 		$whois = substr($whois, $start+49, $end-$start-49);
 		$whois = explode("\n", $whois);
-		
+		var_dump(Array($whois,Connection::getIP()));
 		$whoisAssoc = Array();
 		foreach ($whois as $who){
 			$temp = explode(":",$who);
