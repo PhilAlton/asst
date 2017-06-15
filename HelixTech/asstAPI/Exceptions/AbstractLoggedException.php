@@ -50,7 +50,7 @@ abstract class AbstractLoggedException extends \Exception
 		// If data is returned for Organization and NetName, then recored this
 		$whois = "";
 		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
-			$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
+			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 		}
 
 		// If returned data points to RIPE Network Coordination Centre (RIPE), 
@@ -78,7 +78,7 @@ abstract class AbstractLoggedException extends \Exception
 			$whoisAssoc['NetName'] = substr($whois, $start+17, $end-$start-17);
 
 			// Combine the data to be incorporated into the slack message
-			$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
+			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 			
 		}
 
