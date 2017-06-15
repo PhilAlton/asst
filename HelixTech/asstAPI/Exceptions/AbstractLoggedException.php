@@ -66,7 +66,7 @@ abstract class AbstractLoggedException extends \Exception
 			$end = strpos($whois, '</ul></pre></div>', $start);
 			$whois = substr($whois, $start+128, $end-$start-55);
 
-
+			var_dump($whois);
 			
 		}
 
