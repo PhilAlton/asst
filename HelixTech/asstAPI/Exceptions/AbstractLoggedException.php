@@ -57,35 +57,25 @@ abstract class AbstractLoggedException extends \Exception
 		//	then search the RIPE database for the whois data
 		if (strpos($whoisAssoc['Organization'], 'RIPE') !== false){
 
-
-
-		/*
-			$url = 'https://apps.db.ripe.net/search/query.html';
-
-			$data = array( 'javax.faces.ViewState' => '-3238253681273651874%3A-8928418498483436577',
-							'search' => 'search', 
-							'search%3Abflagcheckbox' => 'on',
-							'search%3AdoSearch' => 'Search',
-							'search%3AqueryString' => '94.197.121.52',
-							'search%3Asources' => 'RIPE'
-			);
-   
-			$options = array(
-				'http' => array(
-					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-					'method'  => 'POST',
-					'content' => http_build_query($data)
-				)
+			$ipParts = explode('.', Connection::getIP());
+			$ipRanges = Array(
+				$ipParts[0].".".$ipParts[1].".".$ipParts[2].".".$ipParts[3]."/32",
+				$ipParts[0].".".$ipParts[1].".".$ipParts[2].".0/24",
+				$ipParts[0].".".$ipParts[1].".0.0/16",
+				$ipParts[0].".0.0.0/8",
 			);
 
-			$context  = stream_context_create($options);
-			$result = file_get_contents($url, false, $context);
-		*/
+			try{
+				$filename = 'https://rest.db.ripe.net/RIPE/inetnum/94.197.121.52/8';//.Connection::getIP();
+				$whois = file_get_contents($filename);
+				var_dump($whois);
+			} catch {
+				
 
-			$filename = 'https://rest.db.ripe.net/RIPE/inetnum/94.197.121.52/8';//.Connection::getIP();
-			$whois = file_get_contents($filename);
-			var_dump($whois);
-			
+			}
+
+
+
 			// If data is returned, then store this in the database
 			if (isset($result)) { 
 				$whois = "RESULT!";
