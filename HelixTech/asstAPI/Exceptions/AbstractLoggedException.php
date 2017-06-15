@@ -74,7 +74,7 @@ abstract class AbstractLoggedException extends \Exception
 			$end = strpos($whois, '</li>', $start);
 			$whoisAssoc['NetName'] = substr($whois, $start, $end-$start);
 
-			var_dump(Array($start,$end,$whoisAssoc['Organization'],$whoisAssoc['NetName']));
+			var_dump(Array($start,$end,$whoisAssoc['Organization'],$whoisAssoc['NetName'],$whois));
 			
 		}
 
