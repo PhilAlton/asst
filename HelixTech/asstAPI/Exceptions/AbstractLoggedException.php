@@ -60,7 +60,7 @@ abstract class AbstractLoggedException extends \Exception
 			$url = 'https://apps.db.ripe.net/search/query.html';
 
 			$data = array('search' => 'search', 
-							'search%3Abflagcheckbox' => 'on'
+							'search%3Abflagcheckbox' => 'on',
 							'search%3AdoSearch' => 'Search',
 							'search%3AqueryString' => '94.197.121.52',
 							'search%3Asources' => 'RIPE'
