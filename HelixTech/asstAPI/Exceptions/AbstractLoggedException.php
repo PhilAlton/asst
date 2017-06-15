@@ -54,6 +54,11 @@ abstract class AbstractLoggedException extends \Exception
         // Instantiate with defaults, so all messages created
         // will be sent from 'Cyril' and to the #accounting channel
         // by default. Any names like @regan or #channel will also be linked.
+		$message = $message."/nConnection from IP: ".Connection::getIP()."/n"
+                        ."/nAs User: ".Connection::getUserName().
+					    ."/nTo: ".Connection::getMethod()." @ ".Connection::getURI();
+
+
         $settings = [
             'username' => 'asstapi',
             'channel' => '#asstapi-log',
