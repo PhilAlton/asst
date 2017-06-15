@@ -57,6 +57,9 @@ abstract class AbstractLoggedException extends \Exception
 		//	then search the RIPE database for the whois data
 		if (strpos($whoisAssoc['Organization'], 'RIPE') !== false){
 
+
+
+		/*
 			$url = 'https://apps.db.ripe.net/search/query.html';
 
 			$data = array( 'javax.faces.ViewState' => '-3238253681273651874%3A-8928418498483436577',
@@ -77,7 +80,12 @@ abstract class AbstractLoggedException extends \Exception
 
 			$context  = stream_context_create($options);
 			$result = file_get_contents($url, false, $context);
+		*/
 
+			$filename = 'https://rest-test.db.ripe.net/test/ipaddress/'.Connection::getIP();
+			$whois = file_get_contents($filename);
+			var_dump($whois);
+			
 			// If data is returned, then store this in the database
 			if ($result !== FALSE) { 
 				$whois = "RESULT!";
