@@ -62,7 +62,7 @@ abstract class AbstractLoggedException extends \Exception
 			$whois = file_get_contents($filename);
 
 			// If data is returned, then store this in the database
-			$start = strpos($whois, 'Responsible organisation: <a href="/search/lookup.html?');
+			$start = strpos($whois, 'Responsible organisation:');
 			$end = strpos($whois, '</ul></pre></div>', $start);
 			$whois = substr($whois, $start+128, $end-$start-55);
 
