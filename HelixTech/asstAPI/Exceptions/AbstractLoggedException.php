@@ -57,12 +57,15 @@ abstract class AbstractLoggedException extends \Exception
 		//	then search the RIPE database for the whois data
 		if (strpos($whoisAssoc['Organization'], 'RIPE') !== false){
 
+			// Build the IP addresses with ranges to look up
+			//	This is because the RIPE database might not have the full IP registered, but some ipaddress
+			//	range upstream of the connecting IP address
 			$ipParts = explode('.', Connection::getIP());
 			$ipRanges = Array(
 				$ipParts[0].".".$ipParts[1].".".$ipParts[2].".".$ipParts[3]."/32",
 				$ipParts[0].".".$ipParts[1].".".$ipParts[2].".0/24",
 				$ipParts[0].".".$ipParts[1].".0.0/16",
-				$ipParts[0].".0.0.0/8",
+				$ipParts[0].".0.0.0/8"
 			);
 
 			try{
