@@ -69,10 +69,10 @@ abstract class AbstractLoggedException extends \Exception
 			);
 
 			
-		//	$filename = 'https://rest.db.ripe.net/RIPE/inetnum/94.197.121.52/8';//.Connection::getIP();
-		//	$whois = file_get_contents($filename);
-		//	var_dump($whois);
-
+			$filename = 'https://apps.db.ripe.net/search/query.html?searchtext=94.197.121.52#resultsAnchor';//.Connection::getIP();
+			$whois = file_get_contents($filename);
+			var_dump($whois);
+		/*
 			foreach ($ipRanges as $ipPart){
 				var_dump($ipPart);
 				$content = @file_get_contents("https://rest.db.ripe.net/RIPE/inetnum/".$ipPart);
@@ -83,7 +83,7 @@ abstract class AbstractLoggedException extends \Exception
 				}
 			}
 				
-
+			
 
 			
 
@@ -93,6 +93,7 @@ abstract class AbstractLoggedException extends \Exception
 				$whois = "RESULT!";
 				var_dump($result);
 			}
+			*/
 		}
 
 
