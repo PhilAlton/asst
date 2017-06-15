@@ -55,8 +55,8 @@ abstract class AbstractLoggedException extends \Exception
         // will be sent from 'Cyril' and to the #accounting channel
         // by default. Any names like @regan or #channel will also be linked.
 		$message = $message.
-						"//nConnection from IP: *".Connection::getIP().
-                        ."*//nAs User: *".Connection::getUserName().
+						"//nConnection from IP: *".Connection::getIP()
+                        ."*//nAs User: *".Connection::getUserName()
 					    ."*//nTo: ".Connection::getMethod()." @ *".Connection::getURI()."*";
 
 
