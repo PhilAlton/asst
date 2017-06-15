@@ -41,7 +41,6 @@ abstract class AbstractLoggedException extends \Exception
 		$whois = substr($whois, $start+49, $end-$start-49);
 		$whois = explode("\n", $whois);
 
-		$whois[0] = null;
 		if (isset($whois[0]) and isset($whois[1])){
 		//because we're about to do a lot of unstable as hell site scrapping!
 
