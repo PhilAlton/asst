@@ -110,7 +110,7 @@ abstract class AbstractLoggedException extends \Exception
 
         $client = new Client('https://hooks.slack.com/services/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', $settings);
 
-        $client->send($message);
+        //$client->send($message);
     }
 
 }
