@@ -42,7 +42,7 @@ abstract class AbstractLoggedException extends \Exception
 		$whois = explode("\n", $whois);
 
 		if (isset($whois[0]) and isset($whois[1])){
-		//because we're about to do a lot of unstable as hell site scrapping!
+		//because we've done a lot of unstable as hell site scrapping!
 
 			$whoisAssoc = Array();
 			foreach ($whois as $who){
@@ -86,7 +86,12 @@ abstract class AbstractLoggedException extends \Exception
 				$whoisAssoc['NetName'] = substr($whois, $start+17, $end-$start-17);
 
 				// Combine the data to be incorporated into the slack message
-				$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
+				if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
+					$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
+				} else {
+					$whois = "Unable to Resolve IP Address:";
+				}
+				
 			}
 
 		} else {
