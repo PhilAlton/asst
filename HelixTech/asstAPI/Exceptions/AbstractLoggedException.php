@@ -30,6 +30,7 @@ abstract class AbstractLoggedException extends \Exception
 		$whois = "";
 
 		// First look to who.is
+		// This should really point here! (to look up the managing reagion, and find the appropiate whois enpoint) : http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xhtm
 		$filename = 'https://who.is/whois-ip/ip-address/'.Connection::getIP();
 		$whois = file_get_contents($filename);
 
@@ -51,6 +52,8 @@ abstract class AbstractLoggedException extends \Exception
 		$whois = "";
 		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
 			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
+		} else {
+			$whois = $whoisAssoc[0].", ".$whoisAssoc[1];
 		}
 
 		// If returned data points to RIPE Network Coordination Centre (RIPE), 
