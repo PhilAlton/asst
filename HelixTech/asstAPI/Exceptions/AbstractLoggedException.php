@@ -58,7 +58,7 @@ abstract class AbstractLoggedException extends \Exception
 		if (strpos($whoisAssoc['Organization'], 'RIPE') !== false){
 
 		
-			$filename = 'https://apps.db.ripe.net/search/query.html?searchtext='..Connection::getIP().'#resultsAnchor';
+			$filename = 'https://apps.db.ripe.net/search/query.html?searchtext='.Connection::getIP().'#resultsAnchor';
 			$whois = file_get_contents($filename);
 
 			// If data is returned, then store this in the database
