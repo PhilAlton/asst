@@ -55,11 +55,32 @@ abstract class AbstractLoggedException extends \Exception
 
 		// If returned data points to RIPE Network Coordination Centre (RIPE), 
 		//	then search the RIPE database for the whois data
-		var_dump($whoisAssoc['Organization']);
 		if (strpos($whoisAssoc['Organization'], 'RIPE') !== false){
-			var_dump($whoisAssoc);
 
+			$url = 'https://apps.db.ripe.net/search/query.html';
 
+			$data = array('search' => 'search', 
+							'search%3Abflagcheckbox' => 'on'
+							'search%3AdoSearch' => 'Search',
+							'search%3AqueryString' => '94.197.121.52',
+							'search%3Asources' => 'RIPE'
+			)  
+   
+			$options = array(
+				'http' => array(
+					'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+					'method'  => 'POST',
+					'content' => http_build_query($data)
+				)
+			);
+			$context  = stream_context_create($options);
+			$result = file_get_contents($url, false, $context);
+
+			// If data is returned, then store this in the database
+			if ($result !== FALSE) { 
+				$whois = "RESULT!";
+				var_dump($result);
+			}
 		}
 
 
