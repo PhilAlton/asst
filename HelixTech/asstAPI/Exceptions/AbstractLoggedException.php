@@ -29,19 +29,22 @@ abstract class AbstractLoggedException extends \Exception
 		// Resolve IP address into userful whois data
 		$whois = "";
 
-		try { //because we're about to do a lot of unstable as hell site scrapping!
 
-			// First look to who.is
-			// This should really point here! (to look up the managing reagion, and find the appropiate whois enpoint) : http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xhtm
-			$filename = 'https://who.is/whois-ip/ip-address/'.Connection::getIP();
-			$whois = file_get_contents($filename);
+		// First look to who.is
+		// This should really point here! (to look up the managing reagion, and find the appropiate whois enpoint) : http://www.iana.org/assignments/ipv4-address-space/ipv4-address-space.xhtm
+		$filename = 'https://who.is/whois-ip/ip-address/'.Connection::getIP();
+		$whois = file_get_contents($filename);
 
-			// Grab just the improtant data and load into an array
-			$start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
-			$end = strpos($whois, '</pre>', $start);
-			$whois = substr($whois, $start+49, $end-$start-49);
-			$whois = explode("\n", $whois);
-			var_dump($whois);
+		// Grab just the improtant data and load into an array
+		$start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
+		$end = strpos($whois, '</pre>', $start);
+		$whois = substr($whois, $start+49, $end-$start-49);
+		$whois = explode("\n", $whois);
+
+		$whois[0] = null;
+		if (isset($whois[0]) and isset($whois[1])){
+		//because we're about to do a lot of unstable as hell site scrapping!
+
 			$whoisAssoc = Array();
 			foreach ($whois as $who){
 				$temp = explode(":",$who);
@@ -54,7 +57,7 @@ abstract class AbstractLoggedException extends \Exception
 			if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
 				$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 			} else {
-	//			$whoisAssoc['Organization'] = $whois[0];
+				$whoisAssoc['Organization'] = $whois[0];
 				$whoisAssoc['NetName'] = $whois[1];
 				$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 			}
@@ -85,13 +88,12 @@ abstract class AbstractLoggedException extends \Exception
 
 				// Combine the data to be incorporated into the slack message
 				$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
-			
 			}
-		} catch (Exception $e) {
-			
-			$whois = "Unable to Resolve IP Address: - error message: ".$e;
 
+		} else {
+			$whois = "Unable to Resolve IP Address:";
 		}
+
 
 
         $query = New Query(UPDATE, "ConnectionLog SET CXTN_ERRORS=:msg WHERE `CXTN_ID` =:cID");
