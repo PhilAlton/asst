@@ -25,13 +25,20 @@ abstract class AbstractLoggedException extends \Exception
     abstract public function logError();
 
     public static function log(){
+		
+		// Resolve IP address into userful whois data
 		$whois = "";
+
+		// First look to who.is
 		$filename = 'https://who.is/whois-ip/ip-address/'.Connection::getIP();
 		$whois = file_get_contents($filename);
+
+		// Grab just the improtant data and load into an array
 		$start = strpos($whois, '<div class="col-md-12 queryResponseBodyKey"');
 		$end = strpos($whois, '</pre>', $start);
 		$whois = substr($whois, $start+49, $end-$start-49);
 		$whois = explode("\n", $whois);
+		
 		$whoisAssoc = Array();
 		foreach ($whois as $who){
 			$temp = explode(":",$who);
@@ -39,10 +46,24 @@ abstract class AbstractLoggedException extends \Exception
 				$whoisAssoc[$temp[0]] = $temp[1];
 			}
 		}		
+		
+		// If data is returned for Organization and NetName, then recored this
 		$whois = "";
 		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
 			$whois = $whoisAssoc['NetName'].", ".$whoisAssoc['Organization'];
 		}
+
+		// If returned data points to RIPE Network Coordination Centre (RIPE), 
+		//	then search the RIPE database for the whois data
+		var_dump($whoisAssoc['Organization']);
+		if (strpos($whoisAssoc['Organization'], 'RIPE') !== false){
+			var_dump($whoisAssoc);
+
+
+		}
+
+
+
         $query = New Query(UPDATE, "ConnectionLog SET CXTN_ERRORS=:msg WHERE `CXTN_ID` =:cID");
         $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':msg' => AbstractLoggedException::$dbMessage, ':cID' => Connection::getCID()]);
 
