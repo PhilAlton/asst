@@ -74,6 +74,7 @@ abstract class AbstractLoggedException extends \Exception
 		//	var_dump($whois);
 
 			foreach ($ipRanges as $ipPart){
+				var_dump($ipPart);
 				$content = @file_get_contents("https://rest.db.ripe.net/RIPE/inetnum/".$ipPart);
 				if (strpos($http_response_header[0], "200")) { 
 					var_dump($ipPart);
