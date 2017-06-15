@@ -53,8 +53,8 @@ abstract class AbstractLoggedException extends \Exception
 		if (isset($whoisAssoc['NetName']) and isset($whoisAssoc['Organization'])){
 			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 		} else {
-			$whoisAssoc['Organization'] = $whoisAssoc[0];
-			$whoisAssoc['NetName'] = $whoisAssoc[1];
+			$whoisAssoc['Organization'] = $whois[0];
+			$whoisAssoc['NetName'] = $whois[1];
 			$whois = $whoisAssoc['Organization'].", ".$whoisAssoc['NetName'];
 		}
 
