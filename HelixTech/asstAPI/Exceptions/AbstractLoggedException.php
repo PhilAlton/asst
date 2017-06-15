@@ -63,8 +63,8 @@ abstract class AbstractLoggedException extends \Exception
 
 			// If data is returned, then store this in the database
 			$start = strpos($whois, 'Responsible organisation:');
-			$end = strpos($whois, '</pre>', $start);
-			$whois = substr($whois, $start+128, $end-$start-55);
+			$end = strpos($whois, '</a>', $start);
+			$whois = substr($whois, $start+135, $end-$start-55);
 
 			var_dump(Array($start,$end,$whois));
 			
