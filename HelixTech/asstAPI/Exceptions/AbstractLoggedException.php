@@ -57,43 +57,17 @@ abstract class AbstractLoggedException extends \Exception
 		//	then search the RIPE database for the whois data
 		if (strpos($whoisAssoc['Organization'], 'RIPE') !== false){
 
-			// Build the IP addresses with ranges to look up
-			//	This is because the RIPE database might not have the full IP registered, but some ipaddress
-			//	range upstream of the connecting IP address
-			$ipParts = explode('.', Connection::getIP());
-			$ipRanges = Array(
-				$ipParts[0].".".$ipParts[1].".".$ipParts[2].".".$ipParts[3]."/32",
-				$ipParts[0].".".$ipParts[1].".".$ipParts[2].".0/24",
-				$ipParts[0].".".$ipParts[1].".0.0/16",
-				$ipParts[0].".0.0.0/8"
-			);
-
-			
-			$filename = 'https://apps.db.ripe.net/search/query.html?searchtext=94.197.121.52#resultsAnchor';//.Connection::getIP();
+		
+			$filename = 'https://apps.db.ripe.net/search/query.html?searchtext='..Connection::getIP().'#resultsAnchor';
 			$whois = file_get_contents($filename);
-			var_dump($whois);
-		/*
-			foreach ($ipRanges as $ipPart){
-				var_dump($ipPart);
-				$content = @file_get_contents("https://rest.db.ripe.net/RIPE/inetnum/".$ipPart);
-				var_dump($content);
-				if (strpos($http_response_header[0], "200")) { 
-					var_dump($ipPart);
-					break;
-				}
-			}
-				
-			
-
-			
-
 
 			// If data is returned, then store this in the database
-			if (isset($result)) { 
-				$whois = "RESULT!";
-				var_dump($result);
-			}
-			*/
+			$start = strpos($whois, 'Responsible organisation: <a href="/search/lookup.html?');
+			$end = strpos($whois, '</ul></pre></div>', $start);
+			$whois = substr($whois, $start+128, $end-$start-55);
+
+
+			
 		}
 
 
