@@ -106,7 +106,7 @@ class Router{
     }
 
 
-	function exception_error_handler($severity, $message, $file, $line) {
+	public function exception_error_handler($severity, $message, $file, $line) {
     	if (!(error_reporting() & $severity)) {
         	// This error code is not included in error_reporting
         	return;
