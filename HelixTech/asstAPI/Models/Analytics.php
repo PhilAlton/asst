@@ -11,20 +11,20 @@ class Analytics{
 
            // build the data retrival queries
                $query = new Query(SELECT, "COUNT(DISTINCT CXTN_IP) FROM ConnectionLog");
-               $numDistinctIP = $query->execute(1);
+               $numDistinctIP = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
                $query = new Query(SELECT, "COUNT(DISTINCT CXTN_USER) FROM ConnectionLog");
-               $numDistinctUsers = $query->execute(1);
+               $numDistinctUsers = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
                $timePeriod = time() - (7 * 24 * 60 * 60);
                $query = new Query(SELECT, "COUNT(*) FROM ConnectionLog WHERE UNIX_TIMESTAMP(CXTN_TIME) > $timePeriod");
-               $numAPIRequestsINlastWeekPerDay = ($query->execute(1))/7;
+               $numAPIRequestsINlastWeekPerDay = ($query->execute(SIMPLIFY_QUERY_RESULTS_ON))/7;
 
                $query = new Query(SELECT, "* FROM ConnectionLog" 
                                             ." WHERE CXTN_ERRORS IS NOT NULL" 
                       //                      ." ORDER BY CXTN_USER, CXTN_IP"
                                     );
-               $CnxtsByIP = $query->execute(1);
+               $CnxtsByIP = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
 
 

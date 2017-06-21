@@ -204,8 +204,8 @@ class Connection{
 				} else {
 					// Password has been supplied
 					$password = $UserDetails["Password"];
-					//Return authtoken to be used in future requests
-					Connection::$AuthToken = $UserDetails["AuthTokenPlain"];
+					//Return authtoken to be used in future requests, unless connection is via admin rather than user
+					if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
 				}
 
 				$password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
