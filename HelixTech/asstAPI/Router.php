@@ -91,7 +91,7 @@ class Router{
         } catch (AttemptedToAccessUnauthorisedResources $e){
             Output::errorMsg("User details do not match requested resources");
         } catch (\Exception $e) {
-			http_response_code(404);
+			http_response_code(500);
 			Output::errorMsg("Other Error Thrown: ".$e->getMessage());
 			Output::setOutput('Error: '.$e->getMessage());
 		}
