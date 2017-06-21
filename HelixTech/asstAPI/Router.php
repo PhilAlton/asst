@@ -94,6 +94,7 @@ class Router{
 			http_response_code(500);
 			Output::errorMsg("Other Error Thrown: ".$e->getMessage());
 			Output::setOutput('Error: '.$e->getMessage());
+			return;
 		}
 
 		restore_error_handler();
