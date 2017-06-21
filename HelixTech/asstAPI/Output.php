@@ -63,7 +63,7 @@ class Output{
 
         }
 
-        if(!empty(Output::getError()) and Output::getHistory() !== "</br>"){
+        if(!empty(Output::getError())){
             // Construct error log header with connection details:
 		    $errorLog = "</br>Connection from IP: <b>".Connection::getIP()."</b>"
                         ."</br>As User: <b>".Connection::getUserName()."</b>"
