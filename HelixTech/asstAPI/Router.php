@@ -21,7 +21,7 @@ class Router{
 
 
     public static function route(){
-		set_error_handler("exception_error_handler");
+
 
         // Switch to govern action based on URI
         try{
@@ -94,8 +94,6 @@ class Router{
 			Output::errorMsg("Other Error Thrown: ".$e->getMessage());
 		}
 
-		restore_error_handler();
-
     }
 
 
@@ -105,15 +103,6 @@ class Router{
 
     }
 
-	function exception_error_handler($severity, $message, $file, $line){
-		if (!(error_reporting() & $severity)){
-		    // This error code is not included in error_reporting
-			return;
-		}
-		throw new ErrorException($message, 0, $severity, $file, $line);
-
-
-	}
 
 
 
