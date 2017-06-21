@@ -28,6 +28,15 @@ require_once 'analytics.php';
 
 use HelixTech\asstAPI\{Connection, Router, Output};
 
+function exception_error_handler($severity, $message, $file, $line){
+	if (!(error_reporting() & $severity)){
+		// This error code is not included in error_reporting
+		return;
+	} 
+	throw new ErrorException($message, 0, $severity, $file, $line);
+}
+
+
 Connection::connect();
 Router::route();
 Output::go();
