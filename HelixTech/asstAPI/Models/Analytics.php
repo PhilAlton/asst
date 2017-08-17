@@ -35,7 +35,7 @@ class Analytics{
                                     "AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
                                     "Data" => $CnxtsByIP);
 
-               include $_Server['DOCUMENT_ROOT/asst/HelixTech/Public/asstAPI/analytics.php'].'.php';
+             //  include $_Server.['DOCUMENT_ROOT/asst/HelixTech/Public/asstAPI/analytics.php'].'.php';
                Output::setOutput($analyticResults);
 
 
