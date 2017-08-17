@@ -44,7 +44,7 @@ class Connection{
     public static function connect(){
 
         try {
-
+                
             // get the HTTP method, path and body of the request
             Connection::$connectionTime = $_SERVER['REQUEST_TIME'];
             Connection::$method = $_SERVER['REQUEST_METHOD'];
