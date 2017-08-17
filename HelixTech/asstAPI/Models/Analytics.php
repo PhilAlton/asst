@@ -21,7 +21,7 @@ class Analytics{
                $numAPIRequestsINlastWeekPerDay = ($query->execute(SIMPLIFY_QUERY_RESULTS_ON))/7;
 
                $query = new Query(SELECT, "* FROM ConnectionLog" 
-                                            ." WHERE CXTN_ERRORS IS NOT NULL" 
+                                            ." WHERE CXTN_WHOIS IS NOT NULL" 
                                             ." ORDER BY CXTN_IP, CXTN_USER"
                                     );
                $CnxtsByIP = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
