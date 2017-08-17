@@ -11,6 +11,7 @@ abstract class AbstractLoggedException extends \Exception
 
     public static $dbMessage = "";
     public static $errorMessage = "";
+	private static $whoIs = "";
 
     public function __construct($message = "", $code = 0, Throwable $previous = NULL){
 
@@ -105,6 +106,9 @@ abstract class AbstractLoggedException extends \Exception
 
 		$query = New Query(UPDATE, "ConnectionLog SET CXTN_WHOIS=:whoIs WHERE `CXTN_ID` =:cID");
         $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':whoIs' => $whois, ':cID' => Connection::getCID()]);
+
+
+		AbstractLoggedException::$whoIs = $whoIs;
     }
 
     public static function callSlack($message){
@@ -113,7 +117,8 @@ abstract class AbstractLoggedException extends \Exception
         // by default. Any names like @regan or #channel will also be linked.
 		$message = "*".$message."*".
 						  "\n"."Connection from IP: *".Connection::getIP()
-                        ."*\nAs User: *".Connection::getUserName()
+						."*\nWhoIS: *".connection::getWhoIs()
+                        ."*\nAs User: *".AbstractLoggedException::$whoIs
 					    ."*\nTo: ".Connection::getMethod()." @ ".Connection::getURI();
 
 
