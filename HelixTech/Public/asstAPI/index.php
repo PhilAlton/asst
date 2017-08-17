@@ -37,8 +37,6 @@ function exception_error_handler($severity, $message, $file, $line){
 	throw new ErrorException($message, 0, $severity, $file, $line);
 }
 
-var_dump($_SERVER);
-
 Connection::connect();
 Router::route();
 Output::go();
