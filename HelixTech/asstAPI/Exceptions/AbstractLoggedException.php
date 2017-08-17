@@ -108,7 +108,7 @@ abstract class AbstractLoggedException extends \Exception
         $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':whoIs' => $whois, ':cID' => Connection::getCID()]);
 
 
-		AbstractLoggedException::$whoIs = $whoIs;
+		AbstractLoggedException::$whoIs = $whois;
     }
 
     public static function callSlack($message){
