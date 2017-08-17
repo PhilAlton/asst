@@ -22,7 +22,7 @@ class Analytics{
 
                $query = new Query(SELECT, "* FROM ConnectionLog" 
                                             ." WHERE CXTN_WHOIS IS NOT NULL" 
-                                            ." ORDER BY CXTN_IP, CXTN_USER"
+                                            ." ORDER BY CXTN_WHOIS, CXTN_IP, CXTN_USER"
                                     );
                $CnxtsByIP = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
