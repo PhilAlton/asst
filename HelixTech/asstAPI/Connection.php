@@ -27,6 +27,7 @@ class Connection{
     private static $apiRoot; public static function getAPIroot(){return Connection::$apiRoot;}
 
     private static $ip; public static function getIP(){return Connection::$ip;}
+    private static $userAgent; public static function getUserAgent(){return Connection::$userAgent;}
     private static $UserName; public static function getUserName(){return Connection::$UserName;}
     private static $password; public static function getPassword(){return Connection::$password;}
 	private static $AuthToken; public static function getAuthToken(){return Connection::$AuthToken;}
@@ -47,6 +48,7 @@ class Connection{
             // get the HTTP method, path and body of the request
             Connection::$connectionTime = $_SERVER['REQUEST_TIME'];
             Connection::$method = $_SERVER['REQUEST_METHOD'];
+            Connection::$userAgent = $_SERVER['HTTP_USER_AGENT'];
 
             Connection::analyse($_SERVER['REQUEST_URI']);
             Connection::$uri = $_SERVER['REQUEST_URI'];
@@ -150,13 +152,14 @@ class Connection{
 
         $query = New Query(
             INSERT, "INTO ConnectionLog ".
-            "(CXTN_USER, CXTN_IP, CXTN_REQUEST) ".
-            "VALUES (:UserName, :ip, :Request)"
+            "(CXTN_USER, CXTN_IP, CXTN_USERAGENT, CXTN_REQUEST) ".
+            "VALUES (:UserName, :ip, :UserAgent, :Request)"
         );
 
         $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [
             ':UserName' => Connection::$UserName,
             ':ip' => Connection::$ip,
+            ':UserAgent' => Connection::$userAgent,
             ':Request' => Connection::$method."@".Connection::$uri
             ]
         );
