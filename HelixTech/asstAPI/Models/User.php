@@ -478,6 +478,7 @@
             // function to restet password
             Output::setOutput('function currently not available');
 
+			echo "this";
 			
 
 
