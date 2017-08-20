@@ -473,7 +473,7 @@
 		}
 
 
-        public static function resetPassword($UserName, $userResetPage){
+        public static function resetPassword($UserName){
 
             // function to restet password
             Output::setOutput('function currently not available');
