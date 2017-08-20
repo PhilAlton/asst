@@ -490,6 +490,7 @@
             // Logging and auditing password change attempts000000
 
 
+			/*
 			try{
 				if (Connection::authenticate()){
 
@@ -505,7 +506,7 @@
 				http_response_code(401);
 				Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
 			}
-
+			*/
         }
 
 
