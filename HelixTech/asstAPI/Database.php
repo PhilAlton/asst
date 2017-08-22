@@ -17,7 +17,7 @@
 
 
 		public static function instance(){
-			if (!isset(Database::$instance){
+			if (!isset(Database::$instance)){
 				Database::$instance = new Database;
 			}
 
