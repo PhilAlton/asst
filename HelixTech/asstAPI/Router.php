@@ -81,6 +81,7 @@ class Router{
                 throw new InvalidURI("Invalid URI selected".Connection::getURI());
             }
 
+
 			
         } catch (InvalidURI $e) {
             http_response_code(404);
