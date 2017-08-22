@@ -140,9 +140,10 @@
 
             } catch (Exception $e) {
 
-               foreach ($results as $param => $value){
-                   $results[$param] = "failed";
-                }
+			$results = Array("failed");
+            foreach ($results as $param => $value){
+                $results[$param] = "failed";
+            }
 
             http_response_code(406);
             Output::errorMsg("caught exception: ".$e->getMessage()
