@@ -80,7 +80,6 @@
         public function execute($simplifyQueryResults, $params = null){
 
             $this->buildQuery($params);
-            $results = false;
 
             try {
                 $this->database->execute(1);
@@ -89,6 +88,8 @@
 					foreach ($params as $key => $value){
 					$results[substr($key,1)] = $value;
 					}
+				} else {
+				    $results = false;
 				}
 				
 
