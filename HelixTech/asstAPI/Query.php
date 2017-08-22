@@ -114,15 +114,15 @@
 				        break;
 
 			        case UPDATE:
-				        http_response_code(204); // No content *(request fulfilled)
+				        http_response_code(200); // No content *(request fulfilled)
 				        break;
 
 			        case DELETE:
-				        http_response_code(204); // No content *(request fulfilled)
+				        http_response_code(200); // No content *(request fulfilled)
 				        break;
 
 			        case DROP:
-				        http_response_code(204); // No content *(request fulfilled)
+				        http_response_code(200); // No content *(request fulfilled)
 				        break;
 
 			        default:
