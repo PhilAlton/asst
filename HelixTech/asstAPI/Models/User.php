@@ -190,7 +190,6 @@
 				}
 
 			} catch (\Exception $e) {
-								var_dump($e);
 				User::deleteUser($params['UserName']);
 				throw new \Exception($e->getMessage());
 			}
@@ -227,7 +226,7 @@
 
             $results = array();
 			
-
+			var_dump($params);
             // Update ResearchTable with parameters
             $query = New Query(
                     INSERT, "INTO ResearchTable".
