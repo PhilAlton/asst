@@ -85,8 +85,8 @@
             try {
                 $this->database->execute(1);
 
-				foreach ($params as $paramKey => $paramValue){
-					$results[substr($paramKey,1)] = $paramValue;
+				foreach ($params as $key => $value){
+					$results[substr($key,1)] = $value;
 				}
 
                 switch ($this->queryType){
