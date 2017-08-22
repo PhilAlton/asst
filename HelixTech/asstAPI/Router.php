@@ -49,7 +49,7 @@ class Router{
                             break;
                         case "resetPassword":
                             //case for restetting password  "/asst/Users/$UserName/resetPassword"
-                            User::resetPassword($UserName);
+                            User::resetPassword($UserName, $input);
                             break;
                         default: throw new InvalidURI("Invalid URI selected".Connection::getURI());
                     }
@@ -65,7 +65,6 @@ class Router{
 
 			} elseif (Router::uri($root.'/Cache')){
                 // code for asst/Cache (withdraw paginated data)
-				//@todo: need to validate user!
 				$cachefile = $request[1];
 				$UserName = explode('-asstAPIcache-',$cachefile)[0];
 				Paginate::retrieve($UserName, $cachefile);
