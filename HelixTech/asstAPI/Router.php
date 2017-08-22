@@ -101,6 +101,7 @@ class Router{
 			} else {
 				
 				Output::setOutput('Error: '.$e->getMessage());
+				var_dump($e);
 			}
 
 
