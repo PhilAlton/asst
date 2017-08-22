@@ -93,7 +93,7 @@ class Router{
 			
 			http_response_code(500);
 
-			$illStrOffsetPos = strpos($e->getMessage(),"Illegal string offset";
+			$illStrOffsetPos = strpos($e->getMessage(),"Illegal string offset");
 			if ($illStrOffsetPos !== false) {
 				Output::errorMsg("Missting data: ".substr($e->getMessage(),$illStrOffsetPos));
 			
