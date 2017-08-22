@@ -87,7 +87,11 @@ class Connection{
             http_response_code(403);
             Connection::$established = false;
             Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
-        }
+        } catch (UsernameNotAValidEmailAddress $e){
+			http_response_code(406);
+            Connection::$established = false;
+            Output::errorMsg("Credential Failure: ".$e->getMessage().".");
+		}
 
         Connection::storeConnection();
 
@@ -133,6 +137,10 @@ class Connection{
         // Sanitise input of UserName
         $_SERVER["PHP_AUTH_USER"] = filter_var(filter_var($_SERVER["PHP_AUTH_USER"], FILTER_SANITIZE_EMAIL), FILTER_VALIDATE_EMAIL);
 
+		if (!$_SERVER["PHP_AUTH_USER"]){
+			// if email validation has failed
+			throw new UsernameNotAValidEmailAddress ("Submitted UserName is not a valid email address");
+		}
 
         // sanitise POST data UserName
         Connection::$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
