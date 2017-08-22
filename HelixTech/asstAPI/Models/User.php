@@ -403,14 +403,14 @@
 		    $isRchParticipant = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
             if ($isRchParticipant){
                 $query = New Query(DROP, "TABLE RCH_DATA_TABLE_".User::$uID);
-		        try{$query->execute(1);} catch (Exception $e){}
+		        try{$query->execute(1);} catch (\Exception $e){}
             }
 		    $query = New Query(DROP, "TABLE GEN_DATA_TABLE_".User::$uID);
-		    try{$query->execute(1);} catch (Exception $e){}
+		    try{$query->execute(1);} catch (\Exception $e){}
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		    try{$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);} catch (Exception $e){}
+		    try{$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);} catch (\Exception $e){}
 		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
-            try{$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);} catch (Exception $e){}
+            try{$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);} catch (\Exception $e){}
 		   
 		   $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
 		   return $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
