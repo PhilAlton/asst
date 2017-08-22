@@ -220,23 +220,6 @@
 
             $results = array();
 			
-            $query = New Query(
-                CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
-                "(".
-                    "RchDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-                    "Date date NOT NULL UNIQUE,".
-                    "LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
-                    "Sleep_1 tinyint UNSIGNED NOT NULL,".
-                    "Sleep_2 tinyint UNSIGNED NOT NULL,".
-                    "Sleep_3 tinyint UNSIGNED NOT NULL,".
-                    "Q_Medications_Changed tinyint(1) NOT NULL,".
-                    "Medication_Changes text null,".
-                    "Currently_Smoking tinyint UNSIGNED NOT NULL".
-                ")"
-            );
-
-			$query->execute(1);
-
 
             // Update ResearchTable with parameters
             $query = New Query(
@@ -255,6 +238,22 @@
 						)));
 
 
+			$query = New Query(
+            CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
+                "(".
+                    "RchDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
+                    "Date date NOT NULL UNIQUE,".
+                    "LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
+                    "Sleep_1 tinyint UNSIGNED NOT NULL,".
+                    "Sleep_2 tinyint UNSIGNED NOT NULL,".
+                    "Sleep_3 tinyint UNSIGNED NOT NULL,".
+                    "Q_Medications_Changed tinyint(1) NOT NULL,".
+                    "Medication_Changes text null,".
+                    "Currently_Smoking tinyint UNSIGNED NOT NULL".
+                ")"
+            );
+
+			$query->execute(1);
 
 
             return $results;
@@ -400,11 +399,11 @@
 		        $query->execute(1);
             }
 		    $query = New Query(DROP, "TABLE GEN_DATA_TABLE_".User::$uID);
-		    $query->execute(1);
+		    try{$query->execute(1);} catch (Exception $e){}
 		    $query = New Query(DELETE, 'FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		    $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
+		    try{$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);} catch (Exception $e){}
 		    $query = New Query(DELETE, 'FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
-            $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
+            try{$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);} catch (Exception $e){}
 		   
 		   $query = New Query(DELETE, 'FROM `AuthTable` WHERE `UniqueID` =:UniqueID');
 		   return $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
