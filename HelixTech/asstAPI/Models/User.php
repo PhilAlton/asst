@@ -51,142 +51,149 @@
 	     */
 	    public static function createUser($params){
 
-			//Database::instance()->beginTransaction();
-            $results = array();
-		    //Ensure user of UserName does not already exist
-		    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-		    $conflict = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']]);
-		    if (count($conflict) !== 0){
-			    http_response_code(409);
-			    Output::errorMsg("database conflict, user {$params['UserName']} alraedy exists");
+			try{
+				//Database::instance()->beginTransaction();
+				$results = array();
+				//Ensure user of UserName does not already exist
+				$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
+				$conflict = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']]);
+				if (count($conflict) !== 0){
+					http_response_code(409);
+					Output::errorMsg("database conflict, user {$params['UserName']} alraedy exists");
 
-		    } else {
+				} else {
 
-			// Hash a new password for storing in the database.
-            // The function automatically generates a cryptographically safe salt.
-			    $password =	Crypt::encrypt(
-							    password_hash
-							    (
-								    base64_encode
-								    (
-									    hash('sha384', $params['Password'], true)
-								    ),
-								    PASSWORD_DEFAULT
-							    )
-						    );
+				// Hash a new password for storing in the database.
+				// The function automatically generates a cryptographically safe salt.
+					$password =	Crypt::encrypt(
+									password_hash
+									(
+										base64_encode
+										(
+											hash('sha384', $params['Password'], true)
+										),
+										PASSWORD_DEFAULT
+									)
+								);
 
-			    /** @todo: Devise AuthToken uses and method */
-                $length = 20; // Length of auth token
-			    $AuthToken = $params['UserName']."=".bin2hex(random_bytes($length));
-                $protectedAuthToken = Crypt::encrypt(
-							    password_hash
-							    (
-								    base64_encode
-								    (
-									    hash('sha384', $AuthToken, true)
-								    ),
-								    PASSWORD_DEFAULT
-							    )
-						    ); 
-
-
-                //Encrypt and hash secret questions and asnwers
-                $secA1 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer1'], true)),PASSWORD_DEFAULT);                            
-                $secA2 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer2'], true)),PASSWORD_DEFAULT);
-                $secQ1 = "Question:".$params['SecretQuestion1']."Answer:".$secA1;
-                $secQ2 = "Question:".$params['SecretQuestion2']."Answer:".$secA2;
+					/** @todo: Devise AuthToken uses and method */
+					$length = 20; // Length of auth token
+					$AuthToken = $params['UserName']."=".bin2hex(random_bytes($length));
+					$protectedAuthToken = Crypt::encrypt(
+									password_hash
+									(
+										base64_encode
+										(
+											hash('sha384', $AuthToken, true)
+										),
+										PASSWORD_DEFAULT
+									)
+								); 
 
 
-			    // Update AuthTable with parameters:
-			    $query = New Query(
-							    INSERT, "INTO AuthTable".
-								    "(UserName, Password, AuthToken, SecQ1, SecQ2)".
-							    "VALUES".
-								    "(:UserName, :Password, :AuthToken, :secQ1, :secQ2)"
-							    );
+					//Encrypt and hash secret questions and asnwers
+					$secA1 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer1'], true)),PASSWORD_DEFAULT);                            
+					$secA2 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer2'], true)),PASSWORD_DEFAULT);
+					$secQ1 = "Question:".$params['SecretQuestion1']."Answer:".$secA1;
+					$secQ2 = "Question:".$params['SecretQuestion2']."Answer:".$secA2;
 
-			    $results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName'], ':Password' => $password, ':AuthToken' => $protectedAuthToken, ':secQ1' => $secQ1, ':secQ2' => $secQ2]));
-                unset($results['secQ1']);
-				unset($results['secQ2']);
+
+					// Update AuthTable with parameters:
+					$query = New Query(
+									INSERT, "INTO AuthTable".
+										"(UserName, Password, AuthToken, SecQ1, SecQ2)".
+									"VALUES".
+										"(:UserName, :Password, :AuthToken, :secQ1, :secQ2)"
+									);
+
+					$results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName'], ':Password' => $password, ':AuthToken' => $protectedAuthToken, ':secQ1' => $secQ1, ':secQ2' => $secQ2]));
+					unset($results['secQ1']);
+					unset($results['secQ2']);
 				
 
-			    // Retrieve the created primary key
-			    $query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
-			    User::$uID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']])['UniqueID'];
+					// Retrieve the created primary key
+					$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
+					User::$uID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']])['UniqueID'];
                 
 
-                // Change password returned to authtoken led by username
-                $results['AuthToken'] = $AuthToken;
+					// Change password returned to authtoken led by username
+					$results['AuthToken'] = $AuthToken;
                 
 
-			    // Update UserTable with parameters
-			    $query = New Query(
-					    INSERT, "INTO UserTable".
-						    "(UniqueID, Age, Gender, Age_Of_Symptom_Onset, Research_Participant)".
-					    "VALUES".
-						    "(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant)"
-					    );
+					// Update UserTable with parameters
+					$query = New Query(
+							INSERT, "INTO UserTable".
+								"(UniqueID, Age, Gender, Age_Of_Symptom_Onset, Research_Participant)".
+							"VALUES".
+								"(:UniqueID, :Age, :Gender, :Age_Of_Symptom_Onset, :Research_Participant)"
+							);
 
-                // Output should be set on the success of the following record insert
-			    $results = array_merge($results, ($query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [
-                                ':UniqueID' => User::$uID,
-							    ':Age' => User::age($params['DoB']),
-							    ':Gender' => $params['Gender'],
-							    ':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
-							    ':Research_Participant' => $params['Research_Participant']
-						])));
-
-
-
-			    // Create General Data Table for User
-                $query = New Query(
-                    CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
-                    "(".
-                        "GenDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
-                        "Date date NOT NULL UNIQUE,".
-                        "LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
-                        "Basdai_1 tinyint UNSIGNED NOT NULL,".
-                        "Basdai_2 tinyint UNSIGNED NOT NULL,".
-                        "Basdai_3 tinyint UNSIGNED NOT NULL,".
-                        "Basdai_4 tinyint UNSIGNED NOT NULL,".
-                        "Basdai_5 tinyint UNSIGNED NOT NULL,".
-                        "Basdai_6 tinyint UNSIGNED NOT NULL,".
-                        "Basdai_Total decimal(4,2) UNSIGNED NOT NULL,".
-                        "Overall_Spinal_Pain tinyint UNSIGNED NOT NULL,".
-                        "Basfi_1 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_2 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_3 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_4 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_5 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_6 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_7 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_8 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_9 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_10 tinyint UNSIGNED NOT NULL,".
-                        "Basfi_Total tinyint UNSIGNED NOT NULL,".
-                        "Overall_Spondylitis_Activity tinyint UNSIGNED NOT NULL,".
-                        "Flare tinyint(1) NOT NULL,".
-                        "Flare_Duration text NULL,".
-                        "Areas_Affected text NULL,".
-                        "Flare_Freetext text NULL".
-                    ")"
-                );
-
-			    $query->execute(1);
+					// Output should be set on the success of the following record insert
+					$results = array_merge($results, ($query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [
+									':UniqueID' => User::$uID,
+									':Age' => User::age($params['DoB']),
+									':Gender' => $params['Gender'],
+									':Age_Of_Symptom_Onset' => $params['Age_Of_Symptom_Onset'],
+									':Research_Participant' => $params['Research_Participant']
+							])));
 
 
 
-                // If the User has agreed to be a reserach participant:
-                if ($params['Research_Participant'] == 1){
-                    $results = array_merge($results, User::participateResearch(User::$uID, $params));
-                }
+					// Create General Data Table for User
+					$query = New Query(
+						CREATE, "TABLE GEN_DATA_TABLE_".User::$uID.
+						"(".
+							"GenDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
+							"Date date NOT NULL UNIQUE,".
+							"LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
+							"Basdai_1 tinyint UNSIGNED NOT NULL,".
+							"Basdai_2 tinyint UNSIGNED NOT NULL,".
+							"Basdai_3 tinyint UNSIGNED NOT NULL,".
+							"Basdai_4 tinyint UNSIGNED NOT NULL,".
+							"Basdai_5 tinyint UNSIGNED NOT NULL,".
+							"Basdai_6 tinyint UNSIGNED NOT NULL,".
+							"Basdai_Total decimal(4,2) UNSIGNED NOT NULL,".
+							"Overall_Spinal_Pain tinyint UNSIGNED NOT NULL,".
+							"Basfi_1 tinyint UNSIGNED NOT NULL,".
+							"Basfi_2 tinyint UNSIGNED NOT NULL,".
+							"Basfi_3 tinyint UNSIGNED NOT NULL,".
+							"Basfi_4 tinyint UNSIGNED NOT NULL,".
+							"Basfi_5 tinyint UNSIGNED NOT NULL,".
+							"Basfi_6 tinyint UNSIGNED NOT NULL,".
+							"Basfi_7 tinyint UNSIGNED NOT NULL,".
+							"Basfi_8 tinyint UNSIGNED NOT NULL,".
+							"Basfi_9 tinyint UNSIGNED NOT NULL,".
+							"Basfi_10 tinyint UNSIGNED NOT NULL,".
+							"Basfi_Total tinyint UNSIGNED NOT NULL,".
+							"Overall_Spondylitis_Activity tinyint UNSIGNED NOT NULL,".
+							"Flare tinyint(1) NOT NULL,".
+							"Flare_Duration text NULL,".
+							"Areas_Affected text NULL,".
+							"Flare_Freetext text NULL".
+						")"
+					);
+
+					$query->execute(1);
 
 
 
-                Output::setOutput($results);
+					// If the User has agreed to be a reserach participant:
+					if ($params['Research_Participant'] == 1){
+						$results = array_merge($results, User::participateResearch(User::$uID, $params));
+					}
 
 
-		    }
+
+					Output::setOutput($results);
+
+
+				}
+
+			} catch (Exception $e) {
+				
+				User::deleteUser(params['UserName']);
+
+			}
 	    }
 
 
