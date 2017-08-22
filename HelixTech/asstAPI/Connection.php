@@ -88,7 +88,7 @@ class Connection{
             Connection::$established = false;
             Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
         } catch (UsernameNotAValidEmailAddress $e){
-			//http_response_code(406);
+			http_response_code(406);
             Connection::$established = false;
             Output::errorMsg("Credential Failure: ".$e->getMessage().".");
 		}

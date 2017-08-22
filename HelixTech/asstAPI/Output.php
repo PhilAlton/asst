@@ -64,6 +64,13 @@ class Output{
         }
 
         if(!empty(Output::getError())){
+			// Send JSON'd error message to screen
+			$errorOutput = json_encode(Array("Error" => Output::getError()));
+			$errorOutput = preg_replace('/":*UniqueID":"\w*",?/', "", $errorOutput);
+			$errorOutput = preg_replace('/":*Password":"\w*",?/', "", $errorOutput);
+
+			echo $errorOutput;
+
             // Construct error log header with connection details:
 		    $errorLog = "</br>Connection from IP: <b>".Connection::getIP()."</b>"
                         ."</br>As User: <b>".Connection::getUserName()."</b>"
