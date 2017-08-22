@@ -245,6 +245,8 @@
 						)));
 
 
+
+
 			$query = New Query(
             CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
                 "(".
