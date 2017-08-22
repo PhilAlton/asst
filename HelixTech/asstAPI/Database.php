@@ -22,6 +22,7 @@
         public function __construct(){
 
             if (!isset($this->dbConnection)){
+				echo "here";
                 $this->config = parse_ini_file(realpath('/var/www/private/config.ini'));
 
                 // Set DSN
