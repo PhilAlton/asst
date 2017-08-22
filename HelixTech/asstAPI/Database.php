@@ -115,7 +115,7 @@
          * @return mixed
          */
         public function execute(){
-            $results;
+            $results = null;
             try{ $results = $this->statement->execute();} 
             catch (\Exception $e) {
                 Output::errorMsg("Exception thrown in execution of Query: ".$e->getMessage());
