@@ -217,21 +217,7 @@
         public static function participateResearch($params){
 
             $results = array();
-            // Update ResearchTable with parameters
-            /** @todo need to update this query to reflect changes to research table, adding baseline survey info */
-            $query = New Query(
-                    INSERT, "INTO ResearchTable".
-                        "(UniqueID, Firstname, Surname, DoB)".
-                    "VALUES".
-                        "(:UniqueID, :Firstname, :Surname, :DoB)"
-                    );
-
-            $results = array_merge($results, ($query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID,
-                            ':Firstname' => $params['Firstname'],
-                            ':Surname' => $params['Surname'],
-                            ':DoB' => $params['DoB']])));
-
-            /** @todo need to amend this query to match true database structure */
+			
             $query = New Query(
                 CREATE, "TABLE RCH_DATA_TABLE_".User::$uID.
                 "(".
@@ -248,6 +234,25 @@
             );
 
 			$query->execute(1);
+
+
+            // Update ResearchTable with parameters
+            $query = New Query(
+                    INSERT, "INTO ResearchTable".
+                        "(UniqueID, Firstname, Surname, DoB)".
+                    "VALUES".
+                        "(:UniqueID, :Firstname, :Surname, :DoB)"
+                    );
+
+            $results = array_merge($results, ($query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [
+							':UniqueID' => User::$uID,
+                            ':Firstname' => $params['Firstname'],
+                            ':Surname' => $params['Surname'],
+                            ':DoB' => $params['DoB']
+							]
+						)));
+
+
 
 
             return $results;
