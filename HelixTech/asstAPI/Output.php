@@ -74,14 +74,14 @@ class Output{
             // return values: sent to client in the HTTP body via echo.
 
         } else {
-			$content = '"http_response_code":'.http_response_code();
+			$content = '{"http_response_code":'.http_response_code().'}';
 		}
 
         if(!empty(Output::getErrorLog())){
 			
 			$success = 'false';
 			$errorOutput = $content;
-			$content = '"http_response_code":'.http_response_code();
+			$content = '{"http_response_code":'.http_response_code().'}';
 
             // Construct error log header with connection details:
 		    $errorLog = "</br>Connection from IP: <b>".Connection::getIP()."</b>"
