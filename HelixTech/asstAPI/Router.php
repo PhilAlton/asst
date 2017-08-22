@@ -96,7 +96,7 @@ class Router{
 
 			$illStrOffsetPos = strpos($e->getMessage(),"Illegal string offset");
 			if ($illStrOffsetPos !== false) {
-				Output::setOutput("Missing data: ".substr($e->getMessage(),22));
+				Output::setOutput("Illegal string offset: ".substr($e->getMessage(),22));	//Illegal string offset ?? = Missing Data
 			} else {
 				Output::setOutput('Error: '.$e->getMessage());
 			}
