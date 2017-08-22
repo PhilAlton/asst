@@ -84,7 +84,10 @@
 
             try {
                 $this->database->execute(1);
-                $results = $params;
+
+				foreach ($params as $paramKey => $paramValue){
+					$results[substr($paramKey,1)] = $paramValue;
+				}
 
                 switch ($this->queryType){
 			        case SELECT:
@@ -118,10 +121,12 @@
 				        break;
 
 			        case DELETE:
+						$results = "DELETE sucessful";
 				        http_response_code(200); // No content *(request fulfilled)
 				        break;
 
 			        case DROP:
+						$results = "DROP table sucessful";
 				        http_response_code(200); // No content *(request fulfilled)
 				        break;
 
