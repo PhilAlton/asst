@@ -20,8 +20,11 @@ class Output{
 	private static $output;
 	/** @var mixed - $history - to be outputed to error log file */
 	private static $history;
+	/** @var array - $error - to be outputted to the client */
+    private static $error;
 	/** @var mixed - $errorLog - to be ouputed to the error log file */
-    private static $errorLog;
+	private static $errorLog;
+
 # endregion
 
 #region Setters and Getters
