@@ -99,9 +99,7 @@ class Router{
 				Output::setOutput("Missting data: ".substr($e->getMessage(),22));
 			
 			} else {
-				
 				Output::setOutput('Error: '.$e->getMessage());
-				var_dump($e);
 			}
 
 
