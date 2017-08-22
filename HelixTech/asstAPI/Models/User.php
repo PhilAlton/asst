@@ -189,7 +189,7 @@
 
 				}
 
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				
 				User::deleteUser(params['UserName']);
 
