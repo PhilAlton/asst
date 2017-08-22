@@ -192,7 +192,7 @@
 			} catch (\Exception $e) {
 				
 				User::deleteUser($params['UserName']);
-				throw new \Exception($e);
+				throw new \Exception($e-getMessage());
 			}
 	    }
 
