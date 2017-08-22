@@ -85,9 +85,12 @@
             try {
                 $this->database->execute(1);
 
-				foreach ($params as $key => $value){
+				if (isset($params)){
+					foreach ($params as $key => $value){
 					$results[substr($key,1)] = $value;
+					}
 				}
+				
 
                 switch ($this->queryType){
 			        case SELECT:
