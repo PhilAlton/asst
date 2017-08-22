@@ -98,9 +98,12 @@ class Router{
 				Output::errorMsg("Missting data: ".substr($e->getMessage(),$illStrOffsetPos));
 			
 			} else {
-				Output::errorMsg("Other Error Thrown: ".$e->getMessage());
-			//	Output::setOutput('Error: '.$e->getMessage());
+				
+				Output::setOutput('Error: '.$e->getMessage());
 			}
+
+
+			Output::errorMsg("Other Error Thrown: ".$e->getMessage());
 
 			return;
 		}

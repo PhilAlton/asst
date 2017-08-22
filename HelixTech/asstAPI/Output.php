@@ -58,28 +58,30 @@ class Output{
 	 * @return void
 	 */
 	public static function go(){
+
+
+
+
 		if(!empty(Output::getOutput())){
 
             // sanaitize output to remove Unique ID from the output using preg_replace.
-            $output = json_encode(Output::getOutput());
-	//		$output = Connection::getAuthToken() ? '":AuthToken": "'.Connection::getAuthToken().'",'.$output : $output;
-	//		var_dump($output);
-            $output = preg_replace('/":*UniqueID":"\w*",?/', "", $output);
-			$output = preg_replace('/":*Password":"\w*",?/', "", $output);
+            $content = json_encode(Output::getOutput());
+			//		$content = Connection::getAuthToken() ? '":AuthToken": "'.Connection::getAuthToken().'",'.$content : $content;
+			//		var_dump($content);
+            $content = preg_replace('/":*UniqueID":"\w*",?/', "", $content);
+			$content = preg_replace('/":*Password":"\w*",?/', "", $content);
 
             // return values: sent to client in the HTTP body via echo.
-            header('Content-Type: application/json');
-            echo $output;
 
-        }
+        } else {
+			$content = '"http_response_code":'.http_response_code();
+		}
 
-        if(!empty(Output::getError())){
-			// Send JSON'd error message to screen
-			$errorOutput = json_encode(Array("Error" => Output::getError()));
-			$errorOutput = preg_replace('/":*UniqueID":"\w*",?/', "", $errorOutput);
-			$errorOutput = preg_replace('/":*Password":"\w*",?/', "", $errorOutput);
-
-			echo $errorOutput;
+        if(!empty(Output::getErrorLog())){
+			
+			$success = 'false';
+			$errorOutput = $content;
+			$content = '"http_response_code":'.http_response_code();
 
             // Construct error log header with connection details:
 		    $errorLog = "</br>Connection from IP: <b>".Connection::getIP()."</b>"
@@ -102,9 +104,31 @@ class Output{
             // Write error log to log file:
             $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
 			file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
-        }
+        } else {
+			
+			$success = 'true';
+			$errorOutput = 'null';
+
+		}
+
+
+
+		$status = '{"success":'.$success.','.
+					 '"error":'.$errorOutput.'}';
+
+
+		$output = '{"content":'.$content.','.
+					'"status":'.$status.'}';
+				
+
+		header('Content-Type: application/json');
+		echo $output;
+
 
 	}
+
+
+
 
 
 }
