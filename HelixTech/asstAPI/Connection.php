@@ -10,7 +10,7 @@
  *
  */
 
-use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, BlackListedInput};
+use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, BlackListedInput, UsernameNotAValidEmailAddress};
 use HelixTech\asstAPI\{Query, Crypt};
 use HelixTech\asstAPI\Models\User;
 
