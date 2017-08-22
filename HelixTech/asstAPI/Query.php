@@ -27,7 +27,7 @@
 
 
         public function __construct($queryType, $query){
-            $this->database = New Database;
+            $this->database = Database::instance();
 		    $this->queryType = $queryType;
             $this->query = $queryType." ".$query;
         }

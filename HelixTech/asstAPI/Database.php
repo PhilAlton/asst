@@ -13,16 +13,27 @@
         private $error;
         private $statement;
 
-        /**
+		private static $instance;
+
+
+		public static function instance(){
+			if (!isset(Database::$instance){
+				Database::$instance = new Database;
+			}
+
+			return Database::$instance;
+        }
+		
+		
+		/**
          * __construct - establish a connection to the database
          * Load config.ini file for database variables
          *
          *
          */
-        public function __construct(){
+        private function __construct(){
 
             if (!isset($this->dbConnection)){
-				echo "here";
                 $this->config = parse_ini_file(realpath('/var/www/private/config.ini'));
 
                 // Set DSN
