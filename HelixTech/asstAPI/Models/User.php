@@ -179,6 +179,7 @@
 
 					// If the User has agreed to be a reserach participant:
 					if ($params['Research_Participant'] == 1){
+						var_dump($params);
 						$results = array_merge($results, User::participateResearch(User::$uID, $params));
 					}
 
@@ -226,7 +227,6 @@
 
             $results = array();
 			
-			var_dump($params);
             // Update ResearchTable with parameters
             $query = New Query(
                     INSERT, "INTO ResearchTable".
