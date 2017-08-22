@@ -20,8 +20,8 @@ class Output{
 	private static $output;
 	/** @var mixed - $history - to be outputed to error log file */
 	private static $history;
-	/** @var mixed - $error - to be ouputed to teh erro log file */
-    private static $error;
+	/** @var mixed - $errorLog - to be ouputed to the error log file */
+    private static $errorLog;
 # endregion
 
 #region Setters and Getters
@@ -31,13 +31,20 @@ class Output{
     private static function getHistory(){return Output::$history;}
     /** @return string getting Output::$error */
     private static function getError(){return Output::$error;}
+	/** @return string getting Output::$errorLog */
+    private static function getErrorLog(){return Output::$errorLog;}
 
     /** @param mixed $newOutput setter for Output::$history */
     private static function setHistory($newOutput){Output::$history = Output::$history."</br>".$newOutput;}
 	/** @param mixed $output setter for Output::$output, which also sets $history via it's setter */
 	public static function setOutput($output){Output::setHistory(Output::$output); Output::$output = $output;}
     /** @param mixed $errMsg setter for Output::$error */
-    public static function errorMsg($errMsg){Output::$error = Output::$error."</br><b>".date("Y-m-d, H:i:s",time())." - </b>".$errMsg;}
+    public static function errorMsg($errMsg){
+		Output::$errorLog = Output::$errorLog."</br><b>"
+							.date("Y-m-d, H:i:s",time())." - </b>"
+							.$errMsg;
+		Output::$error[] = $errMsg;
+	}
 #endregion
 
 
@@ -78,7 +85,7 @@ class Output{
                         ."</br>At: <b>".date("Y-m-d, H:i:s", Connection::getConnectionTime())."</b>"
 
 		    // Then output the error log
-		    ."</br>".Output::getError();
+		    ."</br>".Output::getErrorLog();
             //echo Output::getHistory();
 		    // Add history after
             $errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getOutput();
