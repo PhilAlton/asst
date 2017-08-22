@@ -79,6 +79,7 @@ class Output{
 			$errorOutput = preg_replace('/":*UniqueID":"\w*",?/', "", $errorOutput);
 			$errorOutput = preg_replace('/":*Password":"\w*",?/', "", $errorOutput);
 
+			header('Content-Type: application/json');
 			echo $errorOutput;
 
             // Construct error log header with connection details:

@@ -89,8 +89,11 @@ class Router{
             Output::errorMsg("Connection Failed: request terminated");
         } catch (AttemptedToAccessUnauthorisedResources $e){
             Output::errorMsg("User details do not match requested resources");
+	//	} catch (\Exception $e){
+		
         } catch (\Exception $e) {
 			http_response_code(500);
+			var_dump($e);
 			Output::errorMsg("Other Error Thrown: ".$e->getMessage());
 			Output::setOutput('Error: '.$e->getMessage());
 			return;
