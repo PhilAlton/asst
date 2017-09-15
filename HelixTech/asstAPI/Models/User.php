@@ -472,6 +472,7 @@
 
 		public static function resetPasswordProceed($UserName, $input){
 		
+			Output::setOutput("given");
 			echo "new things here";
 			var_dump($input);
 
