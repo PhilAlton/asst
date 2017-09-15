@@ -427,22 +427,7 @@
         }
 
 
-		public static function passwordResetPage(){
-		
-			// Show password reset page
 
-			// Once button in pressed to submit:
-
-			// Display pop up "If this email address is registered with us, then you should recieve 
-			//		a unique link, in your email inbox, to reset your password, momentarily"	
-			
-
-	// Could the above be done on the apps instead? 
-
-			// Make an http request to the API requesting:
-			//		https://*username*@axspa.org.uk/asst/passwordResetProceed
-
-		}
 
 
 
@@ -485,8 +470,16 @@
 
 		}
 
+		public static function resetPasswordProceed($UserName, $input){
+		
+			echo "new things here";
+			var_dump($input);
 
-        public static function resetPassword($UserName, $input){
+
+		}
+
+
+        public static function resetPassword($UserName){
 
 			
 			//Generate password reset code
@@ -508,12 +501,6 @@
 
 
 
-            // function to restet password
-            
-			//Output::setOutput('function currently not available');
-
-			// echo "this";
-			
 
 
             // Gather identity data or security questions - completed at user registration
