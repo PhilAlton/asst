@@ -51,9 +51,9 @@ class Router{
                             //case for restetting password  "/asst/Users/$UserName/resetPassword"
                             User::resetPassword($UserName);
                             break;
-						case "resetPasswordProceed":
-							//case for proceeding with a password reset "/asst/Users/$UserName/resetPasswordProceed"
-							User::resetPasswordProceed($UserName, $input);
+						case "resetProceed":
+							//case for proceeding with a password reset "/asst/Users/$UserName/resetProceed"
+							User::resetProceed($UserName, $input);
 							break;
                         default: throw new InvalidURI("Invalid URI selected".Connection::getURI());
                     }
