@@ -498,7 +498,7 @@
 
 			// Send an email to the user containing the unique link
 			$message = 'Please click the following link to reset your password:' . "\r\n"
-						."www.axspa.org.uk/asst/passwordReset/".urlencode($UserName)."/".urlencode($uniqueCode) . "\r\n\r\n"
+						."https://axspa.org.uk/asst/passwordReset/".urlencode($UserName)."/".urlencode($uniqueCode) . "\r\n\r\n"
 						. "Please note, this link will expire in 12 hours";
 			
 			$headers = 'From: ResetPassword@axspa.org.uk' . "\r\n" .
