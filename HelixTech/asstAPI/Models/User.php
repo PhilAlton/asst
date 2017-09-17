@@ -472,8 +472,8 @@
 
 		public static function resetProceed($UserName, $input){
 		
-			Output::setOutput($input);
-		//	echo "new things here";
+		//	Output::setOutput($input);
+			echo "new things here";
 		//	var_dump($input);
 
 
