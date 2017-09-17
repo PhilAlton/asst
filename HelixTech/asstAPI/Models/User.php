@@ -472,9 +472,9 @@
 
 		public static function resetProceed($UserName, $input){
 		
-			Output::setOutput("given");
-			echo "new things here";
-			var_dump($input);
+			Output::setOutput($input);
+		//	echo "new things here";
+		//	var_dump($input);
 
 
 		}
