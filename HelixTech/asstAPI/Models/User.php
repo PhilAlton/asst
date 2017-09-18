@@ -481,7 +481,7 @@
 				case 'checkGUIDE':
 					// database call 
 					// check GUIDE $input['GUIDE'] matches GUIDE
-					$uniqueCode = "asomehashorguidewhichisthendatabased"; // will actually be a database call
+					$uniqueCode = "somehashorguidewhichisthendatabased"; // will actually be a database call
 					if ($input['GUIDE'] === $uniqueCode){
 						// output secret questions
 						$output['SecretQuestion1'] = "secretQuestionOneIsThis";
