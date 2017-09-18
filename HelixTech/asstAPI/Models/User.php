@@ -491,7 +491,8 @@
 					break;
 				default:
 					# code...
-					http_response_code('500');
+					$output[$input];
+					//http_response_code('500');
 					break;
 			}
 
