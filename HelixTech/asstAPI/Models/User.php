@@ -476,6 +476,8 @@
 		//	echo "new things here";
 			$output = Array();
 
+
+/*
 			switch ($input['part']) {
 				case 'checkGUIDE':
 					// database call 
@@ -495,8 +497,8 @@
 					//http_response_code('500');
 					break;
 			}
-
-			Output::setOutput($output);
+*/
+			Output::setOutput($input);
 		
 
 
