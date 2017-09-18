@@ -487,7 +487,7 @@
 					break;
 				case 'checkAnswers':
 					// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
-					$output['secretAnswersCheckedYay'];
+					$output['secretAnswersChecked'] = "yay";
 					break;
 				default:
 					# code...
