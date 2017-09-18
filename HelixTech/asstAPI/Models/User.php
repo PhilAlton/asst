@@ -472,8 +472,30 @@
 
 		public static function resetProceed($UserName, $input){
 		
-			Output::setOutput($input);
+		//	Output::setOutput($input);
 		//	echo "new things here";
+			$output = Array();
+
+			switch ($input['part']) {
+				case 'checkGUIDE':
+					// database call 
+					// check GUIDE $input['GUIDE'] matches GUIDE
+					// output secret questions
+					$output['SecretQuestion1'] = "secretQuestionOneIsThis";
+					$output['SecretQuestion2'] = "secretQuestionTwoIsThis";
+					# code...
+					break;
+				case 'checkAnswers':
+					// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
+					$output['secretAnswersCheckedYay'];
+					break;
+				default:
+					# code...
+					http_response_code('500');
+					break;
+			}
+
+			setOutput($output);
 		
 
 
