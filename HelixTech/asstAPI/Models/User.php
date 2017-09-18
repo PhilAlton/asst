@@ -477,18 +477,26 @@
 			$output = Array();
 			if(!isset($input['part'])){$input['part']="undefined";}
 			switch ($input['part']) {
+				
 				case 'checkGUIDE':
 					// database call 
 					// check GUIDE $input['GUIDE'] matches GUIDE
-					// output secret questions
-					$output['SecretQuestion1'] = "secretQuestionOneIsThis";
-					$output['SecretQuestion2'] = "secretQuestionTwoIsThis";
-					# code...
+					$uniqueCode = "somehashorguidewhichisthendatabased"; // will actually be a database call
+					if ($input['GUIDE'] === $uniqueCode){
+						// output secret questions
+						$output['SecretQuestion1'] = "secretQuestionOneIsThis";
+						$output['SecretQuestion2'] = "secretQuestionTwoIsThis";
+					} else {
+						http_response_code(401);
+					}
 					break;
+				
 				case 'checkAnswers':
 					// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
 					$output['secretAnswersChecked'] = "yay";
 					break;
+				
+				
 				default:
 					# code...
 					$output[$input];
