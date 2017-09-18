@@ -495,7 +495,7 @@
 					break;
 			}
 
-			setOutput($output);
+			Output::setOutput($output);
 		
 
 
