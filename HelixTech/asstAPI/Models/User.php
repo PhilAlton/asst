@@ -476,6 +476,8 @@
 		//	echo "new things here";
 			$output = Array();
 			if(!isset($input['part'])){$input['part']="undefined";}
+			
+			
 			switch ($input['part']) {
 				
 				case 'checkGUIDE':
@@ -493,9 +495,20 @@
 				
 				case 'checkAnswers':
 					// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
-					$output['secretAnswersChecked'] = "yay";
+					if (true){
+						$output['secretAnswersChecked'] = true;
+					} else {
+						$output['secretAnswersChecked'] = false;
+					}
 					break;
-				
+
+				case 'newPassword':
+					// Retrieve new password and store in database
+					$newPass = $input['newPassword'];
+					$ouput['passwordResetComplete'] = true;
+					// Store changes in database
+
+					break;				
 				
 				default:
 					# code...
@@ -535,31 +548,10 @@
 
 
 
-            // Gather identity data or security questions - completed at user registration
-            // Get secret questions and answers 
-            // Verify security questions
-            // Send a token over a side-channel - this has been done by forcing email address to initiate the next part of the reset
-            // Allow user to change password (in the existing session)
+			// Allow user to change password (in the existing session)
             // Logging and auditing password change attempts000000
 
 
-			/*
-			try{
-				if (Connection::authenticate()){
-
-					// Pull the user specific reset page
-					include(FILEPATH_STEM.'/'.$userResetPage);
-
-				} else {
-					Output::setOutput('Invalid Username\Password Combination');
-					$e = "Failed to validate UserName against Password";
-					throw new UnableToAuthenticateUserCredentials($e);
-				}
-			} catch (UnableToAuthenticateUserCredentials $e){
-				http_response_code(401);
-				Output::errorMsg("Unable to authenticate: ".$e->getMessage().".");
-			}
-			*/
         }
 
 
