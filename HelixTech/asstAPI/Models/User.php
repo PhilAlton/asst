@@ -428,48 +428,6 @@
 
 
 
-
-
-
-		public static function passwordReset(){
-
-			// Logic to take username from page ?as post variable and send email
-			//		or we might be able to make this function instrinsic to the page
-				
-				// Accept submitted username and validate these	
-					// else error code if no such user
-					// create requestPasswordResetForNonExistantUser error
-
-				// Create user specific password reset endpoint
-					// i.e. a code generated page containing the secret questions for the user (from the database)
-					// Save this file in the /var/www/html/autopage/asst folder
-					// This page needs to contain the secret answers and question, from the database
-
-					//Get secret questions and answers
-					$query = New Query(SELECT, 'SecQ1, SecQ2 FROM `AuthTable` WHERE `UserName` =:UserName');
-					$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']]));
-
-					// Log whether secre questions and answers match
-						// create secretAnswersInvalid error
-						// this error should generate an alert, if there is much activity against it
-						// However, this level of analytics will need to fall in to the analytics class
-						// And not form part of the error's own class
-
-					// if secret answers do match up, then display the password reset page
-
-				// Generate a link to this page
-				//	i.e ensure router is able to process the link to such pages
-				//	i.e. at the Users/*username*/resetPassword endpoint
-
-				// Email out the link to the username
-
-			// Log the attempt to reset password (it's actually already logged 
-			//		by virtue of the connection monitoring that we employ against all request)
-
-
-
-		}
-
 		public static function resetProceed($UserName, $input){
 		
 		//	Output::setOutput($input);
@@ -486,6 +444,10 @@
 					$uniqueCode = "somehashorguidewhichisthendatabased"; // will actually be a database call
 					if ($input['GUIDE'] === $uniqueCode){
 						// output secret questions
+						//Get secret questions and answers
+						$query = New Query(SELECT, 'SecQ1, SecQ2 FROM `AuthTable` WHERE `UserName` =:UserName');
+						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']]));
+
 						$output['SecretQuestion1'] = "secretQuestionOneIsThis";
 						$output['SecretQuestion2'] = "secretQuestionTwoIsThis";
 					} else {
@@ -495,9 +457,16 @@
 				
 				case 'checkAnswers':
 					// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
-					if (true){
+					$secretAnswersMatch = true;
+					
+					if ($secretAnswersMatch){					
 						$output['secretAnswersChecked'] = true;
 					} else {
+						// Log whether secre questions and answers match
+						// create secretAnswersInvalid error
+						// this error should generate an alert, if there is much activity against it
+						// However, this level of analytics will need to fall in to the analytics class
+						// And not form part of the error's own class
 						$output['secretAnswersChecked'] = false;
 					}
 					break;
@@ -518,8 +487,11 @@
 					break;
 			}
 
+			// Log the attempt to reset password (it's actually already logged 
+			//		by virtue of the connection monitoring that we employ against all request)
+
+
 			Output::setOutput($output);
-		
 
 
 		}
@@ -527,12 +499,17 @@
 
         public static function resetPassword($UserName){
 
-			
+		
+			// Accept submitted username and validate these	
+				// else error code if no such user
+				// create requestPasswordResetForNonExistantUser error
+
+
+
 			//Generate password reset code
 			$uniqueCode = "somehashorguidewhichisthendatabased";
 			// store code in database against username
 			// Don't forget an expirary date (12 hours from now)
-
 
 
 			// Send an email to the user containing the unique link
@@ -545,12 +522,10 @@
 
 			mail($UserName, 'Ankylosing Spondylitis Symptom Tracker - Request to Reset Password', $message, $headers);
 
+			// Log the attempt to reset password (it's actually already logged 
+			//		by virtue of the connection monitoring that we employ against all request)
 
 
-
-
-			// Allow user to change password (in the existing session)
-            // Logging and auditing password change attempts000000
 
 
         }
