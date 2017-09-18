@@ -505,7 +505,7 @@
 				case 'newPassword':
 					// Retrieve new password and store in database
 					$newPass = $input['newPassword'];
-					$ouput['passwordResetComplete'] = true;
+					$output['passwordResetComplete'] = true;
 					// Store changes in database
 
 					break;				
