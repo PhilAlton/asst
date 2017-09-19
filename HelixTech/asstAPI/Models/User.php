@@ -507,7 +507,7 @@
 				$query = New Query(SELECT, 'UniqueID FROM `AuthTable` WHERE `UserName` =:UserName');
 				$uniqueID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]);
 
-				if (isset($uniqueID)){
+				if (count($uniqueID)>0){
 
 					//Generate password reset code
 					var_dump($uniqueID);
