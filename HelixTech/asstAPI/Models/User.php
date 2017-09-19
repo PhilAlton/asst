@@ -510,6 +510,7 @@
 				if (isset($uniqueID)){
 
 					//Generate password reset code
+					echo $uniqueID;
 					$prefix = rand(2,34).($uniqueID+17)*3;
 					$uniqueCode = uniqid("l".$prefix."f");
 
