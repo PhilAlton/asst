@@ -541,6 +541,7 @@
 
 				} else {
 					// error code if no such user: throw error and log
+					Output::setOutput("humm");
 					throw new RequestPasswordResetForNonExistantUser("Password Reset Requested for non existant user: ".$UserName);
 					
 				}
