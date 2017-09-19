@@ -10,7 +10,7 @@
        */
 
     use HelixTech\asstAPI\{Output, Connection, Query, Crypt};
-    use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
+    use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, RequestPasswordResetForNonExistantUser};
 
 
 
@@ -502,58 +502,54 @@
 
         public static function resetPassword($UserName){
 
-		
-			// Accept submitted username and validate this	
-			$query = New Query(SELECT, 'UniqueID FROM `AuthTable` WHERE `UserName` =:UserName');
-			$uniqueID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]);
+			try{
+				// Accept submitted username and validate this	
+				$query = New Query(SELECT, 'UniqueID FROM `AuthTable` WHERE `UserName` =:UserName');
+				$uniqueID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]);
 
-			if (isset($uniqueID)){
+				if (isset($uniqueID)){
 
-				//Generate password reset code
-				$prefix = rand(2,34).($uniqueID+17)*3;
-				$uniqueCode = uniqid("l".$prefix."f");
+					//Generate password reset code
+					$prefix = rand(2,34).($uniqueID+17)*3;
+					$uniqueCode = uniqid("l".$prefix."f");
 
-				//Generate expiary
-				$hours=12;
-				$now = new \DateTime(); //current date/time
-				$now->add(new \DateInterval("PT{$hours}H"));
-				$expiary = $now->format('Y-m-d H:i:s');
+					//Generate expiary
+					$hours=12;
+					$now = new \DateTime(); //current date/time
+					$now->add(new \DateInterval("PT{$hours}H"));
+					$expiary = $now->format('Y-m-d H:i:s');
 
-				//Store in the database
-				$query = New Query(UPDATE, "`AuthTable` ".
-                                "SET `PasswordResetToken`=:PassResTok, `PasswordResetTokenExpiry`=:PassResTokEx ".
-                                "WHERE `UniqueID` =:UniqueID");
-		    	return $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTok" => $uniqueCode, ":PassResTokEx" => $expiary, ':UniqueID' => $uniqueID]);
+					//Store in the database
+					$query = New Query(UPDATE, "`AuthTable` ".
+									"SET `PasswordResetToken`=:PassResTok, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=`PasswordResetAttempts`+1 ".
+									"WHERE `UniqueID` =:UniqueID");
+					$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTok" => $uniqueCode, ":PassResTokEx" => $expiary, ':UniqueID' => $uniqueID]);
 
-				// move message generation code to here once debugged
-				
+					
 
-			} else {
+					// Send an email to the user containing the unique link
+					$message = 'Please click the following link to reset your password:' . "\r\n"
+								."https://axspa.org.uk/passwordReset.html?".urlencode("username=".$UserName."&GUIDE=".$uniqueCode) . "\r\n\r\n"
+					//			."debug: uniqueID=" . $uniqueID . "\r\n\r\n"
+								. "Please note, this link will expire in 12 hours";
+					
+					$headers = 'From: ResetPassword@axspa.org.uk' . "\r\n" .
+								'Reply-To: ResetPassword@axspa.org.uk';
 
-				// else error code if no such user
-				// create requestPasswordResetForNonExistantUser error
+					mail($UserName, 'Ankylosing Spondylitis Symptom Tracker - Request to Reset Password', $message, $headers);
+
+
+				} else {
+					// error code if no such user: throw error and log
+					throw new RequestPasswordResetForNonExistantUser("Password Reset Requested for non existant user: ".$UserName);
+					
+				}
+			} catch (RequestPasswordResetForNonExistantUser $e){
+
+				// in case error needs to be handled in the future
+
+
 			}
-
-
-			
-
-
-			// Send an email to the user containing the unique link
-			$message = 'Please click the following link to reset your password:' . "\r\n"
-						."https://axspa.org.uk/passwordReset.html?".urlencode("username=".$UserName."&GUIDE=".$uniqueCode) . "\r\n\r\n"
-						."debug: uniqueID=" . $uniqueID . "\r\n\r\n"
-						. "Please note, this link will expire in 12 hours";
-			
-			$headers = 'From: ResetPassword@axspa.org.uk' . "\r\n" .
-						'Reply-To: ResetPassword@axspa.org.uk';
-
-			mail($UserName, 'Ankylosing Spondylitis Symptom Tracker - Request to Reset Password', $message, $headers);
-
-			// Log the attempt to reset password (it's actually already logged 
-			//		by virtue of the connection monitoring that we employ against all request)
-
-
-
 
         }
 
