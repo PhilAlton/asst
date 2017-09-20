@@ -113,7 +113,7 @@
 					// Retrieve the created primary key
 					$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 					User::$uID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']])['UniqueID'];
-                
+					echo "UID: ".User::$uID;
 
 					// Change password returned to authtoken led by username
 					$results['AuthToken'] = $AuthToken;
