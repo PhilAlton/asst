@@ -335,7 +335,7 @@
             $results = array();
 
             //Get info from User's records in both User Data Tables
-			$query = New Query(SELECT, 'AuthToken FROM `AuthTable` WHERE `UniqueID` = :UniqueID')
+			$query = New Query(SELECT, 'AuthToken FROM `AuthTable` WHERE `UniqueID` = :UniqueID');
 			$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]));
 		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
 		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]));
