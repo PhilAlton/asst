@@ -106,7 +106,7 @@
 						}
 
 				        // algorithm to decrypt all database output
-                        // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
+                        array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
                         http_response_code(200); // OK
 				        break;
 
