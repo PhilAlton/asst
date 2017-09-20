@@ -219,7 +219,7 @@ class Connection{
 					if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
 				}
 
-				$password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
+				//$password = Crypt::decrypt($password);
 			}
 
             // Check if the hash of the entered login password, matches the stored hash.
