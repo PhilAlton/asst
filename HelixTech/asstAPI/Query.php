@@ -36,13 +36,11 @@
             $this->query = $queryType." ".$query;
             
             // based on table name, decide whether to encrpyt the data
-            
+            $this->encryptedTableBoolean = true;
             foreach ($this->unencryptedTableNames as $tableName){
                 if(strpos($query, $tableName) !== false){
                     $this->encryptedTableBoolean = false;
-                } else {
-                    $this->encryptedTableBoolean = true;
-                }
+                } 
             }
         }
 
@@ -73,22 +71,24 @@
             // Encrypt parameters here
             // Exclude specified list of parameters and specified list of table calls
             $newValue;
+            $encryptBool = true;
 
             if($this->encryptedTableBoolean){
                 foreach ($this->unencryptedParameters as $unencryptedParam){
                     if($param == $unencryptedParam){
-                        $newValue = $value;
-                    } else {
-                        echo "<br/>param=".$param."<br/>";
-                        echo "<br/>value=".$value."<br/>";
-                        $newValue = Crypt::encrypt($value);
-                    }
+                        $encryptBool = false;
+                    } 
                 }
-               
+            } else {
+                $encryptBool = false;
+            } 
+
+            if($encryptBool){
+                $newValue = Crypt::encrypt($value);
             } else {
                 $newValue = $value;
             }
-
+            
             return $newValue;
         }
 
