@@ -97,7 +97,7 @@
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
 					    $param,							
-					    handleParamEncryption($param, $value)
+					    $this->handleParamEncryption($param, $value)
     				    );
 			    }
 		    }
