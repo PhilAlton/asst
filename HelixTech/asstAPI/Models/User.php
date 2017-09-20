@@ -554,7 +554,7 @@
 								}
 							} else {
 								http_response_code(401);
-								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName." Info: "."<br/>".$now."<br/>".$tokenExpiry."<br/>".($now < $tokenExpiry)."<br/>";);
+								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName." Info: "."<br/>".$now."<br/>".$tokenExpiry."<br/>".($now < $tokenExpiry)."<br/>");
 							}
 						} else {
 							throw new AttemptedPasswordResetWithInvalidGUIDE("Token does not match the stored PasswordResetToken, for user: ".$UserName);
