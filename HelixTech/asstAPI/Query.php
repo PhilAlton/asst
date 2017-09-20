@@ -64,7 +64,7 @@
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
 					    $param,							// Encrypt all parameters here: uncomment and add () to $param? Or just to value?
-					    Crypt::encrypt($value);
+					    Crypt::encrypt($value)
 				    );
 			    }
 		    }
