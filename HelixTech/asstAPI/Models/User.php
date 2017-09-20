@@ -450,7 +450,7 @@
 						if ($input['GUIDE'] === $uniqueCode) { 
 							// check GUIDE is in-date
 							$now = new \DateTime(); //current date/time
-							$tokenExpiry = strtotime($results["PasswordResetTokenExpiry"]);
+							$tokenExpiry = new \DateTime($results["PasswordResetTokenExpiry"]);
 
 							if ($now < $tokenExpiry){
 								// output secret questions
