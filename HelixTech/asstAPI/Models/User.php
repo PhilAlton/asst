@@ -575,7 +575,7 @@
 				Output::setOutput($output);
 
 			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
-				Output::errorMsg("Password reset token expired. Info: <br/>".$now."<br/>".$tokenExpiry."<br/>".($now < $tokenExpiry)."<br/>".$e->getMessage());
+				Output::errorMsg("Password reset token expired. Info: <br/>".$now->format('Y-m-d H:i:s')."<br/>".$tokenExpiry->format('Y-m-d H:i:s')."<br/>".($now < $tokenExpiry)."<br/>".$e->getMessage());
 
 			} catch (AttemptedPasswordResetWithInvalidGUIDE $e){
 				Output::errorMsg("Password reset token invalid: ".$e->getMessage());
