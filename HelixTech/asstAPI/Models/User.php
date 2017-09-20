@@ -109,11 +109,11 @@
 					unset($results['secQ1']);
 					unset($results['secQ2']);
 				
-
+					echo "here";
 					// Retrieve the created primary key
 					$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 					User::$uID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']])['UniqueID'];
-                
+					echo "UID: ".User::$uID;
 
 					// Change password returned to authtoken led by username
 					$results['AuthToken'] = $AuthToken;
@@ -190,6 +190,7 @@
 				}
 
 			} catch (\Exception $e) {
+				echo $e->getMessage();
 				User::deleteUser($params['UserName']);
 				throw new \Exception($e->getMessage());
 			}
