@@ -190,9 +190,9 @@
 				}
 
 			} catch (\Exception $e) {
-				throw new \Exception($e->getMessage());
 				echo $e->getMessage();
 				User::deleteUser($params['UserName']);
+				throw new \Exception($e->getMessage());
 			}
 	    }
 
