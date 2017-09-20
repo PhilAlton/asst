@@ -58,11 +58,11 @@
 
 
         public function buildQuery($params = null){
-			var_dump($params);
             $this->database->query($this->query);
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
-				    $this->database->bind(
+				    echo Crypt::encrypt($value);
+					$this->database->bind(
 					    $param,							// Encrypt all parameters here: uncomment and add () to $param? Or just to value?
 					    Crypt::encrypt($value)
 				    );
