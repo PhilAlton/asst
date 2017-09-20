@@ -529,7 +529,7 @@
 						if ($input['GUIDE'] === $uniqueCode) { 
 							// check GUIDE is in-date
 							$now = new \DateTime(); //current date/time
-							$tokenExpiry = new \DateTime($results["PasswordResetTokenExpiry"]);
+							$tokenExpiry = strtotime($results["PasswordResetTokenExpiry"]);
 							
 
 							if ($now < $tokenExpiry){
