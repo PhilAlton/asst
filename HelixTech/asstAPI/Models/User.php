@@ -537,6 +537,9 @@
 											"WHERE `UserName` =:UserName");
 									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTokEx" => $now->format('Y-m-d H:i:s');, ':UserName' => $UserName]);
 									
+
+									// still need code for the new password!
+
 								
 									$output['passwordResetComplete'] = true;
 
