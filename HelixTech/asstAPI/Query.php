@@ -63,9 +63,8 @@
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
-			    //		Crypt::encrypt
-					    $param,							// Encrypt all parameters here: uncomment and add () to $param
-					    $value
+					    $param,							
+					    Crypt::encrypt($value)		// Encrypt all parameters here
 				    );
 			    }
 		    }
@@ -107,7 +106,7 @@
 						}
 
 				        // algorithm to decrypt all database output
-                        // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
+                        array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
                         http_response_code(200); // OK
 				        break;
 
