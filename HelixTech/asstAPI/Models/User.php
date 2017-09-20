@@ -76,7 +76,6 @@
 									)
 								);
 
-					/** @todo: Devise AuthToken uses and method */
 					$length = 20; // Length of auth token
 					$AuthToken = $params['UserName']."=".bin2hex(random_bytes($length));
 					$protectedAuthToken = Crypt::encrypt(
@@ -528,17 +527,43 @@
 								
 								if ($results["PasswordResetVerified"]){
 								
-									// Retrieve new password and store in database
-									// Reset password resettting info
+									// Retrieve new password, hash appropiately and store in database
 									$newPass = $input['newPassword'];
 								
-									$query = New Query(UPDATE, "`AuthTable` ".
-											"SET `PasswordResetVerified`=0, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=0, `PasswordResetToken`=NULL ".
-											"WHERE `UserName` =:UserName");
-									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTokEx" => $now->format('Y-m-d H:i:s'), ':UserName' => $UserName]);
-									
+									// Hash a new password for storing in the database.
+									// The function automatically generates a cryptographically safe salt.
+									$newHashedPass = Crypt::encrypt(
+													password_hash
+													(
+														base64_encode
+														(
+															hash('sha384', $newPass, true)
+														),
+														PASSWORD_DEFAULT
+													)
+												);
 
-									// still need code for the new password!
+									$length = 20; // Length of auth token
+									$AuthToken = $UserName."=".bin2hex(random_bytes($length));
+									$protectedAuthToken = Crypt::encrypt(
+													password_hash
+													(
+														base64_encode
+														(
+															hash('sha384', $AuthToken, true)
+														),
+														PASSWORD_DEFAULT
+													)
+												); 
+
+
+
+									// Reset password resettting info as well as setting new password
+									$query = New Query(UPDATE, "`AuthTable` ".
+											"SET `Password`=:Password, `AuthToken`=:AuthToken, `PasswordResetVerified`=0, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=0, `PasswordResetToken`=NULL ".
+											"WHERE `UserName` =:UserName");
+									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":Password" =>$newHashedPass, ":AuthToken" => $protectedAuthToken,":PassResTokEx" => $now->format('Y-m-d H:i:s'), ':UserName' => $UserName]);
+									
 
 								
 									$output['passwordResetComplete'] = true;
