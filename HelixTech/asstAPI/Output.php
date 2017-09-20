@@ -70,6 +70,7 @@ class Output{
 			//		var_dump($content);
             $content = preg_replace('/":*UniqueID":"\w*",?/', "", $content);
 			$content = preg_replace('/":*Password":"\w*",?/', "", $content);
+			$content = preg_replace('/":*AuthTokenPlain":"\w*",?/', "", $content);
 
             // return values: sent to client in the HTTP body via echo.
 
