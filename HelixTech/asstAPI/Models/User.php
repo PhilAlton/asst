@@ -495,7 +495,7 @@
 			            if (password_verify(
 								base64_encode(hash('sha384', $input[$sq1], true)),
 								$sa1
-							) and (password_verify(
+							) and password_verify(
 								base64_encode(hash('sha384', $input[$sq2], true)),
 								$sa2
 							)){
