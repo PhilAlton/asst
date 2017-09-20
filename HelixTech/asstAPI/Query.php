@@ -1,6 +1,7 @@
 <?php namespace HelixTech\asstAPI;
 
     use HelixTech\asstAPI\{Database, Crypt};
+    use Defuse\Crypto\Exception as Ex;
 
     //require 'database.php';
     define("INSERT", "INSERT");
@@ -20,6 +21,9 @@
         private $query;
         private $database;
 	    private $queryType;
+        private $encryptedTableBoolean;
+        private $unencryptedTableNames = Array("cache", "ConnectionLog");
+        private $unencryptedParameters = Array(":UserName", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx");
 
         public function lastInsertId(){
             return $this->database->lastInsertId();
@@ -30,6 +34,16 @@
             $this->database = Database::instance();
 		    $this->queryType = $queryType;
             $this->query = $queryType." ".$query;
+            
+            // based on table name, decide whether to encrpyt the data
+            
+            foreach ($this->unencryptedTableNames as $tableName){
+                if(strpos($query, $tableName) !== false){
+                    $this->encryptedTableBoolean = false;
+                } else {
+                    $this->encryptedTableBoolean = true;
+                }
+            }
         }
 
 
@@ -55,7 +69,26 @@
             }
         }
 
+        private function handleParamEncryption($param, $value){
+            // Encrypt parameters here
+            // Exclude specified list of parameters and specified list of table calls
+            $newValue;
 
+            if($this->encryptedTableBoolean){
+                foreach ($this->unencryptedParameters as $unencryptedParam){
+                    if($param == $unencryptedParam){
+                        $newValue = $value;
+                    } else {
+                        $newValue = Crypt::encrypt($value);
+                    }
+                }
+               
+            } else {
+                $newValue = $value;
+            }
+
+            return $newValue;
+        }
 
         public function buildQuery($params = null){
 
@@ -63,10 +96,9 @@
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
-			    //		Crypt::encrypt
-					    $param,							// Encrypt all parameters here: uncomment and add () to $param? Or just to value?
-					    $value
-				    );
+					    $param,							
+					    handleParamEncryption($param, $value)
+    				    );
 			    }
 		    }
         }
@@ -107,7 +139,15 @@
 						}
 
 				        // algorithm to decrypt all database output
-                        // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
+                        if ($this->encryptedTableBoolean){
+                            array_walk_recursive($results, function(&$value, $key){
+                                try{    
+                                    $value = Crypt::decrypt($value);
+                                } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
+                                    $value = $value;
+                                }
+                            });
+                        }
                         http_response_code(200); // OK
 				        break;
 
