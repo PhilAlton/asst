@@ -442,7 +442,7 @@
 					case 'checkGUIDE':
 						// database call 
 						$query = New Query(SELECT, 'PasswordResetToken, PasswordResetTokenExpiry, SecQ1, SecQ2  FROM `AuthTable` WHERE `UserName` =:UserName');
-						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]));
+						$results = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]);
 
 
 						// check GUIDE $input['GUIDE'] matches GUIDE
@@ -474,7 +474,7 @@
 					case 'checkAnswers':
 						// database call 
 						$query = New Query(SELECT, 'SecQ1, SecQ2  FROM `AuthTable` WHERE `UserName` =:UserName');
-						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]));
+						$results = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]);
 
 						$s1 = explode("Answer:", $results["SecQ1"]);
 						$sq1 = ltrim($s1[0],"Question:"); // secret question
@@ -522,7 +522,7 @@
 					case 'newPassword':
 						// database call 
 						$query = New Query(SELECT, 'PasswordResetToken, PasswordResetVerified, PasswordResetTokenExpiry FROM `AuthTable` WHERE `UserName` =:UserName');
-						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]));
+						$results = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]);
 
 						// check GUIDE $input['GUIDE'] matches GUIDE
 						$uniqueCode = $results["PasswordResetToken"];
