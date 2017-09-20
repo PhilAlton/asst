@@ -92,7 +92,7 @@ class Output{
 		    ."</br>".Output::getErrorLog();
             //echo Output::getHistory();
 		    // Add history after
-            $errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getOutput();
+            $errorLog = $errorLog."</br></br></br><b>History:</b></br>".$errorOutput;
 		    if (Output::getHistory() !== "</br>"){
 			    $errorLog = $errorLog."</b></br>".Output::getHistory();
 		    }
