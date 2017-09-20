@@ -58,7 +58,7 @@
 
 
         public function buildQuery($params = null){
-
+			var_dump($params);
             $this->database->query($this->query);
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
