@@ -100,12 +100,12 @@
 					// Update AuthTable with parameters:
 					$query = New Query(
 									INSERT, "INTO AuthTable".
-										"(UserName, Password, AuthToken, SecQ1, SecQ2)".
+										"(UserName, Password, AuthToken, AuthTokenPlain, SecQ1, SecQ2)".
 									"VALUES".
-										"(:UserName, :Password, :AuthToken, :secQ1, :secQ2)"
+										"(:UserName, :Password, :AuthToken, :AuthTokenPlain, :secQ1, :secQ2)"
 									);
 
-					$results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName'], ':Password' => $password, ':AuthToken' => $protectedAuthToken, ':secQ1' => $secQ1, ':secQ2' => $secQ2]));
+					$results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName'], ':Password' => $password, ':AuthToken' => $protectedAuthToken, ':AuthTokenPlain'=>$AuthToken,':secQ1' => $secQ1, ':secQ2' => $secQ2]));
 					unset($results['secQ1']);
 					unset($results['secQ2']);
 				
@@ -335,7 +335,7 @@
             $results = array();
 
             //Get info from User's records in both User Data Tables
-			$query = New Query(SELECT, 'AuthToken FROM `AuthTable` WHERE `UniqueID` = :UniqueID');
+			$query = New Query(SELECT, 'AuthTokenPlain FROM `AuthTable` WHERE `UniqueID` = :UniqueID');
 			$results = array_merge( $results, Array("AuthToken" => $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID])));
 		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
 		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]));
@@ -562,9 +562,9 @@
 
 									// Reset password resettting info as well as setting new password
 									$query = New Query(UPDATE, "`AuthTable` ".
-											"SET `Password`=:Password, `AuthToken`=:AuthToken, `PasswordResetVerified`=0, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=0, `PasswordResetToken`=NULL ".
+											"SET `Password`=:Password, `AuthToken`=:AuthToken, `AuthTokenPlain`=:AuthTokenPlain, `PasswordResetVerified`=0, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=0, `PasswordResetToken`=NULL ".
 											"WHERE `UserName` =:UserName");
-									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":Password" =>$newHashedPass, ":AuthToken" => $protectedAuthToken,":PassResTokEx" => $now->format('Y-m-d H:i:s'), ':UserName' => $UserName]);
+									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":Password" =>$newHashedPass, ":AuthToken" => $protectedAuthToken, ":AuthTokenPlain" => $AuthToken, ":PassResTokEx" => $now->format('Y-m-d H:i:s'), ':UserName' => $UserName]);
 									
 
 								
