@@ -535,7 +535,7 @@
 									$query = New Query(UPDATE, "`AuthTable` ".
 											"SET `PasswordResetVerified`=0, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=0, `PasswordResetToken`=NULL ".
 											"WHERE `UserName` =:UserName");
-									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTokEx" => $now->format('Y-m-d H:i:s');, ':UserName' => $UserName]);
+									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTokEx" => $now->format('Y-m-d H:i:s'), ':UserName' => $UserName]);
 									
 
 									// still need code for the new password!
