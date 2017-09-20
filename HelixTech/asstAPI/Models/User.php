@@ -569,6 +569,8 @@
 						//http_response_code('500');
 						break;
 
+				}
+
 				Output::setOutput($output);
 
 			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
