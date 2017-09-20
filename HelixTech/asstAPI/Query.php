@@ -58,13 +58,14 @@
 
 
         public function buildQuery($params = null){
-		var_dump($params);
+
             $this->database->query($this->query);
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
 				    $this->database->bind(
-					    $param,							
-					    Crypt::encrypt($value)		// Encrypt all parameters here
+			    //		Crypt::encrypt
+					    $param,							// Encrypt all parameters here: uncomment and add () to $param? Or just to value?
+					    $value
 				    );
 			    }
 		    }
@@ -106,7 +107,7 @@
 						}
 
 				        // algorithm to decrypt all database output
-                        array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
+                        // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
                         http_response_code(200); // OK
 				        break;
 
