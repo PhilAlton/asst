@@ -61,7 +61,7 @@
             $this->database->query($this->query);
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
-				    echo Crypt::encrypt($value);
+				    echo "param: ".$param." value: ".Crypt::encrypt($value);
 					$this->database->bind(
 					    $param,							// Encrypt all parameters here: uncomment and add () to $param? Or just to value?
 					    Crypt::encrypt($value)
