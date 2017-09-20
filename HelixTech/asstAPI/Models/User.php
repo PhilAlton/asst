@@ -496,8 +496,8 @@
 							//set database to validate GUIDE
 							$query = New Query(UPDATE, "`AuthTable` ".
 									"SET `PasswordResetVerified`=:PasswordResetVerified ".
-									"WHERE `UniqueID` =:UniqueID");
-							$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PasswordResetVerified" => 1, ':UniqueID' => $uniqueID]);
+									"WHERE  `UserName` =:UserName");
+							$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PasswordResetVerified" => 1, ':UserName' => $UserName]);
 
 							$output['secretAnswersChecked'] = true;
 
@@ -535,8 +535,8 @@
 								
 									$query = New Query(UPDATE, "`AuthTable` ".
 											"SET `PasswordResetVerified`=0, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=0, `PasswordResetToken`=NULL ".
-											"WHERE `UniqueID` =:UniqueID");
-									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTokEx" => $now, ':UniqueID' => $uniqueID]);
+											"WHERE `UserName` =:UserName");
+									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTokEx" => $now, ':UserName' => $UserName]);
 									
 								
 									$output['passwordResetComplete'] = true;
