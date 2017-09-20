@@ -23,7 +23,7 @@
 	    private $queryType;
         private $encryptedTableBoolean;
         private $unencryptedTableNames = Array("cache", "ConnectionLog");
-        private $unencryptedParameters = Array(":UserName", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx");
+        private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx");
 
         public function lastInsertId(){
             return $this->database->lastInsertId();
