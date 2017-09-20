@@ -289,17 +289,17 @@
                          */
 				        case 'PUT':
 					        // call method to update single varaibles
-                            Output::setOutput(User::updateParams($UserName, $params));
+                            Output::setOutput(User::updateParams($params));
 					        break;
 
 				        case 'DELETE':
 					        // call method to delete
-					        Output::setOutput(User::deleteUser($UserName));
+					        Output::setOutput(User::deleteUser());
 					        break;
 
 				        case 'GET':
 					        // call method to get
-					        Output::setOutput(User::getUser($UserName));
+					        Output::setOutput(User::getUser());
 					        break;
 
 				        default:
@@ -330,7 +330,7 @@
          * @see \HelixTech\asstAPI\User::handleRequest()
 	     * @return array
 	     */
-	    private static function getUser($UserName){
+	    private static function getUser(){
 		    // GET request
             $results = array();
 
@@ -349,11 +349,10 @@
 
 	    /**
         * Summary of updateParams - mapped to endpoint for PUT requests to .../Users/{UserName}
-	     * @param mixed $UserName
 	     * @param mixed $params
 	     * @return array
 	     */
-	    private static function updateParams($UserName, $params){
+	    private static function updateParams($params){
             $results = array();
 
             // Asign columns in the User Table to an array
@@ -397,8 +396,8 @@
         }
 
 
-	    private static function deleteUser($UserName){
-		    // DELETE request, accepting user ID;
+	    private static function deleteUser(){		
+		    // DELETE request, accepting user ID;				
 
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		    $isRchParticipant = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
@@ -496,9 +495,9 @@
 
 							//set database to validate GUIDE
 							$query = New Query(UPDATE, "`AuthTable` ".
-									"SET `PasswordResetVerified`=:PasswordResetVerified ".
+									"SET `PasswordResetVerified`=1 ".
 									"WHERE  `UserName` =:UserName");
-							$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PasswordResetVerified" => 1, ':UserName' => $UserName]);
+							$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]);
 
 							$output['secretAnswersChecked'] = true;
 

@@ -58,14 +58,14 @@
 
 
         public function buildQuery($params = null){
-			echo Crypt::encrypt("philalton25@doctors.org.uk");
+
             $this->database->query($this->query);
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
-				if ($param == ":UserName"){echo "<br/>UserName: ".Crypt::decrypt(Crypt::encrypt($value));}
-					$this->database->bind(
+				    $this->database->bind(
+			    //		Crypt::encrypt
 					    $param,							// Encrypt all parameters here: uncomment and add () to $param? Or just to value?
-					    Crypt::encrypt($value)
+					    $value
 				    );
 			    }
 		    }
@@ -107,7 +107,7 @@
 						}
 
 				        // algorithm to decrypt all database output
-                        array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
+                        // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
                         http_response_code(200); // OK
 				        break;
 
