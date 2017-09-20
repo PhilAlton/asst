@@ -58,6 +58,7 @@
 
 
         public function buildQuery($params = null){
+			echo Crypt::encrypt("philalton25@doctors.org.uk");
             $this->database->query($this->query);
 		    if (isset($params)){
 			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
