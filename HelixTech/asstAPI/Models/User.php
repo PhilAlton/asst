@@ -573,7 +573,6 @@
 									throw new AttemptedNewPasswordWithoutSecretAnswers("Password reset attempted bypassing secret questions for user: ".$UserName);
 								}
 							} else {
-								http_response_code(401);
 								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName);
 							}
 						} else {
@@ -595,15 +594,19 @@
 				Output::setOutput($output);
 
 			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
+				http_response_code(401);
 				Output::errorMsg("Password reset token expired. ".$e->getMessage());
 
 			} catch (AttemptedPasswordResetWithInvalidGUIDE $e){
+				http_response_code(401);
 				Output::errorMsg("Password reset token invalid. ".$e->getMessage());
 
 			} catch (SecretAnswersInvalid $e){
+				http_response_code(401);
 				Output::errorMsg("Invalid secret answers given. ".$e->getMessage());
 
 			} catch (AttemptedNewPasswordWithoutSecretAnswers $e){
+				http_response_code(401);
 				Output::errorMsg("Invalid password reset");
 
 			}
