@@ -10,7 +10,7 @@
        */
 
     use HelixTech\asstAPI\{Output, Connection, Query, Crypt};
-    use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, RequestPasswordResetForNonExistantUser};
+    use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, RequestPasswordResetForNonExistantUser, AttemptedUseOfExpiredPasswordResetToken, AttemptedPasswordResetWithInvalidGUIDE};
 
 
 
@@ -430,72 +430,160 @@
 
 		public static function resetProceed($UserName, $input){
 		
-		//	Output::setOutput($input);
-		//	echo "new things here";
-			$output = Array();
-			if(!isset($input['part'])){$input['part']="undefined";}
+			try{
+			//	Output::setOutput($input);
+			//	echo "new things here";
+				$output = Array();
+				if(!isset($input['part'])){$input['part']="undefined";}
 			
 			
-			switch ($input['part']) {
+				switch ($input['part']) {
 				
-				case 'checkGUIDE':
-					// database call 
-					// check GUIDE $input['GUIDE'] matches GUIDE
-					$uniqueCode = "somehashorguidewhichisthendatabased"; // will actually be a database call
+					case 'checkGUIDE':
+						// database call 
+						$query = New Query(SELECT, 'PasswordResetToken, PasswordResetTokenExpiry, SecQ1, SecQ2  FROM `AuthTable` WHERE `UserName` =:UserName');
+						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]));
 
-					if ($input['GUIDE'] === $uniqueCode){
-						// output secret questions
-						$query = New Query(SELECT, 'SecQ1, SecQ2 FROM `AuthTable` WHERE `UserName` =:UserName');
-						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']]));
 
-						$output['SecretQuestion1'] = $results["SecQ1"];
-						$output['SecretQuestion2'] = $results["SecQ2"];;
-					} else {
-						http_response_code(401);
-					}
-					break;
+						// check GUIDE $input['GUIDE'] matches GUIDE
+						$uniqueCode = $results["PasswordResetToken"];
+						if ($input['GUIDE'] === $uniqueCode) { 
+							// check GUIDE is in-date
+							$now = new \DateTime(); //current date/time
+							$tokenExpiry = $results["PasswordResetTokenExpiry"];
+
+							if ($now < $tokenExpiry){
+								// output secret questions
+								$s1 = explode("Answer:", $results["SecQ1"]);
+								$sq1 = ltrim($s1[0],"Question:"); // secret question
+								$output['SecretQuestion1'] = $sq1;
+
+								$s2 = explode("Answer:", $results["SecQ2"]);
+								$sq2 = ltrim($s2[0],"Question:"); // secret question
+								$output['SecretQuestion2'] = $sq2;
+
+							} else {
+								http_response_code(401);
+								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName);
+							}
+						} else {
+							throw new AttemptedPasswordResetWithInvalidGUIDE("Token does not match the stored PasswordResetToken, for user: ".$UserName);
+						}
+						break;
 				
-				case 'checkAnswers':
-					// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
-					$secretAnswersMatch = true;
-					
-					if ($secretAnswersMatch){					
-						$output['secretAnswersChecked'] = true;
-						//set database to validate GUIDE
+					case 'checkAnswers':
+						// database call 
+						$query = New Query(SELECT, 'SecQ1, SecQ2  FROM `AuthTable` WHERE `UserName` =:UserName');
+						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]));
+
+						$s1 = explode("Answer:", $results["SecQ1"]);
+						$sq1 = ltrim($s1[0],"Question:"); // secret question
+						$sa1 = $s1[1]; // secret answer
+
+						$s2 = explode("Answer:", $results["SecQ2"]);
+						$sq2 = ltrim($s2[0],"Question:"); // secret question
+						$sa2 = $s2[1]; // secret answer
 
 
-					} else {
-						// Log whether secre questions and answers match
-						// create secretAnswersInvalid error
-						// this error should generate an alert, if there is much activity against it
-						// However, this level of analytics will need to fall in to the analytics class
-						// And not form part of the error's own class
-						$output['secretAnswersChecked'] = false;
-					}
-					break;
 
-				case 'newPassword':
-					// Retrieve new password and store in database
-					$newPass = $input['newPassword'];
-					$output['newPasswordFromServer'] = $newPass;
-					$output['passwordResetComplete'] = true;
-					// Store changes in database
-					// but ensure that guide validation has occured
-					break;				
-				
-				default:
-					# code...
-					$output[$input];
-					//http_response_code('500');
-					break;
+						$secA1 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer1'], true)),PASSWORD_DEFAULT);                            
+						$secA2 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer2'], true)),PASSWORD_DEFAULT);
+
+
+
+						// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
+			            if (password_verify(
+								base64_encode(hash('sha384', $input[$sq1], true)),
+								$sa1
+							) and (password_verify(
+								base64_encode(hash('sha384', $input[$sq2], true)),
+								$sa2
+							)){
+
+							//set database to validate GUIDE
+							$query = New Query(UPDATE, "`AuthTable` ".
+									"SET `PasswordResetVerified`=:PasswordResetVerified ".
+									"WHERE `UniqueID` =:UniqueID");
+							$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PasswordResetVerified" => 1, ':UniqueID' => $uniqueID]);
+
+							$output['secretAnswersChecked'] = true;
+
+						} else {
+							// Log whether secre questions and answers match
+							$output['secretAnswersChecked'] = false;
+							throw new SecretAnswersInvalid("Secret answers given do not match those stored for ".$UserName);
+							// this error should generate an alert, if there is much activity against it
+							// However, this level of analytics will need to fall in to the analytics class
+							// And not form part of the error's own class
+						}
+
+						break;
+
+					case 'newPassword':
+						// database call 
+						$query = New Query(SELECT, 'PasswordResetToken, PasswordResetVerified, PasswordResetTokenExpiry FROM `AuthTable` WHERE `UserName` =:UserName');
+						$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $UserName]));
+
+						// check GUIDE $input['GUIDE'] matches GUIDE
+						$uniqueCode = $results["PasswordResetToken"];
+						if ($input['GUIDE'] === $uniqueCode) { 
+							// check GUIDE is in-date
+							$now = new \DateTime(); //current date/time
+							$tokenExpiry = $results["PasswordResetTokenExpiry"];
+
+							if ($now < $tokenExpiry){
+								
+								if ($results["PasswordResetVerified"]){
+								
+									// Retrieve new password and store in database
+									// Reset password resettting info
+									$newPass = $input['newPassword'];
+								
+									$query = New Query(UPDATE, "`AuthTable` ".
+											"SET `PasswordResetVerified`=0, `PasswordResetTokenExpiry`=:PassResTokEx, `PasswordResetAttempts`=0, `PasswordResetToken`=NULL ".
+											"WHERE `UniqueID` =:UniqueID");
+									$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [":PassResTokEx" => $now, ':UniqueID' => $uniqueID]);
+									
+								
+									$output['passwordResetComplete'] = true;
+
+
+								} else {
+									throw new AttemptedNewPasswordWithoutSecretAnswers("Password reset attempted bypassing secret questions for user: ".$UserName);
+								}
+							} else {
+								http_response_code(401);
+								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName);
+							}
+						} else {
+							throw new AttemptedPasswordResetWithInvalidGUIDE("Token does not match the stored PasswordResetToken, for user: ".$UserName);
+						}
+						
+
+						break;				
+
+
+					default:
+						# code...
+						$output[$input];	// for debugging
+						//http_response_code('500');
+						break;
+
+				Output::setOutput($output);
+
+			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
+				Output::errorMsg("Password reset token expired: ".$e->getMessage());
+
+			} catch (AttemptedPasswordResetWithInvalidGUIDE $e){
+				Output::errorMsg("Password reset token invalid: ".$e->getMessage());
+
+			} catch (SecretAnswersInvalid $e){
+				Output::errorMsg("Invalid secret answers given: ".$e->getMessage());
+
+			} catch (AttemptedNewPasswordWithoutSecretAnswers $e){
+				Output::errorMsg("Invalid password reset");
+
 			}
-
-			// Log the attempt to reset password (it's actually already logged 
-			//		by virtue of the connection monitoring that we employ against all request)
-
-
-			Output::setOutput($output);
-
 
 		}
 
@@ -541,7 +629,6 @@
 
 				} else {
 					// error code if no such user: throw error and log
-					Output::setOutput("humm");
 					throw new RequestPasswordResetForNonExistantUser("Password Reset Requested for non existant user: ".$UserName);
 					
 				}
