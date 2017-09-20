@@ -144,7 +144,7 @@
                         if ($this->encryptedTableBoolean){
                             array_walk_recursive($results, function(&$value, $key){
                                 try{    
-                                    $value = Crypt::decrypt($value);
+                                    if(isset($value)){$value = Crypt::decrypt($value);} else {$value = $value;}
                                 } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
                                     $value = $value;
                                 }
