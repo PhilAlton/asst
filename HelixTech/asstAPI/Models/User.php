@@ -554,7 +554,7 @@
 								}
 							} else {
 								http_response_code(401);
-								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName." Info: "."<br/>".$now."<br/>".$tokenExpiry."<br/>".($now < $tokenExpiry)."<br/>");
+								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName);
 							}
 						} else {
 							throw new AttemptedPasswordResetWithInvalidGUIDE("Token does not match the stored PasswordResetToken, for user: ".$UserName);
@@ -575,7 +575,7 @@
 				Output::setOutput($output);
 
 			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
-				Output::errorMsg("Password reset token expired: ".$e->getMessage());
+				Output::errorMsg("Password reset token expired. Info: <br/>".$now."<br/>".$tokenExpiry."<br/>".($now < $tokenExpiry)."<br/>".$e->getMessage());
 
 			} catch (AttemptedPasswordResetWithInvalidGUIDE $e){
 				Output::errorMsg("Password reset token invalid: ".$e->getMessage());
