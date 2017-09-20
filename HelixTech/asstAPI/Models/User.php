@@ -484,13 +484,6 @@
 						$sq2 = ltrim($s2[0],"Question:"); // secret question
 						$sa2 = $s2[1]; // secret answer
 
-
-
-						$secA1 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer1'], true)),PASSWORD_DEFAULT);                            
-						$secA2 = password_hash(base64_encode(hash('sha384', $params['SecretAnswer2'], true)),PASSWORD_DEFAULT);
-
-
-
 						// check secret answers $input['secretAnswer1'] and $input['secretAnswer2'] match database call
 			            if (password_verify(
 								base64_encode(hash('sha384', $input[$sq1], true)),
@@ -529,7 +522,7 @@
 						if ($input['GUIDE'] === $uniqueCode) { 
 							// check GUIDE is in-date
 							$now = new \DateTime(); //current date/time
-							$tokenExpiry = strtotime($results["PasswordResetTokenExpiry"]);
+							$tokenExpiry = new \DateTime($results["PasswordResetTokenExpiry"]);
 							
 
 							if ($now < $tokenExpiry){
@@ -575,13 +568,13 @@
 				Output::setOutput($output);
 
 			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
-				Output::errorMsg("Password reset token expired. Info: <br/>Now: ".$now->format('Y-m-d H:i:s')."<br/>Token: ".$tokenExpiry->format('Y-m-d H:i:s')."<br/>Vs:".($now < $tokenExpiry)."<br/>".$e->getMessage());
+				Output::errorMsg("Password reset token expired. ".$e->getMessage());
 
 			} catch (AttemptedPasswordResetWithInvalidGUIDE $e){
-				Output::errorMsg("Password reset token invalid: ".$e->getMessage());
+				Output::errorMsg("Password reset token invalid. ".$e->getMessage());
 
 			} catch (SecretAnswersInvalid $e){
-				Output::errorMsg("Invalid secret answers given: ".$e->getMessage());
+				Output::errorMsg("Invalid secret answers given. ".$e->getMessage());
 
 			} catch (AttemptedNewPasswordWithoutSecretAnswers $e){
 				Output::errorMsg("Invalid password reset");
