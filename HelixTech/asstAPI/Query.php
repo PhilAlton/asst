@@ -79,6 +79,8 @@
                     if($param == $unencryptedParam){
                         $newValue = $value;
                     } else {
+                        echo "<br/>param=".$param."<br/>";
+                        echo "<br/>value=".$value."<br/>";
                         $newValue = Crypt::encrypt($value);
                     }
                 }
