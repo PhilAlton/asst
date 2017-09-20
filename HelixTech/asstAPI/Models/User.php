@@ -529,7 +529,7 @@
 						if ($input['GUIDE'] === $uniqueCode) { 
 							// check GUIDE is in-date
 							$now = new \DateTime(); //current date/time
-							$tokenExpiry = $results["PasswordResetTokenExpiry"];
+							$tokenExpiry = new \DateTime($results["PasswordResetTokenExpiry"]);
 							
 
 							if ($now < $tokenExpiry){
@@ -575,7 +575,7 @@
 				Output::setOutput($output);
 
 			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
-				Output::errorMsg("Password reset token expired. Info: <br/>".$now->format('Y-m-d H:i:s')."<br/>".$tokenExpiry->format('Y-m-d H:i:s')."<br/>".($now < $tokenExpiry)."<br/>".$e->getMessage());
+				Output::errorMsg("Password reset token expired. Info: <br/>".$now->format('Y-m-d H:i:s')."<br/>".$tokenExpiry."<br/>".($now < $tokenExpiry)."<br/>".$e->getMessage());
 
 			} catch (AttemptedPasswordResetWithInvalidGUIDE $e){
 				Output::errorMsg("Password reset token invalid: ".$e->getMessage());
