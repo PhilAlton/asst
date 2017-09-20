@@ -109,7 +109,7 @@
 					unset($results['secQ1']);
 					unset($results['secQ2']);
 				
-
+					echo "here";
 					// Retrieve the created primary key
 					$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UserName` =:UserName');
 					User::$uID = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName']])['UniqueID'];
