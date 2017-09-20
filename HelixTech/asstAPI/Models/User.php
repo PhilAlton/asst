@@ -450,7 +450,7 @@
 						if ($input['GUIDE'] === $uniqueCode) { 
 							// check GUIDE is in-date
 							$now = new \DateTime(); //current date/time
-							$tokenExpiry = $results["PasswordResetTokenExpiry"];
+							$tokenExpiry = strtotime($results["PasswordResetTokenExpiry"]);
 
 							if ($now < $tokenExpiry){
 								// output secret questions
@@ -575,7 +575,7 @@
 				Output::setOutput($output);
 
 			} catch (AttemptedUseOfExpiredPasswordResetToken $e){
-				Output::errorMsg("Password reset token expired. Info: <br/>Now: ".$now->format('Y-m-d H:i:s')."<br/>Token: ".$tokenExpiry."<br/>Vs:".($now < $tokenExpiry)."<br/>".$e->getMessage());
+				Output::errorMsg("Password reset token expired. Info: <br/>Now: ".$now->format('Y-m-d H:i:s')."<br/>Token: ".$tokenExpiry->format('Y-m-d H:i:s')."<br/>Vs:".($now < $tokenExpiry)."<br/>".$e->getMessage());
 
 			} catch (AttemptedPasswordResetWithInvalidGUIDE $e){
 				Output::errorMsg("Password reset token invalid: ".$e->getMessage());
