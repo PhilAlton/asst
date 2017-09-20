@@ -117,6 +117,7 @@
 
 					// Change password returned to authtoken led by username
 					$results['AuthToken'] = $AuthToken;
+					unset($results['AuthTokenPlain']);
                 
 
 					// Update UserTable with parameters
