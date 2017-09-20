@@ -530,9 +530,7 @@
 							// check GUIDE is in-date
 							$now = new \DateTime(); //current date/time
 							$tokenExpiry = $results["PasswordResetTokenExpiry"];
-							echo $now."<br/>";
-							echo $tokenExpiry."<br/>";
-							echo ($now < $tokenExpiry)."<br/>";
+							
 
 							if ($now < $tokenExpiry){
 								
@@ -556,7 +554,7 @@
 								}
 							} else {
 								http_response_code(401);
-								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName);
+								throw new AttemptedUseOfExpiredPasswordResetToken("Password reset token has expired for user: ".$UserName." Info: "."<br/>".$now."<br/>".$tokenExpiry."<br/>".($now < $tokenExpiry)."<br/>";);
 							}
 						} else {
 							throw new AttemptedPasswordResetWithInvalidGUIDE("Token does not match the stored PasswordResetToken, for user: ".$UserName);
