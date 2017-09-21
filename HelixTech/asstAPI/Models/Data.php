@@ -94,7 +94,7 @@ class Data {
 
 
             if (count($conflict) !== 0){
-                $results = array_merge($results, Array($userTable => "database conflict, data-set {$data['Date']} in $userTable alraedy exists"));
+                $results = array_merge($results, Array($userTable => "database conflict, data-set {$data['Date']} in  $userTable".User::$uID." alraedy exists"));
 		    } else {
             // If no conflicts then proceed:
 
