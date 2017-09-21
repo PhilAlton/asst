@@ -91,7 +91,7 @@
             } else {
                 $newValue = $value;
             }
-            echo "</br>newvalue:".$newValue;
+            echo "</br>Param: ".$param." and newvalue:".$newValue;
             return $newValue;
         }
 
