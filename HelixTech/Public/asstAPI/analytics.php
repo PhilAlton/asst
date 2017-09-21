@@ -1,7 +1,0 @@
-<?php
-//output for analytics
-
-
-
-
-?>
