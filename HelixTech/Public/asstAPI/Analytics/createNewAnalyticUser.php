@@ -1,4 +1,5 @@
 <?php
+require_once dirname(dirname(__FILE__)) . '/../bootstrap.php';
 
 use Defuse\Crypto\KeyProtectedByPassword;
 use Defuse\Crypto\Crypto;
