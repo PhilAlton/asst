@@ -197,7 +197,7 @@ class Connection{
 
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
-                // If no password obtained then throw exception and handle.
+                // If no user obtained from database then throw exception and handle.
                 $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
                 throw new \UnexpectedValueException($e);
             } else {
@@ -205,6 +205,7 @@ class Connection{
 
                     // for admin table, key is protected by password
                 if ($table == "AdminTable"){
+					var_dump($UserDetails);
                     Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
                 }
 
