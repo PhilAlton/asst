@@ -132,16 +132,7 @@
 			        case SELECT:
 				        $results = $this->database->resultset();
 
-						// reduce output in case of single row, or single result
-						if ($simplifyQueryResults == "SIMPLIFY_QUERY_RESULTS_ON"){
-							if (count($results) == 1)
-							{
-								foreach ($results as $result){$results = $result;}
-								if (count($results) == 1){foreach ($results as $result){$results = $result;}}
-							}
-						}
-
-				        // algorithm to decrypt all database output
+						// algorithm to decrypt all database output
                         if ($this->encryptedTableBoolean){
                             array_walk_recursive($results, function(&$value, $key){
                                 try{    
@@ -157,6 +148,17 @@
                                 }
                             });
                         }
+
+						// reduce output in case of single row, or single result
+						if ($simplifyQueryResults == "SIMPLIFY_QUERY_RESULTS_ON"){
+							if (count($results) == 1)
+							{
+								foreach ($results as $result){$results = $result;}
+								if (count($results) == 1){foreach ($results as $result){$results = $result;}}
+							}
+						}
+
+
                         http_response_code(200); // OK
 				        break;
 
