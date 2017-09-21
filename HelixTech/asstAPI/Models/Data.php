@@ -89,7 +89,7 @@ class Data {
         foreach (Data::$userTableArray as $userTable){
 
             // Handle any conflicts
-            $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
+            $query = New Query(SELECT, "* from $userTable".User::$uID." WHERE date = :date");
             $conflict = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':date' => $data['Date']]);
 
 			var_dump($conflict);
