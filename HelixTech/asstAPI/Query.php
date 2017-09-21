@@ -147,6 +147,8 @@
                                 try{    
 									foreach ($this->unencryptedParameters as $unencryptedParam){
 										if($key == $unencryptedParam){
+											$value = $value;
+										} else {
 											if(isset($value)){$value = Crypt::decrypt($value);} else {$value = $value;}
 										}
 									}
