@@ -10,7 +10,7 @@ use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 define("PAGESTEM", "https://axspa.org.uk/asst/Cache/");
 define("FILEPATH_STEM", ($_SERVER['REMOTE_ADDR'] == "::1" ? 
                                 'C:\xampp\htdocs\cache\asst\\' : 
-                                realpath($_SERVER['DOCUMENT_ROOT']).'/cache/asst'))
+                                realpath($_SERVER['DOCUMENT_ROOT'].'/cache/asst'))
         );
 define("LINK_EXPIRE_TIME", 8);
 
