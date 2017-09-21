@@ -286,7 +286,6 @@
                          */
 				        case 'PUT':
 					        // call method to update single varaibles
-							echo "here";
                             Output::setOutput(User::updateParams($params));
 					        break;
 
@@ -360,7 +359,7 @@
                                     );
             $colArray['ResearchTable'] = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':tableName' => 'ResearchTable']);
             $colArray['UserTable'] = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':tableName' => 'UserTable']);
-
+			var_dump($colArray);
             // Loop through each column, and check whether a post variable has been created with that same column name
             // This prevents SQL injuection in the POST array index; bound parameters will prevent injection from the POST array value
             foreach ($colArray as $tableName => $columns){
