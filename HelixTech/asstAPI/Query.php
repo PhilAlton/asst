@@ -145,12 +145,12 @@
                         if ($this->encryptedTableBoolean){
                             array_walk_recursive($results, function(&$value, $key){
                                 try{    
-									foreach ($this->unencryptedParameters as $unencryptedParam){
-										if($key == $unencryptedParam){
-											$value = $value;
-										} else {
-											if(isset($value)){$value = Crypt::decrypt($value);} else {$value = $value;}
+									if(isset($value)){
+										$encryptBool = true;
+										foreach ($this->unencryptedParameters as $unencryptedParam){
+											if($key == $unencryptedParam){$encryptBool = false;} 
 										}
+										if($encryptBool){$value = Crypt::decrypt($value);}
 									}
                                 } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
                                     $value = $value;
