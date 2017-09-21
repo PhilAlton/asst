@@ -87,7 +87,7 @@
             } else {
                 $encryptBool = false;
             } 
-
+			echo $encryptBool;
             if($encryptBool){
                 $newValue = Crypt::encrypt($value);
             } else {
