@@ -91,7 +91,7 @@
             } else {
                 $newValue = $value;
             }
-            
+            echo "</br>newvalue:"$newValue;
             return $newValue;
         }
 
