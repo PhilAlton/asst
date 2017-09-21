@@ -201,8 +201,6 @@
          * @return array - to be sent back to the client
          */
         public static function validateParticipateResearch($params){
-			var_dump($params);
-
             $results = array();
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		    $isResearchParticipant = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
@@ -288,6 +286,7 @@
                          */
 				        case 'PUT':
 					        // call method to update single varaibles
+							echo "here";
                             Output::setOutput(User::updateParams($params));
 					        break;
 
