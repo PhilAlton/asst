@@ -117,7 +117,7 @@
         public function execute($simplifyQueryResults, $params = null){
 
             $this->buildQuery($params);
-			var_dump($this->database->$statement);
+			var_dump($this->database->debugDumpParams());
             try {
                 $this->database->execute(1);
 
