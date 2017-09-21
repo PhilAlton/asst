@@ -108,7 +108,9 @@ class Router{
 			}
 
 
-			Output::errorMsg("Other Error Thrown: ".$e->getMessage());
+			Output::errorMsg(Array("Name"=>"Other Error Thrown: ".substr($e->getMessage(),22),
+										"On Line" => $e->getLine(),
+										"Trace"=>$e->getTrace()));
 
 			return;
 		}
