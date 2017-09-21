@@ -77,7 +77,7 @@
 
             if($this->encryptedTableBoolean){
 				echo "<br/>param:".$param;
-				echo "<br/>value:".$value;
+				echo " - value:".$value;
 				echo "<br/";
                 foreach ($this->unencryptedParameters as $unencryptedParam){
                     if($param == $unencryptedParam){
@@ -87,7 +87,7 @@
             } else {
                 $encryptBool = false;
             } 
-			echo "enc:".$encryptBool;
+			echo "<br/>enc:".$encryptBool;
             if($encryptBool){
                 $newValue = Crypt::encrypt($value);
             } else {
