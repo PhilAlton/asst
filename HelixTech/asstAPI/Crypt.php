@@ -66,7 +66,7 @@ class Crypt{
      * @return mixed cyphertext
      */
     public static function encrypt($input){
-                                                  // syntax here maps to synatx of encrypt();
+        $input = strval($input);                                   // syntax here maps to synatx of encrypt();
         return Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::encrypt", $input, $key = null);
 
     }
@@ -80,7 +80,7 @@ class Crypt{
      */
     public static function decrypt($input){
         $plaintext = "";
-		$input = strval($input);
+		
 		try {
 			try {
 				// call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
