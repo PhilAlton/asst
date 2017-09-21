@@ -24,7 +24,7 @@
         private $encryptedTableBoolean;
         private $unencryptedTableNames = Array("cache", "ConnectionLog", "INFORMATION_SCHEMA");
         private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx",
-												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "Date", "GenDataID", "RchDataID",
+												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "date", "Date", "GenDataID", "RchDataID",
 												"PasswordResetVerified", "PasswordResetAttempts", "Rch_Data_Count");
 
         public function lastInsertId(){
