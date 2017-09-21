@@ -7,7 +7,7 @@ use HelixTech\asstAPI\Query;
 
 
 $userName = "phil.alton@helix-tech.co.uk";
-$password = "Puzzl3d?";
+$password = "axspa123";
 
 
 $protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
