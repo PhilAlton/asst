@@ -150,6 +150,7 @@
                             });
                         }
 
+						var_dump($results);
 						// reduce output in case of single row, or single result
 						if ($simplifyQueryResults == "SIMPLIFY_QUERY_RESULTS_ON"){
 							if (count($results) == 1)
