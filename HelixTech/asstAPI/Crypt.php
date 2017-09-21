@@ -93,7 +93,7 @@ class Crypt{
 				// intentionally modified by someone trying to carry out an attack.
 
 				// ... handle this case
-				Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".$ex."\n");
+				Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".nl2br($ex)."\n");
 				Throw new DecryptionFailureInvalidKeyOrCorruptData;
 
 			} 
