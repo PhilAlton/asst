@@ -201,6 +201,7 @@
          * @return array - to be sent back to the client
          */
         public static function validateParticipateResearch($params){
+			var_dump($params);
 
             $results = array();
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
