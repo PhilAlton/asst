@@ -76,9 +76,7 @@
             $encryptBool = true;
 
             if($this->encryptedTableBoolean){
-				echo "<br/>param:".$param;
-				echo " - value:".$value;
-				echo "<br/";
+
                 foreach ($this->unencryptedParameters as $unencryptedParam){
                     if($param == $unencryptedParam){
                         $encryptBool = false;
@@ -87,8 +85,7 @@
             } else {
                 $encryptBool = false;
             } 
-			echo "<br/>enc:";
-			var_dump($encryptBool);
+
             if($encryptBool){
                 $newValue = Crypt::encrypt($value);
             } else {
@@ -120,7 +117,7 @@
         public function execute($simplifyQueryResults, $params = null){
 
             $this->buildQuery($params);
-
+			var_dump($this->database->$statement);
             try {
                 $this->database->execute(1);
 
