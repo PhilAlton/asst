@@ -141,27 +141,27 @@
 							"GenDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
 							"Date date NOT NULL UNIQUE,".
 							"LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
-							"Basdai_1 tinyint UNSIGNED NOT NULL,".
-							"Basdai_2 tinyint UNSIGNED NOT NULL,".
-							"Basdai_3 tinyint UNSIGNED NOT NULL,".
-							"Basdai_4 tinyint UNSIGNED NOT NULL,".
-							"Basdai_5 tinyint UNSIGNED NOT NULL,".
-							"Basdai_6 tinyint UNSIGNED NOT NULL,".
-							"Basdai_Total decimal(4,2) UNSIGNED NOT NULL,".
-							"Overall_Spinal_Pain tinyint UNSIGNED NOT NULL,".
-							"Basfi_1 tinyint UNSIGNED NOT NULL,".
-							"Basfi_2 tinyint UNSIGNED NOT NULL,".
-							"Basfi_3 tinyint UNSIGNED NOT NULL,".
-							"Basfi_4 tinyint UNSIGNED NOT NULL,".
-							"Basfi_5 tinyint UNSIGNED NOT NULL,".
-							"Basfi_6 tinyint UNSIGNED NOT NULL,".
-							"Basfi_7 tinyint UNSIGNED NOT NULL,".
-							"Basfi_8 tinyint UNSIGNED NOT NULL,".
-							"Basfi_9 tinyint UNSIGNED NOT NULL,".
-							"Basfi_10 tinyint UNSIGNED NOT NULL,".
-							"Basfi_Total tinyint UNSIGNED NOT NULL,".
-							"Overall_Spondylitis_Activity tinyint UNSIGNED NOT NULL,".
-							"Flare tinyint(1) NOT NULL,".
+							"Basdai_1 TEXT NOT NULL,".
+							"Basdai_2 TEXT NOT NULL,".
+							"Basdai_3 TEXT NOT NULL,".
+							"Basdai_4 TEXT NOT NULL,".
+							"Basdai_5 TEXT NOT NULL,".
+							"Basdai_6 TEXT NOT NULL,".
+							"Basdai_Total TEXT NOT NULL,".
+							"Overall_Spinal_Pain TEXT NOT NULL,".
+							"Basfi_1 TEXT NOT NULL,".
+							"Basfi_2 TEXT NOT NULL,".
+							"Basfi_3 TEXT NOT NULL,".
+							"Basfi_4 TEXT NOT NULL,".
+							"Basfi_5 TEXT NOT NULL,".
+							"Basfi_6 TEXT NOT NULL,".
+							"Basfi_7 TEXT NOT NULL,".
+							"Basfi_8 TEXT NOT NULL,".
+							"Basfi_9 TEXT NOT NULL,".
+							"Basfi_10 TEXT NOT NULL,".
+							"Basfi_Total TEXT NOT NULL,".
+							"Overall_Spondylitis_Activity TEXT NOT NULL,".
+							"Flare TEXT NOT NULL,".
 							"Flare_Duration text NULL,".
 							"Areas_Affected text NULL,".
 							"Flare_Freetext text NULL".
@@ -247,12 +247,12 @@
                     "RchDataID int(11) UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,".
                     "Date date NOT NULL UNIQUE,".
                     "LastUpdate DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,".
-                    "Sleep_1 tinyint UNSIGNED NOT NULL,".
-                    "Sleep_2 tinyint UNSIGNED NOT NULL,".
-                    "Sleep_3 tinyint UNSIGNED NOT NULL,".
-                    "Q_Medications_Changed tinyint(1) NOT NULL,".
+                    "Sleep_1 TEXT NOT NULL,".
+                    "Sleep_2 TEXT NOT NULL,".
+                    "Sleep_3 TEXT NOT NULL,".
+                    "Q_Medications_Changed TEXT NOT NULL,".
                     "Medication_Changes text null,".
-                    "Currently_Smoking tinyint UNSIGNED NOT NULL".
+                    "Currently_Smoking TEXT NOT NULL".
                 ")"
             );
 

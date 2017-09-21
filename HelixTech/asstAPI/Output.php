@@ -101,7 +101,7 @@ class Output{
             $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</b></br>";
 
             // Write error log to log file:
-            $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
+            $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath($_SERVER['DOCUMENT_ROOT']));
 			file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
         } else {
 			
