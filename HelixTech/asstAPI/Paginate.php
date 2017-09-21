@@ -166,7 +166,9 @@ class Paginate{
         foreach ($expiredLinks as $link){
             for ($i=1; $i <= $link['Pages']; $i++){
                 $file =  FILEPATH_STEM."/".Paginate::createLink($link['cacheLink'], $i);
-                if (file_exists($file)){unlink($file);}
+                if (file_exists($file)){unlink($file);} 
+				elseif (file_exists(realpath('/var/www/html/cache/asst')."/".Paginate::createLink($link['cacheLink'], $i))){unlink($file);}
+				elseif (file_exists(realpath('/var/www/testing/cache/asst')."/".Paginate::createLink($link['cacheLink'], $i))){unlink($file);}
 				$query = New Query(DELETE, 'FROM `cache` WHERE `cacheLink` =:cacheLink');
 				$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':cacheLink' => $link['cacheLink']]);
             }
