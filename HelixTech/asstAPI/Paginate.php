@@ -161,6 +161,7 @@ class Paginate{
         // get all expired cache links
         $query = New Query(SELECT, "cacheLink, Pages from cache where expired = 1");
         $expiredLinks = $query->execute(1);
+		var_dump($expiredLinks);
         // loop through each link and remove the cache file
         foreach ($expiredLinks as $link){
             for ($i=1; $i <= $link['Pages']; $i++){
