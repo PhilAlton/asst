@@ -76,6 +76,9 @@
             $encryptBool = true;
 
             if($this->encryptedTableBoolean){
+				echo "<br/>param:"$param;
+				echo "<br/>value":$value;
+				echo "<br/";
                 foreach ($this->unencryptedParameters as $unencryptedParam){
                     if($param == $unencryptedParam){
                         $encryptBool = false;
