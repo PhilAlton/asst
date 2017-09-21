@@ -47,27 +47,6 @@
         }
 
 
-        public function executeMultiTableQuery($params = null){
-            $this->database->setToFetchColumnsWithTableNames();
-            $return = $this->execute(SIMPLIFY_QUERY_RESULTS_ON,  $params);
-            $this->database->setToFetchColumnsWithoutTableNames();
-            return $return;
-        }
-
-
-        public function silentexecute($simplifyQueryResults, $params = null){
-            $this->buildQuery($params);
-            try {
-                $this->database->execute();
-            } catch (Exception $e) {
-                http_response_code(406);
-                Output::errorMsg(
-                    "caught exception: ".$e->getMessage()
-                    ." - with SQL Statement ".$this->query
-                    ." and these parameters:".json_encode($params)
-                );
-            }
-        }
 
         private function handleParamEncryption($param, $value){
             // Encrypt parameters here
@@ -91,7 +70,7 @@
             } else {
                 $newValue = $value;
             }
-            echo "</br>Param: ".$param." and newvalue:".$newValue;
+
             return $newValue;
         }
 
@@ -108,6 +87,30 @@
 		    }
         }
 
+
+		public function executeMultiTableQuery($params = null){
+            $this->database->setToFetchColumnsWithTableNames();
+            $return = $this->execute(SIMPLIFY_QUERY_RESULTS_ON,  $params);
+            $this->database->setToFetchColumnsWithoutTableNames();
+            return $return;
+        }
+
+
+        public function silentexecute($simplifyQueryResults, $params = null){
+            $this->buildQuery($params);
+            try {
+                $this->database->execute();
+            } catch (Exception $e) {
+                http_response_code(406);
+                Output::errorMsg(
+                    "caught exception: ".$e->getMessage()
+                    ." - with SQL Statement ".$this->query
+                    ." and these parameters:".json_encode($params)
+                );
+            }
+        }
+
+
         /**
          * Summary of execute - execute a query taking in parameters to bind the SQL statement prepared in the constructor
          *
@@ -117,7 +120,7 @@
         public function execute($simplifyQueryResults, $params = null){
 
             $this->buildQuery($params);
-			var_dump($this->database->debugDumpParams());
+
             try {
                 $this->database->execute(1);
 
