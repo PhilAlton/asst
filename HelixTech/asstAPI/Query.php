@@ -23,7 +23,7 @@
 	    private $queryType;
         private $encryptedTableBoolean;
         private $unencryptedTableNames = Array("cache", "ConnectionLog", "INFORMATION_SCHEMA");
-        private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx",
+        private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date",
 												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "date", "Date", "GenDataID", "RchDataID",
 												"PasswordResetVerified", "PasswordResetAttempts", "Rch_Data_Count");
 
