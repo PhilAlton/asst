@@ -141,7 +141,8 @@ class Connection{
 			// if email validation has failed
 			throw new UsernameNotAValidEmailAddress ("Submitted UserName is not a valid email address");
 		}
-
+		var_dump( $_SERVER["PHP_AUTH_USER"]);
+		var_dump( $_SERVER["PHP_AUTH_PW"]);
         // sanitise POST data UserName
         Connection::$input['UserName'] = $_SERVER["PHP_AUTH_USER"];             // This should never be sent in the post variables, instead, username should be sent in the header.
         Connection::$input['Password'] = $_SERVER["PHP_AUTH_PW"];               // This also prevents UserName being updated.
