@@ -65,10 +65,10 @@ class Output{
 		if(!empty(Output::getOutput())){
 
             // sanaitize output to remove Unique ID from the output using preg_replace.
-            $content = json_encode(Output::getOutput());
+            $content = json_encode(Output::getOutput(),0,256);
 			//$content = Connection::getAuthToken() ? '"AuthToken": "'.Connection::getAuthToken().'",'.$content : $content;
-            $content = preg_replace('/":*UniqueID":"\w*",?/', "", $content);
-			$content = preg_replace('/":*Password":"\w*",?/', "", $content);
+            $content = preg_replace('/,?":*UniqueID":"\w*"/', "", $content);
+			$content = preg_replace('/,?":*Password":"\w*"/', "", $content);
 
             // return values: sent to client in the HTTP body via echo.
 
@@ -92,7 +92,7 @@ class Output{
 		    ."</br>".Output::getErrorLog();
             //echo Output::getHistory();
 		    // Add history after
-            $errorLog = $errorLog."</br></br></br><b>History:</b></br>".Output::getOutput();
+            $errorLog = $errorLog."</br></br></br><b>History:</b></br>".$errorOutput;
 		    if (Output::getHistory() !== "</br>"){
 			    $errorLog = $errorLog."</b></br>".Output::getHistory();
 		    }
@@ -101,7 +101,7 @@ class Output{
             $errorLog = $errorLog."</br></br></br><b>-------------------------------------------------------------------------</b></br>";
 
             // Write error log to log file:
-            $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath('/var/www/html'));
+            $errorLog_PATH = ($_SERVER['REMOTE_ADDR'] == "::1" ? 'C:\xampp\htdocs\errorlogs\asst' : realpath($_SERVER['DOCUMENT_ROOT']));
 			file_put_contents(($errorLog_PATH).'/error.html', $errorLog, 10);
         } else {
 			

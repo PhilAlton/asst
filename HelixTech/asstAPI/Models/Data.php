@@ -89,12 +89,11 @@ class Data {
         foreach (Data::$userTableArray as $userTable){
 
             // Handle any conflicts
-            $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
+            $query = New Query(SELECT, "Date from $userTable".User::$uID." WHERE date = :date");
             $conflict = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':date' => $data['Date']]);
 
-
             if (count($conflict) !== 0){
-                $results = array_merge($results, Array($userTable => "database conflict, data-set {$data['Date']} in $userTable alraedy exists"));
+                $results = array_merge($results, Array($userTable.User::$uID => "database conflict, data-set {$data['Date']} in  $userTable".User::$uID." alraedy exists"));
 		    } else {
             // If no conflicts then proceed:
 
