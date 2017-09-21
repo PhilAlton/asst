@@ -205,8 +205,8 @@ class Connection{
 
                     // for admin table, key is protected by password
                 if ($table == "AdminTable"){
-					var_dump($UserDetails);
                     Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
+					$password = Crypt::decrypt($password);
                 }
 
                 //Load either the authToken from the database, or the password, depending on which the user has supplied
@@ -220,7 +220,6 @@ class Connection{
 					if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
 				}
 
-				//$password = Crypt::decrypt($password);
 			}
 
             // Check if the hash of the entered login password, matches the stored hash.
