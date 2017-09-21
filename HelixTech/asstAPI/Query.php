@@ -137,7 +137,7 @@
                         if ($this->encryptedTableBoolean){
                             array_walk_recursive($results, function(&$value, $key){
                                 try{    
-									if(isset($value)){
+									if(isset($value) && $value != ""){
 										$encryptBool = true;
 										foreach ($this->unencryptedParameters as $unencryptedParam){
 											if($key == $unencryptedParam){$encryptBool = false;} 
