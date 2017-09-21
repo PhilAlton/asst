@@ -24,7 +24,8 @@
         private $encryptedTableBoolean;
         private $unencryptedTableNames = Array("cache", "ConnectionLog");
         private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx",
-												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "Date", "GenDataID", "RchDataID");
+												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "Date", "GenDataID", "RchDataID",
+												"PasswordResetVerified", "PasswordResetAttempts");
 
         public function lastInsertId(){
             return $this->database->lastInsertId();
