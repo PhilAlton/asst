@@ -91,8 +91,8 @@ class Data {
             // Handle any conflicts
             $query = New Query(SELECT, "1 from $userTable".User::$uID." WHERE date = :date");
             $conflict = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':date' => $data['Date']]);
-
-			var_dump($conflict);
+			echo User::$uID;
+			var_dump(User::$uID);
             if (count($conflict) !== 0){
                 $results = array_merge($results, Array($userTable => "database conflict, data-set {$data['Date']} in  $userTable".User::$uID." alraedy exists"));
 		    } else {
