@@ -45,7 +45,6 @@ class Router{
                     {
                         case "sync":
                             // case for /asst/Users/Id/Data      "/asst/Users/$UserName/sync"
-							var_dump($input);
                             Data::syncData($method, $input);
                             break;
                         case "resetPassword":
