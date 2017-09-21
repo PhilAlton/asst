@@ -203,12 +203,6 @@ class Connection{
             } else {
                 // Else decrypt the password
 
-                    // for admin table, key is protected by password
-                if ($table == "AdminTable"){
-                    Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
-					$password = Crypt::decrypt($password);
-                }
-
                 //Load either the authToken from the database, or the password, depending on which the user has supplied
 				if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
 					// Token has been supplied
@@ -219,6 +213,13 @@ class Connection{
 					//Return authtoken to be used in future requests, unless connection is via admin rather than user
 					if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
 				}
+
+
+				// for admin table, key is protected by password
+                if ($table == "AdminTable"){
+                    Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
+					$password = Crypt::decrypt($password);
+                }
 
 			}
 
