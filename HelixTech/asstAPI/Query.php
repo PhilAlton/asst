@@ -23,7 +23,8 @@
 	    private $queryType;
         private $encryptedTableBoolean;
         private $unencryptedTableNames = Array("cache", "ConnectionLog");
-        private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx");
+        private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", "passResTokEx",
+												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "Date", "GenDataID", "RchDataID");
 
         public function lastInsertId(){
             return $this->database->lastInsertId();
@@ -144,7 +145,11 @@
                         if ($this->encryptedTableBoolean){
                             array_walk_recursive($results, function(&$value, $key){
                                 try{    
-                                    if(isset($value)){$value = Crypt::decrypt($value);} else {$value = $value;}
+									foreach ($this->unencryptedParameters as $unencryptedParam){
+										if($key == $unencryptedParam){
+											if(isset($value)){$value = Crypt::decrypt($value);} else {$value = $value;}
+										}
+									}
                                 } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
                                     $value = $value;
                                 }
