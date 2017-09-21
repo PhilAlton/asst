@@ -392,8 +392,8 @@
         }
 
 
-	    private static function deleteUser(){
-		    // DELETE request, accepting user ID;
+	    private static function deleteUser(){		
+		    // DELETE request, accepting user ID;				
 
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		    $isRchParticipant = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
