@@ -4,5 +4,5 @@
     ForceType text/plain
 </FilesMatch>
 <IfModule mod_rewrite.c>
-    RewriteEngine off
+    RewriteEngine Off
 </IfModule>
