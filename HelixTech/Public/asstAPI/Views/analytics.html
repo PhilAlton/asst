@@ -6,22 +6,26 @@
 	<!--This Document will be loaded by an html root directory page in order to load the analytics stream-->
 	<script>
 			function logIn(username,password) {
-				$.ajax({
-					type: 'GET',
-					url: "https://axspa.org.uk/asst/HelixTech/Public/asstAPI/Views/analytics.html",
-					//Add the request header
-					contentType: 'application/x-www-form-urlencoded',
-					beforeSend: function (xhr) {
-						xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
-					},
-					success: function (data) {
-						console.log(data);
-						$('#AnalyticsData').html(data);
-					},
-					error: function (xhr, status, error) {
-						var err = eval("(" + xhr.responseText + ")");
-					}
-				});
+                $.ajax({
+                    type: 'GET',
+
+                    url: "axspa.org.uk/asst/Analytics",
+                    //Add the request header
+                    contentType: 'application/x-www-form-urlencoded',
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+                    },
+                    success: function (data) {
+                        console.log(data.content);
+                        $('#AnalyticsData').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(error);
+                        $('#error').html("Failed to proceed with password reset for <b>" + username + "</b>").css('display', 'inline');
+                    }
+                });
+
 			}
 		</script>
 </head>
@@ -36,5 +40,6 @@
 		</form>
 	</div>
 	<div id="AnalyticsData"/>
+    <div id="error"/>
 </body>
 </html>
