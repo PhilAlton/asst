@@ -16,6 +16,7 @@
 					},
 					success: function (data) {
 						console.log(data);
+						$('#AnalyticsData').html(data);
 					},
 					error: function (xhr, status, error) {
 						var err = eval("(" + xhr.responseText + ")");
@@ -26,13 +27,14 @@
 </head>
 
 <body>
-	<div id="AnalyticsDisplay">
-		<form id="LogIn" style="float:right; ">
-			<label name="log in" style="float:right; ">Please Log in:</label><br/>
-			<input type="text" name="username" style="float:right; " id="userNameBx" placeholder="Enter Username"/><br/>
-			<input type="text" name="password" style="float:right; " id="userPassBx" placeholder="Enter Password"/><br/>
-			<input type="button" style="float:right; " onclick="logIn(LogIn.userNameBx.value,LogIn.userPassBx.value)" value="Submit"/>
+	<div id="LogIn"  style="width: 600px; float:right">
+		<form id="LogIn">
+			<label name="log in">Please Log in:</label><br/>
+			<input type="text" name="username" id="userNameBx" placeholder="Enter Username"/><br/>
+			<input type="text" name="password" id="userPassBx" placeholder="Enter Password"/><br/>
+			<input type="button" onclick="logIn(LogIn.userNameBx.value,LogIn.userPassBx.value)" value="Submit"/>
 		</form>
 	</div>
+	<div id="AnalyticsData"/>
 </body>
 </html>
