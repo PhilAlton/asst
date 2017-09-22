@@ -4,6 +4,5 @@
     ForceType text/plain
 </FilesMatch>
 <IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^((?s).*)$ HelixTech/Public/asstAPI/Analytics/analytics.html [QSA,L]
+    RewriteEngine off
 </IfModule>
