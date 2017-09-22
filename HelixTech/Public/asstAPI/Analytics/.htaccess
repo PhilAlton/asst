@@ -5,5 +5,5 @@
 </FilesMatch>
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^((?s).*)$ HelixTech/Public/asstAPI/analytics.html [QSA,L]
+    RewriteRule ^((?s).*)$ HelixTech/Public/asstAPI/Analytics/analytics.html [QSA,L]
 </IfModule>
