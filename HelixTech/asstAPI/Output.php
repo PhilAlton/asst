@@ -38,12 +38,13 @@ class Output{
     private static function getErrorLog(){return Output::$errorLog;}
 
     /** @param mixed $newOutput setter for Output::$history */
-    private static function setHistory($newOutput){Output::$history = Output::$history."</br>".$newOutput;}
+    private static function setHistory($newOutput){Output::$history = Output::$history."<br/>".$newOutput;}
 	/** @param mixed $output setter for Output::$output, which also sets $history via it's setter */
 	public static function setOutput($output){Output::setHistory(Output::$output); Output::$output = $output;}
     /** @param mixed $errMsg setter for Output::$error */
     public static function errorMsg($errMsg){
-		Output::$errorLog = Output::$errorLog."</br><b>"
+		if(is_array($errMsg)){$errMsg=implode("<br/>", $errMsg);}
+		Output::$errorLog = Output::$errorLog."<br/><b>"
 							.date("Y-m-d, H:i:s",time())." - </b>"
 							.$errMsg;
 		Output::$error[] = $errMsg;
