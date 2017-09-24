@@ -23,7 +23,7 @@
                     },
                     error: function (xhr, status, error) {
                         console.log(error);
-                        $('#error').html("Failed to proceed with password reset for <b>" + username + "</b>").css('display', 'inline');
+                        $('#error').html("<b>Error whilst trying to retreive analytics data</b>").css('display', 'inline');
                     }
                 });
 
@@ -40,7 +40,7 @@
 			<input type="button" onclick="logIn(LogInForm.userNameBx.value,LogInForm.userPassBx.value)" value="Submit"/>
 		</form>
 	</div>
-	<div id="AnalyticsData"/>
+	<div id="AnalyticsData"></div>
     <div id="error"/>
 </body>
 </html>
