@@ -44,7 +44,7 @@ class Output{
     /** @param mixed $errMsg setter for Output::$error */
     public static function errorMsg($errMsg){
 		if(is_array($errMsg)){
-			$errMsg=json_encode($errMsg);
+			$errMsg=json_encode($errMsg, "JSON_PRETTY_PRINT");
 			$jsonNewLines = Array(",", "{", "}", "[", "]");
 			$errMsg = str_replace($jsonNewLines, "<br/>", $errMsg);
 		}
