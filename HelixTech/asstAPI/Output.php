@@ -48,6 +48,7 @@ class Output{
 			str_replace(' ', '&nbsp;', $errMsg);
 			$jsonNewLines = Array(",", "{", "}", "[", "]");
 			$errMsg = str_replace($jsonNewLines, "<br/>", $errMsg);
+			$errMsg = "<pre>".$errMsg."</pre>";
 		}
 		Output::$errorLog = Output::$errorLog."<br/><b>"
 							.date("Y-m-d, H:i:s",time())." - </b>"
