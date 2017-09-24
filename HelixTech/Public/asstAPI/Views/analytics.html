@@ -18,7 +18,27 @@
                         xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
                     },
                     success: function (data) {   
-                        $('#AnalyticsData').html("Number of Average reuqsts per weeek:" + data.AVERAGE_REQUESTS).css('display', 'inline');;
+                        $('#AnalyticsData')
+                            .html(
+                            "Number of Average reuqsts per weeek: " + data.content.AVERAGE_REQUESTS + "<br/>" +
+                            "Number of Distinct IP addresses: " + data.content.DISTINCT_IP_COUNT + "<br/>" +
+                            "Number of Distinct Users: " + data.content.DISTINCT_USER_COUNT + "<br/>" 
+                            )
+                            .css('display', 'inline');
+
+                        var tbl_body = document.createElement("tbody");
+                        var odd_even = false;
+                        $.each(data.content.data, function () {
+                            var tbl_row = tb1_body.insertRow();
+                            tbl_row.className = odd_even ? "odd" : "even";
+                            $.each(this, function (k, v){
+                                var cell = tbl_row.insertCell();
+                                cell.appendChild(document.createTextNode(v.ToString()));
+                            })
+                        odd_even = !odd_even;
+                        })
+                        $("AnalyticsTable").appendChild(tbl_body);
+
                         console.log(data);
 
                     },
@@ -42,6 +62,7 @@
 		</form>
 	</div>
 	<div id="AnalyticsData"></div>
+    <table id="AnalyticsTable"></table>
     <div id="error"/>
 </body>
 </html>
