@@ -19,7 +19,7 @@
                     },
                     success: function (data) {
                         console.log(data.content);
-                        $('#AnalyticsData').html(data);
+                        $('#AnalyticsData').html(eval(data));
                     },
                     error: function (xhr, status, error) {
                         console.log(error);
