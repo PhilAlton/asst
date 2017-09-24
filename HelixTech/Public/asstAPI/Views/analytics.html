@@ -18,8 +18,10 @@
                         xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
                     },
                     success: function (data) {
-                        console.log(data.content);
+                        
                         $('#AnalyticsData').html("Number of Average reuqsts per weeek:" + data.AVERAGE_REQUESTS);
+                        console.log(data.content);
+                        $('#error').html("Strange!");
                     },
                     error: function (xhr, status, error) {
                         console.log(error);
