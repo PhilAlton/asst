@@ -18,6 +18,7 @@
                         xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
                     },
                     success: function (data) {   
+                        $('#error').css('display', 'none');
                         $('#AnalyticsData')
                             .html(
                             "Number of Average reuqsts per weeek: " + data.content.AVERAGE_REQUESTS + "<br/>" +
@@ -37,7 +38,7 @@
                             })
                         odd_even = !odd_even;
                         })
-                        $("AnalyticsTable").append(tbl_body);
+                        $("#AnalyticsTable").append(tbl_body);
 
                         console.log(data);
 
