@@ -45,6 +45,7 @@ class Output{
     public static function errorMsg($errMsg){
 		if(is_array($errMsg)){
 			$errMsg=json_encode($errMsg, JSON_PRETTY_PRINT);
+			str_replace(' ', '&nbsp;', $errMsg);
 			$jsonNewLines = Array(",", "{", "}", "[", "]");
 			$errMsg = str_replace($jsonNewLines, "<br/>", $errMsg);
 		}
