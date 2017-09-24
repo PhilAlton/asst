@@ -529,7 +529,7 @@
 								
 									// Hash a new password for storing in the database.
 									// The function automatically generates a cryptographically safe salt.
-									$newHashedPass = Crypt::encrypt(
+									$newHashedPass =
 													password_hash
 													(
 														base64_encode
@@ -537,12 +537,11 @@
 															hash('sha384', $newPass, true)
 														),
 														PASSWORD_DEFAULT
-													)
-												);
+													);
 
 									$length = 20; // Length of auth token
 									$AuthToken = $UserName."=".bin2hex(random_bytes($length));
-									$protectedAuthToken = Crypt::encrypt(
+									$protectedAuthToken = 
 													password_hash
 													(
 														base64_encode
@@ -550,8 +549,7 @@
 															hash('sha384', $AuthToken, true)
 														),
 														PASSWORD_DEFAULT
-													)
-												); 
+													); 
 
 
 
