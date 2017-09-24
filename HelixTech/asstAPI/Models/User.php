@@ -628,7 +628,7 @@
 					$hours=12;
 					$now = new \DateTime(); //current date/time
 					$now->add(new \DateInterval("PT{$hours}H"));
-					$expiary = $now;//->format('Y-m-d H:i:s');
+					$expiary = $now->format('Y-m-d H:i:s');
 
 					//Store in the database
 					$query = New Query(UPDATE, "`AuthTable` ".
