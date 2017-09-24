@@ -18,6 +18,7 @@
                         xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
                     },
                     success: function (data) {   
+                        $('#error').html("<b>PIE data</b>").css('display', 'inline');
                         $('#AnalyticsData').html("Number of Average reuqsts per weeek:" + data.AVERAGE_REQUESTS).css('display', 'inline');;
                         console.log(data.content);
 
