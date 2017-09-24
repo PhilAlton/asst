@@ -628,7 +628,7 @@
 					$hours=12;
 					$now = new \DateTime(); //current date/time
 					$now->add(new \DateInterval("PT{$hours}H"));
-					$expiary = $now->format('Y-m-d H:i:s');
+					$expiary = $now;//->format('Y-m-d H:i:s');
 
 					//Store in the database
 					$query = New Query(UPDATE, "`AuthTable` ".
@@ -641,8 +641,8 @@
 					// Send an email to the user containing the unique link
 					$message = 'Please click the following link to reset your password:' . "\r\n"
 								."https://axspa.org.uk/passwordReset.html?".urlencode("username=".$UserName."&GUIDE=".$uniqueCode) . "\r\n\r\n"
-								."debug: uniqueID=" . $uniqueID . "\r\n\r\n"
-								."debug: PassResTokEx=" . $expiary . "\r\n\r\n"
+							//	."debug: uniqueID=" . $uniqueID . "\r\n\r\n"
+							//	."debug: PassResTokEx=" . $expiary . "\r\n\r\n"
 								. "Please note, this link will expire in 12 hours";
 					
 					$headers = 'From: ResetPassword@axspa.org.uk' . "\r\n" .
