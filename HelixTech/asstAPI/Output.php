@@ -43,7 +43,7 @@ class Output{
 	public static function setOutput($output){Output::setHistory(Output::$output); Output::$output = $output;}
     /** @param mixed $errMsg setter for Output::$error */
     public static function errorMsg($errMsg){
-		if(is_array($errMsg)){$errMsg=implode("<br/>", $errMsg);}
+		if(is_array($errMsg)){$errMsg=implode(", ", $errMsg);}
 		Output::$errorLog = Output::$errorLog."<br/><b>"
 							.date("Y-m-d, H:i:s",time())." - </b>"
 							.$errMsg;
