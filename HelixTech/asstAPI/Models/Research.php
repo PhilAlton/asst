@@ -28,7 +28,7 @@ class Research{
                             "Data" => $researchParticipants);
 
 			
-            Output::setOutput($researchParticipants);
+            Output::setOutput($analyticResults);
 
 
 
