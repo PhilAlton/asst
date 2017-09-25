@@ -62,6 +62,7 @@
                 },
                 success: function (data) {
                     $('#error').css('display', 'none');
+                    $('#LogIn').css('display', 'none');
                     $('#AnalyticsData')
                         .html(
                         "<b>Average Number of reuqsts per day, over the last week: </b>" + data.content.AVERAGE_REQUESTS + "<br/>" +
