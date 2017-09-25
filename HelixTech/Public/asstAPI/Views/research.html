@@ -101,7 +101,7 @@
                                     // Handle if a row contains an array of embeded data
                                     $.each(this, function (k, V) {
                                         console.log("k:" + k + "v: " + V);
-                                        cell.appendChild(document.createTextNode(V.toString()));
+                                        cell.appendChild(document.createTextNode(V.values()));
                                     })
                                 } else {
                                     cell.appendChild(document.createTextNode(v.toString()));
