@@ -5,6 +5,15 @@
 	<title>Output from Analytics</title>
 	<!--This Document will be loaded by an html root directory page in order to load the analytics stream-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        table#AnalyticsTable {
+            width: 100%;
+            border-spacing: 5px;
+        }
+
+    </style>
+
     <script>
 			function logIn(username,password) {
                 $.ajax({
@@ -58,7 +67,7 @@
 </head>
 
 <body>
-	<div id="LogIn"  style="width: 600px; float:right">
+	<div id="LogIn"  style="width: 300px; float:right">
 		<form id="LogInForm">
 			<label name="log in">Please Log in:</label><br/>
 			<input type="text" name="username" id="userNameBx" placeholder="Enter Username"/><br/>
@@ -67,7 +76,20 @@
 		</form>
 	</div>
 	<div id="AnalyticsData"></div>
-    <table id="AnalyticsTable"></table>
+    <br/><br/><br/>
+    <table id="AnalyticsTable">
+        <tr>
+            <th>Connection Number</th>
+            <th>Date and Time</th>
+            <th>UserName</th>
+            <th>IP Address</th>
+            <th>WHOIS</th>
+            <th>User Agent</th>
+            <th>Requested URI</th>
+            <th>Authenticated</th>
+            <th>Errors</th>
+        </tr>
+    </table>
     <div id="error"/>
 </body>
 </html>
