@@ -6,7 +6,6 @@ use HelixTech\asstAPI\Exceptions\UnableToAuthenticateUserCredentials;
 class Research{
 
     public static function display(){
-	echo "here";
        try{
            if (Connection::authenticate('AdminTable')){
 
@@ -25,7 +24,6 @@ class Research{
                                     //"AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
                                     "Data" => $researchParticipants);
 
-				var_dump($analyticResults);
                Output::setOutput($analyticResults);
 
 

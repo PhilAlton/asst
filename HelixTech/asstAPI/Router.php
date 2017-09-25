@@ -10,7 +10,7 @@
 
 
 use HelixTech\asstAPI\{Connection, Paginate};
-use HelixTech\asstAPI\Models\{Data, User, Analytics};
+use HelixTech\asstAPI\Models\{Data, User, Analytics, Research};
 use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed, AttemptedToAccessUnauthorisedResources};
 
 /**
