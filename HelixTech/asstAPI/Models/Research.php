@@ -6,6 +6,7 @@ use HelixTech\asstAPI\Exceptions\UnableToAuthenticateUserCredentials;
 class Research{
 
     public static function display(){
+	echo "here";
        try{
            if (Connection::authenticate('AdminTable')){
 
