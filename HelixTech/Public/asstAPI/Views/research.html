@@ -104,7 +104,7 @@
                                         $.each(this, function (l, m) {
                                             if (m == null) { m = "null";}
                                             cell.appendChild(document.createTextNode(
-                                                l.toString() + ": " + m.toString() + "<br/>"
+                                                l.toString() + ": " + m.toString() + "&#10;&#13;";
                                             ));
                                         })
                                     })
