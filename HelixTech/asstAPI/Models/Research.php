@@ -10,14 +10,19 @@ class Research{
            if (Connection::authenticate('AdminTable')){
 
            // build the data retrival queries
-		    $results = array();
-		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
-		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 217]));
-            $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
-		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 217]));
+
+		   $query = new Query(SELECT, "COUNT(DISTINCT CXTN_IP) FROM ConnectionLog");
+           $numDistinctIP = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
 
-			$researchParticipants = $results;
+		//    $results = array();
+		//    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
+		//    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 217]));
+        //    $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
+		//    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 217]));
+
+
+			$researchParticipants = $numDistinctIP;
 
             // combine the quries and output as JSON via Output class
                $analyticResults = array(
