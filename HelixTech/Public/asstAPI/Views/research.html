@@ -103,9 +103,8 @@
                                         //console.log("k:" + k + "v: " + V);
                                         $.each(this, function (l, m) {
                                             if (m == null) { m = "null";}
-                                            console.log("L:" + l + " M: " + m);
                                             cell.appendChild(document.createTextNode(
-                                                l.toString() + ": " + m.toString()
+                                                l.toString() + ": " + m.toString() + "<br/>"
                                             ));
                                         })
                                     })
