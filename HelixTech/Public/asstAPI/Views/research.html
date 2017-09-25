@@ -61,12 +61,10 @@
                     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
                 },
                 success: function (data) {
+                    console.log(data);
                     $('#error').css('display', 'none');
                     $('#ResearchData')
                         .html(
-                        "<b>Number of Average reuqsts per weeek: </b>" + data.content.AVERAGE_REQUESTS + "<br/>" +
-                        "<b>Number of Distinct IP addresses: </b>" + data.content.DISTINCT_IP_COUNT + "<br/>" +
-                        "<b>Number of Distinct Users: </b>" + data.content.DISTINCT_USER_COUNT + "<br/>"
                         )
                         .css('display', 'inline');
 
