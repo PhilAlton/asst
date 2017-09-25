@@ -23,6 +23,7 @@ class Research{
 			
 			
 			foreach($researchParticipants as &$researchParticipant){
+				$results = Array();
 
 				$genTable = "GEN_DATA_TABLE_".$researchParticipant['UniqueID'];
 				$rchTable = "RCH_DATA_TABLE_".$researchParticipant['UniqueID'];
