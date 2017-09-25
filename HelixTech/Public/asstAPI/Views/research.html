@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Output from Analytics</title>
+    <title>Output for Research</title>
     <!--This Document will be loaded by an html root directory page in order to load the analytics stream-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -11,7 +11,7 @@
             border: 5px solid black;
         }
 
-        table#AnalyticsTable {
+        table#ResearchTable {
             border-spacing: 5px;
             table-layout: fixed;
             border-collapse: collapse;
@@ -53,7 +53,7 @@
             $.ajax({
                 type: 'GET',
 
-                url: "https://axspa.org.uk/asst/Analytics",
+                url: "https://axspa.org.uk/asst/Research",
                 //Add the request header
                 contentType: 'application/x-www-form-urlencoded',
                 dataType: 'json',
@@ -62,7 +62,7 @@
                 },
                 success: function (data) {
                     $('#error').css('display', 'none');
-                    $('#AnalyticsData')
+                    $('#ResearchData')
                         .html(
                         "<b>Number of Average reuqsts per weeek: </b>" + data.content.AVERAGE_REQUESTS + "<br/>" +
                         "<b>Number of Distinct IP addresses: </b>" + data.content.DISTINCT_IP_COUNT + "<br/>" +
@@ -85,7 +85,7 @@
                         })
                         odd_even = !odd_even;
                     })
-                    $("#AnalyticsTable").append(tbl_body).css('display', 'inline');
+                    $("#ResearchTable").append(tbl_body).css('display', 'inline');
 
                 },
                 error: function (xhr, status, error) {
@@ -107,10 +107,10 @@
             <input type="button" onclick="logIn(LogInForm.userNameBx.value,LogInForm.userPassBx.value)" value="Submit" />
         </form>
     </div>
-    <div id="AnalyticsData"></div>
+    <div id="ResearchData"></div>
     <br /><br /><br />
-    <table id="AnalyticsTable" style="display:none;">
-        <caption>Connection Log - Non Standard / Erronious Requests</caption>
+    <table id="ResearchTable" style="display:none;">
+        <caption>Research participants - Baseline</caption>
         <thead class="tableHeaderRow">
             <tr>
                 <th>ID</th>

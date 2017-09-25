@@ -81,6 +81,10 @@ class Router{
                 // code for asst/Analytics
                 Analytics::display();
 
+            } elseif (Router::uri($root.'/Research')){
+                // code for asst/Analytics
+                Research::display();
+
             } else {
                 throw new InvalidURI("Invalid URI selected".Connection::getURI());
             }
