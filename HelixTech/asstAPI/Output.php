@@ -72,7 +72,7 @@ class Output{
             // sanaitize output to remove Unique ID from the output using preg_replace.
             $content = json_encode(Output::getOutput(),0,256);
 			//$content = Connection::getAuthToken() ? '"AuthToken": "'.Connection::getAuthToken().'",'.$content : $content;
-            $content = preg_replace('/,?":*UniqueID":"\w*"/', "", $content);
+            $content = preg_replace('/":*UniqueID":"\w*",?/', "", $content);
 			$content = preg_replace('/,?":*Password":"\w*"/', "", $content);
 
             // return values: sent to client in the HTTP body via echo.
