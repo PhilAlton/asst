@@ -7,6 +7,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <style>
+        div#AnalyticsTableDiv {
+            border: 5px solid black;
+        } 
         table#AnalyticsTable {
             border-spacing: 5px;
             table-layout: fixed;
@@ -15,6 +18,7 @@
         caption {
             font-weight: bold;
             float: left;
+            padding:20px;
         }
         th {
             white-space: nowrap;
@@ -99,7 +103,7 @@
 	</div>
 	<div id="AnalyticsData"></div>
     <br/><br/><br/>
-    <div style="overflow-x:auto;">
+    <div id="AnalyticsTableDiv" style="overflow-x:auto;">
         <table id="AnalyticsTable" style="display:none;">
             <caption>Connection Log - Non Standard / Erronious Requests</caption>
             <thead class="tableHeaderRow">
