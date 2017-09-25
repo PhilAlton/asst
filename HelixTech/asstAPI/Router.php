@@ -73,16 +73,12 @@ class Router{
 				$UserName = explode('-asstAPIcache-',$cachefile)[0];
 				Paginate::retrieve($UserName, $cachefile);
 
-      //      } elseif (Router::uri($root.'/passwordReset')){
-      //          // proceed with password reset
-	//			User::passwordReset();
-
-            } elseif (Router::uri($root.'/Analytics')){
+			} elseif (Router::uri($root.'/Analytics')){
                 // code for asst/Analytics
                 Analytics::display();
 
             } elseif (Router::uri($root.'/Research')){
-                // code for asst/Analytics
+                // code for asst/Research
                 Research::display();
 
             } else {
