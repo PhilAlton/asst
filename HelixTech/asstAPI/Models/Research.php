@@ -10,14 +10,14 @@ class Research{
            if (Connection::authenticate('AdminTable')){
 
            // build the data retrival queries
-		   $results = array();
+		    $results = array();
 		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `UniqueID` =:UniqueID');
 		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 217]));
             $query = New Query(SELECT, '* FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 217]));
 
 
-			$analyticResults = $results;
+			$researchParticipants = $results;
 
             // combine the quries and output as JSON via Output class
                $analyticResults = array(
