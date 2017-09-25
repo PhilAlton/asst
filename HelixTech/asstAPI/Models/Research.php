@@ -11,7 +11,7 @@ class Research{
 
            // build the data retrival queries
                $query = new Query(SELECT, "* FROM UserTable, ResearchTable" 
-                                            ." WHERE `UserTable.Research_Participant`=true" 
+                                            ." WHERE UserTable.`Research_Participant`=true" 
                                     );
                $researchParticipants = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
