@@ -102,7 +102,7 @@
                                     $.each(this, function (k, V) {
                                         //console.log("k:" + k + "v: " + V);
                                         $.each(this, function (l, m) {
-                                            if (m = null) { m = " "; }
+                                            if (m = null) { m = " "; console.log("here: "+ m)}
                                             console.log("L:" + l + " M: " + m);
                                             cell.appendChild(document.createTextNode(
                                                 l.toString() + ": " + m.toString()
