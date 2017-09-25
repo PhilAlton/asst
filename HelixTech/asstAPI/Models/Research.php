@@ -16,15 +16,15 @@ class Research{
                $researchParticipants = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
 
-/*
+
             // combine the quries and output as JSON via Output class
                $analyticResults = array(
-                                    "DISTINCT_IP_COUNT" => $numDistinctIP,  
-                                    "DISTINCT_USER_COUNT" => $numDistinctUsers, 
-                                    "AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
-                                    "Data" => $CnxtsByIP);
+                                    //"DISTINCT_IP_COUNT" => $numDistinctIP,  
+                                    //"DISTINCT_USER_COUNT" => $numDistinctUsers, 
+                                    //"AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
+                                    "Data" => $researchParticipants);
 
-*/
+
                Output::setOutput($researchParticipants);
 
 
