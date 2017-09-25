@@ -11,8 +11,8 @@ class Research{
 
            // build the data retrival queries
 		    $results = array();
-		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `Research_Participant` =:Research_Participant');
-		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':Research_Participant' => 1]));
+		    //$query = New Query(SELECT, '* FROM `ResearchTable` WHERE `Research_Participant` =:Research_Participant');
+		    //$results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':Research_Participant' => 1]));
             $query = New Query(SELECT, '* FROM `UserTable` WHERE `Research_Participant` =:Research_Participant');
 		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':Research_Participant' => 1]));
 
