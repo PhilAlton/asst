@@ -392,8 +392,8 @@
         }
 
 
-	    private static function deleteUser(){
-		    // DELETE request, accepting user ID;
+	    private static function deleteUser(){		
+		    // DELETE request, accepting user ID;				
 
             $query = New Query(SELECT, 'Research_Participant FROM `UserTable` WHERE `UniqueID` =:UniqueID');
 		    $isRchParticipant = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => User::$uID]);
@@ -529,7 +529,7 @@
 								
 									// Hash a new password for storing in the database.
 									// The function automatically generates a cryptographically safe salt.
-									$newHashedPass = Crypt::encrypt(
+									$newHashedPass =
 													password_hash
 													(
 														base64_encode
@@ -537,12 +537,11 @@
 															hash('sha384', $newPass, true)
 														),
 														PASSWORD_DEFAULT
-													)
-												);
+													);
 
 									$length = 20; // Length of auth token
 									$AuthToken = $UserName."=".bin2hex(random_bytes($length));
-									$protectedAuthToken = Crypt::encrypt(
+									$protectedAuthToken = 
 													password_hash
 													(
 														base64_encode
@@ -550,8 +549,7 @@
 															hash('sha384', $AuthToken, true)
 														),
 														PASSWORD_DEFAULT
-													)
-												); 
+													); 
 
 
 
@@ -641,7 +639,8 @@
 					// Send an email to the user containing the unique link
 					$message = 'Please click the following link to reset your password:' . "\r\n"
 								."https://axspa.org.uk/passwordReset.html?".urlencode("username=".$UserName."&GUIDE=".$uniqueCode) . "\r\n\r\n"
-					//			."debug: uniqueID=" . $uniqueID . "\r\n\r\n"
+						//		."debug: uniqueID=" . $uniqueID . "\r\n\r\n"
+						//		."debug: PassResTokEx=" . $expiary . "\r\n\r\n"
 								. "Please note, this link will expire in 12 hours";
 					
 					$headers = 'From: ResetPassword@axspa.org.uk' . "\r\n" .

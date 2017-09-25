@@ -38,12 +38,17 @@ class Output{
     private static function getErrorLog(){return Output::$errorLog;}
 
     /** @param mixed $newOutput setter for Output::$history */
-    private static function setHistory($newOutput){Output::$history = Output::$history."</br>".$newOutput;}
+    private static function setHistory($newOutput){Output::$history = Output::$history."<br/>".$newOutput;}
 	/** @param mixed $output setter for Output::$output, which also sets $history via it's setter */
 	public static function setOutput($output){Output::setHistory(Output::$output); Output::$output = $output;}
     /** @param mixed $errMsg setter for Output::$error */
     public static function errorMsg($errMsg){
-		Output::$errorLog = Output::$errorLog."</br><b>"
+		if(is_array($errMsg)){
+			$errMsg=json_encode($errMsg, JSON_PRETTY_PRINT);
+			str_replace(' ', '&nbsp;', $errMsg);
+			$errMsg = "<pre>".$errMsg."</pre>";
+		}
+		Output::$errorLog = Output::$errorLog."<br/><b>"
 							.date("Y-m-d, H:i:s",time())." - </b>"
 							.$errMsg;
 		Output::$error[] = $errMsg;
@@ -67,7 +72,7 @@ class Output{
             // sanaitize output to remove Unique ID from the output using preg_replace.
             $content = json_encode(Output::getOutput(),0,256);
 			//$content = Connection::getAuthToken() ? '"AuthToken": "'.Connection::getAuthToken().'",'.$content : $content;
-            $content = preg_replace('/,?":*UniqueID":"\w*"/', "", $content);
+            $content = preg_replace('/":*UniqueID":"\w*",?/', "", $content);
 			$content = preg_replace('/,?":*Password":"\w*"/', "", $content);
 
             // return values: sent to client in the HTTP body via echo.

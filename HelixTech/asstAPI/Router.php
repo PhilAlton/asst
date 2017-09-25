@@ -10,7 +10,7 @@
 
 
 use HelixTech\asstAPI\{Connection, Paginate};
-use HelixTech\asstAPI\Models\{Data, User, Analytics};
+use HelixTech\asstAPI\Models\{Data, User, Analytics, Research};
 use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed, AttemptedToAccessUnauthorisedResources};
 
 /**
@@ -73,13 +73,13 @@ class Router{
 				$UserName = explode('-asstAPIcache-',$cachefile)[0];
 				Paginate::retrieve($UserName, $cachefile);
 
-      //      } elseif (Router::uri($root.'/passwordReset')){
-      //          // proceed with password reset
-	//			User::passwordReset();
-
-            } elseif (Router::uri($root.'/Analytics')){
+			} elseif (Router::uri($root.'/Analytics')){
                 // code for asst/Analytics
                 Analytics::display();
+
+            } elseif (Router::uri($root.'/Research')){
+                // code for asst/Research
+                Research::display();
 
             } else {
                 throw new InvalidURI("Invalid URI selected".Connection::getURI());
@@ -102,13 +102,15 @@ class Router{
 			if ($illStrOffsetPos !== false) {
 				Output::setOutput(Array("Name"=>"Illegal string offset: ".substr($e->getMessage(),22),
 										"On Line" => $e->getLine(),
-										"Trace"=>$e->getTrace()));	//Illegal string offset ?? = Missing Data
+										"Trace"=>$e->getTrace()));	//Illegal string offset: ?? = Missing Data
 			} else {
 				Output::setOutput('Error: '.$e->getMessage());
 			}
 
 
-			Output::errorMsg("Other Error Thrown: ".$e->getMessage());
+			Output::errorMsg(Array("Name"=>"Other Error Thrown: ".substr($e->getMessage(),20),
+										"On Line" => $e->getLine(),
+										"Trace"=>$e->getTrace()));
 
 			return;
 		}

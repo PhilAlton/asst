@@ -197,16 +197,11 @@ class Connection{
 
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
-                // If no password obtained then throw exception and handle.
+                // If no user obtained from database then throw exception and handle.
                 $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
                 throw new \UnexpectedValueException($e);
             } else {
                 // Else decrypt the password
-
-                    // for admin table, key is protected by password
-                if ($table == "AdminTable"){
-                    Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
-                }
 
                 //Load either the authToken from the database, or the password, depending on which the user has supplied
 				if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
@@ -219,7 +214,12 @@ class Connection{
 					if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
 				}
 
-				//$password = Crypt::decrypt($password);
+
+				// for admin table, key is protected by password
+                if ($table == "AdminTable"){
+                    $password = Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"], $password);
+                }
+
 			}
 
             // Check if the hash of the entered login password, matches the stored hash.
