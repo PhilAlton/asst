@@ -94,12 +94,13 @@
                         tbl_row.className = odd_even ? "odd" : "even";
                         //console.log(this);
                         $.each(this, function (k, v) {
-                            console.log("k:"+k + "v: "+v);
+                            
                             var cell = tbl_row.insertCell();
                             if (v != null) {
                                 if ($.isArray(v)) {
                                     // Handle if a row contains an array of embeded data
                                     $.each(this, function (k, V) {
+                                        console.log("k:" + k + "v: " + V);
                                         cell.appendChild(document.createTextNode(V.toString()));
                                     })
                                 } else {
