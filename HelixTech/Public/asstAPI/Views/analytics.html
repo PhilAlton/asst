@@ -10,7 +10,6 @@
         table#AnalyticsTable {
             border-spacing: 5px;
             table-layout: fixed;
-            border: 5px solid black;
             border-collapse: collapse;
         }
         th {
@@ -28,7 +27,7 @@
             float:left;
         }
         .even {
-            background: #b4a36d;
+            background: #d8b691;
         }
         tbody tr:hover {
             background: yellow;
@@ -73,7 +72,7 @@
                             })
                         odd_even = !odd_even;
                         })
-                        $("#AnalyticsTable").append(tbl_body).css('display', 'inline');
+                        $("#AnalyticsTable").append(tbl_body).css('display', 'inline').css('border','5px solid black');
 
                         console.log(data);
 
