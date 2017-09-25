@@ -70,8 +70,23 @@
                         )
                         .css('display', 'inline');
                     $('#AnalyticsTable')
-                        .html("<caption>Connection Log - Non Standard / Erronious Requests</caption><thead class='tableHeaderRow'><tr><th>ID</th><th>Date and Time</th><th>UserName</th><th>IP Address</th><th>WHOIS</th><th>User Agent</th><th>Requested URI</th><th>Authenticated</th><th>Errors</th></tr></thead>")
-                        .css('display', 'inline');;
+                        .html(
+                          "<caption>Connection Log - Non Standard / Erronious Requests</caption>"
+                        + "<thead class='tableHeaderRow'>"
+                        + "<tr>" 
+                        + "<th>ID</th>"
+                        + "<th>Date and Time</th>"
+                        + "<th>UserName</th>"
+                        + "<th>IP Address</th>"
+                        + "<th>WHOIS</th>"
+                        + "<th>User Agent</th>"
+                        + "<th>Requested URI</th>"
+                        + "<th>Authenticated</th>"
+                        + "<th>Errors</th>"
+                        + "</tr>"
+                        + "</thead>" 
+                        )
+                        .css('display', 'inline');
 
                     var tbl_body = document.createElement("tbody");
                     var odd_even = false;
