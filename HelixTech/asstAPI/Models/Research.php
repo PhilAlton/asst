@@ -10,7 +10,7 @@ class Research{
            if (Connection::authenticate('AdminTable')){
 
            // build the data retrival queries
-               $query = new Query(SELECT, "* FROM UserTable, ResearchTable" 
+               $query = new Query(SELECT, "* FROM UserTable" 
                                             ." WHERE UserTable.Research_Participant=1" 
                                     );
                $researchParticipants = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
