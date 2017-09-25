@@ -65,7 +65,8 @@
                     $('#error').css('display', 'none');
                     $('#ResearchData')
                         .html(
-                        "<b>Data from AS-ST Research Participants: </b>"
+                        "<b>Data from AS-ST Research Participants</b>" + "<br/>" +   
+                        "<b>Number of Participants: </b>" + data.content.DISTINCT_USER_COUNT + "<br/><br/><br/>"
                         )
                         .css('display', 'inline');
                     $('#ResearchTable')
