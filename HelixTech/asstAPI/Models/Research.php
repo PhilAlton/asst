@@ -14,7 +14,7 @@ class Research{
 			$numDistinctUsers = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
             $query = New Query(SELECT,
-							"* from UserTable"
+							"Age, Gender, Age_Of_Symptom_Onset, Firstname, Surname, DoB, Hospital from UserTable"
 							." RIGHT JOIN ResearchTable ON UserTable.UniqueID = ResearchTable.UniqueID"
 							." WHERE UserTable.Research_Participant = 1"      
 						);
