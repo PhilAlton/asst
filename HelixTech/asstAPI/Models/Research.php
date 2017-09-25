@@ -25,7 +25,7 @@ class Research{
                                     "Data" => $researchParticipants);
 
 				var_dump($analyticResults);
-               Output::setOutput($researchParticipants);
+               Output::setOutput($analyticResults);
 
 
 
