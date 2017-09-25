@@ -9,11 +9,6 @@ class Analytics{
        try{
            if (Connection::authenticate('AdminTable')){
 
-		                  $query = new Query(SELECT, "* FROM UserTable, ResearchTable" 
-                                            ." WHERE UserTable.Research_Participant=1" 
-                                    );
-               $researchParticipants = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
-
            // build the data retrival queries
                $query = new Query(SELECT, "COUNT(DISTINCT CXTN_IP) FROM ConnectionLog");
                $numDistinctIP = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
