@@ -39,8 +39,8 @@ class Research{
 					." WHERE $rchTable.Date IS NULL"
 				);
 
-				$results = array_merge($results, $query1->execute(SIMPLIFY_QUERY_RESULTS_OFF,  [':remoteLastUpdate' => $remoteLastUpdate]));
-				$results = array_merge($results, $query2->execute(SIMPLIFY_QUERY_RESULTS_OFF,  [':remoteLastUpdate' => $remoteLastUpdate]));
+				$results = array_merge($results, $query1->execute(SIMPLIFY_QUERY_RESULTS_OFF));
+				$results = array_merge($results, $query2->execute(SIMPLIFY_QUERY_RESULTS_OFF));
 
 				$researchParticipant['data'] = $results;
 
