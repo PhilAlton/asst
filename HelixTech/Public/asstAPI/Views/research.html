@@ -102,10 +102,14 @@
                                     $.each(this, function (k, V) {
                                         //console.log("k:" + k + "v: " + V);
                                         $.each(this, function (l, m) {
-                                            if (m == null) { m = "null";}
-                                            cell.appendChild(document.createTextNode(
-                                                l.toString() + ": " + m.toString() + ", "
-                                            ));
+                                            if (m == null) { m = "null"; }
+                                            if (l == "GenDataID" || l == "RchDataID" || l == "LastUpdate") {
+                                                
+                                            } else {
+                                                cell.appendChild(document.createTextNode(
+                                                    m.toString() + ", "
+                                                ));
+                                            }
                                         })
                                         cell.appendChild(document.createElement("br"));
                                         cell.appendChild(document.createElement("br"));
