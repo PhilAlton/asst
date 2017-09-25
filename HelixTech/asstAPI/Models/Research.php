@@ -24,7 +24,7 @@ class Research{
                                     //"AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
                                     "Data" => $researchParticipants);
 
-
+				var_dump($analyticResults);
                Output::setOutput($researchParticipants);
 
 
