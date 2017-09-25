@@ -105,8 +105,11 @@ class Crypt{
     }
 
 
-    public static function decryptWithUserKey($protected_key_encoded, $password){
+    public static function decryptWithUserKey($protected_key_encoded, $password, $cypherText){
         Crypt::$personalKey = KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
+		$plaintext = Crypt::decrypt($cypherText);
+		Crypt::$personalKey = null;
+		return $plaintext;
     }
 
 

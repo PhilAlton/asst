@@ -217,8 +217,7 @@ class Connection{
 
 				// for admin table, key is protected by password
                 if ($table == "AdminTable"){
-                    Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
-					$password = Crypt::decrypt($password);
+                    $password = Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"], $password);
                 }
 
 			}
