@@ -100,9 +100,10 @@
                                 if ($.isArray(v)) {
                                     // Handle if a row contains an array of embeded data
                                     $.each(this, function (k, V) {
-                                        console.log("k:" + k + "v: " + V);
+                                        //console.log("k:" + k + "v: " + V);
                                         $.each(this, function (l, m) {
-                                            if (m = null) { m = "null";}
+                                            if (m = null) { m = "null"; }
+                                            console.log("L:" + l + " M: " + m);
                                             cell.appendChild(document.createTextNode(
                                                 l.toString() + ": " + m.toString()
                                             ));
