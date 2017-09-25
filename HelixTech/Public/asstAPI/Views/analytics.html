@@ -25,7 +25,7 @@
             padding: 15px;
             position: sticky;
         }
-        th:hover {
+        tr:hover {
             background: #ead78e;  
         }
         td {
@@ -56,9 +56,9 @@
                         $('#error').css('display', 'none');
                         $('#AnalyticsData')
                             .html(
-                            "Number of Average reuqsts per weeek: " + data.content.AVERAGE_REQUESTS + "<br/>" +
-                            "Number of Distinct IP addresses: " + data.content.DISTINCT_IP_COUNT + "<br/>" +
-                            "Number of Distinct Users: " + data.content.DISTINCT_USER_COUNT + "<br/>" 
+                            "<b>Number of Average reuqsts per weeek: </b>" + data.content.AVERAGE_REQUESTS + "<br/>" +
+                            "<b>Number of Distinct IP addresses: </b>" + data.content.DISTINCT_IP_COUNT + "<br/>" +
+                            "<b>Number of Distinct Users: </b>" + data.content.DISTINCT_USER_COUNT + "<br/>" 
                             )
                             .css('display', 'inline');
 
