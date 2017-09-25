@@ -69,6 +69,9 @@
                         "<b>Number of Distinct Users: </b>" + data.content.DISTINCT_USER_COUNT + "<br/>"
                         )
                         .css('display', 'inline');
+                    $('#AnalyticsTable')
+                        .html("<caption>Connection Log - Non Standard / Erronious Requests</caption><thead class='tableHeaderRow'><tr><th>ID</th><th>Date and Time</th><th>UserName</th><th>IP Address</th><th>WHOIS</th><th>User Agent</th><th>Requested URI</th><th>Authenticated</th><th>Errors</th></tr></thead>")
+                        .css('display', 'inline');;
 
                     var tbl_body = document.createElement("tbody");
                     var odd_even = false;
@@ -90,7 +93,7 @@
                 },
                 error: function (xhr, status, error) {
                     //console.log(error);
-                    $('#error').html("<b>Error whilst trying to retreive analytics data</b>").css('display', 'inline');
+                    $('#error').html("<b>Error whilst trying to retreive analytics data</b>")
                 }
             });
 
@@ -110,20 +113,6 @@
     <div id="AnalyticsData"></div>
     <br /><br /><br />
     <table id="AnalyticsTable" style="display:none;">
-        <caption>Connection Log - Non Standard / Erronious Requests</caption>
-        <thead class="tableHeaderRow">
-            <tr>
-                <th>ID</th>
-                <th>Date and Time</th>
-                <th>UserName</th>
-                <th>IP Address</th>
-                <th>WHOIS</th>
-                <th>User Agent</th>
-                <th>Requested URI</th>
-                <th>Authenticated</th>
-                <th>Errors</th>
-            </tr>
-        </thead>
     </table>
     <div id="error" />
 </body>
