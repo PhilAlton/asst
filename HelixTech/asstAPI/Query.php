@@ -20,8 +20,9 @@
 
         private $query;
         private $database;
-	    private $queryType;
+	      private $queryType;
         private $encryptedTableBoolean;
+
         private $unencryptedTableNames = Array("AdminTable", "cache", "ConnectionLog", "INFORMATION_SCHEMA");
         private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", ":PassResTokEx",
 												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "date", "Date", "GenDataID", "RchDataID",
