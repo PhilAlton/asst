@@ -16,7 +16,7 @@
             font-weight: bold;
             float: left;
         }
-        tbody tr:hover {
+        .tableHeaderRow:hover {
             background: #ead78e;
         }
         th {
@@ -93,7 +93,7 @@
 <body>
 	<div id="LogIn"  style="width: 300px; float:right">
 		<form id="LogInForm">
-			<label name="log in">Please Log in:</label><br/>
+			<label name="log in"><b>Please Log in:</b></label><br/>
 			<input type="text" name="username" id="userNameBx" placeholder="Enter Username"/><br/>
 			<input type="text" name="password" id="userPassBx" placeholder="Enter Password"/><br/>
 			<input type="button" onclick="logIn(LogInForm.userNameBx.value,LogInForm.userPassBx.value)" value="Submit"/>
@@ -104,17 +104,19 @@
     <div style="overflow-x:auto;">
         <table id="AnalyticsTable" style="display:none;">
             <caption>Connection Log - Non Standard / Erronious Requests</caption>
-            <tr>
-                <th>ID</th>
-                <th>Date and Time</th>
-                <th>UserName</th>
-                <th>IP Address</th>
-                <th>WHOIS</th>
-                <th>User Agent</th>
-                <th>Requested URI</th>
-                <th>Authenticated</th>
-                <th>Errors</th>
-            </tr>
+            <thead class="tableHeaderRow">
+                <tr>
+                    <th>ID</th>
+                    <th>Date and Time</th>
+                    <th>UserName</th>
+                    <th>IP Address</th>
+                    <th>WHOIS</th>
+                    <th>User Agent</th>
+                    <th>Requested URI</th>
+                    <th>Authenticated</th>
+                    <th>Errors</th>
+                </tr>
+            </thead>
         </table>
     </div>
     <div id="error" />
