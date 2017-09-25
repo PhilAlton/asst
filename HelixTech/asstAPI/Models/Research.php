@@ -10,12 +10,13 @@ class Research{
            if (Connection::authenticate('AdminTable')){
 
            // build the data retrival queries
-               $query = new Query(SELECT, "* FROM UserTable, ResearchTable" 
-                                            ." WHERE UserTable.`Research_Participant`=true" 
-                                    );
-               $researchParticipants = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
+		    $results = array();
+		    $query = New Query(SELECT, '* FROM `ResearchTable` WHERE `Research_Participant` =:Research_Participant');
+		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':Research_Participant' => 1]));
+            $query = New Query(SELECT, '* FROM `UserTable` WHERE `Research_Participant` =:Research_Participant');
+		    $results = array_merge( $results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':Research_Participant' => 1]));
 
-
+			$researchParticipants = $results;
 
             // combine the quries and output as JSON via Output class
                $analyticResults = array(
