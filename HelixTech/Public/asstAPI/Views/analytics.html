@@ -27,7 +27,7 @@
             float:left;
         }
         .even {
-            background: #d8b691;
+            background: #b4a174;
         }
         tbody tr:hover {
             background: #e9e7e1;
@@ -98,20 +98,22 @@
 	</div>
 	<div id="AnalyticsData"></div>
     <br/><br/><br/>
-    <table id="AnalyticsTable" style="display:none;">
-        <caption>Connection Log - Non Standard / Erronious Requests</caption>
-        <tr>
-            <th>ID</th>
-            <th>Date and Time</th>
-            <th>UserName</th>
-            <th>IP Address</th>
-            <th>WHOIS</th>
-            <th>User Agent</th>
-            <th>Requested URI</th>
-            <th>Authenticated</th>
-            <th>Errors</th>
-        </tr>
-    </table>
-    <div id="error"/>
+    <div style="overflow-x:auto;">
+        <table id="AnalyticsTable" style="display:none;">
+            <caption>Connection Log - Non Standard / Erronious Requests</caption>
+            <tr>
+                <th>ID</th>
+                <th>Date and Time</th>
+                <th>UserName</th>
+                <th>IP Address</th>
+                <th>WHOIS</th>
+                <th>User Agent</th>
+                <th>Requested URI</th>
+                <th>Authenticated</th>
+                <th>Errors</th>
+            </tr>
+        </table>
+    </div>
+    <div id="error" />
 </body>
 </html>
