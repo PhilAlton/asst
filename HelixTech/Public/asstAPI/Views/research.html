@@ -91,9 +91,9 @@
                     $.each(data.content.Data, function () {
                         var tbl_row = tbl_body.insertRow();
                         tbl_row.className = odd_even ? "odd" : "even";
-                        console.log(this);
+                        //console.log(this);
                         $.each(this, function (k, v) {
-                            console.log("k:"+k + "v: "+v);
+                           // console.log("k:"+k + "v: "+v);
                             var cell = tbl_row.insertCell();
                             if (v != null) {
                                 cell.appendChild(document.createTextNode(v.toString()));
