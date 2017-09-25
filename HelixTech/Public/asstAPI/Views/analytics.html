@@ -12,26 +12,31 @@
             table-layout: fixed;
             border-collapse: collapse;
         }
+        caption {
+            font-weight: bold;
+            float: left;
+        }
+        tbody tr:hover {
+            background: #ead78e;
+        }
         th {
             white-space: nowrap;
             border: 1px solid black;
             padding: 15px;
             position: sticky;
         }
+        th:hover {
+                background:linen;
+        }
         td {
             border: 1px solid black;
             padding: 15px;
         }
-        caption {
-            font-weight: bold;
-            float:left;
-        }
+
         .even {
-            background: #e9e7e1;
+            background: #eadfaa;
         }
-        tbody tr:hover {
-            background: #ead78e;
-        }
+
 
     </style>
 
@@ -72,9 +77,7 @@
                             })
                         odd_even = !odd_even;
                         })
-                        $("#AnalyticsTable").append(tbl_body).css('display', 'inline').css('border','5px solid black');
-
-                        console.log(data);
+                        $("#AnalyticsTable").append(tbl_body).css('display', 'inline');
 
                     },
                     error: function (xhr, status, error) {
