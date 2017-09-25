@@ -104,9 +104,10 @@
                                         $.each(this, function (l, m) {
                                             if (m == null) { m = "null";}
                                             cell.appendChild(document.createTextNode(
-                                                l.toString() + ": " + m.toString() + "&#10;&#13;"
+                                                l.toString() + ": " + m.toString() + ", "
                                             ));
                                         })
+                                        cell.appendChild(document.createElement("br"));
                                     })
                                 } else {
                                     cell.appendChild(document.createTextNode(v.toString()));
