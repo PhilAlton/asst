@@ -70,7 +70,7 @@
                         .css('display', 'inline');
                     $('#ResearchTable')
                         .html(
-                        "<caption>Connection Log - Non Standard / Erronious Requests</caption>"
+                        "<caption>AS-ST Research Participants Data</caption>"
                         + "<thead class='tableHeaderRow'>"
                         + "<tr>"
                        // + "<th>Age</th>"
@@ -107,7 +107,6 @@
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
-                    console.log(data);
                     $('#error').html("<b>Error whilst trying to retreive research data</b>").css('display', 'inline');
                 }
             });

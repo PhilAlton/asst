@@ -10,24 +10,25 @@ class Research{
            if (Connection::authenticate('AdminTable')){
 
            // build the data retrival queries
-               $query = New Query(SELECT,
-									"* from UserTable"
-									." RIGHT JOIN ResearchTable ON UserTable.UniqueID = ResearchTable.UniqueID"
-									." WHERE UserTable.Research_Participant = 1"      
-								);
-               $researchParticipants = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
+			$query = new Query(SELECT, "COUNT(DISTINCT UniqueID) FROM ResearchTable");
+			$numDistinctUsers = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
+
+            $query = New Query(SELECT,
+							"* from UserTable"
+							." RIGHT JOIN ResearchTable ON UserTable.UniqueID = ResearchTable.UniqueID"
+							." WHERE UserTable.Research_Participant = 1"      
+						);
+            $researchParticipants = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
 
 
             // combine the quries and output as JSON via Output class
-               $analyticResults = array(
-                                    //"DISTINCT_IP_COUNT" => $numDistinctIP,  
-                                    //"DISTINCT_USER_COUNT" => $numDistinctUsers, 
-                                    //"AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
-                                    "Data" => $researchParticipants);
+            $analyticResults = array( 
+                            "DISTINCT_USER_COUNT" => $numDistinctUsers, 
+                            "Data" => $researchParticipants);
 
 			
-               Output::setOutput($researchParticipants);
+            Output::setOutput($researchParticipants);
 
 
 
