@@ -62,6 +62,7 @@ class Connection{
 
             $input = json_decode($input, true);
 
+			$results = array();
 			$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UniqueID` = :UniqueID');
 			$results = array_merge( $results, Array("AuthToken" => $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 228])));
 			echo $results;
