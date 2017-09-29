@@ -279,7 +279,7 @@
 	    public static function handleRequest($method, $UserName, $params){
 
             try{
-		        if (true){ //Connection::authenticate()
+		        if (Connection::authenticate()){
 
 			        switch ($method) {
 				        /*			case 'POST':
