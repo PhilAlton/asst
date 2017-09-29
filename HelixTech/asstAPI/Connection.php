@@ -66,8 +66,7 @@ class Connection{
 			$query = New Query(SELECT, '* FROM `AuthTable` WHERE `UniqueID` = :UniqueID');
 			$results = array_merge( $results, Array("AuthToken" => $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UniqueID' => 228])));
 			var_dump($results);
-			$results["AuthTokenPlain"] = Crypt::decrypt($results["AuthTokenPlain"]);
-			
+			$results["AuthTokenPlain"] = Crypt::decrypt($results[0]["AuthTokenPlain"]);
 			Output::setOutput($results);
 
             Connection::$input = array();
