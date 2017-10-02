@@ -17,7 +17,7 @@ Class Auth{
     }
 
 
-    public static function verifyGoogleID($payload){
+    public static function verifyGoogleID($payload, $uID){
         $q_auth = false;
         if ($payload) {
             $userid = $payload['sub'];
@@ -31,10 +31,10 @@ Class Auth{
     }
 
     
-    private static function authentic($auth){
+    private static function authentic($auth, $uID){
         // Tasks in regards to validation
         if ($auth) {
-            User::$uID = Connection::getUserName();
+            User::$uID = $uID;
             $q_auth = true;
         } else {
             http_response_code(401); // not authorised

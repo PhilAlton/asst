@@ -214,7 +214,7 @@ class Connection{
 
                     $client = new \Google_Client(['client_id' => $client_id]);
                     $payload = $client->verifyIdToken($id_token);
-                    $q_auth = Auth::verifyGoogleID($payload);
+                    $q_auth = Auth::verifyGoogleID($payload, $UserDetails['UniqueID']);
                 } else {
                     // Case for password or authtoken supplied
                     //Load either the authToken from the database, or the password, depending on which the user has supplied
@@ -234,7 +234,7 @@ class Connection{
                         $password = Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"], $password);
                     }
                     
-                    $q_auth = Auth::verifyPassword($password);
+                    $q_auth = Auth::verifyPassword($password, $UserDetails['UniqueID']);
 
                 }
 
