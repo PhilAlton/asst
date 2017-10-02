@@ -204,7 +204,20 @@ class Connection{
 
                 if (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
                     // Case for Google Token supplied
-                    $client = new \Google_Client(['client_id' => $_SERVER["PHP_AUTH_PW"]]);//less "google="
+                    
+                        // $_SERVER["PHP_AUTH_PW"]; //less "google=" ; is this token or username or combo
+                        // $CLIENT_ID = username ?? or simply an id representation
+                        // $id_token //needs to be set
+                                                
+                        // google=client_id=#,Id_token=#
+
+                        $tokens = explode("google=client_id=", $_SERVER["PHP_AUTH_PW"]);
+                        $tokens = explode(",id_token=", $tokens[1]);
+                        $CLIENT_ID = $tokens[0];
+                        $id_token = $tokens[1];
+                        var_dump($tokens);
+
+                    $client = new \Google_Client(['client_id' => $CLIENT_ID]);
                     $payload = $client->verifyIdToken($id_token);
                     $q_auth = Auth::verifyGoogleID($payload);
                 } else {
@@ -245,7 +258,7 @@ class Connection{
 
     }
 
-    
+
 
 
 
