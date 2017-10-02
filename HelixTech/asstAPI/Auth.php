@@ -21,7 +21,7 @@ Class Auth{
         $q_auth = false;
         if ($payload) {
             $userid = $payload['sub'];
-            var_dump($payload);  
+            //var_dump($payload);  
             $q_auth = Auth::authentic(true);
         } else {
             $q_auth = Auth::authentic(false);
