@@ -5,7 +5,7 @@ use HelixTech\asstAPI\Models\User;
 
 Class Auth{
 
-    public static function verifyPassword($password){
+    public static function verifyPassword($password, $uID){
         $q_auth = false;
         // Check if the hash of the entered login password, matches the stored hash.
         $q_auth = Auth::authentic(password_verify(
