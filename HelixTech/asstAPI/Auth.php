@@ -34,7 +34,6 @@ Class Auth{
     private static function authentic($auth){
         if ($auth) {
             User::$uID = Connection::getUserName();
-            Connection::authentic();
             $q_auth = true;
         } else {
             http_response_code(401); // not authorised
