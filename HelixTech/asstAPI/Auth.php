@@ -1,7 +1,7 @@
 <?php namespace HelixTech\asstAPI;
 
 use HelixTech\asstAPI\{Connection, Crypt};
-use HelixTech\asstAPI\Models\{Users};
+use HelixTech\asstAPI\Models\User;
 
 Class Auth{
 
