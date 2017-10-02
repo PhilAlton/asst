@@ -11,7 +11,7 @@
  */
 
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, BlackListedInput, UsernameNotAValidEmailAddress};
-use HelixTech\asstAPI\{Query, Crypt};
+use HelixTech\asstAPI\{Query, Crypt, Auth};
 use HelixTech\asstAPI\Models\User;
 
 /**
@@ -197,59 +197,49 @@ class Connection{
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
                 // If no user obtained from database then throw exception and handle.
-                $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
-                throw new \UnexpectedValueException($e);
+                throw new \UnexpectedValueException($_SERVER['PHP_AUTH_USER']." DOES NOT EXIST");
             } else {
-                // Else decrypt the password
+                // Else validate the password
 
-                //Load either the authToken from the database, or the password, depending on which the user has supplied
-				if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
-					// Token has been supplied
-                    $password = $UserDetails["AuthToken"];
-                } elseif (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
+
+                if (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
+                    // Case for Google Token supplied
                     $client = new \Google_Client(['client_id' => $_SERVER["PHP_AUTH_PW"]]);//less "google="
-                    //$payload = $client->verifyIdToken($id_token);
-                    //if ($payload) {
-                      // $userid = $payload['sub];
-                      // var_dump($payload);  
-                    //} else {
-                        // Invalid ID Token
-                 //   }
-
+                    $payload = $client->verifyIdToken($id_token);
+                    $q_auth = Auth::verifyGoogleID($payload);
                 } else {
-					// Password has been supplied
-					$password = $UserDetails["Password"];
-					//Return authtoken to be used in future requests, unless connection is via admin rather than user
-					if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
-				}
+                    // Case for password or authtoken supplied
+                    //Load either the authToken from the database, or the password, depending on which the user has supplied
+                    if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
+                        // Token has been supplied
+                        $password = $UserDetails["AuthToken"];
+                    } else {
+                        // Password has been supplied
+                        $password = $UserDetails["Password"];
+                        //Return authtoken to be used in future requests, unless connection is via admin rather than user
+                        if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
+                    }
 
 
-				// for admin table, key is protected by password
-                if ($table == "AdminTable"){
-                    $password = Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"], $password);
+                    // for admin table, key is protected by password
+                    if ($table == "AdminTable"){
+                        $password = Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"], $password);
+                    }
+                    
+                    $q_auth = Auth::verifyPassword($password);
+
                 }
 
 			}
 
-            // Check if the hash of the entered login password, matches the stored hash.
-            if (password_verify(
-                    base64_encode(hash('sha384', $_SERVER["PHP_AUTH_PW"], true)),
-                    $password
-                )){
-                User::$uID = $UserDetails["UniqueID"];
-                Connection::authentic();
-                $q_auth = true;
-
-            } else {
-                Connection::notAuthentic();
-                $q_auth = false;
-            }
+            
 
         }
         catch (\UnexpectedValueException $e) {
             http_response_code(401);
             Output::errorMsg("Unexpected Value: ".$e->getMessage().".");
         }
+  
 
         return $q_auth;
 

@@ -1,7 +1,57 @@
 <?php
 
+use HelixTech\asstAPI\{Connection, Crypt};
+use HelixTech\asstAPI\Models\{Users};
+
+Class Auth{
+
+    public static function verifyPassword($password){
+        $q_auth = false;
+        // Check if the hash of the entered login password, matches the stored hash.
+        Auth::authentic(password_verify(
+            base64_encode(hash('sha384', Connection::getPassword(), true)),
+            $password
+        ));
+        return $q_auth;
+
+    }
 
 
+    public static function verifyGoogleID($payload){
+        $q_auth = false;
+        if ($payload) {
+            $userid = $payload['sub'];
+            var_dump($payload);  
+            Auth::authentic(true);
+        } else {
+            Auth::authentic(false);
+        }
+        return $q_auth;
+    
+    }
+
+    
+    private static function authentic($auth){
+        if ($auth) {
+            User::$uID = $UserDetails["UniqueID"];
+            Connection::authentic();
+            $q_auth = true;
+        } else {
+            Connection::notAuthentic();
+            $q_auth = false;
+        }
+
+    }
+
+
+
+}
+
+
+
+
+
+/*
 http_response_code(100); // N Continue (send POST body)
 http_response_code(417); // Expectation failed (i.e. don't send POST)
 http_response_code(302); // Found
@@ -20,7 +70,7 @@ http_response_code(409); // Conflict
 
 
 header("HTTP/1.0 418 I'm A Teapot");
-
+*/
 
 
 ?>
