@@ -32,6 +32,7 @@ Class Auth{
 
     
     private static function authentic($auth){
+        // Tasks in regards to validation
         if ($auth) {
             User::$uID = Connection::getUserName();
             $q_auth = true;
@@ -41,10 +42,11 @@ Class Auth{
             $q_auth = false;
         }
 
+        // Update Connection Log
         $query = New Query(UPDATE, "ConnectionLog ".
                                 "SET CXTN_AUTHENTIC=:auth ".
                                 "WHERE `CXTN_ID` =:cID");
-        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':auth' => $q_auth, ':cID' => Connection::$cID]);
+        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':auth' => $q_auth, ':cID' => Connection::getCID()]);
 
         return $q_auth;
     }
