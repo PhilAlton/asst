@@ -213,7 +213,6 @@ class Connection{
                     // var_dump($tokens);
 
                     $client = new \Google_Client(['client_id' => $client_id]);
-                    var_dump($client);
                     $payload = $client->verifyIdToken($id_token);
                     $q_auth = Auth::verifyGoogleID($payload);
                 } else {
