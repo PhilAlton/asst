@@ -11,7 +11,7 @@ Class Auth{
         $q_auth = Auth::authentic(password_verify(
             base64_encode(hash('sha384', Connection::getPassword(), true)),
             $password
-        ));
+        ), $uID);
         return $q_auth;
 
     }
@@ -22,9 +22,9 @@ Class Auth{
         if ($payload) {
             $userid = $payload['sub'];
             //var_dump($payload);  
-            $q_auth = Auth::authentic(true);
+            $q_auth = Auth::authentic(true, $uID);
         } else {
-            $q_auth = Auth::authentic(false);
+            $q_auth = Auth::authentic(false, $uID);
         }
         return $q_auth;
     
