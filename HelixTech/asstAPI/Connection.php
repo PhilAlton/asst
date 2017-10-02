@@ -205,17 +205,18 @@ class Connection{
                 //Load either the authToken from the database, or the password, depending on which the user has supplied
 				if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
 					// Token has been supplied
-					$password = $UserDetails["AuthToken"];
-				} elseif (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
-					$client = new Google_Client(['client_id' => $_SERVER["PHP_AUTH_PW"]]);//less "google="
-					//$payload = $client->verifyIdToken($id_token);
-					//if ($payload) {
- 					//  $userid = $payload['sub'];
-				//		var_dump($payload);
-				//	} else {
- 					  // Invalid ID token
-				//	}
-				} else {
+                    $password = $UserDetails["AuthToken"];
+                } elseif (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
+                    $client = new Google_Client([['client_id'] => $_SERVER["PHP_AUTH_PW"]]);//less "google="
+                    //$payload = $client->verifyIdToken($id_token);
+                    //if ($payload) {
+                      // $userid = $payload['sub];
+                      // var_dump($payload);  
+                    //} else {
+                        // Invalid ID Token
+                 //   }
+
+                } else {
 					// Password has been supplied
 					$password = $UserDetails["Password"];
 					//Return authtoken to be used in future requests, unless connection is via admin rather than user
