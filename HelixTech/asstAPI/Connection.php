@@ -207,7 +207,7 @@ class Connection{
 					// Token has been supplied
                     $password = $UserDetails["AuthToken"];
                 } elseif (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
-                    $client = new Google_Client([['client_id'] => $_SERVER["PHP_AUTH_PW"]]);//less "google="
+                    $client = new \Google_Client([['client_id'] => $_SERVER["PHP_AUTH_PW"]]);//less "google="
                     //$payload = $client->verifyIdToken($id_token);
                     //if ($payload) {
                       // $userid = $payload['sub];
