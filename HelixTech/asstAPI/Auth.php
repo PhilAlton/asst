@@ -8,7 +8,7 @@ Class Auth{
     public static function verifyPassword($password){
         $q_auth = false;
         // Check if the hash of the entered login password, matches the stored hash.
-        Auth::authentic(password_verify(
+        $q_auth = Auth::authentic(password_verify(
             base64_encode(hash('sha384', Connection::getPassword(), true)),
             $password
         ));
@@ -22,9 +22,9 @@ Class Auth{
         if ($payload) {
             $userid = $payload['sub'];
             var_dump($payload);  
-            Auth::authentic(true);
+            $q_auth = Auth::authentic(true);
         } else {
-            Auth::authentic(false);
+            $q_auth = Auth::authentic(false);
         }
         return $q_auth;
     
@@ -37,13 +37,18 @@ Class Auth{
             Connection::authentic();
             $q_auth = true;
         } else {
-            Connection::notAuthentic();
+            http_response_code(401); // not authorised
+
             $q_auth = false;
         }
 
+        $query = New Query(UPDATE, "ConnectionLog ".
+                                "SET CXTN_AUTHENTIC=:auth ".
+                                "WHERE `CXTN_ID` =:cID");
+        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':auth' => $q_auth, ':cID' => Connection::$cID]);
+
+        return $q_auth;
     }
-
-
 
 }
 

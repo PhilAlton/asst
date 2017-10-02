@@ -246,28 +246,6 @@ class Connection{
     }
 
 
-    private static function authentic(){
-        // Success
-        $query = New Query(UPDATE, "ConnectionLog ".
-                           "SET CXTN_AUTHENTIC=1 ".
-                           "WHERE `CXTN_ID` =:cID");
-        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':cID' => Connection::$cID]);
-        $q_auth = true;
-
-    }
-
-
-    public static function notAuthentic(){
-        // Failure
-        http_response_code(401); // not authorised
-        $query = New Query(UPDATE, "ConnectionLog ".
-                       "SET CXTN_AUTHENTIC=0 ".
-                       "WHERE `CXTN_ID` =:cID");
-        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':cID' => Connection::$cID]);
-
-
-    }
-
 
 }
 
