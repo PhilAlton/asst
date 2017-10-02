@@ -33,7 +33,7 @@ Class Auth{
     
     private static function authentic($auth){
         if ($auth) {
-            User::$uID = $UserDetails["UniqueID"];
+            User::$uID = Connection::getUserName();
             Connection::authentic();
             $q_auth = true;
         } else {
