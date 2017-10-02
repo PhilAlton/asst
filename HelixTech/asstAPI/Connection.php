@@ -214,7 +214,7 @@ class Connection{
 				//		var_dump($payload);
 				//	} else {
  					  // Invalid ID token
-					}
+				//	}
 				} else {
 					// Password has been supplied
 					$password = $UserDetails["Password"];
