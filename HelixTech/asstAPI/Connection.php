@@ -13,7 +13,7 @@
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, BlackListedInput, UsernameNotAValidEmailAddress};
 use HelixTech\asstAPI\{Query, Crypt};
 use HelixTech\asstAPI\Models\User;
-
+use Google\Auth;
 
 /**
  * Connection class to register, store and error log connection details
@@ -207,6 +207,15 @@ class Connection{
 				if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
 					// Token has been supplied
 					$password = $UserDetails["AuthToken"];
+				} elseif (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
+					$client = new Google_Client(['client_id' => $_SERVER["PHP_AUTH_PW"]]);//less "google="
+					//$payload = $client->verifyIdToken($id_token);
+					//if ($payload) {
+ 					//  $userid = $payload['sub'];
+				//		var_dump($payload);
+				//	} else {
+ 					  // Invalid ID token
+					}
 				} else {
 					// Password has been supplied
 					$password = $UserDetails["Password"];
