@@ -19,10 +19,8 @@ Class Auth{
 
     public static function verifyGoogleID($payload, $uID){
         $q_auth = false;
-        if ($payload) {
-            $userid = $payload['sub'];
-            //var_dump($payload);  
-            $q_auth = Auth::authentic(true, $uID);
+        if ($payload['email_verified'] && $payload['email'] == Connection::getUserName()){
+           $q_auth = Auth::authentic(true, $uID);
         } else {
             $q_auth = Auth::authentic(false, $uID);
         }
