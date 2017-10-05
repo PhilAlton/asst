@@ -11,9 +11,8 @@
  */
 
 use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials, InsecureConnection, BlackListedInput, UsernameNotAValidEmailAddress};
-use HelixTech\asstAPI\{Query, Crypt};
+use HelixTech\asstAPI\{Query, Crypt, Auth};
 use HelixTech\asstAPI\Models\User;
-
 
 /**
  * Connection class to register, store and error log connection details
@@ -197,77 +196,65 @@ class Connection{
 
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
-                // If no password obtained then throw exception and handle.
-                $e = $_SERVER['PHP_AUTH_USER']." DOES NOT EXIST";
-                throw new \UnexpectedValueException($e);
+                // If no user obtained from database then throw exception and handle.
+                throw new \UnexpectedValueException($_SERVER['PHP_AUTH_USER']." DOES NOT EXIST");
             } else {
-                // Else decrypt the password
+                // Else validate the password
+
+
+                if (strpos($_SERVER["PHP_AUTH_PW"], "google=") !== False) {
+                    // Case for Google Token supplied                 
+                    // google=client_id=#,Id_token=#
+
+                    $tokens = explode("google=client_id=", $_SERVER["PHP_AUTH_PW"]);
+                    $tokens = explode(",id_token=", $tokens[1]);
+                    $client_id = $tokens[0];
+                    $id_token = $tokens[1];
+                    // var_dump($tokens);
+
+                    $client = new \Google_Client(['client_id' => $client_id]);
+                    $payload = $client->verifyIdToken($id_token);
+                    $q_auth = Auth::verifyGoogleID($payload, $UserDetails['UniqueID']);
+                } else {
+                    // Case for password or authtoken supplied
+                    //Load either the authToken from the database, or the password, depending on which the user has supplied
+                    if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
+                        // Token has been supplied
+                        $password = $UserDetails["AuthToken"];
+                    } else {
+                        // Password has been supplied
+                        $password = $UserDetails["Password"];
+                        //Return authtoken to be used in future requests, unless connection is via admin rather than user
+                        if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
+                    }
+
 
                     // for admin table, key is protected by password
-                if ($table == "AdminTable"){
-                    Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"]);
+                    if ($table == "AdminTable"){
+                        $password = Crypt::decryptWithUserKey($UserDetails["UserKey"], $_SERVER["PHP_AUTH_PW"], $password);
+                    }
+                    
+                    $q_auth = Auth::verifyPassword($password, $UserDetails['UniqueID']);
+
                 }
 
-                //Load either the authToken from the database, or the password, depending on which the user has supplied
-				if (strpos($_SERVER["PHP_AUTH_PW"], $_SERVER["PHP_AUTH_USER"]."=") !== False){
-					// Token has been supplied
-					$password = $UserDetails["AuthToken"];
-				} else {
-					// Password has been supplied
-					$password = $UserDetails["Password"];
-					//Return authtoken to be used in future requests, unless connection is via admin rather than user
-					if($table != "AdminTable"){Connection::$AuthToken = $UserDetails["AuthTokenPlain"];}
-				}
-
-				$password = Crypt::decrypt($password);                                                             //FIX - decrypt should go in query class
 			}
 
-            // Check if the hash of the entered login password, matches the stored hash.
-            if (password_verify(
-                    base64_encode(hash('sha384', $_SERVER["PHP_AUTH_PW"], true)),
-                    $password
-                )){
-                User::$uID = $UserDetails["UniqueID"];
-                Connection::authentic();
-                $q_auth = true;
-
-            } else {
-                Connection::notAuthentic();
-                $q_auth = false;
-            }
+            
 
         }
         catch (\UnexpectedValueException $e) {
             http_response_code(401);
             Output::errorMsg("Unexpected Value: ".$e->getMessage().".");
         }
+  
 
         return $q_auth;
 
     }
 
 
-    private static function authentic(){
-        // Success
-        $query = New Query(UPDATE, "ConnectionLog ".
-                           "SET CXTN_AUTHENTIC=1 ".
-                           "WHERE `CXTN_ID` =:cID");
-        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':cID' => Connection::$cID]);
-        $q_auth = true;
 
-    }
-
-
-    public static function notAuthentic(){
-        // Failure
-        http_response_code(401); // not authorised
-        $query = New Query(UPDATE, "ConnectionLog ".
-                       "SET CXTN_AUTHENTIC=0 ".
-                       "WHERE `CXTN_ID` =:cID");
-        $query->silentexecute(SIMPLIFY_QUERY_RESULTS_ON,  [':cID' => Connection::$cID]);
-
-
-    }
 
 
 }

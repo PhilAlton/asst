@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Output for Research</title>
+    <!--This Document will be loaded by an html root directory page in order to load the analytics stream-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        tbody, thead {
+            border: 5px solid black;
+        }
+
+        table#ResearchTable {
+            border-spacing: 5px;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+        caption {
+            font-weight: bold;
+            float: left;
+            padding: 20px;
+        }
+        tr {
+            vertical-align: top;
+        }
+        th {
+            white-space: nowrap;
+            border: 1px solid black;
+            padding: 15px;
+            position: sticky;
+            background: #ead78e;
+        }
+
+        tr:hover {
+            background: #ead78e;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 15px;
+        }
+
+        .even {
+            background: #ede0cf;
+        }
+        .odd {
+            background: linen;
+        }
+    </style>
+
+    <script>
+        function logIn(username, password) {
+            $.ajax({
+                type: 'GET',
+
+                url: "https://axspa.org.uk/asst/Research",
+                //Add the request header
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#error').css('display', 'none');
+                    $('#LogIn').css('display', 'none');
+                    $('#ResearchData')
+                        .html(
+                        "<b>Data from AS-ST Research Participants</b>" + "<br/>" +   
+                        "<b>Number of Participants: </b>" + data.content.DISTINCT_USER_COUNT + "<br/><br/><br/>"
+                        )
+                        .css('display', 'inline');
+                    $('#ResearchTable')
+                        .html(
+                        "<caption>AS-ST Research Participants Data</caption>"
+                        + "<thead class='tableHeaderRow'>"
+                        + "<tr>"
+                        + "<th>Age</th>"
+                        + "<th>Gender</th>"
+                        + "<th>Age of Symptom Onset</th>"
+                        + "<th>Firstname</th>"
+                        + "<th>Surname</th>"
+                        + "<th>Date of Birth</th>"
+                        + "<th>Hospital</th>"
+                        + "<th>Data</th>"
+                        + "</tr>"
+                        + "</thead>"
+                        )
+                        .css('display', 'inline');
+
+                    var tbl_body = document.createElement("tbody");
+                    var odd_even = false;
+                    $.each(data.content.Data, function () {
+                        var tbl_row = tbl_body.insertRow();
+                        tbl_row.className = odd_even ? "odd" : "even";
+                        //console.log(this);
+                        $.each(this, function (k, v) {
+                            
+                            var cell = tbl_row.insertCell();
+                            if (v != null) {
+                                if ($.isArray(v)) {
+                                    // Handle if a row contains an array of embeded data
+                                    $.each(this, function (k, V) {
+                                        //console.log("k:" + k + "v: " + V);
+                                        $.each(this, function (l, m) {
+                                            if (m == null) { m = "null"; }
+                                            if (l == "GenDataID" || l == "RchDataID" || l == "LastUpdate") {
+                                                
+                                            } else {
+                                                cell.appendChild(document.createTextNode(
+                                                    m.toString() + ", "
+                                                ));
+                                            }
+                                        })
+                                        cell.appendChild(document.createElement("br"));
+                                        cell.appendChild(document.createElement("br"));
+                                    })
+                                } else {
+                                    cell.appendChild(document.createTextNode(v.toString()));
+                                }
+                                
+                            }
+                        })
+                        odd_even = !odd_even;
+                    })
+                    $("#ResearchTable").append(tbl_body).css('display', 'inline');
+
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                    $('#error').html("<b>Error whilst trying to retreive research data</b>").css('display', 'inline');
+                }
+            });
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="LogIn" style="width: 300px; float:right">
+        <form id="LogInForm">
+            <label name="log in"><b>Please Log in:</b></label><br />
+            <input type="text" name="username" id="userNameBx" placeholder="Enter Username" /><br />
+            <input type="text" name="password" id="userPassBx" placeholder="Enter Password" /><br />
+            <input type="button" onclick="logIn(LogInForm.userNameBx.value,LogInForm.userPassBx.value)" value="Submit" />
+        </form>
+    </div>
+    <div id="ResearchData"></div>
+    <br /><br /><br />
+    <table id="ResearchTable" style="display:none;">
+    </table>
+    <div id="error" />
+</body>
+</html>

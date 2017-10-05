@@ -66,7 +66,7 @@ class Crypt{
      * @return mixed cyphertext
      */
     public static function encrypt($input){
-                                                  // syntax here maps to synatx of encrypt();
+        $input = strval($input);                                   // syntax here maps to synatx of encrypt();
         return Crypt::UseEncryptionKey("Defuse\Crypto\Crypto::encrypt", $input, $key = null);
 
     }
@@ -80,7 +80,7 @@ class Crypt{
      */
     public static function decrypt($input){
         $plaintext = "";
-
+		
 		try {
 			try {
 				// call Crypto::decrypt via UseEncryptionKey, mapping that functions argument syntax
@@ -93,7 +93,7 @@ class Crypt{
 				// intentionally modified by someone trying to carry out an attack.
 
 				// ... handle this case
-				Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".$ex."\n");
+				Output::errorMsg("caught exception: "."Wrong Key Or Modified Ciphertext Exception Thrown -  ".nl2br($ex)."\n");
 				Throw new DecryptionFailureInvalidKeyOrCorruptData;
 
 			} 
@@ -105,8 +105,11 @@ class Crypt{
     }
 
 
-    public static function decryptWithUserKey($protected_key_encoded, $password){
+    public static function decryptWithUserKey($protected_key_encoded, $password, $cypherText){
         Crypt::$personalKey = KeyProtectedByPassword::loadFromAsciiSafeString($protected_key_encoded);
+		$plaintext = Crypt::decrypt($cypherText);
+		Crypt::$personalKey = null;
+		return $plaintext;
     }
 
 

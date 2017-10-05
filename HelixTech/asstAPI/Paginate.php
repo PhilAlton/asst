@@ -10,7 +10,7 @@ use HelixTech\asstAPI\Exceptions\{UnableToAuthenticateUserCredentials};
 define("PAGESTEM", "https://axspa.org.uk/asst/Cache/");
 define("FILEPATH_STEM", ($_SERVER['REMOTE_ADDR'] == "::1" ? 
                                 'C:\xampp\htdocs\cache\asst\\' : 
-                                realpath('/var/www/html/cache/asst'))
+                                realpath($_SERVER['DOCUMENT_ROOT'].'/cache/asst'))
         );
 define("LINK_EXPIRE_TIME", 8);
 
@@ -160,12 +160,15 @@ class Paginate{
 
         // get all expired cache links
         $query = New Query(SELECT, "cacheLink, Pages from cache where expired = 1");
-        $expiredLinks = $query->execute(0);
+        $expiredLinks = $query->execute(1);
+
         // loop through each link and remove the cache file
         foreach ($expiredLinks as $link){
             for ($i=1; $i <= $link['Pages']; $i++){
                 $file =  FILEPATH_STEM."/".Paginate::createLink($link['cacheLink'], $i);
-                if (file_exists($file)){unlink($file);}
+                if (file_exists($file)){unlink($file);} 
+				elseif (file_exists(realpath('/var/www/html/cache/asst')."/".Paginate::createLink($link['cacheLink'], $i))){unlink($file);}
+				elseif (file_exists(realpath('/var/www/testing/cache/asst')."/".Paginate::createLink($link['cacheLink'], $i))){unlink($file);}
 				$query = New Query(DELETE, 'FROM `cache` WHERE `cacheLink` =:cacheLink');
 				$query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':cacheLink' => $link['cacheLink']]);
             }

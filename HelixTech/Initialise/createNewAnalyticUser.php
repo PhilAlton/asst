@@ -1,4 +1,5 @@
 <?php
+require_once dirname(dirname(dirname(__FILE__))) . '/../bootstrap.php';
 
 use Defuse\Crypto\KeyProtectedByPassword;
 use Defuse\Crypto\Crypto;
@@ -6,7 +7,7 @@ use HelixTech\asstAPI\Query;
 
 
 $userName = "phil.alton@helix-tech.co.uk";
-$password = "Puzzl3d?";
+$password = "axspa123";
 
 
 $protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);

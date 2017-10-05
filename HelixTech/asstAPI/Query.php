@@ -1,6 +1,7 @@
 <?php namespace HelixTech\asstAPI;
 
     use HelixTech\asstAPI\{Database, Crypt};
+    use Defuse\Crypto\Exception as Ex;
 
     //require 'database.php';
     define("INSERT", "INSERT");
@@ -19,7 +20,13 @@
 
         private $query;
         private $database;
-	    private $queryType;
+	      private $queryType;
+        private $encryptedTableBoolean;
+
+        private $unencryptedTableNames = Array("AdminTable", "cache", "ConnectionLog", "INFORMATION_SCHEMA");
+        private $unencryptedParameters = Array(":UserName", ":UniqueID", ":Research_Participant", ":remoteLastUpdate", ":Date", ":date", ":PassResTokEx",
+												"UserName", "UniqueID", "PasswordResetTokenExpiry", "Research_Participant", "LastUpdate", "date", "Date", "GenDataID", "RchDataID",
+												"PasswordResetVerified", "PasswordResetAttempts", "Rch_Data_Count", "Research_Participant", ":Research_Participant", "COUNT(DISTINCT UniqueID)");
 
         public function lastInsertId(){
             return $this->database->lastInsertId();
@@ -30,10 +37,59 @@
             $this->database = Database::instance();
 		    $this->queryType = $queryType;
             $this->query = $queryType." ".$query;
+            
+            // based on table name, decide whether to encrpyt the data
+            $this->encryptedTableBoolean = true;
+            foreach ($this->unencryptedTableNames as $tableName){
+                if(strpos($query, $tableName) !== false){
+                    $this->encryptedTableBoolean = false;
+                } 
+            }
         }
 
 
-        public function executeMultiTableQuery($params = null){
+
+        private function handleParamEncryption($param, $value){
+            // Encrypt parameters here
+            // Exclude specified list of parameters and specified list of table calls
+            $newValue;
+            $encryptBool = true;
+
+            if($this->encryptedTableBoolean){
+
+                foreach ($this->unencryptedParameters as $unencryptedParam){
+                    if($param == $unencryptedParam){
+                        $encryptBool = false;
+                    } 
+                }
+            } else {
+                $encryptBool = false;
+            } 
+
+            if($encryptBool){
+                $newValue = Crypt::encrypt($value);
+            } else {
+                $newValue = $value;
+            }
+
+            return $newValue;
+        }
+
+        public function buildQuery($params = null){
+
+            $this->database->query($this->query);
+		    if (isset($params)){
+			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
+				    $this->database->bind(
+					    $param,							
+					    $this->handleParamEncryption($param, $value)
+    				    );
+			    }
+		    }
+        }
+
+
+		public function executeMultiTableQuery($params = null){
             $this->database->setToFetchColumnsWithTableNames();
             $return = $this->execute(SIMPLIFY_QUERY_RESULTS_ON,  $params);
             $this->database->setToFetchColumnsWithoutTableNames();
@@ -55,21 +111,6 @@
             }
         }
 
-
-
-        public function buildQuery($params = null){
-
-            $this->database->query($this->query);
-		    if (isset($params)){
-			    foreach ($params as $param => $value){				// Pass parameters to PDO statement
-				    $this->database->bind(
-			    //		Crypt::encrypt
-					    $param,							// Encrypt all parameters here: uncomment and add () to $param? Or just to value?
-					    $value
-				    );
-			    }
-		    }
-        }
 
         /**
          * Summary of execute - execute a query taking in parameters to bind the SQL statement prepared in the constructor
@@ -97,6 +138,23 @@
 			        case SELECT:
 				        $results = $this->database->resultset();
 
+						// algorithm to decrypt all database output
+                        if ($this->encryptedTableBoolean){
+                            array_walk_recursive($results, function(&$value, $key){
+                                try{    
+									if(isset($value) && $value != ""){
+										$encryptBool = true;
+										foreach ($this->unencryptedParameters as $unencryptedParam){
+											if($key == $unencryptedParam){$encryptBool = false;} 
+										}
+										if($encryptBool){$value = Crypt::decrypt($value);}
+									}
+                                } catch (Ex\WrongKeyOrModifiedCiphertextException $ex) {
+                                    $value = $value;
+                                }
+                            });
+                        }
+
 						// reduce output in case of single row, or single result
 						if ($simplifyQueryResults == "SIMPLIFY_QUERY_RESULTS_ON"){
 							if (count($results) == 1)
@@ -106,9 +164,7 @@
 							}
 						}
 
-				        // algorithm to decrypt all database output
-                        // array_walk_recursive($results, function(&$value, $key){$value = Crypt::decrypt($value);});
-                        http_response_code(200); // OK
+                http_response_code(200); // OK
 				        break;
 
 			        case INSERT:
