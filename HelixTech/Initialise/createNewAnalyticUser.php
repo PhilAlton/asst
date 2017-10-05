@@ -7,7 +7,7 @@ use HelixTech\asstAPI\Query;
 
 
 $userName = "steven.zhao.25@gmail.com";
-$password = "axspa123"35678;
+$password = "axspa123"356789;
 
 
 $protected_key = KeyProtectedByPassword::createRandomPasswordProtectedKey($password);
