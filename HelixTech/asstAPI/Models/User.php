@@ -161,6 +161,9 @@
 							"Basfi_9 TEXT NOT NULL,".
 							"Basfi_10 TEXT NOT NULL,".
 							"Basfi_Total TEXT NOT NULL,".
+							"ESR TEXT NOT NULL,".
+							"CRP TEXT NOT NULL,".
+							"ASDAS_Total TEXT NOT NULL,".
 							"Overall_Spondylitis_Activity TEXT NOT NULL,".
 							"Flare TEXT NOT NULL,".
 							"Flare_Duration text NULL,".
