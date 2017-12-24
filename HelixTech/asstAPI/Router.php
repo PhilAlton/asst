@@ -10,7 +10,7 @@
 
 
 use HelixTech\asstAPI\{Connection, Paginate};
-use HelixTech\asstAPI\Models\{Data, User, Analytics, Research};
+use HelixTech\asstAPI\Models\{Data, User, Analytics, Research, Home};
 use HelixTech\asstAPI\Exceptions\{InvalidURI, ConnectionFailed, AttemptedToAccessUnauthorisedResources};
 
 /**
@@ -81,6 +81,9 @@ class Router{
                 // code for asst/Research
                 Research::display();
 
+            } elseif (Router::uri($root.'/')){
+                // code for landing Page
+                Home::display();
             } else {
                 throw new InvalidURI("Invalid URI selected".Connection::getURI());
             }
