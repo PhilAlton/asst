@@ -3,12 +3,63 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Index View</title>
-	<!--This Document will be loaded by an html root directory page in order to load the analytics stream-->
+	<!--
+		This Document is loaded by an html root directory page, and is a content based support and contact page. 
+		Further features may be added to allow for logging on and accessing data online, including linking to the analytic pages.
+	-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<style>
+        tbody, thead {
+            border: 5px solid black;
+        }
+    </style>
+
+    <script>
+        function logIn(username, password) {
+            $.ajax({
+                type: 'GET',
+
+                url: "https://axspa.org.uk/asst/Home",
+                //Add the request header
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+                },
+                success: function (data) {
+                    console.log(data);
+                    $('#error').css('display', 'none');
+                    $('#LogIn').css('display', 'none');
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                    $('#error').html("<b>Error whilst trying to retreive research data</b>").css('display', 'inline');
+                }
+            });
+
+        }
+    </script>
+
+
 </head>
 
 <body>
-	<div id="View Changer">
+	<!--
+	<div id="LogIn" style="width: 300px; float:right">
+			<form id="LogInForm">
+				<label name="log in"><b>Please Log in:</b></label><br />
+				<input type="text" name="username" id="userNameBx" placeholder="Enter Username" /><br />
+				<input type="text" name="password" id="userPassBx" placeholder="Enter Password" /><br />
+				<input type="button" onclick="logIn(LogInForm.userNameBx.value,LogInForm.userPassBx.value)" value="Submit" />
+			</form>
+	</div>
+	<div id="error" />
+	<br /><br /><br />
+	!-->
+	<div id="View Changer" style="display:none">
 		Please select which view you would like to enter:
 	</div>
+	<h1>Welcome to the Ankylosing Spondylitis Symptom Tracker</h1>
 </body>
 </html>
