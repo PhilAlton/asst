@@ -9,9 +9,7 @@
 
 		TODO:
 		Give functionality to download button
-		Check email addresses
 		Give functionality to contact button.
-		Updata fa-fa icons on full menu
 	-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -86,7 +84,7 @@
         <a href="#about" class="w3-bar-item w3-button"><i class="fa fa-user"></i> ABOUT</a>
         <a href="#faq" class="w3-bar-item w3-button"><i class="fa fa-leanpub"></i> FAQs</a>
         <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACT</a>
-        <a href="#download" class="w3-bar-item w3-button"><i class="fa fa-download"></i> DOWNLOAD</a>
+        <a href="#download" class="w3-bar-item w3-button" onclick="document.getElementById('download').style.display='block'"><i class="fa fa-download"></i> DOWNLOAD</a>
         </div>
         <!-- Hide right-floated links on small screens and replace them with a menu icon -->
       
@@ -104,7 +102,7 @@
 	<a href="#about" onclick="w3_close()" class="w3-bar-item w3-button" style="text-align: right;">ABOUT</a>
 	<a href="#faq" onclick="w3_close()" class="w3-bar-item w3-button" style="text-align: right;">FAQs</a>
 	<a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button" style="text-align: right;">CONTACT</a>
-    <a href="#download" onclick="w3_close()" class="w3-bar-item w3-button" style="text-align: right;">DOWNLOAD</a>
+    <a href="#download" onclick="w3_close();document.getElementById('download').style.display='block'" class="w3-bar-item w3-button" style="text-align: right;">DOWNLOAD</a>
     </nav>
 	  
 	<!-- Header with Slideshow -->
