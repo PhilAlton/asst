@@ -8,7 +8,7 @@
 		Further features may be added to allow for logging on and accessing data online, including linking to the analytic pages.
 
 		TODO:
-		Give functionality to download button
+		Change download function to redirect to iOS store when active
 		Give functionality to contact button.
 	-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -38,13 +38,36 @@
                     xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
                 },
                 success: function (data) {
-                    console.log(data);
+					console.log(data);
                     $('#error').css('display', 'none');
                     $('#LogIn').css('display', 'none');
                 },
                 error: function (xhr, status, error) {
                     console.log(error);
                     $('#error').html("<b>Error whilst trying to retreive research data</b>").css('display', 'inline');
+                }
+            });
+
+		}
+		
+		function contactEmail(name,email,subject,message) {
+            $.ajax({
+                type: 'GET',
+
+                url: "https://axspa.org.uk/asst/ContactEmail",
+                //Add the request header
+                contentType: 'application/x-www-form-urlencoded',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(username + ":" + password));
+                },
+                success: function (data) {
+					console.log(data);
+					$('#contactform').html("<b>Email successfully sent;<br/> we'll get back to you with an answer.</b>");
+                },
+                error: function (xhr, status, error) {
+					console.log(error);
+                    $('#contactform').html("<b>Error whilst trying to send email.<br/> Please try again later.</b>");
                 }
             });
 
@@ -77,7 +100,7 @@
 	   <!-- Navbar (sit on top) -->
     <div class="w3-top">
     <div class="w3-bar w3-white w3-card-2" id="redshiftNavbar">
-        <a href="#home" class="w3-bar-item w3-button w3-wide logo"><img src="/asst/HelixTech/Public/asstAPI/Images/logo.png" style="max-height:80px;max-width:450px"></a>
+        <a href="#home" class="w3-bar-item w3-button w3-wide logo" style="onhover{}"><img src="/asst/HelixTech/Public/asstAPI/Images/logo.png" style="max-height:80px;max-width:450px"></a>
         <!-- Right-sided navbar links -->
         <div class="w3-right w3-hide-small">
         <a href="#features" class="w3-bar-item w3-button"><i class="fa fa-th"></i> FEATURES</a>
@@ -119,7 +142,7 @@
 							<h1 class="w3-xlarge">Welcome to the Ankylosing Spondylitis Symptom Tracker</h1>
 							<hr class="w3-opacity">
 							<p>Free to use, an app to help you take control of your condition</p>
-							<p><button class="w3-button w3-block w3-indigo w3-round" onclick="document.getElementById('download').style.display='block'">Download <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <i class="fa fa-windows"></i></button></p>
+							<p><button class="w3-button w3-block w3-indigo w3-round" onclick="document.getElementById('download').style.display='block'">Download <i class="fa fa-android"></i> <i class="fa fa-apple"></i> <!--i class="fa fa-windows"--></i></button></p>
 						</div>
 						</div>
 						<div class="w3-padding w3-hide-large" style="width:100%">
@@ -158,7 +181,7 @@
 			<p>Download the app in AppStore or Google Play store.</p>
 			<i class="fa fa-android w3-large"></i> <i class="fa fa-apple w3-large"></i><!--<i class="fa fa-windows w3-large"></i>-->	
 			<p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>
-			<button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('download').style.display='none'">Fake Download</button>
+			<button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById('download').style.display='none';downloadApp()">Download</button>
 		  </div>
 		</div>
 	  </div>
@@ -263,16 +286,16 @@
 		<h3 class="w3-center">CONTACT</h3>
 		<p class="w3-center w3-large">Get in touch. Send us a message:</p>
 		<div class="w3-row-padding" style="margin-top:64px">
-			<div class="w3-half">
+			<div id="contactform" class="w3-half">
 			<p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Liverpool, UK</p>
 			<p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone: +44 151 280 9331</p>
 			<p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Email: inquire@helix-tech.co.uk</p>
 			<br>
 			<form action="/action_page.php" target="_blank">
-				<p><input class="w3-input w3-border" type="text" placeholder="Name" required name="Name"></p>
-				<p><input class="w3-input w3-border" type="text" placeholder="Email" required name="Email"></p>
-				<p><input class="w3-input w3-border" type="text" placeholder="Subject" required name="Subject"></p>
-				<p><input class="w3-input w3-border" type="text" placeholder="Message" required name="Message"></p>
+				<p><input class="w3-input w3-border" type="text" placeholder="Name" required name="webContactName"></p>
+				<p><input class="w3-input w3-border" type="text" placeholder="Your Email" required name="webContactEmail"></p>
+				<p><input class="w3-input w3-border" type="text" placeholder="Subject" required name="webContactSubject"></p>
+				<p><input class="w3-input w3-border" type="text" placeholder="Message" required name="webContactMessage"></p>
 				<p>
 				<button class="w3-button w3-black" type="submit">
 					<i class="fa fa-paper-plane"></i> SEND MESSAGE
@@ -313,6 +336,17 @@
 	  </script>
 	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaodDSpwSCSsthdTxTZPlZtvmAv2rAy4E &callback=myMap"></script>
 	  <script>
+		function downloadApp(){
+			if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
+				window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';
+			}
+			if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+				window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';
+			}
+
+		}
+
+
 		// Slideshow
 		var slideIndex = 1;
 		showDivs(slideIndex);
