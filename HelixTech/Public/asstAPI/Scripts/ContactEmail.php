@@ -1,18 +1,21 @@
 <?php
-echo "some things";
+echo "some other things";
+
+$webContactName = $_GET["webContactName"];
+$webContactEmail = $_GET["webContactEmail"];
+$webContactSubject = $_GET["webContactSubject"];
+$webContactMessage = $_GET["webContactMessage"];
 
 
 // Send an email to the user containing the unique link
-$message = 'Please click the following link to reset your password:' . "\r\n"
-."https://axspa.org.uk/passwordReset.html?".urlencode("username=".$UserName."&GUIDE=".$uniqueCode) . "\r\n\r\n"
-//		."debug: uniqueID=" . $uniqueID . "\r\n\r\n"
-//		."debug: PassResTokEx=" . $expiary . "\r\n\r\n"
-. "Please note, this link will expire in 12 hours";
+$message = "Message From: " . $webContactName . "(email: " . $webContactEmail . ")" . "\r\n\r\n"
+. "Subject: " . $webContactSubject . "\r\n"
+. $webContactMessage;
 
-$headers = 'From: ResetPassword@axspa.org.uk' . "\r\n" .
-'Reply-To: ResetPassword@axspa.org.uk';
+$headers = 'From: CRVW@axspa.org.uk' . "\r\n" .
+'Reply-To: '.$webContactEmail;
 
-mail($UserName, 'Ankylosing Spondylitis Symptom Tracker - Request to Reset Password', $message, $headers);
+mail('inquire@helix-tech.co.uk', 'Ankylosing Spondylitis Symptom Tracker - Contact Request via Website', $message, $headers);
 
 ?>
 
