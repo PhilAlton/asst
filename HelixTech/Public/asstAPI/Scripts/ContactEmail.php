@@ -35,7 +35,7 @@
     ."</head>"
     
     ."<body>"
-    .    '<div class="w3-card-4 w3-hover-shadow w3-center" style="max-width:500px;margin:auto;margin-top:25%">'
+    .    '<div class="w3-card-4 w3-hover-shadow w3-center" style="max-width:500px;margin:auto;margin-top:75px">'
     .    '<header class="w3-container" style="padding=0;">'
     .    '<a href="https://testing.axspa.org.uk" class="w3-bar-item w3-btn w3-wide logo"><img src="/asst/HelixTech/Public/asstAPI/Images/logo.png" style="max-height:80px;max-width:450px;padding:0;margin:0;"></a>'
     .    '</header>'
