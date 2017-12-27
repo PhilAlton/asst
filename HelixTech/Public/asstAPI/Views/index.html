@@ -175,7 +175,7 @@
 	  <!-- Modal -->
 	  <div id="download" class="w3-modal w3-light-grey w3-animate-opacity">
 		<div class="w3-modal-content" style="padding:32px">
-		  <div class="w3-container w3-white">
+		  <div id="downloadContent" class="w3-container w3-white">
 			<i onclick="document.getElementById('download').style.display='none'" class="fa fa-remove w3-xlarge w3-button w3-transparent w3-right w3-xlarge"></i>
 			<h2 class="w3-wide">DOWNLOAD</h2>
 			<p>Download the app in AppStore or Google Play store.</p>
@@ -336,17 +336,6 @@
 	  </script>
 	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBaodDSpwSCSsthdTxTZPlZtvmAv2rAy4E &callback=myMap"></script>
 	  <script>
-		function downloadApp(){
-			if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
-				window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';
-			}
-			if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
-				window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';
-			}
-
-		}
-
-
 		// Slideshow
 		var slideIndex = 1;
 		showDivs(slideIndex);
@@ -364,6 +353,17 @@
 			x[i].style.display = "none";  
 			}
 			x[slideIndex-1].style.display = "block";  
+		}
+
+		function downloadApp(){
+			if(navigator.userAgent.toLowerCase().indexOf("android") > -1){
+				window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';
+			} else if(navigator.userAgent.toLowerCase().indexOf("iphone") > -1){
+				window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';
+			} else {
+				getElementById("downloadContent").html("<h2 class='w3-wide'>Unfortunately our app is only available on android or iOS devices</h2>")
+			}
+
 		}
 
 		
