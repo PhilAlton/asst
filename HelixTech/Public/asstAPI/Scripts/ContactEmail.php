@@ -56,7 +56,7 @@
     .        '<h2 class="w3-wide">DOWNLOAD</h2>'
     .        '<p>Download the app in AppStore or Google Play store.</p>'
     .        '<i class="fa fa-android w3-large"></i> <i class="fa fa-apple w3-large"></i><!--<i class="fa fa-windows w3-large"></i>-->'
-    .        '<div id="downloadModalContent"><h2 class="w3-wide">Unfortunately our app is only available on android or iOS devices</h2></div>'
+    .        '<div id="downloadModalContent" style="display:none;"><h2 class="w3-wide">Unfortunately our app is only available on android or iOS devices</h2></div>'
     .        '<p id="downloadModalEmail"><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>'
     .        '<button id="downloadModalButton" type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="downloadApp()">Download</button>'
     .        '</div>'
@@ -69,7 +69,11 @@
     .            "window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';"
     .        "} else if(navigator.userAgent.toLowerCase().indexOf('iphone') > -1){"
     .            "window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';"
-    .        '} else {document.getElementById("downloadModalContent").html = "<h2 class=\'w3-wide\'>Unfortunately our app is only available on android or iOS devices</h2>";}'
+    .        '} else {'
+    .            'document.getElementById("downloadModalContent").style.display = "block";'
+    .            'document.getElementById("downloadModalEmail").style.display = "none";'
+    .            'document.getElementById("downloadModalButton").style.display = "none";'
+    .        '}'
     .    "}"
     .    "</script>"
 
