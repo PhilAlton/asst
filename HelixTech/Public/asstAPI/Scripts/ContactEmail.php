@@ -57,7 +57,7 @@
     .        '<p>Download the app in AppStore or Google Play store.</p>'
     .        '<i class="fa fa-android w3-large"></i> <i class="fa fa-apple w3-large"></i><!--<i class="fa fa-windows w3-large"></i>-->'
     .        '<p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail"></p>'
-    .        '<button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="document.getElementById(\'download\').style.display=\'none\';downloadApp()">Download</button>'
+    .        '<button type="button" class="w3-button w3-block w3-padding-large w3-red w3-margin-bottom" onclick="downloadApp()">Download</button>'
     .        '</div>'
     .    '</div>'
     .    '</div>'
