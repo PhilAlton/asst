@@ -66,10 +66,9 @@
     .    "function downloadApp(){"
     .        "if(navigator.userAgent.toLowerCase().indexOf('android') > -1){"
     .            "window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';"
-    .        "}"
-    .        "if(navigator.userAgent.toLowerCase().indexOf('iphone') > -1){"
+    .        "} else if(navigator.userAgent.toLowerCase().indexOf('iphone') > -1){"
     .            "window.location.href = 'https://play.google.com/store/apps/details?id=com.ankspondtracker.android.asapp';"
-    .        "}"
+    .        '} else {getElementById("downloadContent").html("<h2 class=\'w3-wide\'>Unfortunately our app is only available on android or iOS devices</h2>")}'
     .    "}"
     .    "</script>"
 
