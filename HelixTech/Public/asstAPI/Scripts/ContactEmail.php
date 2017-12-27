@@ -5,7 +5,7 @@
     $webContactMessage = $_GET["webContactMessage"];
 
 
-    // Send an email to the user containing the unique link
+    // Send an email to the Helix-Tech inquire account with the details of the user's message
     $message = "Message From: " . $webContactName . "\r\n"
     . "Email: " . $webContactEmail . "\r\n\r\n"
     . "Subject: " . $webContactSubject . "\r\n"
@@ -16,7 +16,7 @@
 
     mail('inquire@helix-tech.co.uk', 'Ankylosing Spondylitis Symptom Tracker - Contact Request via Website', $message, $headers);
 
-
+    // Output a response page indicating success.
     $output = "<!DOCTYPE html>"
     ."<html>"
     .    '<meta charset="UTF-8"/>'
