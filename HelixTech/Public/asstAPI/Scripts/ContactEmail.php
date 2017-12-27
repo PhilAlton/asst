@@ -22,7 +22,6 @@
     .    '<meta charset="UTF-8"/>'
     .    "<title>Contact Email</title>"
     ."</head>"
-    .
     ."<body>"
     .    '<a href="#home" class="w3-bar-item w3-button w3-wide logo"><img src="/asst/HelixTech/Public/asstAPI/Images/logo.png" style="max-height:80px;max-width:450px;padding:0;margin:0;"></a>'
     .    "<div><a href='https://testing.axspa.org.uk'>Email sent - we'll be in Touch!</a></div>"
