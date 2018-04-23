@@ -194,6 +194,12 @@ class Connection{
             $query = New Query(SELECT, "* FROM `$table` WHERE `UserName` =:UserName");
             $UserDetails = $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $_SERVER["PHP_AUTH_USER"]]);
 
+            // Ensure continuity in case of accidental duplication of user details
+            if (isset($UserDetails[1]["UniqueID"])){
+                $UserDetails = $UserDetails[0];
+            }
+
+
             /** @todo If control block will need to go into query class for null outputs, as this is where decryption will occur */
             if (count($UserDetails)===0){
                 // If no user obtained from database then throw exception and handle.

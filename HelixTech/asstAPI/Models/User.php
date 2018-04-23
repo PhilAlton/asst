@@ -102,6 +102,16 @@
 										"(:UserName, :Password, :AuthToken, :AuthTokenPlain, :secQ1, :secQ2)"
 									);
 
+													/*$query = New Query(
+																	LOCK, "TABLES AuthTable WRITE; INSERT INTO AuthTable".
+																		"(UserName, Password, AuthToken, AuthTokenPlain, SecQ1, SecQ2)".
+																	"VALUES".
+																		"(:UserName, :Password, :AuthToken, :AuthTokenPlain, :secQ1, :secQ2);".
+																	"UNLOCK TABLES"
+																	);
+													*/
+						
+
 					$results = array_merge($results, $query->execute(SIMPLIFY_QUERY_RESULTS_ON,  [':UserName' => $params['UserName'], ':Password' => $password, ':AuthToken' => $protectedAuthToken, ':AuthTokenPlain'=>$AuthToken,':secQ1' => $secQ1, ':secQ2' => $secQ2]));
 					unset($results['secQ1']);
 					unset($results['secQ2']);

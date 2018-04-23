@@ -5,6 +5,7 @@
 
     //require 'database.php';
     define("INSERT", "INSERT");
+    define("LOCK", "LOCK");
     define("UPDATE", "UPDATE");
     define("SELECT", "SELECT");
     define("CREATE", "CREATE");
@@ -167,6 +168,7 @@
                 http_response_code(200); // OK
 				        break;
 
+                    case LOCK:
 			        case INSERT:
 				        http_response_code(201); // content created
 				        break;
