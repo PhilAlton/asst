@@ -29,7 +29,13 @@ class Analytics{
 
             
                $query = new Query(SELECT, "UniqueID FROM UserTable");
-               $cohortData = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
+               $uniqueIDArr = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
+               $cohortData = array();
+               foreach ($uniqueIDArr as $uID){
+                    $query = new Query(SELECT, "* FROM GEN_DATA_TABLE_".$uID);
+                    array_push($cohortData, $query->execute(SIMPLIFY_QUERY_RESULTS_ON));
+               }
+              
 
             // combine the quries and output as JSON via Output class
                $analyticResults = array(
