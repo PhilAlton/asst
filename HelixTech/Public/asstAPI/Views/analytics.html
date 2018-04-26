@@ -70,6 +70,12 @@
                         "<b>Number of Distinct Users: </b>" + data.content.DISTINCT_USER_COUNT + "<br/>"
                         )
                         .css('display', 'inline');
+                    console.log(data.content.COHORT_DATA);
+                    $('#CohortData')
+                        .html(
+                            "<b>Cohort Analyisis: </b>" + data.content.COHORT_DATA
+                        )
+                        .css('display', 'inline');
                     $('#AnalyticsTable')
                         .html(
                           "<caption>Connection Log - Non Standard / Erronious Requests</caption>"
