@@ -28,7 +28,7 @@ class Analytics{
 
 
             
-               $query = new Query(SELECT, "* FROM UserTable");
+               $query = new Query(SELECT, "UniqueID, Age FROM UserTable");
                $uniqueIDArr = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
                $cohortData = $uniqueIDArr;
                /*$cohortData = array();
