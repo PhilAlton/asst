@@ -37,7 +37,7 @@ class Analytics{
                                     "DISTINCT_USER_COUNT" => $numDistinctUsers, 
                                     "AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
                                     "COHORT_DATA" => $cohortData,
-                                    "Data" => $CnxtsByIP);
+                                    "DATA" => $CnxtsByIP);
 
 
              //  include $_Server.['DOCUMENT_ROOT/asst/HelixTech/Public/asstAPI/analytics.php'].'.php';
