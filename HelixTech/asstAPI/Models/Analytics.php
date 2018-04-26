@@ -74,8 +74,8 @@ class Analytics{
                }
                
 
-               $diffYearsPart = substr($lastCohort,0,4))-substr($firstCohort,0,4);
-               $diffMonthsPart  = substr($lastCohort,5,2))-substr($firstCohort,5,2);
+               $diffYearsPart = substr($lastCohort,0,4)-substr($firstCohort,0,4);
+               $diffMonthsPart  = substr($lastCohort,5,2)-substr($firstCohort,5,2);
                $diffMonths = ($diffYearsPart * 12) + $diffMonthsPart + 1;
                
                $cohortArray = array();
