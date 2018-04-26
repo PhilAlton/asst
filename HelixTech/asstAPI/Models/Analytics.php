@@ -94,8 +94,9 @@ class Analytics{
                     $year++;
                }
                 
+               
+               $cohortData = $diffMonths;  //"";
                /*
-               $cohortData = "";
                foreach ($cohortArray as $cohort){
                     $cohortData.= "</br>";
                     $cohortData.= $cohort."- ";
