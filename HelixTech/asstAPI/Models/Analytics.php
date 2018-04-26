@@ -27,13 +27,18 @@ class Analytics{
                $CnxtsByIP = $query->execute(SIMPLIFY_QUERY_RESULTS_ON);
 
 
+            
+               $query = new Query(SELECT, "UniqueID FROM UserTable");
+               $cohortData = $query->execute();
 
             // combine the quries and output as JSON via Output class
                $analyticResults = array(
                                     "DISTINCT_IP_COUNT" => $numDistinctIP,  
                                     "DISTINCT_USER_COUNT" => $numDistinctUsers, 
                                     "AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
+                                    "COHORT_DATA" => $cohortData,
                                     "Data" => $CnxtsByIP);
+
 
              //  include $_Server.['DOCUMENT_ROOT/asst/HelixTech/Public/asstAPI/analytics.php'].'.php';
                Output::setOutput($analyticResults);
