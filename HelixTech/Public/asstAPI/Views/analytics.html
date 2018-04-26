@@ -71,7 +71,7 @@
                         )
                         .css('display', 'inline');
                     console.log(data.content.COHORT_DATA);
-                    console.log(data.content.data);
+                    console.log(data.content.DATA);
                     $('#CohortData')
                         .html(
                             "<b>Cohort Analyisis: </b>" + data.content.COHORT_DATA + "</br>" +
@@ -99,7 +99,7 @@
 
                     var tbl_body = document.createElement("tbody");
                     var odd_even = false;
-                    $.each(data.content.Data, function () {
+                    $.each(data.content.DATA, function () {
                         var tbl_row = tbl_body.insertRow();
                         tbl_row.className = odd_even ? "odd" : "even";
                         //console.log(this);
