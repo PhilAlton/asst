@@ -29,7 +29,7 @@ class Analytics{
 
             
                $query = new Query(SELECT, "UniqueID FROM UserTable");
-               $cohortData = $query->execute();
+               $cohortData = $query->execute(SIMPLIFY_QUERY_RESULTS_OFF);
 
             // combine the quries and output as JSON via Output class
                $analyticResults = array(
