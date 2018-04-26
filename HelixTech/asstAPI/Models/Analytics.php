@@ -36,7 +36,7 @@ class Analytics{
                $cohortData = array();
                foreach ($uniqueIDArr as $uID){
                     $query = new Query(SELECT, "* FROM GEN_DATA_TABLE_".$uID['UniqueID']);
-                    array_push($cohortData, $query->execute(SIMPLIFY_QUERY_RESULTS_ON));
+                    array_push($cohortData, $query->execute(SIMPLIFY_QUERY_RESULTS_OFF));
                }
                
 
