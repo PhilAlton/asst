@@ -80,8 +80,8 @@ class Analytics{
                
                $cohortArray = array();
                $i = 0;
-               $month = int(substr($firstCohort,5,2));
-               $year = int(substr($firstCohort,0,4));
+               $month = (substr($firstCohort,5,2));
+               $year = (substr($firstCohort,0,4));
                while ($i < $diffMonths){
                     while ($month <= 12){
                         if ($month < 10){$month = "0".$month;}
