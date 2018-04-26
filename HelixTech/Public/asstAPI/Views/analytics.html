@@ -73,7 +73,8 @@
                     console.log(data.content.COHORT_DATA);
                     $('#CohortData')
                         .html(
-                            "<b>Cohort Analyisis: </b>" + data.content.COHORT_DATA
+                            "<b>Cohort Analyisis: </b>" + data.content.COHORT_DATA + "</br>" +
+                            "<b>Some things: </b>" + data.content.COHORT_DATA[0]
                         )
                         .css('display', 'inline');
                     $('#AnalyticsTable')
@@ -133,6 +134,8 @@
         </form>
     </div>
     <div id="AnalyticsData"></div>
+    <br /><br /><br />
+    <div id="CohortData" style="display:none;"></div>
     <br /><br /><br />
     <table id="AnalyticsTable" style="display:none;">
     </table>
