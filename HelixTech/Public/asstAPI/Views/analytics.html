@@ -70,13 +70,9 @@
                         "<b>Number of Distinct Users: </b>" + data.content.DISTINCT_USER_COUNT + "<br/>"
                         )
                         .css('display', 'inline');
-                    console.log(data.content.COHORT_DATA);
-                    console.log(data.content.COHORT_DATA[0]);
-                    console.log(data.content.DATA);
                     $('#CohortData')
                         .html(
-                            "<b>Cohort Analyisis: </b>" + data.content.COHORT_DATA + "</br>" +
-                            "<b>Some things: </b>" + data.content.COHORT_DATA[0].toString()
+                            "<b>Cohort Analyisis: </b>" + data.content.COHORT_DATA + "</br>"
                         )
                         .css('display', 'inline');
                     $('#AnalyticsTable')
