@@ -95,8 +95,8 @@ class Analytics{
                }
                 
                
-               $cohortData = $diffMonths;  //"";
-               /*
+               $cohortData = "";
+               
                foreach ($cohortArray as $cohort){
                     $cohortData.= "</br>";
                     $cohortData.= $cohort."- ";
@@ -110,13 +110,11 @@ class Analytics{
                             } else {
                                 $cohortData.= "0.00";
                             }
-
-                            $i++;
                         }
-                            
+                        $i++; 
                     }
                }
-                 */  
+                 
 
                    
                
