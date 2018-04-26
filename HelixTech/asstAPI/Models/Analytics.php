@@ -106,7 +106,7 @@ class Analytics{
                             $cohortData.= ($i+1).": ";
                             
                             if (isset($cohorts[$cohort]["datapoints"][$cohortArray[$i]])){
-                                $cohortData.= ($cohorts[$cohort]["datapoints"][$cohortArray[i]]/$cohorts[$cohort]["numofusers"]);
+                                $cohortData.= ($cohorts[$cohort]["datapoints"][$cohortArray[$i]]/$cohorts[$cohort]["numofusers"]);
                             } else {
                                 $cohortData.= "0.00";
                             }
