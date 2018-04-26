@@ -93,7 +93,8 @@ class Analytics{
                     $month = 1;
                     $year++;
                }
-                  
+                
+               /*
                $cohortData = "";
                foreach ($cohortArray as $cohort){
                     $cohortData.= "</br>";
@@ -114,7 +115,7 @@ class Analytics{
                             
                     }
                }
-                   
+                 */  
 
                    
                
