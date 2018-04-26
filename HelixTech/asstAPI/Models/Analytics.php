@@ -51,10 +51,9 @@ class Analytics{
                     $cohort = 999999;
                     foreach ($user as $data){
                         $date = substr($data["Date"],0,4).substr($data["Date"],5,2);
-                        if ((int)$date < $cohort){$cohort = (int)$date;}  
+                        if ((int)$date < $cohort){$cohort = (int)$date;} 
                     }
-                    /*  orderedScores = sorted(score[1].keys())
-                        cohort = datetime.datetime.fromtimestamp(int(orderedScores[0])/1000).strftime('%Y%m')*/
+                    
 
                     //if cohorts[cohort] is not set, then initialise 
                     if (!isset($cohorts[$cohort])){
@@ -72,16 +71,17 @@ class Analytics{
                            if ((int)$data > $lastCohort){$lastCohort = (int)$data;} 
                     }
                }
-               
+	       unset($cohorts[999999]);            
 
                $diffYearsPart = substr($lastCohort,0,4)-substr($firstCohort,0,4);
-               $diffMonthsPart  = substr($lastCohort,5,2)-substr($firstCohort,5,2);
+               $diffMonthsPart  = substr($lastCohort,4,2)-substr($firstCohort,4,2);
                $diffMonths = ($diffYearsPart * 12) + $diffMonthsPart + 1;
-               
+               		
                $cohortArray = array();
                $i = 0;
-               $month = (substr($firstCohort,5,2));
+               $month = (substr($firstCohort,4,2));
                $year = (substr($firstCohort,0,4));
+
                while ($i < $diffMonths){
                     while ($month <= 12){
                         if ($month < 10){$month = "0".$month;}
@@ -96,17 +96,16 @@ class Analytics{
                 
                
                $cohortData = "";
-               
                foreach ($cohortArray as $cohort){
                     $cohortData.= "</br>";
-                    $cohortData.= $cohort."- ";
+                    $cohortData.= $cohort."  -   ";
                     $i = 0;
                     while ($i < $diffMonths){
                         if (isset($cohorts[$cohort])){
-                            $cohortData.= ($i+1).": ";
+                            $cohortData.= "  &emsp;".($i+1).": ";
                             
                             if (isset($cohorts[$cohort]["datapoints"][$cohortArray[$i]])){
-                                $cohortData.= ($cohorts[$cohort]["datapoints"][$cohortArray[$i]]/$cohorts[$cohort]["numofusers"]);
+                                $cohortData.= number_format((float)($cohorts[$cohort]["datapoints"][$cohortArray[$i]]/$cohorts[$cohort]["numofusers"]), 2, '.', '');
                             } else {
                                 $cohortData.= "0.00";
                             }
