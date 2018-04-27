@@ -94,6 +94,11 @@ class Analytics{
                     $year++;
                }
                 
+
+               //$command = escapeshellcmd('/var/www/private/dataFirebase.py');
+               //$jsonOfFirebaseCohortData = shell_exec($command);
+               
+               
                
                $cohortData = "";
                foreach ($cohortArray as $cohort){
