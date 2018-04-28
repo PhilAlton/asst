@@ -95,8 +95,8 @@ class Analytics{
                }
                 
 
-               //$command = escapeshellcmd('/var/www/private/dataFirebase.py');
-               //$jsonOfFirebaseCohortData = shell_exec($command);
+               $command = escapeshellcmd('/var/www/private/dataFirebase.py');
+               $jsonOfFirebaseCohortData = shell_exec($command);
                
                
                
