@@ -96,7 +96,7 @@ class Analytics{
                 
 
                $command = escapeshellcmd('/var/www/private/dataFirebase.py');
-               $jsonOfFirebaseCohortData = shell_exec($command);
+               $firebaseCohortData = shell_exec($command);
                
                
                
@@ -133,6 +133,7 @@ class Analytics{
                                     "DISTINCT_USER_COUNT" => $numDistinctUsers, 
                                     "AVERAGE_REQUESTS" => $numAPIRequestsINlastWeekPerDay,
                                     "COHORT_DATA" => $cohortData,
+                                    "firebase_COHORT_DATA" => $firebaseCohortData,
                                     "DATA" => $CnxtsByIP);
 
 
