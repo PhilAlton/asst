@@ -139,6 +139,7 @@ class Analytics{
 
              //  include $_Server.['DOCUMENT_ROOT/asst/HelixTech/Public/asstAPI/analytics.php'].'.php';
                Output::setOutput($analyticResults);
+               var_dump($analyticResults);
 
 
 
