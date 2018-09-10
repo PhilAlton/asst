@@ -76,7 +76,6 @@ class Router{
 			} elseif (Router::uri($root.'/Analytics')){
                 // code for asst/Analytics
                 Analytics::display();
-                echo "hi";
 
             } elseif (Router::uri($root.'/Research')){
                 // code for asst/Research
