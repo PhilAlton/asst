@@ -117,7 +117,7 @@ class Router{
 
 			return;
 		}
-
+        
 		restore_error_handler();
 
     }
