@@ -56,6 +56,18 @@ class Output{
 #endregion
 
 
+	public static function sanitize($textIn){
+		$textOut = preg_replace('/,?":*UniqueID":"\w*",?/', "", $textIn);
+		$textOut = preg_replace('/,?":*UniqueID":\s*"\w*",?/', "", $textOut);
+		$textOut = preg_replace('/,?":*Password":"\w*",?/', "", $textOut);
+		$textOut = preg_replace('/,?":*Password":\s*"\w*",?/', "", $textOut);
+		$textOut = preg_replace('/,?":*SecretAnswer1":"\w*",?/', "", $textOut);
+		$textOut = preg_replace('/,?":*SecretAnswer1":\s*"\w*",?/', "", $textOut);
+		$textOut = preg_replace('/,?":*SecretAnswer2":"\w*",?/', "", $textOut);
+		$textOut = preg_replace('/,?":*SecretAnswer2":\s*"\w*",?/', "", $textOut);
+		return $textOut;
+	}
+
 	/**
 	 * Summary of Output::go - process output from buisness logic.
      * Passes back a JSON encoded string in the HTTP body to the client with return data,
@@ -70,12 +82,9 @@ class Output{
 		if(!empty(Output::getOutput())){
 
             // sanaitize output to remove Unique ID from the output using preg_replace.
-            $content = json_encode(Output::getOutput(),0,256);
+            $content = Output::sanitize(json_encode(Output::getOutput(),0,256));
 			//$content = Connection::getAuthToken() ? '"AuthToken": "'.Connection::getAuthToken().'",'.$content : $content;
-			$content = preg_replace('/":*UniqueID":"\w*",?/', "", $content);
-			$content = preg_replace('/":*UniqueID":\s*"\w*",?/', "", $content);
-			$content = preg_replace('/,?":*Password":"\w*"/', "", $content);
-			$content = preg_replace('/,?":*Password":\s*"\w*"/', "", $content);
+	
 
             // return values: sent to client in the HTTP body via echo.
 
@@ -96,12 +105,12 @@ class Output{
                         ."</br>At: <b>".date("Y-m-d, H:i:s", Connection::getConnectionTime())."</b>"
 
 		    // Then output the error log
-		    ."</br>".Output::getErrorLog();
+		    ."</br>".Output::sanitize(Output::getErrorLog());
             //echo Output::getHistory();
 		    // Add history after
             $errorLog = $errorLog."</br></br></br><b>History:</b></br>".$errorOutput;
 		    if (Output::getHistory() !== "</br>"){
-			    $errorLog = $errorLog."</b></br>".Output::getHistory();
+			    $errorLog = $errorLog."</b></br>".Output::sanitize(Output::getHistory());
 		    }
 
 		    // Enclose entry to improve readability
